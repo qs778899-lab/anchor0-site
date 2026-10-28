@@ -3,6 +3,8 @@ from pathlib import Path
 from html.parser import HTMLParser
 import hashlib
 import json
+import math
+import sys
 import urllib.request
 import urllib.error
 import urllib.parse
@@ -27,18 +29,69 @@ for link in parser.links:
 print(f'PASS: {len(parser.links)} local page references')
 
 provenance=json.loads((ROOT/'docs/demo-provenance.json').read_text())
+assert provenance['sourceCommit']=='cdcfef07a9109603f36532c182ad0c282e51e748'
+assert len(provenance['immutableFiles'])==134, 'Published demo asset inventory changed'
 for file, expected in provenance['immutableFiles'].items():
     assert hashlib.sha256((DIST/'demo'/file).read_bytes()).hexdigest()==expected, f'Changed published payload: {file}'
 print(f'PASS: {len(provenance["immutableFiles"])} unchanged published demo files')
 
 data=json.loads((DIST/'data/paper-results.json').read_text())
+assert data['snapshot']['checkpoint']=='test134 / 46000'
+assert data['snapshot']['checkpointSha256']=='5757a7d5a5632ae611060508a86032af5cbc5152098aed32edcb7da71f1f31ea'
 assert [c['count'] for c in data['simulation']['cohorts']]==[15342,2230]
+expected_anchor={
+    'inhouse': [(89.58414809020988,89.50593143006127),(85.7124234128536,44.27714769912658)],
+    'public': [(59.14798206278027,60.941704035874444),(57.264573991031384,26.09865470852018)],
+}
+for cohort in data['simulation']['cohorts']:
+    for series, (local, global_) in zip(cohort['series'][:2], expected_anchor[cohort['id']]):
+        assert math.isclose(series['localSuccess'],local,abs_tol=1e-10)
+        assert math.isclose(series['globalSuccess'],global_,abs_tol=1e-10)
+        assert series['config'].startswith('test134_46k_human_')
+    for series in cohort['series']:
+        assert series['count']==cohort['count']
+        for frame in ('local','global'):
+            assert math.isclose(series[frame+'Success'],100*series[frame+'SuccessCount']/cohort['count'],abs_tol=1e-10)
+lookahead={c['id']:c for c in data['lookahead']['cohorts']}
+assert set(lookahead)=={'inhouse','public'}
+assert data['lookahead']['series']==lookahead['inhouse']['series'], 'Legacy alias must use In-house data'
+for cohort in data['simulation']['cohorts']:
+    ahead=lookahead[cohort['id']]
+    assert ahead['count']==cohort['count'] and len(ahead['series'])==7
+    by_model={s['id']:s for s in ahead['series']}
+    assert len(by_model)==7
+    for series in cohort['series']:
+        other=by_model[series['id']]
+        assert other['localSuccess']==series['localSuccess'], 'Mixed cohorts or checkpoints in look-ahead plot'
+        assert other['config']==series['config'] and other['input']==series['input']
+    smpl=by_model['sonic-smpl']
+    assert smpl['config']=='sonic_v1_1_smpl' and smpl['input']=='SMPL'
+    assert smpl['lookaheadSeconds']==0.18 and smpl['onlineRetargeting'] is False
+    assert math.isclose(smpl['localSuccess'],{'inhouse':0.6257332811888932,'public':8.295964125560538}[cohort['id']],abs_tol=1e-10)
 assert data['reachability']['count']==3210
 assert sum(a['count'] for a in data['reachability']['postures']['axes'])==3210
-assert abs(data['simulation']['cohorts'][0]['series'][0]['localSuccess']-87.05514274540477)<1e-10
+assert data['reachability']['difficulty'] is None
+for plot in [*data['radars'],data['reachability']['postures']]:
+    for series in plot['series']:
+        assert len(series['values'])==len(plot['axes'])==len(series['successes'])==len(series['counts'])
+        if series['id'].startswith('anchor-'):
+            assert series['config'].startswith('test134_46k_')
+        for value,passed,count in zip(series['values'],series['successes'],series['counts']):
+            assert 0<=passed<=count and count>0
+            assert math.isclose(value,100*passed/count,abs_tol=1e-10)
+for series in data['reachability']['postures']['series']:
+    assert sum(series['counts'])==3210
+    assert math.isclose(series['overallSuccess'],100*sum(series['successes'])/3210,abs_tol=1e-10)
+    if series['id'] in ('anchor-global','anchor-local'):
+        assert sum(series['successes'])=={'anchor-global':1909,'anchor-local':1448}[series['id']]
 assert data['hardware']['thresholdFigure']['numericValuesAvailable'] is False
 assert all(v is None for s in data['downstream']['autonomy']['series'] if s.get('pending') for v in s['values'])
-print('PASS: paper snapshot, cohort counts, pending-result semantics')
+print('PASS: test134/46k snapshot, cohort/look-ahead consistency, exact count aggregation, pending-result semantics')
+assert max(p.stat().st_size for p in DIST.rglob('*') if p.is_file()) < 100*1024**2
+print('PASS: every served asset is below the ordinary GitHub file limit')
+if '--offline' in sys.argv:
+    print('SKIP: HTTP QA (--offline); all checks above were read-only')
+    sys.exit(0)
 
 def get(path, headers=None):
     return urllib.request.urlopen(urllib.request.Request(BASE+path,headers=headers or {}), timeout=10)
@@ -64,5 +117,3 @@ for path in ['/assets/','/.cache/evaluation.html','/../README.md']:
     except urllib.error.HTTPError as e: assert e.code in (403,404)
     else:raise AssertionError(f'Unexpected exposure: {path}')
 print('PASS: HTTP pages, redirects, range streaming, raw gzip, MIME types, no directory listings')
-assert max(p.stat().st_size for p in DIST.rglob('*') if p.is_file()) < 100*1024**2
-print('PASS: every served asset is below the ordinary GitHub file limit')

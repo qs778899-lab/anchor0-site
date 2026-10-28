@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the paper's fixed evaluation configuration, without internal paths.
+"""Export the approved test134/46k evaluation snapshot, without internal paths.
 
 Input is the saved evaluation dashboard HTML, not a network request. No script
 from that document is executed. Only its JSON data blocks are read.
@@ -15,14 +15,16 @@ from statistics import mean
 
 
 ROOT = Path(__file__).resolve().parents[1]
+ANCHOR_CHECKPOINT_SHA256 = "5757a7d5a5632ae611060508a86032af5cbc5152098aed32edcb7da71f1f31ea"
 MODELS = [
-    ("anchor-global", "Anchor-0ᴳ", "test132_38k_human_global_reference", "test132_38k_g1_global_reference", False, 0.06),
-    ("anchor-local", "Anchor-0ᴸ", "test132_38k_human_reanchor_reference", "test132_38k_g1_reanchor_reference", False, 0.06),
+    ("anchor-global", "Anchor-0ᴳ", "test134_46k_human_global_reference", "test134_46k_g1_global_reference", False, 0.06),
+    ("anchor-local", "Anchor-0ᴸ", "test134_46k_human_reanchor_reference", "test134_46k_g1_reanchor_reference", False, 0.06),
     ("scale-global", "ScaleBFMᴳ", "scalebfm_xl_wholebody14", "scalebfm_xl_wholebody14", True, 0.10),
     ("scale-local", "ScaleBFMᴸ", "scalebfm_xl_wholebody14_local", "scalebfm_xl_wholebody14_local", True, 0.10),
     ("sonic", "SONIC v1.1 (G1)", "sonic_v1_1_g1", "sonic_v1_1_g1", True, 0.90),
     ("mimic", "MimicLite v1.1", "mimiclite_v1_1", "mimiclite_v1_1", True, 0.08),
 ]
+COHORTS = [("inhouse", "In-house", "自建动作集", 15342), ("public", "Public", "公开动作集", 2230)]
 
 
 def block(html: str, name: str) -> dict:
@@ -35,27 +37,37 @@ def block(html: str, name: str) -> dict:
 def selected_record(data: dict, config: str, dataset: str) -> dict:
     matches = [r for r in data["records"] if r["config"] == config and r["dataset"] == dataset and r["simulator"] == "isaacsim" and r["dr"] is True]
     assert len(matches) == 1, (config, dataset, len(matches))
+    if config.startswith("test134_46k_"):
+        assert matches[0]["checkpointSha256"] == ANCHOR_CHECKPOINT_SHA256, "Anchor-0 checkpoint hash changed"
     return matches[0]
 
 
 def model_metadata(data: dict) -> list:
     return [{"id": mid, "label": label, "input": selected_record(data, config, "inhouse")["input"],
+             "checkpointSha256": selected_record(data, config, "inhouse").get("checkpointSha256"),
              "onlineRetargeting": retarget, "trackingConfig": config, "reachabilityConfig": reach_config}
             for mid, label, config, reach_config, retarget, _ in MODELS]
 
 
 def simulation(data: dict) -> dict:
     cohorts = []
-    expected = {"inhouse": [87.1, 73.2, 53.4, 35.4, 33.6, 28.8], "public": [57.0, 40.8, 35.2, 26.0, 25.9, 18.9]}
-    for dataset, label, label_zh, count in [("inhouse", "In-house", "自建动作集", 15342), ("public", "Public", "公开动作集", 2230)]:
+    expected = {"inhouse": [89.6, 85.7, 53.4, 35.4, 33.6, 28.8], "public": [59.1, 57.3, 35.2, 26.0, 25.9, 18.9]}
+    anchor_expected = {"inhouse": [89.58414809020988, 85.7124234128536], "public": [59.14798206278027, 57.264573991031384]}
+    for dataset, label, label_zh, count in COHORTS:
         series = []
         for mid, model_label, config, _, _, _ in MODELS:
             row = selected_record(data, config, dataset)
-            assert row["local"]["valid"] == count
-            series.append({"id": mid, "label": model_label, "localSuccess": row["local"]["main"],
+            assert row["local"]["valid"] == count and row["global"]["valid"] == count
+            local_success_count = round(row["local"]["main"] * count / 100)
+            global_success_count = round(row["global"]["main"] * count / 100)
+            assert abs(row["local"]["main"] - 100 * local_success_count / count) < 1e-10
+            assert abs(row["global"]["main"] - 100 * global_success_count / count) < 1e-10
+            series.append({"id": mid, "label": model_label, "config": config, "input": row["input"], "count": count,
+                           "localSuccessCount": local_success_count, "globalSuccessCount": global_success_count, "localSuccess": row["local"]["main"],
                            "globalSuccess": row["global"]["main"], "rootError": row["global"]["root"],
                            "wristError": row["local"]["wrist"], "ankleError": row["local"]["ankle"]})
-        assert [round(s["localSuccess"], 1) for s in series] == expected[dataset], "Values do not match the paper snapshot"
+        assert [round(s["localSuccess"], 1) for s in series] == expected[dataset], "Values do not match the approved snapshot"
+        assert [s["localSuccess"] for s in series[:2]] == anchor_expected[dataset]
         cohorts.append({"id": dataset, "label": label, "labelZh": label_zh, "count": count, "series": series})
     return {"cohorts": cohorts, "metric": {
         "successUnit": "%", "errorUnit": "mm", "success": data["mainMetric"],
@@ -82,7 +94,7 @@ def radars(data: dict) -> list:
             totals = [record["totals"][a["id"]] for a in axes]
             successes = [record["mainCounts"][a["id"]][0] for a in axes]
             assert totals == [a["count"] for a in axes]
-            series.append({"id": mid, "label": model_label, "values": [100 * s / n for s, n in zip(successes, totals)], "successes": successes, "counts": totals})
+            series.append({"id": mid, "label": model_label, "config": config, "values": [100 * s / n for s, n in zip(successes, totals)], "successes": successes, "counts": totals})
         result.append({"id": rid, "label": label, "labelZh": label_zh, "axes": axes, "series": series, "unit": "%", "metric": "local main success", "note": "Categories contain complete motions with the indicated phase and may overlap."})
     return result
 
@@ -110,8 +122,8 @@ def reachability(data: dict) -> dict:
         assert all(valid(row) for row in values), "Snapshot should have complete tracking and feet data for all motions"
         success = lambda row: valid(row) and row[index["taskSuccess"]] == 1
         successes = [sum(success(values[i]) for i in ids) for ids in grouped_indices]
-        series.append({"id": mid, "label": label, "values": [100 * s / len(ids) for s, ids in zip(successes, grouped_indices)], "successes": successes, "counts": list(map(len, grouped_indices)), "overallSuccess": 100 * sum(success(row) for row in values) / len(values)})
-        foot.append({"id": mid, "label": label, "slips": mean(row[index["slipCount"]] for row in values), "steps": mean(row[index["stepCount"]] for row in values), "touchdowns": mean(row[index["touchdownCount"]] for row in values), "count": len(values)})
+        series.append({"id": mid, "label": label, "config": config, "values": [100 * s / len(ids) for s, ids in zip(successes, grouped_indices)], "successes": successes, "counts": list(map(len, grouped_indices)), "overallSuccess": 100 * sum(success(row) for row in values) / len(values)})
+        foot.append({"id": mid, "label": label, "config": config, "slips": mean(row[index["slipCount"]] for row in values), "steps": mean(row[index["stepCount"]] for row in values), "touchdowns": mean(row[index["touchdownCount"]] for row in values), "count": len(values)})
     return {"count": 3210, "postures": {"axes": axes, "series": series, "unit": "%"}, "difficulty": None,
             "footEvents": {"series": foot, "unit": "events / motion"}, "windowSeconds": [5.5, 16.5], "includeEnd": True,
             "metric": "Global main tracking success with zero foot slips, undesired steps, or undesired touchdowns during the task window.",
@@ -122,8 +134,19 @@ def reachability(data: dict) -> dict:
 
 def lookahead(data: dict) -> dict:
     models = MODELS + [("sonic-smpl", "SONIC v1.1 (SMPL)", "sonic_v1_1_smpl", "", False, 0.18)]
-    return {"series": [{"id": mid, "label": label, "lookaheadSeconds": seconds, "localSuccess": selected_record(data, config, "inhouse")["local"]["main"], "onlineRetargeting": retarget} for mid, label, config, _, retarget, seconds in models],
-            "count": 15342, "note": "This compares complete controller configurations; look-ahead is the furthest future reference time, not end-to-end inference latency. It does not isolate the causal effect of look-ahead."}
+    cohorts = []
+    for dataset, label, label_zh, count in COHORTS:
+        series = []
+        for mid, model_label, config, _, retarget, seconds in models:
+            row = selected_record(data, config, dataset)
+            assert row["local"]["valid"] == count
+            series.append({"id": mid, "label": model_label, "config": config, "input": row["input"],
+                           "lookaheadSeconds": seconds, "localSuccess": row["local"]["main"], "onlineRetargeting": retarget})
+        cohorts.append({"id": dataset, "label": label, "labelZh": label_zh, "count": count, "series": series})
+    assert cohorts[0]["series"][-1]["localSuccess"] == 0.6257332811888932
+    assert cohorts[1]["series"][-1]["localSuccess"] == 8.295964125560538
+    return {"cohorts": cohorts, "series": cohorts[0]["series"], "count": cohorts[0]["count"],
+            "note": "This compares complete controller configurations; look-ahead is the furthest future reference time, not end-to-end inference latency. It does not isolate the causal effect of look-ahead. Durations and retargeting requirements retain the documented controller settings; success rates use the fixed test134/46k snapshot for each cohort."}
 
 
 def hardware() -> dict:
@@ -178,17 +201,17 @@ def main() -> None:
     html = raw.decode("utf-8")
     data = block(html, "data")
     result = {"schemaVersion": 1,
-              "snapshot": {"label": "Paper snapshot · test132 · 38k", "checkpoint": "test132 / 38000", "simulator": "Isaac Sim", "domainRandomization": True,
+              "snapshot": {"label": "Evaluation snapshot · test134 · 46k", "checkpoint": "test134 / 46000", "checkpointSha256": ANCHOR_CHECKPOINT_SHA256, "simulator": "Isaac Sim", "domainRandomization": True,
                            "source": "Supplied evaluation dashboard and S0_Report paper figures/tables", "sourceUrl": "http://172.16.3.99:18080/", "sourceSha256": hashlib.sha256(raw).hexdigest(), "sourceGeneratedAt": data.get("generatedAt"),
-                           "paperFigures": ["simulation-summary.pdf", "lookahead-comparison.pdf"]},
+                           "historicalPaperFigures": [{"file": "simulation-summary.pdf", "checkpoint": "test132 / 38000"}, {"file": "lookahead-comparison.pdf", "checkpoint": "test132 / 38000"}]},
               "models": model_metadata(data), "simulation": simulation(data), "radars": radars(block(html, "radarData")),
               "reachability": reachability(block(html, "reachData")), "lookahead": lookahead(data), "hardware": hardware(), "downstream": downstream(),
-              "notes": ["G and L identify input modes; scoring frames are independently specified.", "Raw source paths, unrelated checkpoints, and large per-motion payloads are intentionally excluded.", "The dashboard dataset named real_robot consists of simulation evaluations on hardware motion references; it is not used as measured hardware results."]}
+              "notes": ["G and L identify input modes; scoring frames are independently specified.", "The supplied original paper simulation and look-ahead figures use test132/38k and are historical references only. Interactive simulation data is pinned to the approved test134/46k snapshot; hardware and downstream data retain their separately documented experiment versions.", "Raw source paths, unrelated checkpoints, and large per-motion payloads are intentionally excluded.", "The dashboard dataset named real_robot consists of simulation evaluations on hardware motion references; it is not used as measured hardware results."]}
     encoded = json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False) + "\n"
     assert "/Users/" not in encoded and "/mnt/" not in encoded and "/workspace/" not in encoded
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(encoded)
-    print(f"Wrote {args.output.name}: {len(encoded.encode('utf-8')):,} bytes; 2 cohorts, 2 task radars, 5 reachability postures, 7 look-ahead configurations.")
+    print(f"Wrote {args.output.name}: {len(encoded.encode('utf-8')):,} bytes; 2 simulation cohorts, 2 task radars, 5 reachability postures, 2 look-ahead cohorts with 7 configurations each.")
 
 
 if __name__ == "__main__":

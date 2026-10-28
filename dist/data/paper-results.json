@@ -1,17 +1,24 @@
 {
   "schemaVersion": 1,
   "snapshot": {
-    "label": "Paper snapshot · test132 · 38k",
-    "checkpoint": "test132 / 38000",
+    "label": "Evaluation snapshot · test134 · 46k",
+    "checkpoint": "test134 / 46000",
+    "checkpointSha256": "5757a7d5a5632ae611060508a86032af5cbc5152098aed32edcb7da71f1f31ea",
     "simulator": "Isaac Sim",
     "domainRandomization": true,
     "source": "Supplied evaluation dashboard and S0_Report paper figures/tables",
     "sourceUrl": "http://172.16.3.99:18080/",
-    "sourceSha256": "f01361401b57ea41d8a057cc5efef04246cf722b7906398c28632fe38db149cd",
-    "sourceGeneratedAt": "2026-10-28T05:14:45.612508+00:00",
-    "paperFigures": [
-      "simulation-summary.pdf",
-      "lookahead-comparison.pdf"
+    "sourceSha256": "e33cfc4858fc96c721d7653a36ffd19f9dc58f4c63001eece7c35a93bc080b25",
+    "sourceGeneratedAt": "2026-10-28T13:44:30.709415+00:00",
+    "historicalPaperFigures": [
+      {
+        "file": "simulation-summary.pdf",
+        "checkpoint": "test132 / 38000"
+      },
+      {
+        "file": "lookahead-comparison.pdf",
+        "checkpoint": "test132 / 38000"
+      }
     ]
   },
   "models": [
@@ -19,22 +26,25 @@
       "id": "anchor-global",
       "label": "Anchor-0ᴳ",
       "input": "human_scaled H′",
+      "checkpointSha256": "5757a7d5a5632ae611060508a86032af5cbc5152098aed32edcb7da71f1f31ea",
       "onlineRetargeting": false,
-      "trackingConfig": "test132_38k_human_global_reference",
-      "reachabilityConfig": "test132_38k_g1_global_reference"
+      "trackingConfig": "test134_46k_human_global_reference",
+      "reachabilityConfig": "test134_46k_g1_global_reference"
     },
     {
       "id": "anchor-local",
       "label": "Anchor-0ᴸ",
       "input": "human_scaled H′",
+      "checkpointSha256": "5757a7d5a5632ae611060508a86032af5cbc5152098aed32edcb7da71f1f31ea",
       "onlineRetargeting": false,
-      "trackingConfig": "test132_38k_human_reanchor_reference",
-      "reachabilityConfig": "test132_38k_g1_reanchor_reference"
+      "trackingConfig": "test134_46k_human_reanchor_reference",
+      "reachabilityConfig": "test134_46k_g1_reanchor_reference"
     },
     {
       "id": "scale-global",
       "label": "ScaleBFMᴳ",
       "input": "G1 / WholeBody-14",
+      "checkpointSha256": "8a7be5191de8bbcd3f7359615b935ea605ee47d8703135dc4202fa9eeefc1b2f",
       "onlineRetargeting": true,
       "trackingConfig": "scalebfm_xl_wholebody14",
       "reachabilityConfig": "scalebfm_xl_wholebody14"
@@ -43,6 +53,7 @@
       "id": "scale-local",
       "label": "ScaleBFMᴸ",
       "input": "G1 / WholeBody-14",
+      "checkpointSha256": "8a7be5191de8bbcd3f7359615b935ea605ee47d8703135dc4202fa9eeefc1b2f",
       "onlineRetargeting": true,
       "trackingConfig": "scalebfm_xl_wholebody14_local",
       "reachabilityConfig": "scalebfm_xl_wholebody14_local"
@@ -51,6 +62,7 @@
       "id": "sonic",
       "label": "SONIC v1.1 (G1)",
       "input": "G1",
+      "checkpointSha256": "af24831ae59424a0cf92cb56e9bb6dc1a59ab859fd055ba13187e9e6f0a59f43",
       "onlineRetargeting": true,
       "trackingConfig": "sonic_v1_1_g1",
       "reachabilityConfig": "sonic_v1_1_g1"
@@ -59,6 +71,7 @@
       "id": "mimic",
       "label": "MimicLite v1.1",
       "input": "G1",
+      "checkpointSha256": "f647b2674a593cdc9e3b661f653b3f0f120238523a79f3ec7765bc480af22f48",
       "onlineRetargeting": true,
       "trackingConfig": "mimiclite_v1_1",
       "reachabilityConfig": "mimiclite_v1_1"
@@ -75,24 +88,39 @@
           {
             "id": "anchor-global",
             "label": "Anchor-0ᴳ",
-            "localSuccess": 87.05514274540477,
-            "globalSuccess": 88.00677877721287,
-            "rootError": 15.706923884856446,
-            "wristError": 25.610046046001916,
-            "ankleError": 22.02493911888468
+            "config": "test134_46k_human_global_reference",
+            "input": "human_scaled H′",
+            "count": 15342,
+            "localSuccessCount": 13744,
+            "globalSuccessCount": 13732,
+            "localSuccess": 89.58414809020988,
+            "globalSuccess": 89.50593143006127,
+            "rootError": 16.832382744610417,
+            "wristError": 27.071945888090223,
+            "ankleError": 23.249205284728554
           },
           {
             "id": "anchor-local",
             "label": "Anchor-0ᴸ",
-            "localSuccess": 73.1716855690262,
-            "globalSuccess": 21.802894016425498,
-            "rootError": 65.02116478407065,
-            "wristError": 26.557691244683326,
-            "ankleError": 29.8853730788337
+            "config": "test134_46k_human_reanchor_reference",
+            "input": "human_scaled H′",
+            "count": 15342,
+            "localSuccessCount": 13150,
+            "globalSuccessCount": 6793,
+            "localSuccess": 85.7124234128536,
+            "globalSuccess": 44.27714769912658,
+            "rootError": 47.46123432132921,
+            "wristError": 25.586052259337443,
+            "ankleError": 24.680901862351753
           },
           {
             "id": "scale-global",
             "label": "ScaleBFMᴳ",
+            "config": "scalebfm_xl_wholebody14",
+            "input": "G1 / WholeBody-14",
+            "count": 15342,
+            "localSuccessCount": 8187,
+            "globalSuccessCount": 3312,
             "localSuccess": 53.3633163863903,
             "globalSuccess": 21.587798201016817,
             "rootError": 33.36887643620306,
@@ -102,6 +130,11 @@
           {
             "id": "scale-local",
             "label": "ScaleBFMᴸ",
+            "config": "scalebfm_xl_wholebody14_local",
+            "input": "G1 / WholeBody-14",
+            "count": 15342,
+            "localSuccessCount": 5427,
+            "globalSuccessCount": 1010,
             "localSuccess": 35.373484552209625,
             "globalSuccess": 6.583235562508148,
             "rootError": 73.40629025272253,
@@ -111,6 +144,11 @@
           {
             "id": "sonic",
             "label": "SONIC v1.1 (G1)",
+            "config": "sonic_v1_1_g1",
+            "input": "G1",
+            "count": 15342,
+            "localSuccessCount": 5153,
+            "globalSuccessCount": 1737,
             "localSuccess": 33.58753747881632,
             "globalSuccess": 11.321861556511536,
             "rootError": 62.503048059674605,
@@ -120,6 +158,11 @@
           {
             "id": "mimic",
             "label": "MimicLite v1.1",
+            "config": "mimiclite_v1_1",
+            "input": "G1",
+            "count": 15342,
+            "localSuccessCount": 4425,
+            "globalSuccessCount": 1744,
             "localSuccess": 28.842393429800552,
             "globalSuccess": 11.367487941598228,
             "rootError": 59.869546770332086,
@@ -137,24 +180,39 @@
           {
             "id": "anchor-global",
             "label": "Anchor-0ᴳ",
-            "localSuccess": 57.04035874439462,
-            "globalSuccess": 59.596412556053814,
-            "rootError": 25.07607531654741,
-            "wristError": 34.99602173558562,
-            "ankleError": 37.13950918692489
+            "config": "test134_46k_human_global_reference",
+            "input": "human_scaled H′",
+            "count": 2230,
+            "localSuccessCount": 1319,
+            "globalSuccessCount": 1359,
+            "localSuccess": 59.14798206278027,
+            "globalSuccess": 60.941704035874444,
+            "rootError": 26.663991537864433,
+            "wristError": 35.48544060189688,
+            "ankleError": 37.45025312172234
           },
           {
             "id": "anchor-local",
             "label": "Anchor-0ᴸ",
-            "localSuccess": 40.80717488789238,
-            "globalSuccess": 15.336322869955158,
-            "rootError": 77.79920969128655,
-            "wristError": 35.0027259597296,
-            "ankleError": 43.94188982573103
+            "config": "test134_46k_human_reanchor_reference",
+            "input": "human_scaled H′",
+            "count": 2230,
+            "localSuccessCount": 1277,
+            "globalSuccessCount": 582,
+            "localSuccess": 57.264573991031384,
+            "globalSuccess": 26.09865470852018,
+            "rootError": 66.49016913382424,
+            "wristError": 32.75870091466493,
+            "ankleError": 38.8495119396966
           },
           {
             "id": "scale-global",
             "label": "ScaleBFMᴳ",
+            "config": "scalebfm_xl_wholebody14",
+            "input": "G1 / WholeBody-14",
+            "count": 2230,
+            "localSuccessCount": 785,
+            "globalSuccessCount": 332,
             "localSuccess": 35.2017937219731,
             "globalSuccess": 14.887892376681613,
             "rootError": 39.24748007553139,
@@ -164,6 +222,11 @@
           {
             "id": "scale-local",
             "label": "ScaleBFMᴸ",
+            "config": "scalebfm_xl_wholebody14_local",
+            "input": "G1 / WholeBody-14",
+            "count": 2230,
+            "localSuccessCount": 580,
+            "globalSuccessCount": 155,
             "localSuccess": 26.00896860986547,
             "globalSuccess": 6.950672645739911,
             "rootError": 70.87559083720218,
@@ -173,6 +236,11 @@
           {
             "id": "sonic",
             "label": "SONIC v1.1 (G1)",
+            "config": "sonic_v1_1_g1",
+            "input": "G1",
+            "count": 2230,
+            "localSuccessCount": 577,
+            "globalSuccessCount": 257,
             "localSuccess": 25.87443946188341,
             "globalSuccess": 11.524663677130045,
             "rootError": 72.54105188231077,
@@ -182,6 +250,11 @@
           {
             "id": "mimic",
             "label": "MimicLite v1.1",
+            "config": "mimiclite_v1_1",
+            "input": "G1",
+            "count": 2230,
+            "localSuccessCount": 421,
+            "globalSuccessCount": 272,
             "localSuccess": 18.878923766816143,
             "globalSuccess": 12.197309417040358,
             "rootError": 58.821271949762,
@@ -275,25 +348,26 @@
         {
           "id": "anchor-global",
           "label": "Anchor-0ᴳ",
+          "config": "test134_46k_human_global_reference",
           "values": [
-            84.04255319148936,
-            96.36363636363636,
-            95.7983193277311,
-            98.06295399515739,
+            82.97872340425532,
+            98.18181818181819,
+            96.63865546218487,
+            98.30508474576271,
             81.81818181818181,
-            90.72164948453609,
-            82.22222222222223,
-            79.24528301886792
+            90.86892488954345,
+            80.0,
+            75.47169811320755
           ],
           "successes": [
-            79,
-            106,
-            456,
-            405,
+            78,
+            108,
+            460,
+            406,
             18,
-            616,
-            74,
-            42
+            617,
+            72,
+            40
           ],
           "counts": [
             94,
@@ -309,25 +383,26 @@
         {
           "id": "anchor-local",
           "label": "Anchor-0ᴸ",
+          "config": "test134_46k_human_reanchor_reference",
           "values": [
-            86.17021276595744,
-            90.9090909090909,
-            75.84033613445378,
-            72.88135593220339,
-            27.272727272727273,
-            79.97054491899853,
-            81.11111111111111,
-            75.47169811320755
+            88.29787234042553,
+            93.63636363636364,
+            92.01680672268908,
+            91.52542372881356,
+            54.54545454545455,
+            86.74521354933727,
+            82.22222222222223,
+            77.35849056603773
           ],
           "successes": [
-            81,
-            100,
-            361,
-            301,
-            6,
-            543,
-            73,
-            40
+            83,
+            103,
+            438,
+            378,
+            12,
+            589,
+            74,
+            41
           ],
           "counts": [
             94,
@@ -343,6 +418,7 @@
         {
           "id": "scale-global",
           "label": "ScaleBFMᴳ",
+          "config": "scalebfm_xl_wholebody14",
           "values": [
             92.55319148936171,
             88.18181818181819,
@@ -377,6 +453,7 @@
         {
           "id": "scale-local",
           "label": "ScaleBFMᴸ",
+          "config": "scalebfm_xl_wholebody14_local",
           "values": [
             77.65957446808511,
             72.72727272727273,
@@ -411,6 +488,7 @@
         {
           "id": "sonic",
           "label": "SONIC v1.1 (G1)",
+          "config": "sonic_v1_1_g1",
           "values": [
             35.1063829787234,
             45.45454545454545,
@@ -445,6 +523,7 @@
         {
           "id": "mimic",
           "label": "MimicLite v1.1",
+          "config": "mimiclite_v1_1",
           "values": [
             52.12765957446808,
             62.72727272727273,
@@ -521,19 +600,20 @@
         {
           "id": "anchor-global",
           "label": "Anchor-0ᴳ",
+          "config": "test134_46k_human_global_reference",
           "values": [
-            94.3327239488117,
-            93.75,
+            96.52650822669104,
+            95.3125,
             100.0,
-            90.37433155080214,
-            92.98507462686567
+            93.31550802139037,
+            93.73134328358209
           ],
           "successes": [
-            516,
-            300,
+            528,
+            305,
             25,
-            338,
-            623
+            349,
+            628
           ],
           "counts": [
             547,
@@ -546,19 +626,20 @@
         {
           "id": "anchor-local",
           "label": "Anchor-0ᴸ",
+          "config": "test134_46k_human_reanchor_reference",
           "values": [
-            84.46069469835466,
-            91.25,
+            90.49360146252285,
+            94.6875,
             100.0,
-            81.28342245989305,
-            75.67164179104478
+            90.10695187165776,
+            91.34328358208955
           ],
           "successes": [
-            462,
-            292,
+            495,
+            303,
             25,
-            304,
-            507
+            337,
+            612
           ],
           "counts": [
             547,
@@ -571,6 +652,7 @@
         {
           "id": "scale-global",
           "label": "ScaleBFMᴳ",
+          "config": "scalebfm_xl_wholebody14",
           "values": [
             69.83546617915906,
             75.3125,
@@ -596,6 +678,7 @@
         {
           "id": "scale-local",
           "label": "ScaleBFMᴸ",
+          "config": "scalebfm_xl_wholebody14_local",
           "values": [
             48.994515539305304,
             58.4375,
@@ -621,6 +704,7 @@
         {
           "id": "sonic",
           "label": "SONIC v1.1 (G1)",
+          "config": "sonic_v1_1_g1",
           "values": [
             41.86471663619744,
             33.75,
@@ -646,6 +730,7 @@
         {
           "id": "mimic",
           "label": "MimicLite v1.1",
+          "config": "mimiclite_v1_1",
           "values": [
             38.391224862888485,
             27.5,
@@ -713,19 +798,20 @@
         {
           "id": "anchor-global",
           "label": "Anchor-0ᴳ",
+          "config": "test134_46k_g1_global_reference",
           "values": [
-            61.691542288557216,
-            61.35770234986945,
-            52.697095435684645,
-            64.86111111111111,
-            34.47488584474886
+            60.19900497512438,
+            62.79373368146214,
+            57.053941908713696,
+            64.72222222222223,
+            46.34703196347032
           ],
           "successes": [
-            496,
-            470,
-            254,
-            467,
-            151
+            484,
+            481,
+            275,
+            466,
+            203
           ],
           "counts": [
             804,
@@ -734,24 +820,25 @@
             720,
             438
           ],
-          "overallSuccess": 57.258566978193144
+          "overallSuccess": 59.47040498442367
         },
         {
           "id": "anchor-local",
           "label": "Anchor-0ᴸ",
+          "config": "test134_46k_g1_reanchor_reference",
           "values": [
-            40.67164179104478,
-            26.240208877284594,
-            4.979253112033195,
-            18.333333333333332,
-            0.0
+            50.62189054726368,
+            48.56396866840731,
+            46.058091286307054,
+            56.80555555555556,
+            8.67579908675799
           ],
           "successes": [
-            327,
-            201,
-            24,
-            132,
-            0
+            407,
+            372,
+            222,
+            409,
+            38
           ],
           "counts": [
             804,
@@ -760,11 +847,12 @@
             720,
             438
           ],
-          "overallSuccess": 21.30841121495327
+          "overallSuccess": 45.109034267912776
         },
         {
           "id": "scale-global",
           "label": "ScaleBFMᴳ",
+          "config": "scalebfm_xl_wholebody14",
           "values": [
             53.73134328358209,
             59.92167101827676,
@@ -791,6 +879,7 @@
         {
           "id": "scale-local",
           "label": "ScaleBFMᴸ",
+          "config": "scalebfm_xl_wholebody14_local",
           "values": [
             36.44278606965174,
             29.634464751958223,
@@ -817,6 +906,7 @@
         {
           "id": "sonic",
           "label": "SONIC v1.1 (G1)",
+          "config": "sonic_v1_1_g1",
           "values": [
             33.333333333333336,
             20.234986945169712,
@@ -843,6 +933,7 @@
         {
           "id": "mimic",
           "label": "MimicLite v1.1",
+          "config": "mimiclite_v1_1",
           "values": [
             25.248756218905474,
             19.451697127937337,
@@ -875,22 +966,25 @@
         {
           "id": "anchor-global",
           "label": "Anchor-0ᴳ",
-          "slips": 0.11869158878504672,
-          "steps": 0.31433021806853584,
+          "config": "test134_46k_g1_global_reference",
+          "slips": 0.11214953271028037,
+          "steps": 0.33925233644859815,
           "touchdowns": 0,
           "count": 3210
         },
         {
           "id": "anchor-local",
           "label": "Anchor-0ᴸ",
-          "slips": 0.9149532710280374,
-          "steps": 2.4560747663551403,
+          "config": "test134_46k_g1_reanchor_reference",
+          "slips": 0.14205607476635515,
+          "steps": 0.9177570093457944,
           "touchdowns": 0,
           "count": 3210
         },
         {
           "id": "scale-global",
           "label": "ScaleBFMᴳ",
+          "config": "scalebfm_xl_wholebody14",
           "slips": 0.1205607476635514,
           "steps": 0.8077881619937695,
           "touchdowns": 0,
@@ -899,6 +993,7 @@
         {
           "id": "scale-local",
           "label": "ScaleBFMᴸ",
+          "config": "scalebfm_xl_wholebody14_local",
           "slips": 0.38878504672897196,
           "steps": 4.365109034267912,
           "touchdowns": 0,
@@ -907,6 +1002,7 @@
         {
           "id": "sonic",
           "label": "SONIC v1.1 (G1)",
+          "config": "sonic_v1_1_g1",
           "slips": 0.3582554517133956,
           "steps": 1.7514018691588784,
           "touchdowns": 0,
@@ -915,6 +1011,7 @@
         {
           "id": "mimic",
           "label": "MimicLite v1.1",
+          "config": "mimiclite_v1_1",
           "slips": 1.246417445482866,
           "steps": 17.650778816199377,
           "touchdowns": 0,
@@ -936,24 +1033,174 @@
     ]
   },
   "lookahead": {
+    "cohorts": [
+      {
+        "id": "inhouse",
+        "label": "In-house",
+        "labelZh": "自建动作集",
+        "count": 15342,
+        "series": [
+          {
+            "id": "anchor-global",
+            "label": "Anchor-0ᴳ",
+            "config": "test134_46k_human_global_reference",
+            "input": "human_scaled H′",
+            "lookaheadSeconds": 0.06,
+            "localSuccess": 89.58414809020988,
+            "onlineRetargeting": false
+          },
+          {
+            "id": "anchor-local",
+            "label": "Anchor-0ᴸ",
+            "config": "test134_46k_human_reanchor_reference",
+            "input": "human_scaled H′",
+            "lookaheadSeconds": 0.06,
+            "localSuccess": 85.7124234128536,
+            "onlineRetargeting": false
+          },
+          {
+            "id": "scale-global",
+            "label": "ScaleBFMᴳ",
+            "config": "scalebfm_xl_wholebody14",
+            "input": "G1 / WholeBody-14",
+            "lookaheadSeconds": 0.1,
+            "localSuccess": 53.3633163863903,
+            "onlineRetargeting": true
+          },
+          {
+            "id": "scale-local",
+            "label": "ScaleBFMᴸ",
+            "config": "scalebfm_xl_wholebody14_local",
+            "input": "G1 / WholeBody-14",
+            "lookaheadSeconds": 0.1,
+            "localSuccess": 35.373484552209625,
+            "onlineRetargeting": true
+          },
+          {
+            "id": "sonic",
+            "label": "SONIC v1.1 (G1)",
+            "config": "sonic_v1_1_g1",
+            "input": "G1",
+            "lookaheadSeconds": 0.9,
+            "localSuccess": 33.58753747881632,
+            "onlineRetargeting": true
+          },
+          {
+            "id": "mimic",
+            "label": "MimicLite v1.1",
+            "config": "mimiclite_v1_1",
+            "input": "G1",
+            "lookaheadSeconds": 0.08,
+            "localSuccess": 28.842393429800552,
+            "onlineRetargeting": true
+          },
+          {
+            "id": "sonic-smpl",
+            "label": "SONIC v1.1 (SMPL)",
+            "config": "sonic_v1_1_smpl",
+            "input": "SMPL",
+            "lookaheadSeconds": 0.18,
+            "localSuccess": 0.6257332811888932,
+            "onlineRetargeting": false
+          }
+        ]
+      },
+      {
+        "id": "public",
+        "label": "Public",
+        "labelZh": "公开动作集",
+        "count": 2230,
+        "series": [
+          {
+            "id": "anchor-global",
+            "label": "Anchor-0ᴳ",
+            "config": "test134_46k_human_global_reference",
+            "input": "human_scaled H′",
+            "lookaheadSeconds": 0.06,
+            "localSuccess": 59.14798206278027,
+            "onlineRetargeting": false
+          },
+          {
+            "id": "anchor-local",
+            "label": "Anchor-0ᴸ",
+            "config": "test134_46k_human_reanchor_reference",
+            "input": "human_scaled H′",
+            "lookaheadSeconds": 0.06,
+            "localSuccess": 57.264573991031384,
+            "onlineRetargeting": false
+          },
+          {
+            "id": "scale-global",
+            "label": "ScaleBFMᴳ",
+            "config": "scalebfm_xl_wholebody14",
+            "input": "G1 / WholeBody-14",
+            "lookaheadSeconds": 0.1,
+            "localSuccess": 35.2017937219731,
+            "onlineRetargeting": true
+          },
+          {
+            "id": "scale-local",
+            "label": "ScaleBFMᴸ",
+            "config": "scalebfm_xl_wholebody14_local",
+            "input": "G1 / WholeBody-14",
+            "lookaheadSeconds": 0.1,
+            "localSuccess": 26.00896860986547,
+            "onlineRetargeting": true
+          },
+          {
+            "id": "sonic",
+            "label": "SONIC v1.1 (G1)",
+            "config": "sonic_v1_1_g1",
+            "input": "G1",
+            "lookaheadSeconds": 0.9,
+            "localSuccess": 25.87443946188341,
+            "onlineRetargeting": true
+          },
+          {
+            "id": "mimic",
+            "label": "MimicLite v1.1",
+            "config": "mimiclite_v1_1",
+            "input": "G1",
+            "lookaheadSeconds": 0.08,
+            "localSuccess": 18.878923766816143,
+            "onlineRetargeting": true
+          },
+          {
+            "id": "sonic-smpl",
+            "label": "SONIC v1.1 (SMPL)",
+            "config": "sonic_v1_1_smpl",
+            "input": "SMPL",
+            "lookaheadSeconds": 0.18,
+            "localSuccess": 8.295964125560538,
+            "onlineRetargeting": false
+          }
+        ]
+      }
+    ],
     "series": [
       {
         "id": "anchor-global",
         "label": "Anchor-0ᴳ",
+        "config": "test134_46k_human_global_reference",
+        "input": "human_scaled H′",
         "lookaheadSeconds": 0.06,
-        "localSuccess": 87.05514274540477,
+        "localSuccess": 89.58414809020988,
         "onlineRetargeting": false
       },
       {
         "id": "anchor-local",
         "label": "Anchor-0ᴸ",
+        "config": "test134_46k_human_reanchor_reference",
+        "input": "human_scaled H′",
         "lookaheadSeconds": 0.06,
-        "localSuccess": 73.1716855690262,
+        "localSuccess": 85.7124234128536,
         "onlineRetargeting": false
       },
       {
         "id": "scale-global",
         "label": "ScaleBFMᴳ",
+        "config": "scalebfm_xl_wholebody14",
+        "input": "G1 / WholeBody-14",
         "lookaheadSeconds": 0.1,
         "localSuccess": 53.3633163863903,
         "onlineRetargeting": true
@@ -961,6 +1208,8 @@
       {
         "id": "scale-local",
         "label": "ScaleBFMᴸ",
+        "config": "scalebfm_xl_wholebody14_local",
+        "input": "G1 / WholeBody-14",
         "lookaheadSeconds": 0.1,
         "localSuccess": 35.373484552209625,
         "onlineRetargeting": true
@@ -968,6 +1217,8 @@
       {
         "id": "sonic",
         "label": "SONIC v1.1 (G1)",
+        "config": "sonic_v1_1_g1",
+        "input": "G1",
         "lookaheadSeconds": 0.9,
         "localSuccess": 33.58753747881632,
         "onlineRetargeting": true
@@ -975,6 +1226,8 @@
       {
         "id": "mimic",
         "label": "MimicLite v1.1",
+        "config": "mimiclite_v1_1",
+        "input": "G1",
         "lookaheadSeconds": 0.08,
         "localSuccess": 28.842393429800552,
         "onlineRetargeting": true
@@ -982,13 +1235,15 @@
       {
         "id": "sonic-smpl",
         "label": "SONIC v1.1 (SMPL)",
+        "config": "sonic_v1_1_smpl",
+        "input": "SMPL",
         "lookaheadSeconds": 0.18,
         "localSuccess": 0.6257332811888932,
         "onlineRetargeting": false
       }
     ],
     "count": 15342,
-    "note": "This compares complete controller configurations; look-ahead is the furthest future reference time, not end-to-end inference latency. It does not isolate the causal effect of look-ahead."
+    "note": "This compares complete controller configurations; look-ahead is the furthest future reference time, not end-to-end inference latency. It does not isolate the causal effect of look-ahead. Durations and retargeting requirements retain the documented controller settings; success rates use the fixed test134/46k snapshot for each cohort."
   },
   "hardware": {
     "trackingErrors": {
@@ -1274,6 +1529,7 @@
   },
   "notes": [
     "G and L identify input modes; scoring frames are independently specified.",
+    "The supplied original paper simulation and look-ahead figures use test132/38k and are historical references only. Interactive simulation data is pinned to the approved test134/46k snapshot; hardware and downstream data retain their separately documented experiment versions.",
     "Raw source paths, unrelated checkpoints, and large per-motion payloads are intentionally excluded.",
     "The dashboard dataset named real_robot consists of simulation evaluations on hardware motion references; it is not used as measured hardware results."
   ]

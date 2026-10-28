@@ -1,5 +1,7 @@
 # Verification — 2026-10-28
 
+The initial application checks below refer to the original test132 / 38k build. The revision section records the current test134 / 46k release.
+
 ## Application
 
 - Browser checked through `http://172.16.3.166:18081/` on the serving Mac, rather than only through localhost.
@@ -37,3 +39,16 @@
 - A separate physical device on the Wi-Fi was not available for testing. The actual LAN IP was exercised from this Mac, and the server listens on all IPv4 interfaces.
 - CoM-difficulty group values and exact hardware radar vertices were not present in supplied numerical data; original figures are displayed instead of inferred numbers.
 - Current-model downstream results left pending in the paper remain pending in the website.
+
+## Performance / grouped-figure revision — test134 / 46k
+
+- All interactive simulation data uses the fixed test134 / 46k snapshot. In-house local success is 89.58414809020988% / 85.7124234128536%; Public is 59.14798206278027% / 57.264573991031384%. The extraction and verification checks enforce equality between the front performance plot and the later simulation panels.
+- The performance figure follows the main video and precedes the overview. Its horizontal labels run from 1.0 s on the left to 0.0 s on the right. Three circle configurations and four diamond configurations match the retargeting metadata.
+- Both overlapping Anchor-0 marks were selected separately by their labels. Keyboard Tab moved between them and displayed the corresponding configuration and sample count. In-house and Public switching, two-decimal tables, and four-decimal tooltips were checked; downloaded JSON retains full precision.
+- All nine Chart / Data pairs were exercised. Stage heights before and after switching were identical. The paired task-radar panel contains 12 data rows; other simulation panels contain 6 rows, and the performance panel contains 7.
+- The shared simulation legend highlights the chosen controller across A/B/C/D/E/F/H and their tables. The remaining series dim, while the selected series remains visible. Clicking again restores every series.
+- The 1280 px desktop layout has A/B above D/E, with C in the right column spanning both experiment groups. F and H share the next row; H shows slips and extra steps together. No horizontal page overflow or duplicate element IDs were present.
+- A temporary 390 px iframe viewport was used for mobile layout QA and then removed. Panels appear in experiment order (A/B/C, D/E, F/H) with no page overflow. The front plot uses larger narrow-screen labels. This is responsive QA, not a separate physical-device connection test.
+- English / Chinese, Light / Dark, dataset preservation through translation, arrow-key view switching, and the historical test132 / 38k label were checked. Deep links are positioned after asynchronous chart rendering, preventing the added figure from shifting the destination.
+- Both JavaScript modules pass syntax checks. Local data / reference / immutable demo checks and HTTP range, MIME, redirect, and directory-boundary checks pass. The clean homepage preview tab reported no console errors or warnings.
+- The original robot demo remains unchanged. All 134 immutable published demo resources still match the recorded SHA-256 hashes. Hardware and downstream numerical data retain their original experiment versions.
