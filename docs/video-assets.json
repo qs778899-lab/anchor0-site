@@ -1,0 +1,145 @@
+{
+  "ffmpeg": "ffmpeg version 7.1 Copyright (c) 2000-2024 the FFmpeg developers",
+  "videos": [
+    {
+      "slug": "scenes",
+      "title": "Scene capabilities",
+      "source": "场景/场景.mp4",
+      "source_metadata": {
+        "duration_seconds": 228.86666666666667,
+        "faststart": false,
+        "width": 3840,
+        "height": 2160,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 750021134,
+        "sha256": "6b3652943f8444820ba767d07d4d6c8a97013fcc7fd36f950c0dac695108c9d6"
+      },
+      "output": "assets/videos/scenes.mp4",
+      "output_metadata": {
+        "duration_seconds": 228.878,
+        "faststart": true,
+        "width": 1920,
+        "height": 1080,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 70410946,
+        "sha256": "906985bf63ec7847968541bc3a882650ef75920da40e497fc3b1a8daf8181b4e"
+      },
+      "poster": "assets/posters/scenes.jpg",
+      "poster_time_seconds": 125,
+      "poster_bytes": 152242,
+      "poster_sha256": "4f571768477f61c468918ad13c7508ddbb08ad6cd4c65a55ea21b144e520700a",
+      "validation": "complete decode without errors"
+    },
+    {
+      "slug": "comparison",
+      "title": "Controller comparison",
+      "source": "双机对比 pico logo/双机对比.mp4",
+      "source_metadata": {
+        "duration_seconds": 83.76666666666667,
+        "faststart": false,
+        "width": 1738,
+        "height": 906,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 123129847,
+        "sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b"
+      },
+      "output": "assets/videos/comparison.mp4",
+      "output_metadata": {
+        "duration_seconds": 83.777,
+        "faststart": true,
+        "width": 1738,
+        "height": 906,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 19156602,
+        "sha256": "75e06eca5b026b7ea89d8a67c400a1914b2bd7aef56fce73295a765328e2b335"
+      },
+      "poster": "assets/posters/comparison.jpg",
+      "poster_time_seconds": 10,
+      "poster_bytes": 135719,
+      "poster_sha256": "358776066625681f85b4073f0fb8e7e401a109d5681abf14a95619126dcbf0ab",
+      "validation": "complete decode without errors"
+    },
+    {
+      "slug": "body-diversity",
+      "title": "Body diversity",
+      "source": "多体型适配/多体型适配.mp4",
+      "source_metadata": {
+        "duration_seconds": 32.3,
+        "faststart": false,
+        "width": 3840,
+        "height": 2160,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 102259161,
+        "sha256": "a1a69ccd9e24e8fc6fd47cc5ff44e5b5666803efdb2921c1c15c6586cf96c7dc"
+      },
+      "output": "assets/videos/body-diversity.mp4",
+      "output_metadata": {
+        "duration_seconds": 32.321,
+        "faststart": true,
+        "width": 1920,
+        "height": 1080,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 9771936,
+        "sha256": "3fd97491dc8520090c0dd9b63208f25081d6d4b2d6fab87d7c39eae0e56e427d"
+      },
+      "poster": "assets/posters/body-diversity.jpg",
+      "poster_time_seconds": 6,
+      "poster_bytes": 207806,
+      "poster_sha256": "951f52cb1084f3343b43cbad829f2fafe7fe66b81ea5a76405c8945ce856c926",
+      "validation": "complete decode without errors"
+    },
+    {
+      "slug": "input-devices",
+      "title": "Input devices",
+      "source": "多设备适配/多设备适配.mp4",
+      "source_metadata": {
+        "duration_seconds": 19.6,
+        "faststart": false,
+        "width": 3840,
+        "height": 2160,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 62205105,
+        "sha256": "aa9ad752a83c9a61e178c0b5f76d02d091df77df70063bfaeb4da96d91289583"
+      },
+      "output": "assets/videos/input-devices.mp4",
+      "output_metadata": {
+        "duration_seconds": 19.62,
+        "faststart": true,
+        "width": 1920,
+        "height": 1080,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 6689739,
+        "sha256": "79fa6c9fd16fd4e20573af0d48ab12bcf3f3da1e1d6f6b367d443a61a95bbb66"
+      },
+      "poster": "assets/posters/input-devices.jpg",
+      "poster_time_seconds": 4,
+      "poster_bytes": 206308,
+      "poster_sha256": "b4657f300cceb1b10fbd03f73bd92362fead5ab3533333625ea23cc3fc807d9a",
+      "validation": "complete decode without errors"
+    }
+  ]
+}

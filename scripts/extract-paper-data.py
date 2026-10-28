@@ -1,0 +1,195 @@
+#!/usr/bin/env python3
+"""Export the paper's fixed evaluation configuration, without internal paths.
+
+Input is the saved evaluation dashboard HTML, not a network request. No script
+from that document is executed. Only its JSON data blocks are read.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import re
+from pathlib import Path
+from statistics import mean
+
+
+ROOT = Path(__file__).resolve().parents[1]
+MODELS = [
+    ("anchor-global", "Anchor-0ᴳ", "test132_38k_human_global_reference", "test132_38k_g1_global_reference", False, 0.06),
+    ("anchor-local", "Anchor-0ᴸ", "test132_38k_human_reanchor_reference", "test132_38k_g1_reanchor_reference", False, 0.06),
+    ("scale-global", "ScaleBFMᴳ", "scalebfm_xl_wholebody14", "scalebfm_xl_wholebody14", True, 0.10),
+    ("scale-local", "ScaleBFMᴸ", "scalebfm_xl_wholebody14_local", "scalebfm_xl_wholebody14_local", True, 0.10),
+    ("sonic", "SONIC v1.1 (G1)", "sonic_v1_1_g1", "sonic_v1_1_g1", True, 0.90),
+    ("mimic", "MimicLite v1.1", "mimiclite_v1_1", "mimiclite_v1_1", True, 0.08),
+]
+
+
+def block(html: str, name: str) -> dict:
+    match = re.search(r'<script id="' + re.escape(name) + r'" type="application/json">(.*?)</script>', html, re.S)
+    if not match:
+        raise ValueError(f"Missing data block: {name}")
+    return json.loads(match.group(1))
+
+
+def selected_record(data: dict, config: str, dataset: str) -> dict:
+    matches = [r for r in data["records"] if r["config"] == config and r["dataset"] == dataset and r["simulator"] == "isaacsim" and r["dr"] is True]
+    assert len(matches) == 1, (config, dataset, len(matches))
+    return matches[0]
+
+
+def model_metadata(data: dict) -> list:
+    return [{"id": mid, "label": label, "input": selected_record(data, config, "inhouse")["input"],
+             "onlineRetargeting": retarget, "trackingConfig": config, "reachabilityConfig": reach_config}
+            for mid, label, config, reach_config, retarget, _ in MODELS]
+
+
+def simulation(data: dict) -> dict:
+    cohorts = []
+    expected = {"inhouse": [87.1, 73.2, 53.4, 35.4, 33.6, 28.8], "public": [57.0, 40.8, 35.2, 26.0, 25.9, 18.9]}
+    for dataset, label, label_zh, count in [("inhouse", "In-house", "自建动作集", 15342), ("public", "Public", "公开动作集", 2230)]:
+        series = []
+        for mid, model_label, config, _, _, _ in MODELS:
+            row = selected_record(data, config, dataset)
+            assert row["local"]["valid"] == count
+            series.append({"id": mid, "label": model_label, "localSuccess": row["local"]["main"],
+                           "globalSuccess": row["global"]["main"], "rootError": row["global"]["root"],
+                           "wristError": row["local"]["wrist"], "ankleError": row["local"]["ankle"]})
+        assert [round(s["localSuccess"], 1) for s in series] == expected[dataset], "Values do not match the paper snapshot"
+        cohorts.append({"id": dataset, "label": label, "labelZh": label_zh, "count": count, "series": series})
+    return {"cohorts": cohorts, "metric": {
+        "successUnit": "%", "errorUnit": "mm", "success": data["mainMetric"],
+        "rootErrorFrame": "global", "wristErrorFrame": "local", "ankleErrorFrame": "local",
+        "errorWindow": "Frames before the first body14 position error exceeds 25 cm; average within each motion, then across motions. Observation windows can differ between controllers.",
+        "frameDefinition": "Global: fixed initial pelvis XY and yaw alignment. Local: additional per-frame horizontal pelvis translation removal; height and heading differences remain.",
+    }}
+
+
+def radars(data: dict) -> list:
+    ds = data["datasets"]["inhouse"]
+    definitions = {r["id"]: r for r in ds["radars"]}
+    labels = {
+        "home_fixed": ("Stationary tasks", "原地任务", ["High unilateral reach", "Far unilateral reach", "Forward bending", "Shallow squat", "Half kneeling", "Asymmetric bimanual reach", "Unilateral arm swing", "Opposite bilateral swing"], list(range(8))),
+        "home_moving": ("Mobile tasks", "移动任务", ["Small forward steps", "Small lateral steps", "World-fixed hand hold", "Forward walking", "Turning"], [0, 1, 4, 3, 2]),
+    }
+    result = []
+    for rid, (label, label_zh, axis_labels, order) in labels.items():
+        definition = definitions[rid]
+        axes = [{"id": definition["axes"][i]["id"], "label": axis_labels[j], "labelZh": definition["axes"][i]["label"], "count": definition["axes"][i]["expected"]} for j, i in enumerate(order)]
+        series = []
+        for mid, model_label, config, _, _, _ in MODELS:
+            record = ds["results"][f"isaacsim|{config}|on"]
+            totals = [record["totals"][a["id"]] for a in axes]
+            successes = [record["mainCounts"][a["id"]][0] for a in axes]
+            assert totals == [a["count"] for a in axes]
+            series.append({"id": mid, "label": model_label, "values": [100 * s / n for s, n in zip(successes, totals)], "successes": successes, "counts": totals})
+        result.append({"id": rid, "label": label, "labelZh": label_zh, "axes": axes, "series": series, "unit": "%", "metric": "local main success", "note": "Categories contain complete motions with the indicated phase and may overlap."})
+    return result
+
+
+def reachability(data: dict) -> dict:
+    assert len(data["motions"]) == 3210
+    assert data["taskMetric"]["window"] == [5.5, 16.5] and data["taskMetric"]["includeEnd"] is True
+    index = {name: i for i, name in enumerate(data["fields"])}
+    groups = [
+        ("standing", "Standing", "站姿", ["standing"]),
+        ("shallow-squat", "Shallow squat", "半蹲", ["half_squat"]),
+        ("deep-squat", "Deep squat", "深蹲", ["deep_squat"]),
+        ("staggered", "Staggered stance", "跨步站姿", ["staggered_left", "staggered_right"]),
+        ("half-kneeling", "Half kneeling", "单膝跪地", ["half_kneel_left", "half_kneel_right"]),
+    ]
+    grouped_indices = [[i for i, motion in enumerate(data["motions"]) if motion["posture"] in ids] for _, _, _, ids in groups]
+    assert sum(map(len, grouped_indices)) == 3210
+    axes = [{"id": mid, "label": label, "labelZh": label_zh, "count": len(ids)} for (mid, label, label_zh, _), ids in zip(groups, grouped_indices)]
+    series, foot = [], []
+    for mid, label, _, config, _, _ in MODELS:
+        matches = [c for c in data["conditions"] if c["config"] == config and c["simulator"] == "isaacsim" and c["dr"] is True]
+        assert len(matches) == 1
+        values = matches[0]["values"]
+        valid = lambda row: row[index["mainComplete"]] == 1 and row[index["feetAvailable"]] == 1
+        assert all(valid(row) for row in values), "Snapshot should have complete tracking and feet data for all motions"
+        success = lambda row: valid(row) and row[index["taskSuccess"]] == 1
+        successes = [sum(success(values[i]) for i in ids) for ids in grouped_indices]
+        series.append({"id": mid, "label": label, "values": [100 * s / len(ids) for s, ids in zip(successes, grouped_indices)], "successes": successes, "counts": list(map(len, grouped_indices)), "overallSuccess": 100 * sum(success(row) for row in values) / len(values)})
+        foot.append({"id": mid, "label": label, "slips": mean(row[index["slipCount"]] for row in values), "steps": mean(row[index["stepCount"]] for row in values), "touchdowns": mean(row[index["touchdownCount"]] for row in values), "count": len(values)})
+    return {"count": 3210, "postures": {"axes": axes, "series": series, "unit": "%"}, "difficulty": None,
+            "footEvents": {"series": foot, "unit": "events / motion"}, "windowSeconds": [5.5, 16.5], "includeEnd": True,
+            "metric": "Global main tracking success with zero foot slips, undesired steps, or undesired touchdowns during the task window.",
+            "notes": ["Anchor-0 uses robot-space G1 references for this benchmark, unlike its human references in the other two simulation cohorts.",
+                      "Left and right posture variants and wrist targets are pooled. All 3,210 motions have complete tracking and foot-event records for every selected controller.",
+                      "Figure 3G's reference CoM difficulty grouping is not present in the supplied dashboard JSON. No values were inferred from the printed figure."]}
+
+
+def lookahead(data: dict) -> dict:
+    models = MODELS + [("sonic-smpl", "SONIC v1.1 (SMPL)", "sonic_v1_1_smpl", "", False, 0.18)]
+    return {"series": [{"id": mid, "label": label, "lookaheadSeconds": seconds, "localSuccess": selected_record(data, config, "inhouse")["local"]["main"], "onlineRetargeting": retarget} for mid, label, config, _, retarget, seconds in models],
+            "count": 15342, "note": "This compares complete controller configurations; look-ahead is the furthest future reference time, not end-to-end inference latency. It does not isolate the causal effect of look-ahead."}
+
+
+def hardware() -> dict:
+    # These printed values are transcribed from the supplied paper, not inferred
+    # from radar pixels and not from the dashboard's simulated real_robot set.
+    errors = [
+        ("anchor", "Anchor-0", 37.8, 45.7, 59, 72),
+        ("scale14", "ScaleBFM (14-point)", 56.5, 60.2, 57, 72),
+        ("scale5", "ScaleBFM (5-point)", 52.0, 64.9, 56, 71),
+        ("sonic-g1", "SONIC v1.1 (G1)", 43.6, 64.1, 53, 69),
+        ("sonic-smpl", "SONIC v1.1 (SMPL)", 92.3, 75.6, 51, 70),
+        ("mimic-roa", "MimicLite (ROA)", 43.3, 59.4, 53, 72),
+    ]
+    standing = [
+        ("mimic-roa", "MimicLite (ROA)", True, 65.05, 9.13, 46.44, 9.71, False),
+        ("scale14", "ScaleBFM (14-point)", True, 64.18, 6.40, 46.15, 8.26, False),
+        ("scale5", "ScaleBFM (5-point)", True, 72.69, 8.34, 51.22, 8.25, False),
+        ("sonic-g1", "SONIC v1.1 (G1)", True, 98.15, 10.19, 42.38, 9.42, False),
+        ("sonic-smpl", "SONIC v1.1 (SMPL)", False, 166.70, 19.20, 85.87, 18.75, False),
+        ("anchor", "Anchor-0†", False, 56.66, 6.18, 35.38, 5.80, True),
+    ]
+    return {
+        "trackingErrors": {"series": [{"id": mid, "label": label, "wristError": wrist, "ankleError": ankle, "retained": retained, "valid": valid} for mid, label, wrist, ankle, retained, valid in errors], "unit": "mm",
+            "note": "Mean local errors are conditional on retained complete motions within the body14 25 cm position threshold, without an orientation gate. Retained motion sets differ by controller."},
+        "standingReach": {"count": 51, "series": [{"id": mid, "label": label, "onlineRetargeting": retarget, "globalPosition": gp, "globalRotation": gr, "localPosition": lp, "localRotation": lr, "preliminary": preliminary} for mid, label, retarget, gp, gr, lp, lr, preliminary in standing], "positionUnit": "mm", "rotationUnit": "deg", "note": "† Anchor-0 standing-reach values are preliminary in the supplied paper."},
+        "thresholdFigure": {"thresholdsCm": [10, 12.5, 15, 17.5, 20, 25], "numericValuesAvailable": False, "note": "The supplied radar image does not print the per-point success rates. It is shown as an image; exact numeric tooltips are not fabricated."}
+    }
+
+
+def downstream() -> dict:
+    tasks = [{"id": "slippers", "label": "Pick up slippers", "labelZh": "拾取拖鞋"}, {"id": "clothes", "label": "Throw dirty clothes", "labelZh": "投放脏衣物"}, {"id": "box", "label": "Kick cardboard box", "labelZh": "踢纸箱"}, {"id": "trash", "label": "Clear shelf surface", "labelZh": "清理架面"}]
+    return {"tasks": tasks,
+            "collection": {"series": [
+                {"id": "sonic-smpl", "label": "SONIC v1.1 (SMPL)", "demosPerHour": [41, 24, 9, 39], "success": [68.33, 55.81, 37.50, 81.25]},
+                {"id": "anchor-star", "label": "Anchor-0*", "demosPerHour": [67, 57, 45, 74], "success": [93.10, 93.50, 94.74, 96.15]},
+                {"id": "anchor-current", "label": "Anchor-0", "demosPerHour": [None] * 4, "success": [None] * 4, "pending": True}]},
+            "autonomy": {"taskOrder": ["box", "trash", "slippers", "clothes"], "unit": "%", "series": [
+                {"id": "sonic-token", "label": "SONIC v1.1 (SMPL)", "interface": "Motion token", "values": [70, 0, 10, 40]},
+                {"id": "anchor-star-sparse", "label": "Anchor-0* (re-locate)", "interface": "Sparse", "values": [85, 50, 45, 60]},
+                {"id": "anchor-star-token", "label": "Anchor-0* (re-locate)", "interface": "Motion token", "values": [0, 0, 0, 0]},
+                {"id": "anchor-sparse", "label": "Anchor-0 (re-locate + PRED feedback)", "interface": "Sparse", "values": [None] * 4, "pending": True},
+                {"id": "anchor-token", "label": "Anchor-0 (re-locate + PRED feedback)", "interface": "Motion token", "values": [None] * 4, "pending": True}]},
+            "note": "* denotes the earlier variant with error feedback supplied to the encoder (test101/59000). Current-model collection and autonomy results are pending in the supplied paper; they are not replaced with earlier-variant results."}
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input", type=Path, default=ROOT / ".cache/evaluation.html")
+    parser.add_argument("--output", type=Path, default=ROOT / "dist/data/paper-results.json")
+    args = parser.parse_args()
+    raw = args.input.read_bytes()
+    html = raw.decode("utf-8")
+    data = block(html, "data")
+    result = {"schemaVersion": 1,
+              "snapshot": {"label": "Paper snapshot · test132 · 38k", "checkpoint": "test132 / 38000", "simulator": "Isaac Sim", "domainRandomization": True,
+                           "source": "Supplied evaluation dashboard and S0_Report paper figures/tables", "sourceUrl": "http://172.16.3.99:18080/", "sourceSha256": hashlib.sha256(raw).hexdigest(), "sourceGeneratedAt": data.get("generatedAt"),
+                           "paperFigures": ["simulation-summary.pdf", "lookahead-comparison.pdf"]},
+              "models": model_metadata(data), "simulation": simulation(data), "radars": radars(block(html, "radarData")),
+              "reachability": reachability(block(html, "reachData")), "lookahead": lookahead(data), "hardware": hardware(), "downstream": downstream(),
+              "notes": ["G and L identify input modes; scoring frames are independently specified.", "Raw source paths, unrelated checkpoints, and large per-motion payloads are intentionally excluded.", "The dashboard dataset named real_robot consists of simulation evaluations on hardware motion references; it is not used as measured hardware results."]}
+    encoded = json.dumps(result, ensure_ascii=False, indent=2, allow_nan=False) + "\n"
+    assert "/Users/" not in encoded and "/mnt/" not in encoded and "/workspace/" not in encoded
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(encoded)
+    print(f"Wrote {args.output.name}: {len(encoded.encode('utf-8')):,} bytes; 2 cohorts, 2 task radars, 5 reachability postures, 7 look-ahead configurations.")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,4734 @@
+{
+  "version": 2,
+  "title": "S0 Tracker",
+  "model": {
+    "bytes": 55092300,
+    "sha256": "e4f393a62ceb64d14fe310dd8f1ac7f9790f945ef22708074ce9e383d0928f3c",
+    "checkpointStep": 20000,
+    "checkpointSha256": "3cb5fef7cc90a98d7ffe25713fbdc2f7daf29e21dde21dc585b9ba18972a9b3e",
+    "inputs": {
+      "sparse_target_pos_b_mf_nonflat": [
+        1,
+        4,
+        15
+      ],
+      "sparse_target_pos_err_b_mf_nonflat": [
+        1,
+        4,
+        12
+      ],
+      "sparse_pelvis_ori_b_mf_nonflat": [
+        1,
+        4,
+        6
+      ],
+      "sparse_target_ori_b_mf_nonflat": [
+        1,
+        4,
+        24
+      ],
+      "sparse_target_ori_err_mf_nonflat": [
+        1,
+        4,
+        24
+      ],
+      "proprioception": [
+        1,
+        930
+      ]
+    },
+    "outputs": [
+      "action",
+      "tokens"
+    ],
+    "opset": 17,
+    "precision": "float32",
+    "parts": [
+      {
+        "url": "models/test052-20k-e4f393a62ceb.part-00.bin",
+        "bytes": 16777216,
+        "sha256": "e3066969ec0d146e087915bf0354c6056275ea4deba86892cbf8bcb10c8ac7e8"
+      },
+      {
+        "url": "models/test052-20k-e4f393a62ceb.part-01.bin",
+        "bytes": 16777216,
+        "sha256": "6ad081cc94322e35f18728d3d4f2a58475c07d489e93c5d6977a99f2693e8bc9"
+      },
+      {
+        "url": "models/test052-20k-e4f393a62ceb.part-02.bin",
+        "bytes": 16777216,
+        "sha256": "d91c9d25e02edfd82995e2c16839ed6e04d4761bd280f6c59f5de5a25d554889"
+      },
+      {
+        "url": "models/test052-20k-e4f393a62ceb.part-03.bin",
+        "bytes": 4760652,
+        "sha256": "5c742a0b251f1b15afb19c961c987dea5dbc7d0a7489ae9e91d8180591b36ffc"
+      }
+    ]
+  },
+  "physics": {
+    "sceneUrl": "robot/scene.xml",
+    "scenePath": "robot/scene.xml",
+    "files": [
+      {
+        "path": "robot/scene.xml",
+        "url": "robot/scene.xml",
+        "sha256": "a2d70baaf5247c734ec31174628f2eb989b10c5a25e74610e093737d60ceee5e",
+        "bytes": 53709
+      },
+      {
+        "path": "robot/meshes/83f8fb3a726bf9613d65.stl",
+        "url": "robot/meshes/83f8fb3a726bf9613d65.stl",
+        "sha256": "83f8fb3a726bf9613d65dd14f0f447cb918c3c95b3938042a0c9c09749267d3b",
+        "bytes": 318684
+      },
+      {
+        "path": "robot/meshes/bc9dece2d12509707e00.stl",
+        "url": "robot/meshes/bc9dece2d12509707e00.stl",
+        "sha256": "bc9dece2d12509707e0057ba2e48df8f3d56db0c79410212963a25e8a50f61a6",
+        "bytes": 341484
+      }
+    ],
+    "mujocoVersion": "3.9.0",
+    "dt": 0.005,
+    "controlDt": 0.02,
+    "substeps": 4,
+    "jointNames": [
+      "left_hip_pitch_joint",
+      "left_hip_roll_joint",
+      "left_hip_yaw_joint",
+      "left_knee_joint",
+      "left_ankle_pitch_joint",
+      "left_ankle_roll_joint",
+      "right_hip_pitch_joint",
+      "right_hip_roll_joint",
+      "right_hip_yaw_joint",
+      "right_knee_joint",
+      "right_ankle_pitch_joint",
+      "right_ankle_roll_joint",
+      "waist_yaw_joint",
+      "waist_roll_joint",
+      "waist_pitch_joint",
+      "left_shoulder_pitch_joint",
+      "left_shoulder_roll_joint",
+      "left_shoulder_yaw_joint",
+      "left_elbow_joint",
+      "left_wrist_roll_joint",
+      "left_wrist_pitch_joint",
+      "left_wrist_yaw_joint",
+      "right_shoulder_pitch_joint",
+      "right_shoulder_roll_joint",
+      "right_shoulder_yaw_joint",
+      "right_elbow_joint",
+      "right_wrist_roll_joint",
+      "right_wrist_pitch_joint",
+      "right_wrist_yaw_joint"
+    ],
+    "defaultJointPos": [
+      -0.31200000643730164,
+      0,
+      0,
+      0.6690000295639038,
+      -0.3630000054836273,
+      0,
+      -0.31200000643730164,
+      0,
+      0,
+      0.6690000295639038,
+      -0.3630000054836273,
+      0,
+      0,
+      0,
+      0,
+      0.20000000298023224,
+      0.20000000298023224,
+      0,
+      0.6000000238418579,
+      0,
+      0,
+      0,
+      0.20000000298023224,
+      -0.20000000298023224,
+      0,
+      0.6000000238418579,
+      0,
+      0,
+      0
+    ],
+    "actionScale": [
+      0.3506614565849304,
+      0.3506614565849304,
+      0.5475465059280396,
+      0.3506614565849304,
+      0.4385773241519928,
+      0.4385773241519928,
+      0.3506614565849304,
+      0.3506614565849304,
+      0.5475465059280396,
+      0.3506614565849304,
+      0.4385773241519928,
+      0.4385773241519928,
+      0.5475465059280396,
+      0.4385773241519928,
+      0.4385773241519928,
+      0.4385773241519928,
+      0.4385773241519928,
+      0.4385773241519928,
+      0.4385773241519928,
+      0.4385773241519928,
+      0.07450086623430252,
+      0.07450086623430252,
+      0.4385773241519928,
+      0.4385773241519928,
+      0.4385773241519928,
+      0.4385773241519928,
+      0.4385773241519928,
+      0.07450086623430252,
+      0.07450086623430252
+    ],
+    "kp": [
+      99.09842681884766,
+      99.09842681884766,
+      40.179237365722656,
+      99.09842681884766,
+      28.501245498657227,
+      28.501245498657227,
+      99.09842681884766,
+      99.09842681884766,
+      40.179237365722656,
+      99.09842681884766,
+      28.501245498657227,
+      28.501245498657227,
+      40.179237365722656,
+      28.501245498657227,
+      28.501245498657227,
+      14.250622749328613,
+      14.250622749328613,
+      14.250622749328613,
+      14.250622749328613,
+      14.250622749328613,
+      16.77832794189453,
+      16.77832794189453,
+      14.250622749328613,
+      14.250622749328613,
+      14.250622749328613,
+      14.250622749328613,
+      14.250622749328613,
+      16.77832794189453,
+      16.77832794189453
+    ],
+    "kd": [
+      6.308801651000977,
+      6.308801651000977,
+      2.557889699935913,
+      6.308801651000977,
+      1.8144457340240479,
+      1.8144457340240479,
+      6.308801651000977,
+      6.308801651000977,
+      2.557889699935913,
+      6.308801651000977,
+      1.8144457340240479,
+      1.8144457340240479,
+      2.557889699935913,
+      1.8144457340240479,
+      1.8144457340240479,
+      0.9072228670120239,
+      0.9072228670120239,
+      0.9072228670120239,
+      0.9072228670120239,
+      0.9072228670120239,
+      1.0681414604187012,
+      1.0681414604187012,
+      0.9072228670120239,
+      0.9072228670120239,
+      0.9072228670120239,
+      0.9072228670120239,
+      0.9072228670120239,
+      1.0681414604187012,
+      1.0681414604187012
+    ],
+    "effortLimit": [
+      139,
+      139,
+      88,
+      139,
+      50,
+      50,
+      139,
+      139,
+      88,
+      139,
+      50,
+      50,
+      88,
+      50,
+      50,
+      25,
+      25,
+      25,
+      25,
+      25,
+      5,
+      5,
+      25,
+      25,
+      25,
+      25,
+      25,
+      5,
+      5
+    ],
+    "armature": [
+      0.025101924315094948,
+      0.025101924315094948,
+      0.010177520103752613,
+      0.025101924315094948,
+      0.007219450082629919,
+      0.007219450082629919,
+      0.025101924315094948,
+      0.025101924315094948,
+      0.010177520103752613,
+      0.025101924315094948,
+      0.007219450082629919,
+      0.007219450082629919,
+      0.010177520103752613,
+      0.007219450082629919,
+      0.007219450082629919,
+      0.0036097250413149595,
+      0.0036097250413149595,
+      0.0036097250413149595,
+      0.0036097250413149595,
+      0.0036097250413149595,
+      0.0042500002309679985,
+      0.0042500002309679985,
+      0.0036097250413149595,
+      0.0036097250413149595,
+      0.0036097250413149595,
+      0.0036097250413149595,
+      0.0036097250413149595,
+      0.0042500002309679985,
+      0.0042500002309679985
+    ],
+    "softJointLimits": [
+      [
+        -2.260175,
+        2.609275
+      ],
+      [
+        -0.3490650000000002,
+        2.7925649999999997
+      ],
+      [
+        -2.48184,
+        2.48184
+      ],
+      [
+        0.061086349999999845,
+        2.7314466499999996
+      ],
+      [
+        -0.8028565,
+        0.4537865
+      ],
+      [
+        -0.23562,
+        0.23562
+      ],
+      [
+        -2.260175,
+        2.609275
+      ],
+      [
+        -2.7925649999999997,
+        0.3490650000000002
+      ],
+      [
+        -2.48184,
+        2.48184
+      ],
+      [
+        0.061086349999999845,
+        2.7314466499999996
+      ],
+      [
+        -0.8028565,
+        0.4537865
+      ],
+      [
+        -0.23562,
+        0.23562
+      ],
+      [
+        -2.3562,
+        2.3562
+      ],
+      [
+        -0.468,
+        0.468
+      ],
+      [
+        -0.468,
+        0.468
+      ],
+      [
+        -2.80122,
+        2.3824199999999998
+      ],
+      [
+        -1.396215,
+        2.059515
+      ],
+      [
+        -2.3562,
+        2.3562
+      ],
+      [
+        -0.8901199999999999,
+        1.9373199999999997
+      ],
+      [
+        -1.7749998486,
+        1.7749998486
+      ],
+      [
+        -1.4529866022000002,
+        1.4529866022000002
+      ],
+      [
+        -1.4529866022000002,
+        1.4529866022000002
+      ],
+      [
+        -2.80122,
+        2.3824199999999998
+      ],
+      [
+        -2.059515,
+        1.396215
+      ],
+      [
+        -2.3562,
+        2.3562
+      ],
+      [
+        -0.8901199999999999,
+        1.9373199999999997
+      ],
+      [
+        -1.7749998486,
+        1.7749998486
+      ],
+      [
+        -1.4529866022000002,
+        1.4529866022000002
+      ],
+      [
+        -1.4529866022000002,
+        1.4529866022000002
+      ]
+    ],
+    "qposAddresses": [
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35
+    ],
+    "qvelAddresses": [
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34
+    ],
+    "actuatorIndices": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23,
+      24,
+      25,
+      26,
+      27,
+      28
+    ],
+    "bodyNames": [
+      "world",
+      "pelvis",
+      "pelvis_contour_link",
+      "left_hip_pitch_link",
+      "left_hip_roll_link",
+      "left_hip_yaw_link",
+      "left_knee_link",
+      "left_ankle_pitch_link",
+      "left_ankle_roll_link",
+      "LL_FOOT",
+      "right_hip_pitch_link",
+      "right_hip_roll_link",
+      "right_hip_yaw_link",
+      "right_knee_link",
+      "right_ankle_pitch_link",
+      "right_ankle_roll_link",
+      "LR_FOOT",
+      "waist_yaw_link",
+      "waist_roll_link",
+      "torso_link",
+      "logo_link",
+      "head_link",
+      "imu_in_torso",
+      "mid360_link",
+      "left_shoulder_pitch_link",
+      "left_shoulder_roll_link",
+      "left_shoulder_yaw_link",
+      "left_elbow_link",
+      "left_wrist_roll_link",
+      "left_wrist_pitch_link",
+      "left_wrist_yaw_link",
+      "left_base2_link",
+      "left_base_link",
+      "left_thumb_metacarpal_Link",
+      "left_thumb_proximal_Link",
+      "left_thumb_distal_Link",
+      "left_thumb_tip_Link",
+      "left_index_proximal_Link",
+      "left_index_distal_Link",
+      "left_index_tip_Link",
+      "left_middle_proximal_Link",
+      "left_middle_distal_Link",
+      "left_middle_tip_Link",
+      "left_ring_proximal_Link",
+      "left_ring_distal_Link",
+      "left_ring_tip_Link",
+      "left_pinky_proximal_Link",
+      "left_pinky_distal_Link",
+      "left_pinky_tip_Link",
+      "right_shoulder_pitch_link",
+      "right_shoulder_roll_link",
+      "right_shoulder_yaw_link",
+      "right_elbow_link",
+      "right_wrist_roll_link",
+      "right_wrist_pitch_link",
+      "right_wrist_yaw_link",
+      "right_base2_link",
+      "right_base_link",
+      "right_thumb_metacarpal_link",
+      "right_thumb_proximal_link",
+      "right_thumb_distal_link",
+      "right_thumb_tip",
+      "right_index_proximal_link",
+      "right_index_distal_link",
+      "right_index_tip",
+      "right_middle_proximal_link",
+      "right_middle_distal_link",
+      "right_middle_tip",
+      "right_ring_proximal_link",
+      "right_ring_distal_link",
+      "right_ring_tip",
+      "right_pinky_proximal_link",
+      "right_pinky_distal_link",
+      "right_pinky_tip",
+      "imu_in_pelvis"
+    ],
+    "rootQposAddress": 0,
+    "rootQvelAddress": 0,
+    "canonicalUrdfSha256": "6bd00a833d14fc8f0fc9b51a68b57bfe68ba7e0cb3b5f95d089fc762e4a5d3fd",
+    "physicsSha256": "0ba6cd32b473427dbc74e06b3d4636d9539cffe24ca0b98916cdbb7e58c9bc08",
+    "solver": {
+      "solver": "CG",
+      "integrator": "Euler",
+      "iterations": 100,
+      "tolerance": 1e-8
+    },
+    "selfCollision": true,
+    "handCollision": "1019_nohand_wrist_retained",
+    "initialGroundClearanceM": 0.01,
+    "initialVelocity": "reference",
+    "visualGeometry": "original URDF visual meshes",
+    "profile": "lhm_brainco_nohand",
+    "velocityLimitEnforced": false
+  },
+  "visuals": {
+    "profile": "g1_1020_visual_only",
+    "source": "1020_G1_New_assemble_MuJoCo.zip",
+    "sourceArchiveSha256": "5c91465700f531f1c70b1d16cbcd9c8beab63df35aba6748e6b77a3be725c6a9",
+    "urdfSha256": "02e4391ee10fe141cce70847bcc40eb083f812b6a974393c32c03ea9fdb194d1",
+    "expectedComponents": 76,
+    "components": [
+      {
+        "name": "pelvis:visual:0",
+        "sourceBodyName": "pelvis",
+        "bodyName": "pelvis",
+        "bodyId": 1,
+        "meshUrl": "robot/appearance-1020/9a249feb95d632aa648c.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.00972122,
+          0.01161225,
+          0.01298303,
+          1
+        ],
+        "materialName": "archon_black"
+      },
+      {
+        "name": "left_hip_pitch_link:visual:0",
+        "sourceBodyName": "left_hip_pitch_link",
+        "bodyName": "left_hip_pitch_link",
+        "bodyId": 3,
+        "meshUrl": "robot/appearance-1020/4725168105ee768ee316.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.00972122,
+          0.01161225,
+          0.01298303,
+          1
+        ],
+        "materialName": "archon_black"
+      },
+      {
+        "name": "left_hip_roll_link:visual:0",
+        "sourceBodyName": "left_hip_roll_link",
+        "bodyName": "left_hip_roll_link",
+        "bodyId": 4,
+        "meshUrl": "robot/appearance-1020/91f25922ee8a7c315279.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.462077,
+          0.496933,
+          0.51491767,
+          1
+        ],
+        "materialName": "archon_silver"
+      },
+      {
+        "name": "left_hip_yaw_link:visual:0",
+        "sourceBodyName": "left_hip_yaw_link",
+        "bodyName": "left_hip_yaw_link",
+        "bodyId": 5,
+        "meshUrl": "robot/appearance-1020/a16d88aa6ddac8083aa7.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.462077,
+          0.496933,
+          0.51491767,
+          1
+        ],
+        "materialName": "archon_silver"
+      },
+      {
+        "name": "left_knee_link:visual:0",
+        "sourceBodyName": "left_knee_link",
+        "bodyName": "left_knee_link",
+        "bodyId": 6,
+        "meshUrl": "robot/appearance-1020/8d92b9e3d3a636761150.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.462077,
+          0.496933,
+          0.51491767,
+          1
+        ],
+        "materialName": "archon_silver"
+      },
+      {
+        "name": "left_ankle_pitch_link:visual:0",
+        "sourceBodyName": "left_ankle_pitch_link",
+        "bodyName": "left_ankle_pitch_link",
+        "bodyId": 7,
+        "meshUrl": "robot/appearance-1020/d49e3abc6f5b12e53206.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.00972122,
+          0.01161225,
+          0.01298303,
+          1
+        ],
+        "materialName": "archon_black"
+      },
+      {
+        "name": "left_ankle_roll_link:visual:0",
+        "sourceBodyName": "left_ankle_roll_link",
+        "bodyName": "left_ankle_roll_link",
+        "bodyId": 8,
+        "meshUrl": "robot/appearance-1020/c4092af943141d4d9f74.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.00651209,
+          0.00749903,
+          0.00856813,
+          1
+        ],
+        "materialName": "archon_rubber"
+      },
+      {
+        "name": "right_hip_pitch_link:visual:0",
+        "sourceBodyName": "right_hip_pitch_link",
+        "bodyName": "right_hip_pitch_link",
+        "bodyId": 10,
+        "meshUrl": "robot/appearance-1020/e4f3c99d7f4a7d34eadb.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.00972122,
+          0.01161225,
+          0.01298303,
+          1
+        ],
+        "materialName": "archon_black"
+      },
+      {
+        "name": "right_hip_roll_link:visual:0",
+        "sourceBodyName": "right_hip_roll_link",
+        "bodyName": "right_hip_roll_link",
+        "bodyId": 11,
+        "meshUrl": "robot/appearance-1020/4c254ef66a356f492947.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.462077,
+          0.496933,
+          0.51491767,
+          1
+        ],
+        "materialName": "archon_silver"
+      },
+      {
+        "name": "right_hip_yaw_link:visual:0",
+        "sourceBodyName": "right_hip_yaw_link",
+        "bodyName": "right_hip_yaw_link",
+        "bodyId": 12,
+        "meshUrl": "robot/appearance-1020/e479c2936ca2057e9eb2.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.462077,
+          0.496933,
+          0.51491767,
+          1
+        ],
+        "materialName": "archon_silver"
+      },
+      {
+        "name": "right_knee_link:visual:0",
+        "sourceBodyName": "right_knee_link",
+        "bodyName": "right_knee_link",
+        "bodyId": 13,
+        "meshUrl": "robot/appearance-1020/63c4008449c9bbe701a6.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.462077,
+          0.496933,
+          0.51491767,
+          1
+        ],
+        "materialName": "archon_silver"
+      },
+      {
+        "name": "right_ankle_pitch_link:visual:0",
+        "sourceBodyName": "right_ankle_pitch_link",
+        "bodyName": "right_ankle_pitch_link",
+        "bodyId": 14,
+        "meshUrl": "robot/appearance-1020/15be426539ec1be70246.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.00972122,
+          0.01161225,
+          0.01298303,
+          1
+        ],
+        "materialName": "archon_black"
+      },
+      {
+        "name": "right_ankle_roll_link:visual:0",
+        "sourceBodyName": "right_ankle_roll_link",
+        "bodyName": "right_ankle_roll_link",
+        "bodyId": 15,
+        "meshUrl": "robot/appearance-1020/4b66222ea56653e62771.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.00651209,
+          0.00749903,
+          0.00856813,
+          1
+        ],
+        "materialName": "archon_rubber"
+      },
+      {
+        "name": "waist_yaw_link:visual:0",
+        "sourceBodyName": "waist_yaw_link",
+        "bodyName": "waist_yaw_link",
+        "bodyId": 17,
+        "meshUrl": "robot/appearance-1020/ec6db442b11f25eed898.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.00972122,
+          0.01161225,
+          0.01298303,
+          1
+        ],
+        "materialName": "archon_black"
+      },
+      {
+        "name": "waist_roll_link:visual:0",
+        "sourceBodyName": "waist_roll_link",
+        "bodyName": "waist_roll_link",
+        "bodyId": 18,
+        "meshUrl": "robot/appearance-1020/b67c347a05abc3e8ddae.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.00972122,
+          0.01161225,
+          0.01298303,
+          1
+        ],
+        "materialName": "archon_black"
+      },
+      {
+        "name": "torso_link:visual:0",
+        "sourceBodyName": "torso_link",
+        "bodyName": "torso_link",
+        "bodyId": 19,
+        "meshUrl": "robot/appearance-1020/11ddb46f2098efbbd881.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.462077,
+          0.496933,
+          0.51491767,
+          1
+        ],
+        "materialName": "archon_silver"
+      },
+      {
+        "name": "left_shoulder_pitch_link:visual:0",
+        "sourceBodyName": "left_shoulder_pitch_link",
+        "bodyName": "left_shoulder_pitch_link",
+        "bodyId": 24,
+        "meshUrl": "robot/appearance-1020/f0d1cfd02fcf0d42f95e.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.462077,
+          0.496933,
+          0.51491767,
+          1
+        ],
+        "materialName": "archon_silver"
+      },
+      {
+        "name": "left_shoulder_roll_link:visual:0",
+        "sourceBodyName": "left_shoulder_roll_link",
+        "bodyName": "left_shoulder_roll_link",
+        "bodyId": 25,
+        "meshUrl": "robot/appearance-1020/fb9df21687773522598d.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.462077,
+          0.496933,
+          0.51491767,
+          1
+        ],
+        "materialName": "archon_silver"
+      },
+      {
+        "name": "left_shoulder_yaw_link:visual:0",
+        "sourceBodyName": "left_shoulder_yaw_link",
+        "bodyName": "left_shoulder_yaw_link",
+        "bodyId": 26,
+        "meshUrl": "robot/appearance-1020/1aa97e9748e924336567.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.462077,
+          0.496933,
+          0.51491767,
+          1
+        ],
+        "materialName": "archon_silver"
+      },
+      {
+        "name": "left_elbow_link:visual:0",
+        "sourceBodyName": "left_elbow_link",
+        "bodyName": "left_elbow_link",
+        "bodyId": 27,
+        "meshUrl": "robot/appearance-1020/fa752198accd104d5c4c.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.462077,
+          0.496933,
+          0.51491767,
+          1
+        ],
+        "materialName": "archon_silver"
+      },
+      {
+        "name": "left_wrist_roll_link:visual:0",
+        "sourceBodyName": "left_wrist_roll_link",
+        "bodyName": "left_wrist_roll_link",
+        "bodyId": 28,
+        "meshUrl": "robot/appearance-1020/2e1be7b7d36f54ef1193.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.7,
+          0.7,
+          0.7,
+          1
+        ],
+        "materialName": "left_wrist_roll_link_material"
+      },
+      {
+        "name": "left_wrist_pitch_link:visual:0",
+        "sourceBodyName": "left_wrist_pitch_link",
+        "bodyName": "left_wrist_pitch_link",
+        "bodyId": 29,
+        "meshUrl": "robot/appearance-1020/5c4cbe6beddeb6e80c1a.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.7,
+          0.7,
+          0.7,
+          1
+        ],
+        "materialName": "left_wrist_pitch_link_material"
+      },
+      {
+        "name": "left_wrist_yaw_link:visual:0",
+        "sourceBodyName": "left_wrist_yaw_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/4a340f1121c710cac0f7.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.7,
+          0.7,
+          0.7,
+          1
+        ],
+        "materialName": "left_wrist_v5"
+      },
+      {
+        "name": "left_base2_link:visual:0",
+        "sourceBodyName": "left_base2_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/1fe2d033a63652bf9af9.stl",
+        "position": [
+          0.059000062137,
+          -0.000850399730441,
+          -0.00150052992497
+        ],
+        "quaternion": [
+          -0.499956497312684,
+          0.49995649731023567,
+          -0.5000434989026775,
+          0.5000434989051258
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.16,
+          0.17,
+          0.18,
+          1
+        ],
+        "materialName": "left_hand_adapter_material"
+      },
+      {
+        "name": "right_shoulder_pitch_link:visual:0",
+        "sourceBodyName": "right_shoulder_pitch_link",
+        "bodyName": "right_shoulder_pitch_link",
+        "bodyId": 49,
+        "meshUrl": "robot/appearance-1020/24cdb387e0128dfe6027.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.462077,
+          0.496933,
+          0.51491767,
+          1
+        ],
+        "materialName": "archon_silver"
+      },
+      {
+        "name": "right_shoulder_roll_link:visual:0",
+        "sourceBodyName": "right_shoulder_roll_link",
+        "bodyName": "right_shoulder_roll_link",
+        "bodyId": 50,
+        "meshUrl": "robot/appearance-1020/962b97c48f9ce9e8399f.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.462077,
+          0.496933,
+          0.51491767,
+          1
+        ],
+        "materialName": "archon_silver"
+      },
+      {
+        "name": "right_shoulder_yaw_link:visual:0",
+        "sourceBodyName": "right_shoulder_yaw_link",
+        "bodyName": "right_shoulder_yaw_link",
+        "bodyId": 51,
+        "meshUrl": "robot/appearance-1020/a0b76489271da0c72461.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.462077,
+          0.496933,
+          0.51491767,
+          1
+        ],
+        "materialName": "archon_silver"
+      },
+      {
+        "name": "right_elbow_link:visual:0",
+        "sourceBodyName": "right_elbow_link",
+        "bodyName": "right_elbow_link",
+        "bodyId": 52,
+        "meshUrl": "robot/appearance-1020/1be925d7aa268bb8fddf.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.462077,
+          0.496933,
+          0.51491767,
+          1
+        ],
+        "materialName": "archon_silver"
+      },
+      {
+        "name": "right_wrist_roll_link:visual:0",
+        "sourceBodyName": "right_wrist_roll_link",
+        "bodyName": "right_wrist_roll_link",
+        "bodyId": 53,
+        "meshUrl": "robot/appearance-1020/5959c2ee4df1f14ae840.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.7,
+          0.7,
+          0.7,
+          1
+        ],
+        "materialName": "right_wrist_roll_link_material"
+      },
+      {
+        "name": "right_wrist_pitch_link:visual:0",
+        "sourceBodyName": "right_wrist_pitch_link",
+        "bodyName": "right_wrist_pitch_link",
+        "bodyId": 54,
+        "meshUrl": "robot/appearance-1020/b0b2a3153c9cb576ef32.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.7,
+          0.7,
+          0.7,
+          1
+        ],
+        "materialName": "right_wrist_pitch_link_material"
+      },
+      {
+        "name": "right_wrist_yaw_link:visual:0",
+        "sourceBodyName": "right_wrist_yaw_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/3322fefc17fbb4361db0.stl",
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.7,
+          0.7,
+          0.7,
+          1
+        ],
+        "materialName": "right_wrist_v5"
+      },
+      {
+        "name": "right_base2_link:visual:0",
+        "sourceBodyName": "right_base2_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/1b7f9d1922c59fdf1b63.stl",
+        "position": [
+          0.059,
+          0.000851550928178,
+          0.00349947007503
+        ],
+        "quaternion": [
+          0.5000000000024486,
+          0.49999999999999967,
+          0.49999999999755207,
+          0.49999999999999967
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.16,
+          0.17,
+          0.18,
+          1
+        ],
+        "materialName": "right_hand_adapter_material"
+      },
+      {
+        "name": "neck_link:visual:0",
+        "sourceBodyName": "neck_link",
+        "bodyName": "torso_link",
+        "bodyId": 19,
+        "meshUrl": "robot/appearance-1020/9fb6699711444f1e1906.stl",
+        "position": [
+          0.0124599976357,
+          -0.00102960254131,
+          0.357160561929
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.15,
+          0.16,
+          0.18,
+          1
+        ],
+        "materialName": "neck_link_material"
+      },
+      {
+        "name": "head_yaw_link:visual:0",
+        "sourceBodyName": "head_yaw_link",
+        "bodyName": "torso_link",
+        "bodyId": 19,
+        "meshUrl": "robot/appearance-1020/5a23e6d7eddd9123d4ee.stl",
+        "position": [
+          0.0124599976357,
+          -0.00102960254131,
+          0.357160561929
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.35,
+          0.37,
+          0.4,
+          1
+        ],
+        "materialName": "head_yaw_link_material"
+      },
+      {
+        "name": "head_link:visual:0",
+        "sourceBodyName": "head_link",
+        "bodyName": "torso_link",
+        "bodyId": 19,
+        "meshUrl": "robot/appearance-1020/29cff1ec1d83714a0909.stl",
+        "position": [
+          0.0124599976357,
+          -0.00102960254131,
+          0.39716056192899996
+        ],
+        "quaternion": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.85,
+          0.86,
+          0.88,
+          1
+        ],
+        "materialName": "head_link_material"
+      },
+      {
+        "name": "left_base_link:visual:0",
+        "sourceBodyName": "left_base_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/340401f796bbac762cf8.stl",
+        "position": [
+          0.059000062137,
+          -0.000850399730441,
+          -0.00150052992497
+        ],
+        "quaternion": [
+          -0.499956497312684,
+          0.49995649731023567,
+          -0.5000434989026775,
+          0.5000434989051258
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_base_link_material_0"
+      },
+      {
+        "name": "left_base_link:visual:1",
+        "sourceBodyName": "left_base_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/d9d2558da8369d2f0993.stl",
+        "position": [
+          0.059000062137,
+          -0.000850399730441,
+          -0.00150052992497
+        ],
+        "quaternion": [
+          -0.499956497312684,
+          0.49995649731023567,
+          -0.5000434989026775,
+          0.5000434989051258
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_base_link_material_1"
+      },
+      {
+        "name": "left_thumb_metacarpal_link:visual:0",
+        "sourceBodyName": "left_thumb_metacarpal_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/415a75193e7773572b0d.stl",
+        "position": [
+          0.08682427870134768,
+          -0.005355241300918567,
+          0.017499470075166244
+        ],
+        "quaternion": [
+          0.5518795769670884,
+          -0.4419774114866419,
+          0.5519564907971636,
+          -0.4420734469848601
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_thumb_metacarpal_link_material_0"
+      },
+      {
+        "name": "left_thumb_proximal_link:visual:0",
+        "sourceBodyName": "left_thumb_proximal_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/ccffe779ed683ec5c2f2.stl",
+        "position": [
+          0.08682373790876072,
+          -0.008463187360684086,
+          0.031382848626409866
+        ],
+        "quaternion": [
+          0.37215077349124925,
+          -0.4938123356138401,
+          0.651528517680571,
+          -0.4395040041164892
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_thumb_proximal_link_material_0"
+      },
+      {
+        "name": "left_thumb_proximal_link:visual:1",
+        "sourceBodyName": "left_thumb_proximal_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/bcd5279fb8a4d8ba4b06.stl",
+        "position": [
+          0.08682373790876072,
+          -0.008463187360684086,
+          0.031382848626409866
+        ],
+        "quaternion": [
+          0.37215077349124925,
+          -0.4938123356138401,
+          0.651528517680571,
+          -0.4395040041164892
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_thumb_proximal_link_material_1"
+      },
+      {
+        "name": "left_thumb_distal_link:visual:0",
+        "sourceBodyName": "left_thumb_distal_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/99300669452dc8e34d5f.stl",
+        "position": [
+          0.10327352855960369,
+          -0.015013690547046515,
+          0.08027554026379974
+        ],
+        "quaternion": [
+          0.3974849525738838,
+          -0.47365866770478116,
+          0.6276337002484357,
+          -0.4730001239935629
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_thumb_distal_link_material_0"
+      },
+      {
+        "name": "left_thumb_touch_link:visual:0",
+        "sourceBodyName": "left_thumb_touch_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/e31a6aa8faf2be8a6bfc.stl",
+        "position": [
+          0.11355975352301642,
+          -0.018115973937299693,
+          0.09188638587161935
+        ],
+        "quaternion": [
+          0.4373303415683083,
+          -0.437137270612193,
+          0.5839294149285783,
+          -0.5260034385502033
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_thumb_touch_link_material_0"
+      },
+      {
+        "name": "left_index_proximal_link:visual:0",
+        "sourceBodyName": "left_index_proximal_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/1fed32c1a8451282b314.stl",
+        "position": [
+          0.13987643239190747,
+          0.0012704275557123082,
+          0.028077470075426016
+        ],
+        "quaternion": [
+          0.5241254520838958,
+          -0.38956322528872683,
+          0.5502891748658477,
+          -0.5203026311733981
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_index_proximal_link_material_0"
+      },
+      {
+        "name": "left_index_distal_link:visual:0",
+        "sourceBodyName": "left_index_distal_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/634d5c569628c3c2dbc9.stl",
+        "position": [
+          0.17130755774739906,
+          -0.003986334301518047,
+          0.030984498397225006
+        ],
+        "quaternion": [
+          0.5241254520838958,
+          -0.38956322528872683,
+          0.5502891748658477,
+          -0.5203026311733981
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_index_distal_link_material_0"
+      },
+      {
+        "name": "left_index_touch_link:visual:0",
+        "sourceBodyName": "left_index_touch_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/821249c18a0cf66c87aa.stl",
+        "position": [
+          0.19206427664745795,
+          -0.021936696442578372,
+          0.03061580135529644
+        ],
+        "quaternion": [
+          0.3797468824779308,
+          -0.2560352126708632,
+          0.658268919777454,
+          -0.5974280746465656
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_index_touch_link_material_0"
+      },
+      {
+        "name": "left_middle_proximal_link:visual:0",
+        "sourceBodyName": "left_middle_proximal_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/50122ebf6e75698ba2c4.stl",
+        "position": [
+          0.14399386013390636,
+          0.0037283111473831957,
+          0.008560470075446178
+        ],
+        "quaternion": [
+          0.48347134247338613,
+          -0.4385100418444104,
+          0.5406390532463378,
+          -0.5307295152085467
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_middle_proximal_link_material_0"
+      },
+      {
+        "name": "left_middle_distal_link:visual:0",
+        "sourceBodyName": "left_middle_distal_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/e0ff6f648bbb7712bbc7.stl",
+        "position": [
+          0.18055827473227093,
+          -0.0018162175896275392,
+          0.009701428516128445
+        ],
+        "quaternion": [
+          0.44832055921563524,
+          -0.40407577894961333,
+          0.5701261273373592,
+          -0.5573936131479699
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_middle_distal_link_material_0"
+      },
+      {
+        "name": "left_middle_touch_link:visual:0",
+        "sourceBodyName": "left_middle_touch_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/c91b30341a816ac079ec.stl",
+        "position": [
+          0.20447121743312957,
+          -0.021574748040162454,
+          0.009605805188765873
+        ],
+        "quaternion": [
+          0.3425068730466949,
+          -0.3011452902534229,
+          0.6393153891499014,
+          -0.6190931991793053
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_middle_touch_link_material_0"
+      },
+      {
+        "name": "left_ring_proximal_link:visual:0",
+        "sourceBodyName": "left_ring_proximal_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/77220c07d5bbc119cb82.stl",
+        "position": [
+          0.14298287654040975,
+          0.003822687063176387,
+          -0.011526529924558774
+        ],
+        "quaternion": [
+          -0.4387992272724575,
+          0.48376635008046814,
+          -0.53049023313462,
+          0.5403753040468195
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_ring_proximal_link_material_0"
+      },
+      {
+        "name": "left_ring_distal_link:visual:0",
+        "sourceBodyName": "left_ring_distal_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/c59b62ef04c9cb436f6a.stl",
+        "position": [
+          0.17757646304252844,
+          -0.0013844393668019407,
+          -0.012608013749056877
+        ],
+        "quaternion": [
+          -0.4043795150307733,
+          0.4486316528287769,
+          -0.5571730944056845,
+          0.5698815585487836
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_ring_distal_link_material_0"
+      },
+      {
+        "name": "left_ring_touch_link:visual:0",
+        "sourceBodyName": "left_ring_touch_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/c2fb7d2c4fb0df91209a.stl",
+        "position": [
+          0.20106236109154813,
+          -0.02050763795286592,
+          -0.012528838822375791
+        ],
+        "quaternion": [
+          -0.30148270491990714,
+          0.3428557097609189,
+          -0.6189287745292712,
+          0.6391285574735395
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_ring_touch_link_material_0"
+      },
+      {
+        "name": "left_pinky_proximal_link:visual:0",
+        "sourceBodyName": "left_pinky_proximal_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/9f1408568638fbbec4cf.stl",
+        "position": [
+          0.1376944739075875,
+          0.0015092072270512312,
+          -0.03085652992458467
+        ],
+        "quaternion": [
+          -0.3902214049761855,
+          0.5248245215528697,
+          -0.5198083673351426,
+          0.5496232690885517
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_pinky_proximal_link_material_0"
+      },
+      {
+        "name": "left_pinky_distal_link:visual:0",
+        "sourceBodyName": "left_pinky_distal_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/d52822897dcc0de60fff.stl",
+        "position": [
+          0.16618964890549742,
+          -0.003183051468253266,
+          -0.03350373792072452
+        ],
+        "quaternion": [
+          -0.3902214049761855,
+          0.5248245215528697,
+          -0.5198083673351426,
+          0.5496232690885517
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_pinky_distal_link_material_0"
+      },
+      {
+        "name": "left_pinky_touch_link:visual:0",
+        "sourceBodyName": "left_pinky_touch_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/850ad4ad9daf4188aa17.stl",
+        "position": [
+          0.1849204603344321,
+          -0.020254625456362925,
+          -0.03303305673118311
+        ],
+        "quaternion": [
+          -0.25679130155555224,
+          0.3805831432993352,
+          -0.5971027642697866,
+          0.6577864299171753
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "left_pinky_touch_link_material_0"
+      },
+      {
+        "name": "right_base_link:visual:0",
+        "sourceBodyName": "right_base_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/2754b59a9132a04a28cf.stl",
+        "position": [
+          0.059,
+          0.000851550928178,
+          0.00349947007503
+        ],
+        "quaternion": [
+          0.5000000000024486,
+          0.49999999999999967,
+          0.49999999999755207,
+          0.49999999999999967
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_base_link_material_0"
+      },
+      {
+        "name": "right_base_link:visual:1",
+        "sourceBodyName": "right_base_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/7357830cda11d9749adc.stl",
+        "position": [
+          0.059,
+          0.000851550928178,
+          0.00349947007503
+        ],
+        "quaternion": [
+          0.5000000000024486,
+          0.49999999999999967,
+          0.49999999999755207,
+          0.49999999999999967
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_base_link_material_1"
+      },
+      {
+        "name": "right_thumb_metacarpal_link:visual:0",
+        "sourceBodyName": "right_thumb_metacarpal_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/15464fa122dddc49a564.stl",
+        "position": [
+          0.08682499999993024,
+          0.00647055092804178,
+          0.02336647007516624
+        ],
+        "quaternion": [
+          0.5519180359733702,
+          0.44202543090892615,
+          0.5519180359685032,
+          0.44202543090838803
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_thumb_metacarpal_link_material_0"
+      },
+      {
+        "name": "right_thumb_proximal_link:visual:0",
+        "sourceBodyName": "right_thumb_proximal_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/0c415499f0b28609062d.stl",
+        "position": [
+          0.08682499999987747,
+          0.009578497034857133,
+          0.03724984862640985
+        ],
+        "quaternion": [
+          0.3721890096321121,
+          0.4938690177650933,
+          0.6514855527539963,
+          0.4394716247422916
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_thumb_proximal_link_material_0"
+      },
+      {
+        "name": "right_thumb_distal_link:visual:0",
+        "sourceBodyName": "right_thumb_distal_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/f489da4e47935510ffba.stl",
+        "position": [
+          0.10327593021013916,
+          0.01612613780602083,
+          0.08614254026379971
+        ],
+        "quaternion": [
+          0.3975261028347176,
+          0.4737132710450825,
+          0.6275924888135452,
+          0.47296554037860916
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_thumb_distal_link_material_0"
+      },
+      {
+        "name": "right_thumb_touch_link:visual:0",
+        "sourceBodyName": "right_thumb_touch_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/184c29c27b46ea21df21.stl",
+        "position": [
+          0.11356081835185469,
+          0.01922387838741937,
+          0.0977095309238948
+        ],
+        "quaternion": [
+          0.4131120722419138,
+          0.4601843993087794,
+          0.6114605807444227,
+          0.4936442976440658
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_thumb_touch_link_material_0"
+      },
+      {
+        "name": "right_index_proximal_link:visual:0",
+        "sourceBodyName": "right_index_proximal_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/94fdff414f1c29940495.stl",
+        "position": [
+          0.13987599999984485,
+          -0.0012665490722179751,
+          0.03306747007542602
+        ],
+        "quaternion": [
+          0.5241707172590081,
+          0.3896110998502347,
+          0.5502552801612915,
+          0.5202570294539864
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_index_proximal_link_material_0"
+      },
+      {
+        "name": "right_index_distal_link:visual:0",
+        "sourceBodyName": "right_index_distal_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/44d4b12f55e85baf7768.stl",
+        "position": [
+          0.17130803957284224,
+          0.003984743589383059,
+          0.035974498397225
+        ],
+        "quaternion": [
+          0.5241707172590081,
+          0.3896110998502347,
+          0.5502552801612915,
+          0.5202570294539864
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_index_distal_link_material_0"
+      },
+      {
+        "name": "right_index_touch_link:visual:0",
+        "sourceBodyName": "right_index_touch_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/a7f7b054539a858173b3.stl",
+        "position": [
+          0.19206788157893284,
+          0.021931493723416517,
+          0.03560580135529642
+        ],
+        "quaternion": [
+          0.05496802596979515,
+          0.45476262846785076,
+          0.8824928018607509,
+          -0.10665796985672031
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_index_touch_link_material_0"
+      },
+      {
+        "name": "right_middle_proximal_link:visual:0",
+        "sourceBodyName": "right_middle_proximal_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/56d9f019bad093daf93a.stl",
+        "position": [
+          0.14399299999992837,
+          -0.003725149072238162,
+          0.013550470075446183
+        ],
+        "quaternion": [
+          0.4835175149579004,
+          0.43855707664470045,
+          0.5406009001271985,
+          0.5306874504220479
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_middle_proximal_link_material_0"
+      },
+      {
+        "name": "right_middle_distal_link:visual:0",
+        "sourceBodyName": "right_middle_distal_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/8f11ee9addab1a1eab40.stl",
+        "position": [
+          0.18055837881044298,
+          0.00181301725608793,
+          0.014691428516128443
+        ],
+        "quaternion": [
+          0.4835175149579004,
+          0.43855707664470045,
+          0.5406009001271985,
+          0.5306874504220479
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_middle_distal_link_material_0"
+      },
+      {
+        "name": "right_middle_touch_link:visual:0",
+        "sourceBodyName": "right_middle_touch_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/1fdd83c56c7eccb38b1a.stl",
+        "position": [
+          0.20447492547959087,
+          0.021566897031474956,
+          0.014595837234820446
+        ],
+        "quaternion": [
+          0.34256322030499886,
+          0.3012033183648572,
+          0.6392878542438214,
+          0.6190622266917906
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_middle_touch_link_material_0"
+      },
+      {
+        "name": "right_ring_proximal_link:visual:0",
+        "sourceBodyName": "right_ring_proximal_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/89c64252e891bc915672.stl",
+        "position": [
+          0.14298200000002625,
+          -0.00381934907223324,
+          -0.006537529924558768
+        ],
+        "quaternion": [
+          0.4388462391250526,
+          0.4838125017459436,
+          0.5304481426828952,
+          0.5403371257690847
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_ring_proximal_link_material_0"
+      },
+      {
+        "name": "right_ring_distal_link:visual:0",
+        "sourceBodyName": "right_ring_distal_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/40acf67de96d432bbbc0.stl",
+        "position": [
+          0.17757649203505305,
+          0.0013817578845421847,
+          -0.007619013749056876
+        ],
+        "quaternion": [
+          0.4388462391250526,
+          0.4838125017459436,
+          0.5304481426828952,
+          0.5403371257690847
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_ring_distal_link_material_0"
+      },
+      {
+        "name": "right_ring_touch_link:visual:0",
+        "sourceBodyName": "right_ring_touch_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/f9c0ac36994b014d25b7.stl",
+        "position": [
+          0.20106610229075794,
+          0.0205003982587611,
+          -0.007539878477790354
+        ],
+        "quaternion": [
+          0.301540716135715,
+          0.3429120419858512,
+          0.6188977703807762,
+          0.639100991855871
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_ring_touch_link_material_0"
+      },
+      {
+        "name": "right_pinky_proximal_link:visual:0",
+        "sourceBodyName": "right_pinky_proximal_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/1a4ba525880efd4da2bc.stl",
+        "position": [
+          0.13769400000013227,
+          -0.001505049072207373,
+          -0.025866529924584665
+        ],
+        "quaternion": [
+          0.3902692216003383,
+          0.5248697437235939,
+          0.5197627047974435,
+          0.5495893171238329
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_pinky_proximal_link_material_0"
+      },
+      {
+        "name": "right_pinky_distal_link:visual:0",
+        "sourceBodyName": "right_pinky_distal_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/14c25fb57059978594ea.stl",
+        "position": [
+          0.1661899910346436,
+          0.0031822513007388835,
+          -0.02851373792072453
+        ],
+        "quaternion": [
+          0.3902692216003383,
+          0.5248697437235939,
+          0.5197627047974435,
+          0.5495893171238329
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_pinky_distal_link_material_0"
+      },
+      {
+        "name": "right_pinky_touch_link:visual:0",
+        "sourceBodyName": "right_pinky_touch_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/96ed796046634fead6ac.stl",
+        "position": [
+          0.1849237726883381,
+          0.020250565809486105,
+          -0.02804305673118313
+        ],
+        "quaternion": [
+          0.25684852905219,
+          0.3806350907517701,
+          0.5970696506695133,
+          0.6577640861749017
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "materialName": "right_pinky_touch_link_material_0"
+      },
+      {
+        "name": "left_wrist_camera_link:visual:0",
+        "sourceBodyName": "left_wrist_camera_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/72a18279e8a56408586e.stl",
+        "position": [
+          0.0477850953541,
+          -0.0264111315841,
+          -0.0198367108292
+        ],
+        "quaternion": [
+          -0.5844129106518303,
+          0.3389911308374351,
+          0.31022383299604805,
+          0.6688106881010896
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.08,
+          0.09,
+          0.1,
+          1
+        ],
+        "materialName": "left_wrist_camera_link_material"
+      },
+      {
+        "name": "left_wrist_camera_PCB_link:visual:0",
+        "sourceBodyName": "left_wrist_camera_PCB_link",
+        "bodyName": "left_wrist_yaw_link",
+        "bodyId": 30,
+        "meshUrl": "robot/appearance-1020/9ef0c934cf4351d857d1.stl",
+        "position": [
+          0.03616013938049921,
+          -0.020153536505886874,
+          -0.019861477141115438
+        ],
+        "quaternion": [
+          -0.6151686585063749,
+          0.2704919990416447,
+          0.4066805556260613,
+          0.6188800576215072
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.1,
+          0.25,
+          0.12,
+          1
+        ],
+        "materialName": "left_wrist_camera_PCB_link_material"
+      },
+      {
+        "name": "right_wrist_camera_link:visual:0",
+        "sourceBodyName": "right_wrist_camera_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/72a18279e8a56408586e.stl",
+        "position": [
+          0.0474874805168,
+          0.0263737979501,
+          -0.0148423329622
+        ],
+        "quaternion": [
+          -0.33899113083869353,
+          0.5844129106511002,
+          0.6688106881017577,
+          0.31022383299460776
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.08,
+          0.09,
+          0.1,
+          1
+        ],
+        "materialName": "right_wrist_camera_link_material"
+      },
+      {
+        "name": "right_wrist_camera_PCB_link:visual:0",
+        "sourceBodyName": "right_wrist_camera_PCB_link",
+        "bodyName": "right_wrist_yaw_link",
+        "bodyId": 55,
+        "meshUrl": "robot/appearance-1020/9ef0c934cf4351d857d1.stl",
+        "position": [
+          0.03595301484311611,
+          0.019188173285292518,
+          -0.01582045943699134
+        ],
+        "quaternion": [
+          -0.6244546983055784,
+          -0.392443430544438,
+          -0.25662603229998865,
+          0.6246499524794404
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rgba": [
+          0.1,
+          0.25,
+          0.12,
+          1
+        ],
+        "materialName": "right_wrist_camera_PCB_link_material"
+      }
+    ],
+    "files": [
+      {
+        "url": "robot/appearance-1020/9a249feb95d632aa648c.stl",
+        "bytes": 1751184,
+        "sha256": "9a249feb95d632aa648cd07757b2ccce6da36723875e7630fa75d66a4ae8f036",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/9a249feb95d632aa648c.stl.gz",
+          "bytes": 704818,
+          "sha256": "f76085de6eec5ca9f49f4729dc41bcfa7f9bcf58428f2682ed2e06c58fb58129"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/4725168105ee768ee316.stl",
+        "bytes": 181684,
+        "sha256": "4725168105ee768ee31638ef22b53f6be2d7641bfd7cfefe803488d884776fa4",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/4725168105ee768ee316.stl.gz",
+          "bytes": 78838,
+          "sha256": "01c72eb10443bc65023248a003a3f088aec144c06aeba77e209e7d36d91d0d61"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/91f25922ee8a7c315279.stl",
+        "bytes": 192184,
+        "sha256": "91f25922ee8a7c3152790051bebad17b4d9cd243569c38fe340285ff93a97acf",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/91f25922ee8a7c315279.stl.gz",
+          "bytes": 84245,
+          "sha256": "e9d45074be6ea5633dcdacaedfeb2a48e266543749a9dfd66add54fc5a1e252b"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/a16d88aa6ddac8083aa7.stl",
+        "bytes": 296284,
+        "sha256": "a16d88aa6ddac8083aa7ad55ed317bea44b1fa003d314fba88965b7ed0f3b55b",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/a16d88aa6ddac8083aa7.stl.gz",
+          "bytes": 132139,
+          "sha256": "6f770e69a7171ef4e7d44d82a22730b7d37e3fadebbd8d8ad5cfe8afcb79d719"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/8d92b9e3d3a636761150.stl",
+        "bytes": 854884,
+        "sha256": "8d92b9e3d3a636761150bb8025e32514c4602b91c7028d523ee42b3e632de477",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/8d92b9e3d3a636761150.stl.gz",
+          "bytes": 393720,
+          "sha256": "74fe38b5f7ce4e0805ddca4faf2a0dd8d46ff3668e2d8b33bb2753ebe11cfb7d"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/d49e3abc6f5b12e53206.stl",
+        "bytes": 71184,
+        "sha256": "d49e3abc6f5b12e532062cd575b87b5ef40cd2a3fc18f54a1ca5bba4f773d51d",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/d49e3abc6f5b12e53206.stl.gz",
+          "bytes": 30227,
+          "sha256": "a217776653145a8721cb750c89870cee9d1f090ca746dc38923e96a2be91306a"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/c4092af943141d4d9f74.stl",
+        "bytes": 653384,
+        "sha256": "c4092af943141d4d9f74232f3cfa345afc6565f46a077793b8ae0e68b39dc33f",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/c4092af943141d4d9f74.stl.gz",
+          "bytes": 303214,
+          "sha256": "1747fb3fcba6a5a95fb73bd1151d685ee9fac7350563e8596b612fdecd6e5f2d"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/e4f3c99d7f4a7d34eadb.stl",
+        "bytes": 181284,
+        "sha256": "e4f3c99d7f4a7d34eadbef9461fc66e3486cb5442db1ec50c86317d459f1a9c6",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/e4f3c99d7f4a7d34eadb.stl.gz",
+          "bytes": 78638,
+          "sha256": "0ad795120146565cd7428d8d3ff1bfe26a26761d5c5dca6fb992f238a02f298d"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/4c254ef66a356f492947.stl",
+        "bytes": 192684,
+        "sha256": "4c254ef66a356f492947f360dd931965477b631e3fcc841f91ccc46d945d54f6",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/4c254ef66a356f492947.stl.gz",
+          "bytes": 84472,
+          "sha256": "ec46cefc8ae574d220eca699dd073e63a7a3f6378e47cfaf8b33c10fd16e4f37"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/e479c2936ca2057e9eb2.stl",
+        "bytes": 296284,
+        "sha256": "e479c2936ca2057e9eb2f7dff6c189b7419d7b8484dea0b298cbb36a2a6aa668",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/e479c2936ca2057e9eb2.stl.gz",
+          "bytes": 131780,
+          "sha256": "0291f39ed21734bab0a29b38a8835578c94001ab348a73e9234961b04c3121f0"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/63c4008449c9bbe701a6.stl",
+        "bytes": 852284,
+        "sha256": "63c4008449c9bbe701a6e2b557b7a252e90cf3a5abcf54cee46862b9a69f8ec8",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/63c4008449c9bbe701a6.stl.gz",
+          "bytes": 392403,
+          "sha256": "71a9463816f20f939cc64d877bebf58021f985ccaf1b0dac4f043a6d853e223a"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/15be426539ec1be70246.stl",
+        "bytes": 71184,
+        "sha256": "15be426539ec1be70246d4d82a168806db64a41301af8b35c197a33348c787a9",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/15be426539ec1be70246.stl.gz",
+          "bytes": 30210,
+          "sha256": "5b3afc5d64dde40600917a25e8fa26e794ad1e76c74054ca4f0646448bad1fdd"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/4b66222ea56653e62771.stl",
+        "bytes": 653784,
+        "sha256": "4b66222ea56653e627711b56d0a8949b4920da5df091da0ceb343f54e884e3a5",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/4b66222ea56653e62771.stl.gz",
+          "bytes": 303456,
+          "sha256": "16eec723054646f377326195dfb5fb1b6e47feebccd4ce832fda71efb43c06eb"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/ec6db442b11f25eed898.stl",
+        "bytes": 619984,
+        "sha256": "ec6db442b11f25eed898b5add07940c85d804f300de24dcbd264ccd8be7d554c",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/ec6db442b11f25eed898.stl.gz",
+          "bytes": 221496,
+          "sha256": "b9eebf8741daf4cd3f0eda330139b222d3d0e0457bc2ac2ee05f71b982232467"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/b67c347a05abc3e8ddae.stl",
+        "bytes": 85884,
+        "sha256": "b67c347a05abc3e8ddae600d98a082bee273bb39f8e651647708b0a7140a8a97",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/b67c347a05abc3e8ddae.stl.gz",
+          "bytes": 32482,
+          "sha256": "f903e5ea41ce028b6462c2483719df1124c6777f2dca4ed99707c9cc6bab1cd9"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/11ddb46f2098efbbd881.stl",
+        "bytes": 2570584,
+        "sha256": "11ddb46f2098efbbd8816b1d65893632d8e78be936376c7cdcd6771899ccc723",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/11ddb46f2098efbbd881.stl.gz",
+          "bytes": 1072072,
+          "sha256": "eccaa9724c29ba562ff4baf1103a9fb441be6f4816413125b0339b34a25073b9"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/f0d1cfd02fcf0d42f95e.stl",
+        "bytes": 176784,
+        "sha256": "f0d1cfd02fcf0d42f95e678eeca33da3afbcc366ffba5c052847773ec4f31d52",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/f0d1cfd02fcf0d42f95e.stl.gz",
+          "bytes": 78226,
+          "sha256": "a5ccff5f5359faa2d8919ce0dfae16fea23fecfdb6ff45fc745fd735cb967f47"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/fb9df21687773522598d.stl",
+        "bytes": 400284,
+        "sha256": "fb9df21687773522598dc384f1a2945c7519f11cbc8bd372a49170316d6eee88",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/fb9df21687773522598d.stl.gz",
+          "bytes": 179843,
+          "sha256": "c9853978b62c3637f4a475ae5c1e525f0034c37eff05901b3b29eaa723bd3c3d"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/1aa97e9748e924336567.stl",
+        "bytes": 249184,
+        "sha256": "1aa97e9748e924336567992181f78c7cd0652fd52a4afcca3df6b2ef6f9e712e",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/1aa97e9748e924336567.stl.gz",
+          "bytes": 109223,
+          "sha256": "caaa066a3dade3817ed3417379c5c6e452c329d6a678a5c6bd72dcda1cbbd302"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/fa752198accd104d5c4c.stl",
+        "bytes": 88784,
+        "sha256": "fa752198accd104d5c4c3a01382e45165b944fbbc5acce085059223324e5bed3",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/fa752198accd104d5c4c.stl.gz",
+          "bytes": 39925,
+          "sha256": "e1b277dd5e5da375f7a523cd98ef9235bc9700e5727438d6e8649443e625fcb2"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/2e1be7b7d36f54ef1193.stl",
+        "bytes": 790684,
+        "sha256": "2e1be7b7d36f54ef119322c2c931c3ec3226a2728f2d9b0afdaa914add23b7a8",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/2e1be7b7d36f54ef1193.stl.gz",
+          "bytes": 369188,
+          "sha256": "6c86fe6aa0f01cf997ec1a4935453dc23856866ff787a4e572cf097ccfc553ba"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/5c4cbe6beddeb6e80c1a.stl",
+        "bytes": 123884,
+        "sha256": "5c4cbe6beddeb6e80c1a0ca26c787e4cb0627743b8a1d1c1e508294ff93fe58a",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/5c4cbe6beddeb6e80c1a.stl.gz",
+          "bytes": 56277,
+          "sha256": "da7db48374db67d3f1a23fe769040096d04c14066a318792c37256dc08dd634b"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/4a340f1121c710cac0f7.stl",
+        "bytes": 626284,
+        "sha256": "4a340f1121c710cac0f7ac1490352455848f04b454193f4071c25ab4b46c5f27",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/4a340f1121c710cac0f7.stl.gz",
+          "bytes": 207437,
+          "sha256": "fcc262e4b4afc9f2e2a8418f62968845d901162e565a160424e491a3091f3b3e"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/1fe2d033a63652bf9af9.stl",
+        "bytes": 844884,
+        "sha256": "1fe2d033a63652bf9af999fdd24c07b8aa02c40feb64dbf4c9a88b2d9baf5f45",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/1fe2d033a63652bf9af9.stl.gz",
+          "bytes": 311765,
+          "sha256": "42687ffd69b0cb0d61097e6b64ed1cbe7886a6a5b968eb64e855ca037a58c36b"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/24cdb387e0128dfe6027.stl",
+        "bytes": 176784,
+        "sha256": "24cdb387e0128dfe602770a81c56cdce3a0181d34d039a11d1aaf8819b7b8c02",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/24cdb387e0128dfe6027.stl.gz",
+          "bytes": 78268,
+          "sha256": "d9c24871535ef9658b80c5a6293dd7b13f4622476ece914d538c41e6f707b0f3"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/962b97c48f9ce9e8399f.stl",
+        "bytes": 401884,
+        "sha256": "962b97c48f9ce9e8399f45dd9522e0865d19aa9fd299406b2d475a8fc4a53e81",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/962b97c48f9ce9e8399f.stl.gz",
+          "bytes": 181443,
+          "sha256": "90b59351535b88767948b5f06be0ba5882ba84dcca6071d67c66b2c494a99fbc"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/a0b76489271da0c72461.stl",
+        "bytes": 249984,
+        "sha256": "a0b76489271da0c72461a344c9ffb0f0c6e64f019ea5014c1624886c442a2fe5",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/a0b76489271da0c72461.stl.gz",
+          "bytes": 109394,
+          "sha256": "aede8eeb767d43cf8cbfe77dfeb862c5778d8582279ed343d0e3e83ea5fc084c"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/1be925d7aa268bb8fddf.stl",
+        "bytes": 88784,
+        "sha256": "1be925d7aa268bb8fddf5362b9173066890c7d32092c05638608126e59d1e2ab",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/1be925d7aa268bb8fddf.stl.gz",
+          "bytes": 39954,
+          "sha256": "c72e4abda8daed5bdb94f26548ae00ebd688e19dcc1a85a6be868f37d5ca2679"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/5959c2ee4df1f14ae840.stl",
+        "bytes": 799184,
+        "sha256": "5959c2ee4df1f14ae8402411a26cba31544b49ae1402c96b204a72f3e086f7a4",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/5959c2ee4df1f14ae840.stl.gz",
+          "bytes": 373126,
+          "sha256": "3aa510644116ebeeda8dec0c862d696914b77db75100dd89f27919a565bb4cbe"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/b0b2a3153c9cb576ef32.stl",
+        "bytes": 114084,
+        "sha256": "b0b2a3153c9cb576ef327145e9761db713a5083452c70b22899841365df75c56",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/b0b2a3153c9cb576ef32.stl.gz",
+          "bytes": 52311,
+          "sha256": "f5da1dfd140372a441dce46c48ad3d38a3059235b2870eb76c59bbb5c76c0a26"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/3322fefc17fbb4361db0.stl",
+        "bytes": 618184,
+        "sha256": "3322fefc17fbb4361db061db8b3ffc6200eaea7e6bec07957a2ce53a890c3c59",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/3322fefc17fbb4361db0.stl.gz",
+          "bytes": 201702,
+          "sha256": "17b4c390bd13d91e667709c75acc4825c291e944c46cc171df39908c33b9dcec"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/1b7f9d1922c59fdf1b63.stl",
+        "bytes": 845084,
+        "sha256": "1b7f9d1922c59fdf1b63571818a09af779931ffb370860e88ac895896fe1717f",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/1b7f9d1922c59fdf1b63.stl.gz",
+          "bytes": 218745,
+          "sha256": "6ce78647d3b9a5caeac339524661ac2c44e0ed73c097b3db6490b2b9a2a272d8"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/9fb6699711444f1e1906.stl",
+        "bytes": 22369484,
+        "sha256": "9fb6699711444f1e1906754c4dae744cba122e3a49d244d68fb528cb6598bacb",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/9fb6699711444f1e1906.stl.gz",
+          "bytes": 7559343,
+          "sha256": "556168785e3be4e18a5a3a55a04ec9be94c477cdc1f8aabc2bd8b4b8bb037d1d"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/5a23e6d7eddd9123d4ee.stl",
+        "bytes": 9552784,
+        "sha256": "5a23e6d7eddd9123d4eec177767815105110277ba192e6bed8eb268ca3a448af",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/5a23e6d7eddd9123d4ee.stl.gz",
+          "bytes": 4286476,
+          "sha256": "f3f927172986d2949a22fa1057f67d419ca99f42fb4368aeb9e2e7284c483b2b"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/29cff1ec1d83714a0909.stl",
+        "bytes": 1700384,
+        "sha256": "29cff1ec1d83714a0909f2a7a783b3e36b5e42949a246e66b7acbcfb21e5801d",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/29cff1ec1d83714a0909.stl.gz",
+          "bytes": 617134,
+          "sha256": "9dea3b1399e698fc9030b4634914efb123472bbfc30ea4cfc53b73f4d6191112"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/340401f796bbac762cf8.stl",
+        "bytes": 2368784,
+        "sha256": "340401f796bbac762cf85d53e6db4be02cce2f06b66fcf8d6ecb5ba883f06afd",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/340401f796bbac762cf8.stl.gz",
+          "bytes": 1076790,
+          "sha256": "74a62213d6b1497b92c1f1293dccb5f5e7049ff694ac820b877bad682f1bc96d"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/d9d2558da8369d2f0993.stl",
+        "bytes": 252684,
+        "sha256": "d9d2558da8369d2f0993e46eed3d1e2a11b4927ab2b8c1731d460b72fea04e9e",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/d9d2558da8369d2f0993.stl.gz",
+          "bytes": 114875,
+          "sha256": "e927ded30a3c562319edd8fcb61ce52a1428b9fcb6c6b7ce90cf112deacaf71f"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/415a75193e7773572b0d.stl",
+        "bytes": 290384,
+        "sha256": "415a75193e7773572b0df8a80fa4e1d187a67901a5ff381a89ee5b7df64735ea",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/415a75193e7773572b0d.stl.gz",
+          "bytes": 124826,
+          "sha256": "7626db727c63d2e71b718199d800ee041510665a6a34189cf9699e87c9f0f4a0"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/ccffe779ed683ec5c2f2.stl",
+        "bytes": 620384,
+        "sha256": "ccffe779ed683ec5c2f24e3776c11a127e341743142ddd8f275bfded76938da8",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/ccffe779ed683ec5c2f2.stl.gz",
+          "bytes": 283178,
+          "sha256": "b0a9b847a7af2558432bb4dd2ced870f2a820d08100d920ed01912dbbd5f9dfb"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/bcd5279fb8a4d8ba4b06.stl",
+        "bytes": 771684,
+        "sha256": "bcd5279fb8a4d8ba4b06b3d302caa567fde9add81b057943cc6a445abb9e27b5",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/bcd5279fb8a4d8ba4b06.stl.gz",
+          "bytes": 348132,
+          "sha256": "beb17fbd82028a1c7c55f999c76d09eec44a0a686af985ccc05cad5534732408"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/99300669452dc8e34d5f.stl",
+        "bytes": 96284,
+        "sha256": "99300669452dc8e34d5f62caf31c9c769077af45e0127511cd0c56967fe691a6",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/99300669452dc8e34d5f.stl.gz",
+          "bytes": 44094,
+          "sha256": "5ea73a393703b6c9a11c93a9760d635a84f153666559d768032efd204bcfe317"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/e31a6aa8faf2be8a6bfc.stl",
+        "bytes": 125084,
+        "sha256": "e31a6aa8faf2be8a6bfc3f222ebe7cf59fb5266487d1d98b86a55a7a2524fc20",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/e31a6aa8faf2be8a6bfc.stl.gz",
+          "bytes": 56829,
+          "sha256": "53b8afef915045836e4b5c76f398b8bd66f1cb8d49adb40066eac0a9c2e6f246"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/1fed32c1a8451282b314.stl",
+        "bytes": 339884,
+        "sha256": "1fed32c1a8451282b314579eed3903a288a62524dc7d8b08464fb559261bb580",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/1fed32c1a8451282b314.stl.gz",
+          "bytes": 156533,
+          "sha256": "26ef4edbb40c3eff3357c219d65cb44621fc28d1ebf8959a369de1fadbd3f62d"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/634d5c569628c3c2dbc9.stl",
+        "bytes": 408284,
+        "sha256": "634d5c569628c3c2dbc92932065748ed830fb17ccf933959a5834b2759ab8acd",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/634d5c569628c3c2dbc9.stl.gz",
+          "bytes": 186328,
+          "sha256": "14c42ad55881b8b815ae568e5f51bf460451c84d6c4949e0a389c1c216aee27b"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/821249c18a0cf66c87aa.stl",
+        "bytes": 99984,
+        "sha256": "821249c18a0cf66c87aa4029de1f0ce532f03e7a173c951a5121f2df3b301b52",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/821249c18a0cf66c87aa.stl.gz",
+          "bytes": 44532,
+          "sha256": "d09cda5a67e559882ff00b3d5708cb3024768f41da479dc7c1d834881f5640aa"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/50122ebf6e75698ba2c4.stl",
+        "bytes": 334284,
+        "sha256": "50122ebf6e75698ba2c469efd58e07ad3f82b1a002728cd15802f1c435d54c0c",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/50122ebf6e75698ba2c4.stl.gz",
+          "bytes": 153533,
+          "sha256": "5a45d41ea8b6938f22bf1a8f8123e12e5c8c8b16be064ab25904d0807e4cd933"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/e0ff6f648bbb7712bbc7.stl",
+        "bytes": 406584,
+        "sha256": "e0ff6f648bbb7712bbc7f06bacdd3a574cac2e1bc2398383b57da2d76c88932a",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/e0ff6f648bbb7712bbc7.stl.gz",
+          "bytes": 185155,
+          "sha256": "ebf803c76df5677cf49cc32c4cca0ccf684ba3e775c84bd7b6e319f297bb369e"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/c91b30341a816ac079ec.stl",
+        "bytes": 69884,
+        "sha256": "c91b30341a816ac079ec1268c8427ca3a010356002a30b6847b2853a0edf1e6b",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/c91b30341a816ac079ec.stl.gz",
+          "bytes": 31187,
+          "sha256": "b93721bfd584c9791dd51d2f7c414fd692d22351dc43bd87a44500ebd15a245c"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/77220c07d5bbc119cb82.stl",
+        "bytes": 281184,
+        "sha256": "77220c07d5bbc119cb828af89f35cb4cef755bbc98a1cae2dda846268ff59501",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/77220c07d5bbc119cb82.stl.gz",
+          "bytes": 129062,
+          "sha256": "2815dd0f4e406fbca103d4bc839344283ae45ffec2453f2adbdea61cd8447af2"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/c59b62ef04c9cb436f6a.stl",
+        "bytes": 529784,
+        "sha256": "c59b62ef04c9cb436f6a6bac5ae9be985eca0d538bc58380c40c00d16079d580",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/c59b62ef04c9cb436f6a.stl.gz",
+          "bytes": 240978,
+          "sha256": "26b25d30e1b666bc7560afed5d2b9c8da3ec90cf6bfcc50419f8886c5658e765"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/c2fb7d2c4fb0df91209a.stl",
+        "bytes": 71584,
+        "sha256": "c2fb7d2c4fb0df91209ab7158d5f17ab59a7aa56522a9e91a3c3884a35ac6ae0",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/c2fb7d2c4fb0df91209a.stl.gz",
+          "bytes": 32001,
+          "sha256": "4b487a7279e03b96b9be9638138f1fb2142e3019c9fcd2257c38956993a54238"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/9f1408568638fbbec4cf.stl",
+        "bytes": 346784,
+        "sha256": "9f1408568638fbbec4cf32507d4b233fbd8cdb9c862e07cc7da6cd826497caa6",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/9f1408568638fbbec4cf.stl.gz",
+          "bytes": 158934,
+          "sha256": "47f8dd4572f0b4eec838c5192a71ee005b64001cb4d745a37c226a5c6f581511"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/d52822897dcc0de60fff.stl",
+        "bytes": 554484,
+        "sha256": "d52822897dcc0de60fff7f2652a7d12a342b47905eff7555eaabcc1bcfcaeac4",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/d52822897dcc0de60fff.stl.gz",
+          "bytes": 253706,
+          "sha256": "b13a6f3f0f188823017d9ea3882d2510d56a2cf399313b6667d7907a3f32fa84"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/850ad4ad9daf4188aa17.stl",
+        "bytes": 68584,
+        "sha256": "850ad4ad9daf4188aa17f96588fe5541fb0c70be10d714930b3cb816748258a0",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/850ad4ad9daf4188aa17.stl.gz",
+          "bytes": 30826,
+          "sha256": "281c4f3b5dfd34024a9d2113b09765d44482876e36b0c759e8290c31b16c7b6c"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/2754b59a9132a04a28cf.stl",
+        "bytes": 2364184,
+        "sha256": "2754b59a9132a04a28cf5725d5478599218c9f7dd4b2e13329147e824211ec44",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/2754b59a9132a04a28cf.stl.gz",
+          "bytes": 1076207,
+          "sha256": "3f4836e57c4dc2f989e12e58a57583cbe521d1821bb89fce2baa734deb9ef537"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/7357830cda11d9749adc.stl",
+        "bytes": 130584,
+        "sha256": "7357830cda11d9749adc1e796aa0e493f8001ac2c21815d40fdc1406a3b3457c",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/7357830cda11d9749adc.stl.gz",
+          "bytes": 58902,
+          "sha256": "50ef2fce21dc0be985e090374da8b386612003238844b9878f76f07d0f54e15d"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/15464fa122dddc49a564.stl",
+        "bytes": 289584,
+        "sha256": "15464fa122dddc49a56462898777e9e407f22b81abb03d10aba0d95f8fefc83a",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/15464fa122dddc49a564.stl.gz",
+          "bytes": 124724,
+          "sha256": "ab3a642d1fc6cbefc267c4dbb112d93df529663e192ba33f3974c97047af50a3"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/0c415499f0b28609062d.stl",
+        "bytes": 735284,
+        "sha256": "0c415499f0b28609062d1364cd2500cd801a5f4e6a8a2083ae82b8a870404495",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/0c415499f0b28609062d.stl.gz",
+          "bytes": 332277,
+          "sha256": "085fe32300d148337f24a227c8851f8111574d41349b27255c5f02feff4d28fc"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/f489da4e47935510ffba.stl",
+        "bytes": 95834,
+        "sha256": "f489da4e47935510ffba42016052318f123ef07360fdbbfaadcb0f7d8ddbe28f",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/f489da4e47935510ffba.stl.gz",
+          "bytes": 43724,
+          "sha256": "69828b23a9e343c5f1d7a4c220d7b06016b22a92eb411ccf036c08684f51844e"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/184c29c27b46ea21df21.stl",
+        "bytes": 123084,
+        "sha256": "184c29c27b46ea21df210a13af795c49569fcc1b36cd8b8ebe5aa66b4a0f5612",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/184c29c27b46ea21df21.stl.gz",
+          "bytes": 56013,
+          "sha256": "83ff8c080b7bb360f982fe5db56df18d7ac0601a4e7fab226d3264b8a4ff38f0"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/94fdff414f1c29940495.stl",
+        "bytes": 339884,
+        "sha256": "94fdff414f1c29940495d1f0264a50621340cfc30f9b5365b3490d39ae367f2f",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/94fdff414f1c29940495.stl.gz",
+          "bytes": 156513,
+          "sha256": "77f5a2075912a22984bf6a7f9d157dfcd881517cb0b59d5dee05268fbd0f5a14"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/44d4b12f55e85baf7768.stl",
+        "bytes": 411284,
+        "sha256": "44d4b12f55e85baf77685443aa1f38ae521130a58f0b742920f2a99abc1a1efb",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/44d4b12f55e85baf7768.stl.gz",
+          "bytes": 187910,
+          "sha256": "e8625064481f96edd1f00f0d68a60cd3e6233e796069b2f40869da7ed18b0a07"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/a7f7b054539a858173b3.stl",
+        "bytes": 99984,
+        "sha256": "a7f7b054539a858173b3e002be2df5ebc60a3e3d8bdf38e32f490a1475809251",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/a7f7b054539a858173b3.stl.gz",
+          "bytes": 44836,
+          "sha256": "d8f483a92b6cdb111945be734bff187aa1a3f8b3f3758de54106d9ec24fc630c"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/56d9f019bad093daf93a.stl",
+        "bytes": 333384,
+        "sha256": "56d9f019bad093daf93a736596ab4e7d9b17fb3c79e2be4181d909958cf76a37",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/56d9f019bad093daf93a.stl.gz",
+          "bytes": 153115,
+          "sha256": "87227ffccf6feabcaad856d497d9ce02f1814bda9a46334848ea97d8772a2b9e"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/8f11ee9addab1a1eab40.stl",
+        "bytes": 408584,
+        "sha256": "8f11ee9addab1a1eab40fd765c21389e6f98397166ae5899dc83ddf66f871b3b",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/8f11ee9addab1a1eab40.stl.gz",
+          "bytes": 186565,
+          "sha256": "9a0538f3fedb2d29e4cfcc5e61d82b1e77d9576169c222aafd05d792af075c42"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/1fdd83c56c7eccb38b1a.stl",
+        "bytes": 69884,
+        "sha256": "1fdd83c56c7eccb38b1af2d75742f1681d6a4dff93e9f15a37173e22117fecf0",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/1fdd83c56c7eccb38b1a.stl.gz",
+          "bytes": 31193,
+          "sha256": "9575151c24ac3f010e053aae32b996164763e866c9f45e3bebc758ae5c5b0bce"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/89c64252e891bc915672.stl",
+        "bytes": 281484,
+        "sha256": "89c64252e891bc91567241b74de18d986e20e4e57d74cd10289d7171f6c57dc6",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/89c64252e891bc915672.stl.gz",
+          "bytes": 129182,
+          "sha256": "38c0397690dd0e0411ab9d85843dc8c1f90ad2e02addd742b44e664ef9802274"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/40acf67de96d432bbbc0.stl",
+        "bytes": 529684,
+        "sha256": "40acf67de96d432bbbc0a3eda7bbb292cbd2ea0c5f0c78a9b299cf360f3a9f07",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/40acf67de96d432bbbc0.stl.gz",
+          "bytes": 240886,
+          "sha256": "6988c675b8aec8f4eaaa89ce65e78cfba6f472924eecdf0c0e1fc32d551b570c"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/f9c0ac36994b014d25b7.stl",
+        "bytes": 71584,
+        "sha256": "f9c0ac36994b014d25b7d5c292cbd39192e5146c8961ded1e8a9702e2d4e62c2",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/f9c0ac36994b014d25b7.stl.gz",
+          "bytes": 32002,
+          "sha256": "5f1365ab0574dd528725f426b3492dd2b7e8faef3b5a4fdc768c1c8d6f4ca31a"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/1a4ba525880efd4da2bc.stl",
+        "bytes": 343284,
+        "sha256": "1a4ba525880efd4da2bcdfd5d2d69a684a02f8c7c01f8e185adf23f47469d0f4",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/1a4ba525880efd4da2bc.stl.gz",
+          "bytes": 157461,
+          "sha256": "f7c468a5a0fc09a95fd047f1bf7fa1ade13903a4352ab75945828d53de9d1363"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/14c25fb57059978594ea.stl",
+        "bytes": 554084,
+        "sha256": "14c25fb57059978594ea518860522ae401e3a3602d6a39297c52807620e30bac",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/14c25fb57059978594ea.stl.gz",
+          "bytes": 253487,
+          "sha256": "e1ea37dd4773f4d739d1e664b47b80a58a65d21d2ebe627a33a3a470a7483c78"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/96ed796046634fead6ac.stl",
+        "bytes": 68584,
+        "sha256": "96ed796046634fead6ac789be979e3b013c3a6d32ba866a31ea92f7c3ebf19ee",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/96ed796046634fead6ac.stl.gz",
+          "bytes": 30832,
+          "sha256": "92a831cd891ea17eddea91a214b20ff6206eaa98a3256c373191437e036e09b4"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/72a18279e8a56408586e.stl",
+        "bytes": 25084,
+        "sha256": "72a18279e8a56408586e379a2762fa27b325c27423dd3731e1ea4e31360c27cc",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/72a18279e8a56408586e.stl.gz",
+          "bytes": 4412,
+          "sha256": "15ce9765a70e53cf3090f854be5d19b7a8f546447d74966943a33633e1e7f992"
+        }
+      },
+      {
+        "url": "robot/appearance-1020/9ef0c934cf4351d857d1.stl",
+        "bytes": 27884,
+        "sha256": "9ef0c934cf4351d857d1415cc3fe534a773e6da97523ccc4a6bd059fb402b506",
+        "transport": {
+          "encoding": "gzip",
+          "url": "robot/appearance-1020/9ef0c934cf4351d857d1.stl.gz",
+          "bytes": 4873,
+          "sha256": "2e87e0d7955b716b246d9fd950afe81aee53d0241ff53d6be158cf306ad6772b"
+        }
+      }
+    ]
+  },
+  "protocol": {
+    "batch": "1019_eval_inhouse_grounded_refvel_nohand",
+    "condition": "dr_off/test052_20k_human_global",
+    "dataset": "lhm_1014_beta_grounded_20261019",
+    "backend": "mujoco",
+    "comparisonBackend": "isaacsim",
+    "startupRandomization": false,
+    "rolloutConfigSha256": "8070cc9ea5ba2a1e6f71ecf55b93af41c4d7a46061e04a7ccb61b6e35cc75ce9",
+    "datasetManifestSha256": "15ba794fc444f03a33aaa0833f2a4ee599e5373a9f0987c8fd4a8af599c25e78"
+  },
+  "policy": {
+    "jointNames": [
+      "left_hip_pitch_joint",
+      "right_hip_pitch_joint",
+      "waist_yaw_joint",
+      "left_hip_roll_joint",
+      "right_hip_roll_joint",
+      "waist_roll_joint",
+      "left_hip_yaw_joint",
+      "right_hip_yaw_joint",
+      "waist_pitch_joint",
+      "left_knee_joint",
+      "right_knee_joint",
+      "left_shoulder_pitch_joint",
+      "right_shoulder_pitch_joint",
+      "left_ankle_pitch_joint",
+      "right_ankle_pitch_joint",
+      "left_shoulder_roll_joint",
+      "right_shoulder_roll_joint",
+      "left_ankle_roll_joint",
+      "right_ankle_roll_joint",
+      "left_shoulder_yaw_joint",
+      "right_shoulder_yaw_joint",
+      "left_elbow_joint",
+      "right_elbow_joint",
+      "left_wrist_roll_joint",
+      "right_wrist_roll_joint",
+      "left_wrist_pitch_joint",
+      "right_wrist_pitch_joint",
+      "left_wrist_yaw_joint",
+      "right_wrist_yaw_joint"
+    ],
+    "historyLength": 10,
+    "actionClip": 20,
+    "futureOffsets": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "pointNames": [
+      "pelvis",
+      "left_wrist_yaw_link",
+      "right_wrist_yaw_link",
+      "left_ankle_roll_link",
+      "right_ankle_roll_link"
+    ],
+    "referenceFrame": "global",
+    "referenceSource": "human_scaled",
+    "historyOrder": "oldest-to-newest",
+    "firstControlFrame": 1
+  },
+  "motions": [
+    {
+      "id": "motion01",
+      "label": "Balance-Perturbation-1 · REC-10666",
+      "taskName": "Balance-Perturbation-1",
+      "category": "Balance-Perturbation",
+      "sourceFilename": "Chingmu_Balance-Perturbation_REC-10666_BVH_Take_000_shibowen.pkl",
+      "recordId": "REC-10666",
+      "officialTaskRecordId": "recvrw3ZAo8KnD",
+      "datasetId": "lhm_1014_beta_grounded_20261019",
+      "sourceFps": 30,
+      "sourceFrames": 127,
+      "humanSourceSha256": "48c73d67ef546f3878fb04bad8b723a5d4780dc1da08cb7c2556ce09dac6b416",
+      "g1SourceSha256": "49e2318ad11c93b17aad0e623f8f2dcd5a01669a635023f9fe07f2af4bcf9023",
+      "url": "motions/motion01.json",
+      "numFrames": 210,
+      "fps": 50,
+      "duration": 4.18,
+      "bytes": 150488,
+      "sha256": "d7d6973ab3d1d395590cbb12822603dcc153b30ae06c6fc26cc6f52285b1101b"
+    },
+    {
+      "id": "motion02",
+      "label": "Dual-Reaching-1801 · REC-10675",
+      "taskName": "Dual-Reaching-1801",
+      "category": "Dual-Reaching",
+      "sourceFilename": "Chingmu_Dual-Reaching_REC-10675_BVH_Take_001_shibowen.pkl",
+      "recordId": "REC-10675",
+      "officialTaskRecordId": "recvkguPVGSqYb",
+      "datasetId": "lhm_1014_beta_grounded_20261019",
+      "sourceFps": 30,
+      "sourceFrames": 72,
+      "humanSourceSha256": "3e4281e9604f109abb1a272ab2f68d703c278a7511979fa89369ee3d9f748929",
+      "g1SourceSha256": "67fc20ea82e0db71403b7d09d7ce36e823cbfc19231f5cb4702bbb5592151a01",
+      "url": "motions/motion02.json",
+      "numFrames": 119,
+      "fps": 50,
+      "duration": 2.36,
+      "bytes": 86794,
+      "sha256": "7ae507eea8a5a4a6bd8dd63d201931d4c0c80591096d40891d79c302e54b3d71"
+    },
+    {
+      "id": "motion03",
+      "label": "End-Effector-Stability-1 · REC-11470",
+      "taskName": "End-Effector-Stability-1",
+      "category": "End-Effector-Stability",
+      "sourceFilename": "Chingmu_End-Effector-Stability_REC-11470_BVH_Take_000_huchuanxiang.pkl",
+      "recordId": "REC-11470",
+      "officialTaskRecordId": "recvsggZSvLp15",
+      "datasetId": "lhm_1014_beta_grounded_20261019",
+      "sourceFps": 30,
+      "sourceFrames": 247,
+      "humanSourceSha256": "6b91676f9443a1f1a9bb141b5140d0a0d2a4bf2c6dd2aaae5d697374ffee3bf6",
+      "g1SourceSha256": "fe7e33f6857fc7531012b72dfcf05a28f6be32b9ec0c72819c433a3454b7d0f1",
+      "url": "motions/motion03.json",
+      "numFrames": 410,
+      "fps": 50,
+      "duration": 8.18,
+      "bytes": 290443,
+      "sha256": "1b22799def931c0128ac49e155cb95e262988fb755f6c2690eba29be1da4ca39"
+    },
+    {
+      "id": "motion04",
+      "label": "Hand-Reaching-1 · REC-0674",
+      "taskName": "Hand-Reaching-1",
+      "category": "Hand-Reaching",
+      "sourceFilename": "Chingmu_Hand-Reaching_REC-0674_BVH_Hand-Reaching-1-shihao-pangyiming-zhouzhihe-_010_pangyiming.pkl",
+      "recordId": "REC-0674",
+      "officialTaskRecordId": "recvjEyB2IrvSr",
+      "datasetId": "lhm_1014_beta_grounded_20261019",
+      "sourceFps": 30,
+      "sourceFrames": 129,
+      "humanSourceSha256": "9daa122739a4d33644a4b2dd0b39f794c69e06a960cdb5cf4a829ca17b98dd92",
+      "g1SourceSha256": "133dc23eca6f8179525f5bb199467617b40534e88f77b38cc684228165a59b19",
+      "url": "motions/motion04.json",
+      "numFrames": 214,
+      "fps": 50,
+      "duration": 4.26,
+      "bytes": 152975,
+      "sha256": "a18947282ca225f4808e0becaa272c2659b0fad17522545fed9ffa439ccbcba1"
+    },
+    {
+      "id": "motion05",
+      "label": "Mobile-1 · REC-10253",
+      "taskName": "Mobile-1",
+      "category": "Mobile",
+      "sourceFilename": "Chingmu_Mobile_REC-10253_BVH_Take_000_huchuanxiang.pkl",
+      "recordId": "REC-10253",
+      "officialTaskRecordId": "recvo1lTCfdcGd",
+      "datasetId": "lhm_1014_beta_grounded_20261019",
+      "sourceFps": 30,
+      "sourceFrames": 203,
+      "humanSourceSha256": "6e84841ed8ba54ea9ddfe761331f924353a603d6665f8733476e20be0b789714",
+      "g1SourceSha256": "da0f0598e1d04f2b40bd232f9be4a7e9ebb2607b09f87df7b883bf407c5de2d2",
+      "url": "motions/motion05.json",
+      "numFrames": 337,
+      "fps": 50,
+      "duration": 6.72,
+      "bytes": 240297,
+      "sha256": "6848a2a609922ef084dc3295bd42f682e4c69f7f463a2ec4689805788ae83831"
+    },
+    {
+      "id": "motion06",
+      "label": "Mobile-Reaching-1 · REC-11285",
+      "taskName": "Mobile-Reaching-1",
+      "category": "Mobile-Reaching",
+      "sourceFilename": "Chingmu_Mobile-Reaching_REC-11285_BVH_Take_000_wenjunyan.pkl",
+      "recordId": "REC-11285",
+      "officialTaskRecordId": "recvkOSSEmnYPd",
+      "datasetId": "lhm_1014_beta_grounded_20261019",
+      "sourceFps": 30,
+      "sourceFrames": 310,
+      "humanSourceSha256": "97c1c2fac84e73ebc497e11f9b092e5bdb78858999ab5dcbd970de06b3be5778",
+      "g1SourceSha256": "c72d0adc976975d0723ec2ca7466c0c1b2a8c0939c5d2467d2d9efc1ba4e61da",
+      "url": "motions/motion06.json",
+      "numFrames": 515,
+      "fps": 50,
+      "duration": 10.28,
+      "bytes": 365646,
+      "sha256": "11494241ef5d48dd01d40691ab8bf9b3c7a61eb37a1e768cc07de934fdcd4358"
+    },
+    {
+      "id": "motion07",
+      "label": "Sequence-1 · REC-12652",
+      "taskName": "Sequence-1",
+      "category": "Sequence",
+      "sourceFilename": "Chingmu_Sequence_REC-12652_BVH_Take_001_wenjunyan.pkl",
+      "recordId": "REC-12652",
+      "officialTaskRecordId": "recvsbFzncQv7d",
+      "datasetId": "lhm_1014_beta_grounded_20261019",
+      "sourceFps": 30,
+      "sourceFrames": 285,
+      "humanSourceSha256": "c0a09c94f6cf2a35c019f2fca9ad49e1fbf3e4eebd5e260946bee9ec41bdcdea",
+      "g1SourceSha256": "3b8c89a1abc9c32f3153d737f756f31e249ae6c053569776dc5c6ae4c068e3e5",
+      "url": "motions/motion07.json",
+      "numFrames": 474,
+      "fps": 50,
+      "duration": 9.46,
+      "bytes": 333315,
+      "sha256": "b753915e2bfa6e9cecb5b3c032b5636340661f7944b053e9b0de042b49e12912"
+    },
+    {
+      "id": "letter-A",
+      "label": "字母 A",
+      "taskName": "Letter-A",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "A",
+      "sourceFilename": "A/motion.npz",
+      "recordId": "A",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 714,
+      "sourceSha256": "07741a645fce7169ef320ca043c4f463c93ddf94330614644c38450ca29224ad",
+      "g1SourceSha256": "07741a645fce7169ef320ca043c4f463c93ddf94330614644c38450ca29224ad",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 714,
+      "duration": 14.26,
+      "url": "motions/letter-A.json",
+      "bytes": 469977,
+      "sha256": "91860be0234e769500f81aae7c256b1fb6c3c90a3961bb17e0cf33fea049739e"
+    },
+    {
+      "id": "letter-B",
+      "label": "字母 B",
+      "taskName": "Letter-B",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "B",
+      "sourceFilename": "B/motion.npz",
+      "recordId": "B",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 909,
+      "sourceSha256": "b1f91b535bee2671d1c9bb21143cca02a3fa4e49d69a23e7475ac1b6830bef6a",
+      "g1SourceSha256": "b1f91b535bee2671d1c9bb21143cca02a3fa4e49d69a23e7475ac1b6830bef6a",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 909,
+      "duration": 18.16,
+      "url": "motions/letter-B.json",
+      "bytes": 601288,
+      "sha256": "f9935312488c24e2848812b4647447672ab78580401f2d5484634947f6aeb659"
+    },
+    {
+      "id": "letter-C",
+      "label": "字母 C",
+      "taskName": "Letter-C",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "C",
+      "sourceFilename": "C/motion.npz",
+      "recordId": "C",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 511,
+      "sourceSha256": "01dbc1b8ac30fe72fd3a6f92dc8402b24eab01036e1c2dfc0da9809a16caee6d",
+      "g1SourceSha256": "01dbc1b8ac30fe72fd3a6f92dc8402b24eab01036e1c2dfc0da9809a16caee6d",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 511,
+      "duration": 10.2,
+      "url": "motions/letter-C.json",
+      "bytes": 336450,
+      "sha256": "b5c8a8d4e1a3e81b927bcda5f0397bf435021293a850da7d5e0b4640695fe5dc"
+    },
+    {
+      "id": "letter-D",
+      "label": "字母 D",
+      "taskName": "Letter-D",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "D",
+      "sourceFilename": "D/motion.npz",
+      "recordId": "D",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 728,
+      "sourceSha256": "cd8e8e3edacf176871c7b6f95916f4574dc7a637e0d61fafacd9298a32cec28e",
+      "g1SourceSha256": "cd8e8e3edacf176871c7b6f95916f4574dc7a637e0d61fafacd9298a32cec28e",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 728,
+      "duration": 14.54,
+      "url": "motions/letter-D.json",
+      "bytes": 480002,
+      "sha256": "8d422053187b947a0640d2a3899189c4f10f26c728648a43a77bfbf66a6fa232"
+    },
+    {
+      "id": "letter-E",
+      "label": "字母 E",
+      "taskName": "Letter-E",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "E",
+      "sourceFilename": "E/motion.npz",
+      "recordId": "E",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 819,
+      "sourceSha256": "d9f9322c1080da5ced07e2b1c0cce4a1c27f30676e711d00fa250f2654fb152a",
+      "g1SourceSha256": "d9f9322c1080da5ced07e2b1c0cce4a1c27f30676e711d00fa250f2654fb152a",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 819,
+      "duration": 16.36,
+      "url": "motions/letter-E.json",
+      "bytes": 539005,
+      "sha256": "1664876152e319b8de0ac4d90316ef0f6601b3aad42faa56e0a257a6dea10745"
+    },
+    {
+      "id": "letter-F",
+      "label": "字母 F",
+      "taskName": "Letter-F",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "F",
+      "sourceFilename": "F/motion.npz",
+      "recordId": "F",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 666,
+      "sourceSha256": "f342bffb8b3fcbb49bf71bca8407940458768ac46fca914f09512015e1495852",
+      "g1SourceSha256": "f342bffb8b3fcbb49bf71bca8407940458768ac46fca914f09512015e1495852",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 666,
+      "duration": 13.3,
+      "url": "motions/letter-F.json",
+      "bytes": 437816,
+      "sha256": "0034f354ed34d1db11ff00bbae0838cb491eb2498750c782b6623728ed74e3e4"
+    },
+    {
+      "id": "letter-G",
+      "label": "字母 G",
+      "taskName": "Letter-G",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "G",
+      "sourceFilename": "G/motion.npz",
+      "recordId": "G",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 684,
+      "sourceSha256": "a170c485a3e4998d81cb88cf5e64cad81df01fccc79f31065bb130aa4f19e1bb",
+      "g1SourceSha256": "a170c485a3e4998d81cb88cf5e64cad81df01fccc79f31065bb130aa4f19e1bb",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 684,
+      "duration": 13.66,
+      "url": "motions/letter-G.json",
+      "bytes": 451919,
+      "sha256": "c4177bfea85b7513d743d713ce85dcdf38d79b5e08f6e4aa60926513e4791550"
+    },
+    {
+      "id": "letter-H",
+      "label": "字母 H",
+      "taskName": "Letter-H",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "H",
+      "sourceFilename": "H/motion.npz",
+      "recordId": "H",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 938,
+      "sourceSha256": "a2ad080e70755291af3702c30be85144c7281b13e1c6fe14a187512f4f78a6fa",
+      "g1SourceSha256": "a2ad080e70755291af3702c30be85144c7281b13e1c6fe14a187512f4f78a6fa",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 938,
+      "duration": 18.74,
+      "url": "motions/letter-H.json",
+      "bytes": 618715,
+      "sha256": "6035b7d1cb6ab87f5934b213bede64655a59b4d61e2f40a6647f7548cd62489d"
+    },
+    {
+      "id": "letter-I",
+      "label": "字母 I",
+      "taskName": "Letter-I",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "I",
+      "sourceFilename": "I/motion.npz",
+      "recordId": "I",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 613,
+      "sourceSha256": "174adfb508a4c1ad6618c7a22424d3530cdf1683c32bc31c1bbfe3a0e451a77b",
+      "g1SourceSha256": "174adfb508a4c1ad6618c7a22424d3530cdf1683c32bc31c1bbfe3a0e451a77b",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 613,
+      "duration": 12.24,
+      "url": "motions/letter-I.json",
+      "bytes": 403006,
+      "sha256": "c0e747ad5c09b1ad07b8828d8fc3192116b0e2861d48b8a9ff176d02970e94a5"
+    },
+    {
+      "id": "letter-J",
+      "label": "字母 J",
+      "taskName": "Letter-J",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "J",
+      "sourceFilename": "J/motion.npz",
+      "recordId": "J",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 589,
+      "sourceSha256": "4a3f65fa578c6d79b11c7bd900b35cadfecbd7a0160adf4d86d60ac402ca863c",
+      "g1SourceSha256": "4a3f65fa578c6d79b11c7bd900b35cadfecbd7a0160adf4d86d60ac402ca863c",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 589,
+      "duration": 11.76,
+      "url": "motions/letter-J.json",
+      "bytes": 389043,
+      "sha256": "ec9fa5747529aa1f9f3dfb3deb4e28a13a23587cbf98e967d3f098b9d09109dd"
+    },
+    {
+      "id": "letter-K",
+      "label": "字母 K",
+      "taskName": "Letter-K",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "K",
+      "sourceFilename": "K/motion.npz",
+      "recordId": "K",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 811,
+      "sourceSha256": "2cdaf8c3460067b739dbf2a9618b7762a431170a977f28d4898a5ec092841d85",
+      "g1SourceSha256": "2cdaf8c3460067b739dbf2a9618b7762a431170a977f28d4898a5ec092841d85",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 811,
+      "duration": 16.2,
+      "url": "motions/letter-K.json",
+      "bytes": 534099,
+      "sha256": "5c5778093986e8762bc9a4b358fc8e187641222e85644ca32f679ed26ef80ef0"
+    },
+    {
+      "id": "letter-L",
+      "label": "字母 L",
+      "taskName": "Letter-L",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "L",
+      "sourceFilename": "L/motion.npz",
+      "recordId": "L",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 471,
+      "sourceSha256": "3848449c385d58860b6d03fe1adba3df3cc48c8eb8e36c2075b32d73ac94b4c5",
+      "g1SourceSha256": "3848449c385d58860b6d03fe1adba3df3cc48c8eb8e36c2075b32d73ac94b4c5",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 471,
+      "duration": 9.4,
+      "url": "motions/letter-L.json",
+      "bytes": 307840,
+      "sha256": "b6109354849b430b86e4a0c47b127745ef6bacc03d631ccf757437718eac588e"
+    },
+    {
+      "id": "letter-M",
+      "label": "字母 M",
+      "taskName": "Letter-M",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "M",
+      "sourceFilename": "M/motion.npz",
+      "recordId": "M",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 756,
+      "sourceSha256": "e69c10d609f61a99c953129a7ad0b64a3ec9c9321034d78bcaecd93022d4c512",
+      "g1SourceSha256": "e69c10d609f61a99c953129a7ad0b64a3ec9c9321034d78bcaecd93022d4c512",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 756,
+      "duration": 15.1,
+      "url": "motions/letter-M.json",
+      "bytes": 497100,
+      "sha256": "3022014561f82646e811afac6a929eb2ba5348516ceac482522ed7b3499eb864"
+    },
+    {
+      "id": "letter-N",
+      "label": "字母 N",
+      "taskName": "Letter-N",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "N",
+      "sourceFilename": "N/motion.npz",
+      "recordId": "N",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 714,
+      "sourceSha256": "7e858f0e3278d67ea02098a039aea4cda4ad8c2d0c0d6bb66677206a906b1079",
+      "g1SourceSha256": "7e858f0e3278d67ea02098a039aea4cda4ad8c2d0c0d6bb66677206a906b1079",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 714,
+      "duration": 14.26,
+      "url": "motions/letter-N.json",
+      "bytes": 468566,
+      "sha256": "f389051f35da413f4061359ddf56b33f43e10d123c1f3f5f8eac52f9adef3d04"
+    },
+    {
+      "id": "letter-O",
+      "label": "字母 O",
+      "taskName": "Letter-O",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "O",
+      "sourceFilename": "O/motion.npz",
+      "recordId": "O",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 633,
+      "sourceSha256": "398ca65fbabef6e821aae139b21c4499784b7af0db2861d0708005dfa9fd59c9",
+      "g1SourceSha256": "398ca65fbabef6e821aae139b21c4499784b7af0db2861d0708005dfa9fd59c9",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 633,
+      "duration": 12.64,
+      "url": "motions/letter-O.json",
+      "bytes": 417356,
+      "sha256": "11c418960c42dc33485e97adc70c2fe9fdd7de1383b103b55a09f94d6f9ca420"
+    },
+    {
+      "id": "letter-P",
+      "label": "字母 P",
+      "taskName": "Letter-P",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "P",
+      "sourceFilename": "P/motion.npz",
+      "recordId": "P",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 671,
+      "sourceSha256": "d2a4c5dc05074ebeed0c3a14fe491cf4bdc99dc4c36d69c8a40ef73d3423822f",
+      "g1SourceSha256": "d2a4c5dc05074ebeed0c3a14fe491cf4bdc99dc4c36d69c8a40ef73d3423822f",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 671,
+      "duration": 13.4,
+      "url": "motions/letter-P.json",
+      "bytes": 442287,
+      "sha256": "5fd37932aca13bc0506b3942ba26f9e87372d4011174d0ece4d6190323f129ef"
+    },
+    {
+      "id": "letter-Q",
+      "label": "字母 Q",
+      "taskName": "Letter-Q",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "Q",
+      "sourceFilename": "Q/motion.npz",
+      "recordId": "Q",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 813,
+      "sourceSha256": "2b8b98bc3991f7b941e3ca8e45ed56b6c1a2a977274be1b2828f0f3daa51c329",
+      "g1SourceSha256": "2b8b98bc3991f7b941e3ca8e45ed56b6c1a2a977274be1b2828f0f3daa51c329",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 813,
+      "duration": 16.24,
+      "url": "motions/letter-Q.json",
+      "bytes": 537019,
+      "sha256": "68a53354338a588cd686ca4fa2f088498492dc2c41d5b973708fc80c614ab4d0"
+    },
+    {
+      "id": "letter-R",
+      "label": "字母 R",
+      "taskName": "Letter-R",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "R",
+      "sourceFilename": "R/motion.npz",
+      "recordId": "R",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 871,
+      "sourceSha256": "d27b1b97b92f220449edfe0a1f36f36287c7083e26841827bd1142cf6228232b",
+      "g1SourceSha256": "d27b1b97b92f220449edfe0a1f36f36287c7083e26841827bd1142cf6228232b",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 871,
+      "duration": 17.4,
+      "url": "motions/letter-R.json",
+      "bytes": 574905,
+      "sha256": "4dc8c1cea25aba598a51d669e51b1b750daf437870e56ebd390d72409673eeaf"
+    },
+    {
+      "id": "letter-S",
+      "label": "字母 S",
+      "taskName": "Letter-S",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "S",
+      "sourceFilename": "S/motion.npz",
+      "recordId": "S",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 593,
+      "sourceSha256": "de60aa1448a3741a9f8d72e8b4c075a3c21a4268b3b5801a987000840cd039ea",
+      "g1SourceSha256": "de60aa1448a3741a9f8d72e8b4c075a3c21a4268b3b5801a987000840cd039ea",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 593,
+      "duration": 11.84,
+      "url": "motions/letter-S.json",
+      "bytes": 392903,
+      "sha256": "3254f5aa5be9728030a16fa5d5e5f21f7cae1fec3bcc596a6c0face43aff7caf"
+    },
+    {
+      "id": "letter-T",
+      "label": "字母 T",
+      "taskName": "Letter-T",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "T",
+      "sourceFilename": "T/motion.npz",
+      "recordId": "T",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 546,
+      "sourceSha256": "89235624aaead8be0e196b28e9969ca78149842509c49ebcb6ab1ffbcbf984e5",
+      "g1SourceSha256": "89235624aaead8be0e196b28e9969ca78149842509c49ebcb6ab1ffbcbf984e5",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 546,
+      "duration": 10.9,
+      "url": "motions/letter-T.json",
+      "bytes": 358406,
+      "sha256": "9107292b9a2399ce997287b76d13f33a28b0b3c983dff334a80f920474f2621e"
+    },
+    {
+      "id": "letter-U",
+      "label": "字母 U",
+      "taskName": "Letter-U",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "U",
+      "sourceFilename": "U/motion.npz",
+      "recordId": "U",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 588,
+      "sourceSha256": "84f73314d53001a3deb2613083807f78abbeed66685e70b259b3216c2d8d1123",
+      "g1SourceSha256": "84f73314d53001a3deb2613083807f78abbeed66685e70b259b3216c2d8d1123",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 588,
+      "duration": 11.74,
+      "url": "motions/letter-U.json",
+      "bytes": 387518,
+      "sha256": "ae04d1ab91b7b709d5552f33396720689dc547abde6113854b3253ab7f499306"
+    },
+    {
+      "id": "letter-V",
+      "label": "字母 V",
+      "taskName": "Letter-V",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "V",
+      "sourceFilename": "V/motion.npz",
+      "recordId": "V",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 536,
+      "sourceSha256": "3b5fa9b8701b3e1f4f5c5fe8dd873d88c93958261af65f178b396dc3e197a84d",
+      "g1SourceSha256": "3b5fa9b8701b3e1f4f5c5fe8dd873d88c93958261af65f178b396dc3e197a84d",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 536,
+      "duration": 10.7,
+      "url": "motions/letter-V.json",
+      "bytes": 351548,
+      "sha256": "9ca9bb54990341663f4e4b16cff285119d50af6b012a290f193cfd86627f699f"
+    },
+    {
+      "id": "letter-W",
+      "label": "字母 W",
+      "taskName": "Letter-W",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "W",
+      "sourceFilename": "W/motion.npz",
+      "recordId": "W",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 754,
+      "sourceSha256": "a8242fa064b27c0b44d0e27f266ba66755bcf7bda4ab9b8183fbfba0ffaceaba",
+      "g1SourceSha256": "a8242fa064b27c0b44d0e27f266ba66755bcf7bda4ab9b8183fbfba0ffaceaba",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 754,
+      "duration": 15.06,
+      "url": "motions/letter-W.json",
+      "bytes": 496232,
+      "sha256": "48558dcdc6e0bd7b563be026a376725048389aa93422bf7b56860002006f7423"
+    },
+    {
+      "id": "letter-X",
+      "label": "字母 X",
+      "taskName": "Letter-X",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "X",
+      "sourceFilename": "X/motion.npz",
+      "recordId": "X",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 738,
+      "sourceSha256": "34287c519518a03311a9e19504cc89a96785c45e7f13151f07bf72885162a416",
+      "g1SourceSha256": "34287c519518a03311a9e19504cc89a96785c45e7f13151f07bf72885162a416",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 738,
+      "duration": 14.74,
+      "url": "motions/letter-X.json",
+      "bytes": 485494,
+      "sha256": "0f26ad5cf01cf65168fd3051ca206f6f68f7986d3db1e432c65db539c1f92cc0"
+    },
+    {
+      "id": "letter-Y",
+      "label": "字母 Y",
+      "taskName": "Letter-Y",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "Y",
+      "sourceFilename": "Y/motion.npz",
+      "recordId": "Y",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 578,
+      "sourceSha256": "2c89249ec5e148dc6d4c82158013fcd9a88a0e84cd155350bb1a565e74db9336",
+      "g1SourceSha256": "2c89249ec5e148dc6d4c82158013fcd9a88a0e84cd155350bb1a565e74db9336",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 578,
+      "duration": 11.54,
+      "url": "motions/letter-Y.json",
+      "bytes": 379868,
+      "sha256": "ae8d79032aebbe498fd7999d017a20fc4168c7f0a917f9030dc30934a17f403e"
+    },
+    {
+      "id": "letter-Z",
+      "label": "字母 Z",
+      "taskName": "Letter-Z",
+      "category": "Handwriting",
+      "kind": "letter",
+      "letter": "Z",
+      "sourceFilename": "Z/motion.npz",
+      "recordId": "Z",
+      "datasetId": "handwriting_letters_v2",
+      "sourceFps": 50,
+      "sourceFrames": 624,
+      "sourceSha256": "78f7e0b5d2ac6b0b8b6463e9aac1512f0cf04cb73b0bb8058048d033fb8686f8",
+      "g1SourceSha256": "78f7e0b5d2ac6b0b8b6463e9aac1512f0cf04cb73b0bb8058048d033fb8686f8",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 624,
+      "duration": 12.46,
+      "url": "motions/letter-Z.json",
+      "bytes": 410041,
+      "sha256": "7e52a604e92c1130627ce88a0cb80489fa726fae961d20a9b541f31f668ed53d"
+    },
+    {
+      "id": "shape-heart",
+      "label": "♡ 爱心",
+      "taskName": "Shape-heart",
+      "category": "Handwriting",
+      "kind": "shape",
+      "letter": "♡",
+      "sourceFilename": "heart/motion.npz",
+      "recordId": "heart",
+      "datasetId": "handwriting_shapes_v1",
+      "sourceFps": 50,
+      "sourceFrames": 973,
+      "sourceSha256": "e56602e733ea6e21377c6993548990500070715145f3e9ad3f00fbbef2ff4e76",
+      "g1SourceSha256": "e56602e733ea6e21377c6993548990500070715145f3e9ad3f00fbbef2ff4e76",
+      "referenceSource": "g1_fk",
+      "referenceFrame": "global",
+      "fps": 50,
+      "numFrames": 973,
+      "duration": 19.44,
+      "url": "motions/shape-heart.json",
+      "bytes": 682405,
+      "sha256": "c198da122ded126d3b79be8f01ff3bad80bdf6fd6d7b5a61467ff34584525cfa"
+    },
+    {
+      "id": "chingmu-gt-take-007-lizhe",
+      "label": "gt · Take_007_lizhe",
+      "taskName": "gt",
+      "category": "gt",
+      "kind": "preset",
+      "sourceFilename": "Take_007_lizhe.bvh",
+      "sourceRelativePath": "shanshenbu_1/gt/Take_007_lizhe.bvh",
+      "recordId": "Take_007_lizhe",
+      "datasetId": "chingmu_shanshenbu_20261023",
+      "sourceFps": 120,
+      "sourceFrames": 982,
+      "numFrames": 409,
+      "fps": 50,
+      "duration": 8.16,
+      "referenceSource": "human_scaled",
+      "referenceFrame": "global",
+      "sourceSha256": "0fed725d39b87c4f6c74c2cf5edc484246f177284e7c4d5c687b40ad293911e5",
+      "humanSourceSha256": "ecc1877710db04ce327d8300a00240c976f94da0c16a43ffeaac04d562621462",
+      "g1SourceSha256": "ba7407eae9cbe7454509104751c359430c9ad620933c20243878a4d7dc96d3a6",
+      "retarget": {
+        "commit": "3bada171c5e6a5e698b9007f878ebb85c0307bf3",
+        "configVersion": "v6",
+        "retargetVersion": "v6",
+        "pairedFps": 30,
+        "pairedFrames": 246,
+        "preprocessing": {
+          "fps": 120,
+          "kept_frames": 981,
+          "leading_reason": "leading_dead_or_rotation_dead_run",
+          "leading_stripped": 1,
+          "original_frames": 982,
+          "source_start_frame_offset": 1,
+          "source_time_offset_sec": 0.008333333333333333,
+          "trailing_reason": "",
+          "trailing_stripped": 0
+        }
+      },
+      "url": "motions/chingmu-gt-take-007-lizhe.json",
+      "bytes": 287721,
+      "sha256": "e4bc3185cae5e0d5bb6457c21e4f7ac87093997d31bd9cf92731b85ba1828cf9"
+    },
+    {
+      "id": "chingmu-lzt-take-016-lizhe",
+      "label": "lzt · Take_016_lizhe",
+      "taskName": "lzt",
+      "category": "lzt",
+      "kind": "preset",
+      "sourceFilename": "Take_016_lizhe.bvh",
+      "sourceRelativePath": "shanshenbu_1/lzt/Take_016_lizhe.bvh",
+      "recordId": "Take_016_lizhe",
+      "datasetId": "chingmu_shanshenbu_20261023",
+      "sourceFps": 120,
+      "sourceFrames": 671,
+      "numFrames": 279,
+      "fps": 50,
+      "duration": 5.56,
+      "referenceSource": "human_scaled",
+      "referenceFrame": "global",
+      "sourceSha256": "b9e2c42c9e300ce317f763d025377ae9b2d5b52154160c2f9b6cb79058272faa",
+      "humanSourceSha256": "cb66059a793769cf0e1f62dabda3a1379f46c4f6dee15caa683749822928c237",
+      "g1SourceSha256": "d04bb6373adf47542c831a8ab5a94fc286233eeb203757852b589384e96e6f83",
+      "retarget": {
+        "commit": "3bada171c5e6a5e698b9007f878ebb85c0307bf3",
+        "configVersion": "v6",
+        "retargetVersion": "v6",
+        "pairedFps": 30,
+        "pairedFrames": 168,
+        "preprocessing": {
+          "fps": 120,
+          "kept_frames": 670,
+          "leading_reason": "leading_dead_or_rotation_dead_run",
+          "leading_stripped": 1,
+          "original_frames": 671,
+          "source_start_frame_offset": 1,
+          "source_time_offset_sec": 0.008333333333333333,
+          "trailing_reason": "",
+          "trailing_stripped": 0
+        }
+      },
+      "url": "motions/chingmu-lzt-take-016-lizhe.json",
+      "bytes": 198871,
+      "sha256": "96bc8ffb6019b6c74be566bec32642276a012f19f5aca214233a8c08add45eb7"
+    },
+    {
+      "id": "chingmu-shanshenbu-1-take-006-lizhe",
+      "label": "shanshenbu_1 · Take_006_lizhe",
+      "taskName": "shanshenbu_1",
+      "category": "shanshenbu_1",
+      "kind": "preset",
+      "sourceFilename": "Take_006_lizhe.bvh",
+      "sourceRelativePath": "shanshenbu_1/shanshenbu_1/Take_006_lizhe.bvh",
+      "recordId": "Take_006_lizhe",
+      "datasetId": "chingmu_shanshenbu_20261023",
+      "sourceFps": 120,
+      "sourceFrames": 310,
+      "numFrames": 129,
+      "fps": 50,
+      "duration": 2.56,
+      "referenceSource": "human_scaled",
+      "referenceFrame": "global",
+      "sourceSha256": "7e2666e61fdb93a5d1da8d8b972e40a35c46e3d6814ab838bc5b40d79d40d1c1",
+      "humanSourceSha256": "8c741e8e152ab0dc60f19af97b2aeede3f74180d5947839e1d5ee0f0ca6e8977",
+      "g1SourceSha256": "9b356685db4944b3c5efca18c7aeca1cfcd8631d18516a7a8e93f46d7e02c912",
+      "retarget": {
+        "commit": "3bada171c5e6a5e698b9007f878ebb85c0307bf3",
+        "configVersion": "v6",
+        "retargetVersion": "v6",
+        "pairedFps": 30,
+        "pairedFrames": 78,
+        "preprocessing": {
+          "fps": 120,
+          "kept_frames": 309,
+          "leading_reason": "leading_dead_or_rotation_dead_run",
+          "leading_stripped": 1,
+          "original_frames": 310,
+          "source_start_frame_offset": 1,
+          "source_time_offset_sec": 0.008333333333333333,
+          "trailing_reason": "",
+          "trailing_stripped": 0
+        }
+      },
+      "url": "motions/chingmu-shanshenbu-1-take-006-lizhe.json",
+      "bytes": 93086,
+      "sha256": "4f7e8d6bc1730ec886a8bb127441d6b129b7dff500c1ccca08b944042bede390"
+    }
+  ],
+  "handwriting": {
+    "version": 1,
+    "letters": [
+      "A",
+      "B",
+      "C",
+      "D",
+      "E",
+      "F",
+      "G",
+      "H",
+      "I",
+      "J",
+      "K",
+      "L",
+      "M",
+      "N",
+      "O",
+      "P",
+      "Q",
+      "R",
+      "S",
+      "T",
+      "U",
+      "V",
+      "W",
+      "X",
+      "Y",
+      "Z"
+    ],
+    "referenceSource": "g1_fk",
+    "referenceFrame": "global",
+    "rightWristPointIndex": 2,
+    "containsLateralMotion": false,
+    "datasetId": "handwriting_letters_v2"
+  },
+  "lateral": {
+    "id": "lateral-r2-052",
+    "url": "motions/lateral-r2-052.json",
+    "numFrames": 451,
+    "fps": 50,
+    "bytes": 270426,
+    "sha256": "8336c935cc062e08a005adf25e3bff6d52ae33616cf629c3c79a3e1883608712",
+    "referenceSource": "sparse_refined",
+    "referenceFrame": "global",
+    "distanceM": 0.424
+  },
+  "runtime": {
+    "mujocoWasm": {
+      "url": "mujoco-C3n9ZUSM.wasm",
+      "bytes": 9139270,
+      "sha256": "9eb895c79cb4d4a6d88bf2d9a449081a5a5c132e6a705ed90252a14b7f21ade8"
+    },
+    "ortWasm": {
+      "url": "ort-wasm-simd-threaded-CDsxkEtH.wasm",
+      "bytes": 13022405,
+      "sha256": "040d52ce5066707a10d45cb9500c35e70a9c2fb33c4fb63428da9ae45b956b97"
+    }
+  }
+}

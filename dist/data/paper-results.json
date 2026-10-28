@@ -1,0 +1,1280 @@
+{
+  "schemaVersion": 1,
+  "snapshot": {
+    "label": "Paper snapshot · test132 · 38k",
+    "checkpoint": "test132 / 38000",
+    "simulator": "Isaac Sim",
+    "domainRandomization": true,
+    "source": "Supplied evaluation dashboard and S0_Report paper figures/tables",
+    "sourceUrl": "http://172.16.3.99:18080/",
+    "sourceSha256": "f01361401b57ea41d8a057cc5efef04246cf722b7906398c28632fe38db149cd",
+    "sourceGeneratedAt": "2026-10-28T05:14:45.612508+00:00",
+    "paperFigures": [
+      "simulation-summary.pdf",
+      "lookahead-comparison.pdf"
+    ]
+  },
+  "models": [
+    {
+      "id": "anchor-global",
+      "label": "Anchor-0ᴳ",
+      "input": "human_scaled H′",
+      "onlineRetargeting": false,
+      "trackingConfig": "test132_38k_human_global_reference",
+      "reachabilityConfig": "test132_38k_g1_global_reference"
+    },
+    {
+      "id": "anchor-local",
+      "label": "Anchor-0ᴸ",
+      "input": "human_scaled H′",
+      "onlineRetargeting": false,
+      "trackingConfig": "test132_38k_human_reanchor_reference",
+      "reachabilityConfig": "test132_38k_g1_reanchor_reference"
+    },
+    {
+      "id": "scale-global",
+      "label": "ScaleBFMᴳ",
+      "input": "G1 / WholeBody-14",
+      "onlineRetargeting": true,
+      "trackingConfig": "scalebfm_xl_wholebody14",
+      "reachabilityConfig": "scalebfm_xl_wholebody14"
+    },
+    {
+      "id": "scale-local",
+      "label": "ScaleBFMᴸ",
+      "input": "G1 / WholeBody-14",
+      "onlineRetargeting": true,
+      "trackingConfig": "scalebfm_xl_wholebody14_local",
+      "reachabilityConfig": "scalebfm_xl_wholebody14_local"
+    },
+    {
+      "id": "sonic",
+      "label": "SONIC v1.1 (G1)",
+      "input": "G1",
+      "onlineRetargeting": true,
+      "trackingConfig": "sonic_v1_1_g1",
+      "reachabilityConfig": "sonic_v1_1_g1"
+    },
+    {
+      "id": "mimic",
+      "label": "MimicLite v1.1",
+      "input": "G1",
+      "onlineRetargeting": true,
+      "trackingConfig": "mimiclite_v1_1",
+      "reachabilityConfig": "mimiclite_v1_1"
+    }
+  ],
+  "simulation": {
+    "cohorts": [
+      {
+        "id": "inhouse",
+        "label": "In-house",
+        "labelZh": "自建动作集",
+        "count": 15342,
+        "series": [
+          {
+            "id": "anchor-global",
+            "label": "Anchor-0ᴳ",
+            "localSuccess": 87.05514274540477,
+            "globalSuccess": 88.00677877721287,
+            "rootError": 15.706923884856446,
+            "wristError": 25.610046046001916,
+            "ankleError": 22.02493911888468
+          },
+          {
+            "id": "anchor-local",
+            "label": "Anchor-0ᴸ",
+            "localSuccess": 73.1716855690262,
+            "globalSuccess": 21.802894016425498,
+            "rootError": 65.02116478407065,
+            "wristError": 26.557691244683326,
+            "ankleError": 29.8853730788337
+          },
+          {
+            "id": "scale-global",
+            "label": "ScaleBFMᴳ",
+            "localSuccess": 53.3633163863903,
+            "globalSuccess": 21.587798201016817,
+            "rootError": 33.36887643620306,
+            "wristError": 43.63809626510408,
+            "ankleError": 37.082525074172004
+          },
+          {
+            "id": "scale-local",
+            "label": "ScaleBFMᴸ",
+            "localSuccess": 35.373484552209625,
+            "globalSuccess": 6.583235562508148,
+            "rootError": 73.40629025272253,
+            "wristError": 45.9472557249489,
+            "ankleError": 44.152475407146426
+          },
+          {
+            "id": "sonic",
+            "label": "SONIC v1.1 (G1)",
+            "localSuccess": 33.58753747881632,
+            "globalSuccess": 11.321861556511536,
+            "rootError": 62.503048059674605,
+            "wristError": 30.580560180407122,
+            "ankleError": 41.794085903093205
+          },
+          {
+            "id": "mimic",
+            "label": "MimicLite v1.1",
+            "localSuccess": 28.842393429800552,
+            "globalSuccess": 11.367487941598228,
+            "rootError": 59.869546770332086,
+            "wristError": 26.46532388621956,
+            "ankleError": 42.63133145626453
+          }
+        ]
+      },
+      {
+        "id": "public",
+        "label": "Public",
+        "labelZh": "公开动作集",
+        "count": 2230,
+        "series": [
+          {
+            "id": "anchor-global",
+            "label": "Anchor-0ᴳ",
+            "localSuccess": 57.04035874439462,
+            "globalSuccess": 59.596412556053814,
+            "rootError": 25.07607531654741,
+            "wristError": 34.99602173558562,
+            "ankleError": 37.13950918692489
+          },
+          {
+            "id": "anchor-local",
+            "label": "Anchor-0ᴸ",
+            "localSuccess": 40.80717488789238,
+            "globalSuccess": 15.336322869955158,
+            "rootError": 77.79920969128655,
+            "wristError": 35.0027259597296,
+            "ankleError": 43.94188982573103
+          },
+          {
+            "id": "scale-global",
+            "label": "ScaleBFMᴳ",
+            "localSuccess": 35.2017937219731,
+            "globalSuccess": 14.887892376681613,
+            "rootError": 39.24748007553139,
+            "wristError": 53.457854986702294,
+            "ankleError": 46.23609779194803
+          },
+          {
+            "id": "scale-local",
+            "label": "ScaleBFMᴸ",
+            "localSuccess": 26.00896860986547,
+            "globalSuccess": 6.950672645739911,
+            "rootError": 70.87559083720218,
+            "wristError": 56.190221019352464,
+            "ankleError": 51.176958936370944
+          },
+          {
+            "id": "sonic",
+            "label": "SONIC v1.1 (G1)",
+            "localSuccess": 25.87443946188341,
+            "globalSuccess": 11.524663677130045,
+            "rootError": 72.54105188231077,
+            "wristError": 35.25243700937955,
+            "ankleError": 49.7639922270508
+          },
+          {
+            "id": "mimic",
+            "label": "MimicLite v1.1",
+            "localSuccess": 18.878923766816143,
+            "globalSuccess": 12.197309417040358,
+            "rootError": 58.821271949762,
+            "wristError": 31.27322503481505,
+            "ankleError": 56.848674109466295
+          }
+        ]
+      }
+    ],
+    "metric": {
+      "successUnit": "%",
+      "errorUnit": "mm",
+      "success": {
+        "points": 14,
+        "wristPositionCm": 10,
+        "otherPositionCm": 25,
+        "wristOrientationRad": 1.0,
+        "anklePositionCm": 10,
+        "ankleOrientationRad": 1.0,
+        "orientationBodies": [
+          "left_wrist_yaw_link",
+          "right_wrist_yaw_link",
+          "left_ankle_roll_link",
+          "right_ankle_roll_link"
+        ],
+        "window": "complete motion"
+      },
+      "rootErrorFrame": "global",
+      "wristErrorFrame": "local",
+      "ankleErrorFrame": "local",
+      "errorWindow": "Frames before the first body14 position error exceeds 25 cm; average within each motion, then across motions. Observation windows can differ between controllers.",
+      "frameDefinition": "Global: fixed initial pelvis XY and yaw alignment. Local: additional per-frame horizontal pelvis translation removal; height and heading differences remain."
+    }
+  },
+  "radars": [
+    {
+      "id": "home_fixed",
+      "label": "Stationary tasks",
+      "labelZh": "原地任务",
+      "axes": [
+        {
+          "id": "combination_L1-1__U2-2__U3-1",
+          "label": "High unilateral reach",
+          "labelZh": "站定高处单手触达",
+          "count": 94
+        },
+        {
+          "id": "combination_L1-1__U2-2__U3-7",
+          "label": "Far unilateral reach",
+          "labelZh": "站定远端单手触达",
+          "count": 110
+        },
+        {
+          "id": "combination_L1-1__U1-2__U3-4",
+          "label": "Forward bending",
+          "labelZh": "站定俯身低处触达",
+          "count": 476
+        },
+        {
+          "id": "combination_L2-11__U3-4",
+          "label": "Shallow squat",
+          "labelZh": "半蹲低处触达",
+          "count": 413
+        },
+        {
+          "id": "combination_L1-4__U3-4",
+          "label": "Half kneeling",
+          "labelZh": "单膝跪低处触达",
+          "count": 22
+        },
+        {
+          "id": "combination_L1-1__U2-4",
+          "label": "Asymmetric bimanual reach",
+          "labelZh": "站定双手非对称触达",
+          "count": 679
+        },
+        {
+          "id": "combination_L1-1__U2-12",
+          "label": "Unilateral arm swing",
+          "labelZh": "站定单臂摆动",
+          "count": 90
+        },
+        {
+          "id": "combination_L1-1__U2-14",
+          "label": "Opposite bilateral swing",
+          "labelZh": "站定双臂反向摆动",
+          "count": 53
+        }
+      ],
+      "series": [
+        {
+          "id": "anchor-global",
+          "label": "Anchor-0ᴳ",
+          "values": [
+            84.04255319148936,
+            96.36363636363636,
+            95.7983193277311,
+            98.06295399515739,
+            81.81818181818181,
+            90.72164948453609,
+            82.22222222222223,
+            79.24528301886792
+          ],
+          "successes": [
+            79,
+            106,
+            456,
+            405,
+            18,
+            616,
+            74,
+            42
+          ],
+          "counts": [
+            94,
+            110,
+            476,
+            413,
+            22,
+            679,
+            90,
+            53
+          ]
+        },
+        {
+          "id": "anchor-local",
+          "label": "Anchor-0ᴸ",
+          "values": [
+            86.17021276595744,
+            90.9090909090909,
+            75.84033613445378,
+            72.88135593220339,
+            27.272727272727273,
+            79.97054491899853,
+            81.11111111111111,
+            75.47169811320755
+          ],
+          "successes": [
+            81,
+            100,
+            361,
+            301,
+            6,
+            543,
+            73,
+            40
+          ],
+          "counts": [
+            94,
+            110,
+            476,
+            413,
+            22,
+            679,
+            90,
+            53
+          ]
+        },
+        {
+          "id": "scale-global",
+          "label": "ScaleBFMᴳ",
+          "values": [
+            92.55319148936171,
+            88.18181818181819,
+            65.96638655462185,
+            71.67070217917676,
+            22.727272727272727,
+            72.01767304860088,
+            88.88888888888889,
+            75.47169811320755
+          ],
+          "successes": [
+            87,
+            97,
+            314,
+            296,
+            5,
+            489,
+            80,
+            40
+          ],
+          "counts": [
+            94,
+            110,
+            476,
+            413,
+            22,
+            679,
+            90,
+            53
+          ]
+        },
+        {
+          "id": "scale-local",
+          "label": "ScaleBFMᴸ",
+          "values": [
+            77.65957446808511,
+            72.72727272727273,
+            47.05882352941177,
+            51.08958837772397,
+            18.181818181818183,
+            54.78645066273932,
+            74.44444444444444,
+            56.60377358490566
+          ],
+          "successes": [
+            73,
+            80,
+            224,
+            211,
+            4,
+            372,
+            67,
+            30
+          ],
+          "counts": [
+            94,
+            110,
+            476,
+            413,
+            22,
+            679,
+            90,
+            53
+          ]
+        },
+        {
+          "id": "sonic",
+          "label": "SONIC v1.1 (G1)",
+          "values": [
+            35.1063829787234,
+            45.45454545454545,
+            68.0672268907563,
+            65.85956416464892,
+            0.0,
+            46.09720176730486,
+            36.666666666666664,
+            18.867924528301888
+          ],
+          "successes": [
+            33,
+            50,
+            324,
+            272,
+            0,
+            313,
+            33,
+            10
+          ],
+          "counts": [
+            94,
+            110,
+            476,
+            413,
+            22,
+            679,
+            90,
+            53
+          ]
+        },
+        {
+          "id": "mimic",
+          "label": "MimicLite v1.1",
+          "values": [
+            52.12765957446808,
+            62.72727272727273,
+            24.789915966386555,
+            34.38256658595642,
+            27.272727272727273,
+            43.004418262150224,
+            52.22222222222222,
+            16.9811320754717
+          ],
+          "successes": [
+            49,
+            69,
+            118,
+            142,
+            6,
+            292,
+            47,
+            9
+          ],
+          "counts": [
+            94,
+            110,
+            476,
+            413,
+            22,
+            679,
+            90,
+            53
+          ]
+        }
+      ],
+      "unit": "%",
+      "metric": "local main success",
+      "note": "Categories contain complete motions with the indicated phase and may overlap."
+    },
+    {
+      "id": "home_moving",
+      "label": "Mobile tasks",
+      "labelZh": "移动任务",
+      "axes": [
+        {
+          "id": "combination_L2-4__U2-2",
+          "label": "Small forward steps",
+          "labelZh": "小步前后单手触达",
+          "count": 547
+        },
+        {
+          "id": "combination_L2-5__U2-2",
+          "label": "Small lateral steps",
+          "labelZh": "小步横移单手触达",
+          "count": 320
+        },
+        {
+          "id": "combination_L2-5__U2-16",
+          "label": "World-fixed hand hold",
+          "labelZh": "横移时手部定点保持",
+          "count": 25
+        },
+        {
+          "id": "combination_L2-6__U2-4",
+          "label": "Forward walking",
+          "labelZh": "前进行走双手非对称触达",
+          "count": 374
+        },
+        {
+          "id": "combination_L2-3__U2-2",
+          "label": "Turning",
+          "labelZh": "转身单手触达",
+          "count": 670
+        }
+      ],
+      "series": [
+        {
+          "id": "anchor-global",
+          "label": "Anchor-0ᴳ",
+          "values": [
+            94.3327239488117,
+            93.75,
+            100.0,
+            90.37433155080214,
+            92.98507462686567
+          ],
+          "successes": [
+            516,
+            300,
+            25,
+            338,
+            623
+          ],
+          "counts": [
+            547,
+            320,
+            25,
+            374,
+            670
+          ]
+        },
+        {
+          "id": "anchor-local",
+          "label": "Anchor-0ᴸ",
+          "values": [
+            84.46069469835466,
+            91.25,
+            100.0,
+            81.28342245989305,
+            75.67164179104478
+          ],
+          "successes": [
+            462,
+            292,
+            25,
+            304,
+            507
+          ],
+          "counts": [
+            547,
+            320,
+            25,
+            374,
+            670
+          ]
+        },
+        {
+          "id": "scale-global",
+          "label": "ScaleBFMᴳ",
+          "values": [
+            69.83546617915906,
+            75.3125,
+            88.0,
+            59.09090909090909,
+            36.26865671641791
+          ],
+          "successes": [
+            382,
+            241,
+            22,
+            221,
+            243
+          ],
+          "counts": [
+            547,
+            320,
+            25,
+            374,
+            670
+          ]
+        },
+        {
+          "id": "scale-local",
+          "label": "ScaleBFMᴸ",
+          "values": [
+            48.994515539305304,
+            58.4375,
+            40.0,
+            34.224598930481285,
+            22.53731343283582
+          ],
+          "successes": [
+            268,
+            187,
+            10,
+            128,
+            151
+          ],
+          "counts": [
+            547,
+            320,
+            25,
+            374,
+            670
+          ]
+        },
+        {
+          "id": "sonic",
+          "label": "SONIC v1.1 (G1)",
+          "values": [
+            41.86471663619744,
+            33.75,
+            40.0,
+            28.342245989304814,
+            24.029850746268657
+          ],
+          "successes": [
+            229,
+            108,
+            10,
+            106,
+            161
+          ],
+          "counts": [
+            547,
+            320,
+            25,
+            374,
+            670
+          ]
+        },
+        {
+          "id": "mimic",
+          "label": "MimicLite v1.1",
+          "values": [
+            38.391224862888485,
+            27.5,
+            48.0,
+            31.28342245989305,
+            27.611940298507463
+          ],
+          "successes": [
+            210,
+            88,
+            12,
+            117,
+            185
+          ],
+          "counts": [
+            547,
+            320,
+            25,
+            374,
+            670
+          ]
+        }
+      ],
+      "unit": "%",
+      "metric": "local main success",
+      "note": "Categories contain complete motions with the indicated phase and may overlap."
+    }
+  ],
+  "reachability": {
+    "count": 3210,
+    "postures": {
+      "axes": [
+        {
+          "id": "standing",
+          "label": "Standing",
+          "labelZh": "站姿",
+          "count": 804
+        },
+        {
+          "id": "shallow-squat",
+          "label": "Shallow squat",
+          "labelZh": "半蹲",
+          "count": 766
+        },
+        {
+          "id": "deep-squat",
+          "label": "Deep squat",
+          "labelZh": "深蹲",
+          "count": 482
+        },
+        {
+          "id": "staggered",
+          "label": "Staggered stance",
+          "labelZh": "跨步站姿",
+          "count": 720
+        },
+        {
+          "id": "half-kneeling",
+          "label": "Half kneeling",
+          "labelZh": "单膝跪地",
+          "count": 438
+        }
+      ],
+      "series": [
+        {
+          "id": "anchor-global",
+          "label": "Anchor-0ᴳ",
+          "values": [
+            61.691542288557216,
+            61.35770234986945,
+            52.697095435684645,
+            64.86111111111111,
+            34.47488584474886
+          ],
+          "successes": [
+            496,
+            470,
+            254,
+            467,
+            151
+          ],
+          "counts": [
+            804,
+            766,
+            482,
+            720,
+            438
+          ],
+          "overallSuccess": 57.258566978193144
+        },
+        {
+          "id": "anchor-local",
+          "label": "Anchor-0ᴸ",
+          "values": [
+            40.67164179104478,
+            26.240208877284594,
+            4.979253112033195,
+            18.333333333333332,
+            0.0
+          ],
+          "successes": [
+            327,
+            201,
+            24,
+            132,
+            0
+          ],
+          "counts": [
+            804,
+            766,
+            482,
+            720,
+            438
+          ],
+          "overallSuccess": 21.30841121495327
+        },
+        {
+          "id": "scale-global",
+          "label": "ScaleBFMᴳ",
+          "values": [
+            53.73134328358209,
+            59.92167101827676,
+            56.016597510373444,
+            56.25,
+            40.63926940639269
+          ],
+          "successes": [
+            432,
+            459,
+            270,
+            405,
+            178
+          ],
+          "counts": [
+            804,
+            766,
+            482,
+            720,
+            438
+          ],
+          "overallSuccess": 54.33021806853583
+        },
+        {
+          "id": "scale-local",
+          "label": "ScaleBFMᴸ",
+          "values": [
+            36.44278606965174,
+            29.634464751958223,
+            42.11618257261411,
+            26.944444444444443,
+            23.059360730593607
+          ],
+          "successes": [
+            293,
+            227,
+            203,
+            194,
+            101
+          ],
+          "counts": [
+            804,
+            766,
+            482,
+            720,
+            438
+          ],
+          "overallSuccess": 31.713395638629283
+        },
+        {
+          "id": "sonic",
+          "label": "SONIC v1.1 (G1)",
+          "values": [
+            33.333333333333336,
+            20.234986945169712,
+            7.676348547717843,
+            32.361111111111114,
+            2.73972602739726
+          ],
+          "successes": [
+            268,
+            155,
+            37,
+            233,
+            12
+          ],
+          "counts": [
+            804,
+            766,
+            482,
+            720,
+            438
+          ],
+          "overallSuccess": 21.962616822429908
+        },
+        {
+          "id": "mimic",
+          "label": "MimicLite v1.1",
+          "values": [
+            25.248756218905474,
+            19.451697127937337,
+            19.502074688796682,
+            23.055555555555557,
+            0.0
+          ],
+          "successes": [
+            203,
+            149,
+            94,
+            166,
+            0
+          ],
+          "counts": [
+            804,
+            766,
+            482,
+            720,
+            438
+          ],
+          "overallSuccess": 19.065420560747665
+        }
+      ],
+      "unit": "%"
+    },
+    "difficulty": null,
+    "footEvents": {
+      "series": [
+        {
+          "id": "anchor-global",
+          "label": "Anchor-0ᴳ",
+          "slips": 0.11869158878504672,
+          "steps": 0.31433021806853584,
+          "touchdowns": 0,
+          "count": 3210
+        },
+        {
+          "id": "anchor-local",
+          "label": "Anchor-0ᴸ",
+          "slips": 0.9149532710280374,
+          "steps": 2.4560747663551403,
+          "touchdowns": 0,
+          "count": 3210
+        },
+        {
+          "id": "scale-global",
+          "label": "ScaleBFMᴳ",
+          "slips": 0.1205607476635514,
+          "steps": 0.8077881619937695,
+          "touchdowns": 0,
+          "count": 3210
+        },
+        {
+          "id": "scale-local",
+          "label": "ScaleBFMᴸ",
+          "slips": 0.38878504672897196,
+          "steps": 4.365109034267912,
+          "touchdowns": 0,
+          "count": 3210
+        },
+        {
+          "id": "sonic",
+          "label": "SONIC v1.1 (G1)",
+          "slips": 0.3582554517133956,
+          "steps": 1.7514018691588784,
+          "touchdowns": 0,
+          "count": 3210
+        },
+        {
+          "id": "mimic",
+          "label": "MimicLite v1.1",
+          "slips": 1.246417445482866,
+          "steps": 17.650778816199377,
+          "touchdowns": 0,
+          "count": 3210
+        }
+      ],
+      "unit": "events / motion"
+    },
+    "windowSeconds": [
+      5.5,
+      16.5
+    ],
+    "includeEnd": true,
+    "metric": "Global main tracking success with zero foot slips, undesired steps, or undesired touchdowns during the task window.",
+    "notes": [
+      "Anchor-0 uses robot-space G1 references for this benchmark, unlike its human references in the other two simulation cohorts.",
+      "Left and right posture variants and wrist targets are pooled. All 3,210 motions have complete tracking and foot-event records for every selected controller.",
+      "Figure 3G's reference CoM difficulty grouping is not present in the supplied dashboard JSON. No values were inferred from the printed figure."
+    ]
+  },
+  "lookahead": {
+    "series": [
+      {
+        "id": "anchor-global",
+        "label": "Anchor-0ᴳ",
+        "lookaheadSeconds": 0.06,
+        "localSuccess": 87.05514274540477,
+        "onlineRetargeting": false
+      },
+      {
+        "id": "anchor-local",
+        "label": "Anchor-0ᴸ",
+        "lookaheadSeconds": 0.06,
+        "localSuccess": 73.1716855690262,
+        "onlineRetargeting": false
+      },
+      {
+        "id": "scale-global",
+        "label": "ScaleBFMᴳ",
+        "lookaheadSeconds": 0.1,
+        "localSuccess": 53.3633163863903,
+        "onlineRetargeting": true
+      },
+      {
+        "id": "scale-local",
+        "label": "ScaleBFMᴸ",
+        "lookaheadSeconds": 0.1,
+        "localSuccess": 35.373484552209625,
+        "onlineRetargeting": true
+      },
+      {
+        "id": "sonic",
+        "label": "SONIC v1.1 (G1)",
+        "lookaheadSeconds": 0.9,
+        "localSuccess": 33.58753747881632,
+        "onlineRetargeting": true
+      },
+      {
+        "id": "mimic",
+        "label": "MimicLite v1.1",
+        "lookaheadSeconds": 0.08,
+        "localSuccess": 28.842393429800552,
+        "onlineRetargeting": true
+      },
+      {
+        "id": "sonic-smpl",
+        "label": "SONIC v1.1 (SMPL)",
+        "lookaheadSeconds": 0.18,
+        "localSuccess": 0.6257332811888932,
+        "onlineRetargeting": false
+      }
+    ],
+    "count": 15342,
+    "note": "This compares complete controller configurations; look-ahead is the furthest future reference time, not end-to-end inference latency. It does not isolate the causal effect of look-ahead."
+  },
+  "hardware": {
+    "trackingErrors": {
+      "series": [
+        {
+          "id": "anchor",
+          "label": "Anchor-0",
+          "wristError": 37.8,
+          "ankleError": 45.7,
+          "retained": 59,
+          "valid": 72
+        },
+        {
+          "id": "scale14",
+          "label": "ScaleBFM (14-point)",
+          "wristError": 56.5,
+          "ankleError": 60.2,
+          "retained": 57,
+          "valid": 72
+        },
+        {
+          "id": "scale5",
+          "label": "ScaleBFM (5-point)",
+          "wristError": 52.0,
+          "ankleError": 64.9,
+          "retained": 56,
+          "valid": 71
+        },
+        {
+          "id": "sonic-g1",
+          "label": "SONIC v1.1 (G1)",
+          "wristError": 43.6,
+          "ankleError": 64.1,
+          "retained": 53,
+          "valid": 69
+        },
+        {
+          "id": "sonic-smpl",
+          "label": "SONIC v1.1 (SMPL)",
+          "wristError": 92.3,
+          "ankleError": 75.6,
+          "retained": 51,
+          "valid": 70
+        },
+        {
+          "id": "mimic-roa",
+          "label": "MimicLite (ROA)",
+          "wristError": 43.3,
+          "ankleError": 59.4,
+          "retained": 53,
+          "valid": 72
+        }
+      ],
+      "unit": "mm",
+      "note": "Mean local errors are conditional on retained complete motions within the body14 25 cm position threshold, without an orientation gate. Retained motion sets differ by controller."
+    },
+    "standingReach": {
+      "count": 51,
+      "series": [
+        {
+          "id": "mimic-roa",
+          "label": "MimicLite (ROA)",
+          "onlineRetargeting": true,
+          "globalPosition": 65.05,
+          "globalRotation": 9.13,
+          "localPosition": 46.44,
+          "localRotation": 9.71,
+          "preliminary": false
+        },
+        {
+          "id": "scale14",
+          "label": "ScaleBFM (14-point)",
+          "onlineRetargeting": true,
+          "globalPosition": 64.18,
+          "globalRotation": 6.4,
+          "localPosition": 46.15,
+          "localRotation": 8.26,
+          "preliminary": false
+        },
+        {
+          "id": "scale5",
+          "label": "ScaleBFM (5-point)",
+          "onlineRetargeting": true,
+          "globalPosition": 72.69,
+          "globalRotation": 8.34,
+          "localPosition": 51.22,
+          "localRotation": 8.25,
+          "preliminary": false
+        },
+        {
+          "id": "sonic-g1",
+          "label": "SONIC v1.1 (G1)",
+          "onlineRetargeting": true,
+          "globalPosition": 98.15,
+          "globalRotation": 10.19,
+          "localPosition": 42.38,
+          "localRotation": 9.42,
+          "preliminary": false
+        },
+        {
+          "id": "sonic-smpl",
+          "label": "SONIC v1.1 (SMPL)",
+          "onlineRetargeting": false,
+          "globalPosition": 166.7,
+          "globalRotation": 19.2,
+          "localPosition": 85.87,
+          "localRotation": 18.75,
+          "preliminary": false
+        },
+        {
+          "id": "anchor",
+          "label": "Anchor-0†",
+          "onlineRetargeting": false,
+          "globalPosition": 56.66,
+          "globalRotation": 6.18,
+          "localPosition": 35.38,
+          "localRotation": 5.8,
+          "preliminary": true
+        }
+      ],
+      "positionUnit": "mm",
+      "rotationUnit": "deg",
+      "note": "† Anchor-0 standing-reach values are preliminary in the supplied paper."
+    },
+    "thresholdFigure": {
+      "thresholdsCm": [
+        10,
+        12.5,
+        15,
+        17.5,
+        20,
+        25
+      ],
+      "numericValuesAvailable": false,
+      "note": "The supplied radar image does not print the per-point success rates. It is shown as an image; exact numeric tooltips are not fabricated."
+    }
+  },
+  "downstream": {
+    "tasks": [
+      {
+        "id": "slippers",
+        "label": "Pick up slippers",
+        "labelZh": "拾取拖鞋"
+      },
+      {
+        "id": "clothes",
+        "label": "Throw dirty clothes",
+        "labelZh": "投放脏衣物"
+      },
+      {
+        "id": "box",
+        "label": "Kick cardboard box",
+        "labelZh": "踢纸箱"
+      },
+      {
+        "id": "trash",
+        "label": "Clear shelf surface",
+        "labelZh": "清理架面"
+      }
+    ],
+    "collection": {
+      "series": [
+        {
+          "id": "sonic-smpl",
+          "label": "SONIC v1.1 (SMPL)",
+          "demosPerHour": [
+            41,
+            24,
+            9,
+            39
+          ],
+          "success": [
+            68.33,
+            55.81,
+            37.5,
+            81.25
+          ]
+        },
+        {
+          "id": "anchor-star",
+          "label": "Anchor-0*",
+          "demosPerHour": [
+            67,
+            57,
+            45,
+            74
+          ],
+          "success": [
+            93.1,
+            93.5,
+            94.74,
+            96.15
+          ]
+        },
+        {
+          "id": "anchor-current",
+          "label": "Anchor-0",
+          "demosPerHour": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "success": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "pending": true
+        }
+      ]
+    },
+    "autonomy": {
+      "taskOrder": [
+        "box",
+        "trash",
+        "slippers",
+        "clothes"
+      ],
+      "unit": "%",
+      "series": [
+        {
+          "id": "sonic-token",
+          "label": "SONIC v1.1 (SMPL)",
+          "interface": "Motion token",
+          "values": [
+            70,
+            0,
+            10,
+            40
+          ]
+        },
+        {
+          "id": "anchor-star-sparse",
+          "label": "Anchor-0* (re-locate)",
+          "interface": "Sparse",
+          "values": [
+            85,
+            50,
+            45,
+            60
+          ]
+        },
+        {
+          "id": "anchor-star-token",
+          "label": "Anchor-0* (re-locate)",
+          "interface": "Motion token",
+          "values": [
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        {
+          "id": "anchor-sparse",
+          "label": "Anchor-0 (re-locate + PRED feedback)",
+          "interface": "Sparse",
+          "values": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "pending": true
+        },
+        {
+          "id": "anchor-token",
+          "label": "Anchor-0 (re-locate + PRED feedback)",
+          "interface": "Motion token",
+          "values": [
+            null,
+            null,
+            null,
+            null
+          ],
+          "pending": true
+        }
+      ]
+    },
+    "note": "* denotes the earlier variant with error feedback supplied to the encoder (test101/59000). Current-model collection and autonomy results are pending in the supplied paper; they are not replaced with earlier-variant results."
+  },
+  "notes": [
+    "G and L identify input modes; scoring frames are independently specified.",
+    "Raw source paths, unrelated checkpoints, and large per-motion payloads are intentionally excluded.",
+    "The dashboard dataset named real_robot consists of simulation evaluations on hardware motion references; it is not used as measured hardware results."
+  ]
+}

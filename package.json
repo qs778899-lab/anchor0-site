@@ -1,0 +1,7 @@
+{
+  "name": "anchor0-site",
+  "private": true,
+  "type": "module",
+  "description": "Anchor-0 paper website and pinned local interactive demo",
+  "scripts": {"start":"python3 scripts/site.py start","stop":"python3 scripts/site.py stop","test":"node --test tests/demo.test.mjs"}
+}

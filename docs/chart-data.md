@@ -1,0 +1,94 @@
+# 论文图表数据
+
+网站使用 `dist/data/paper-results.json` 中的固定论文快照，不跟随评测网站的最新 checkpoint 自动更新。数值来自用户提供的评测网页及 `S0_Report` 论文图表；没有从雷达图像的像素位置估算成功率。
+
+## 来源与版本
+
+- 评测网页：`http://172.16.3.99:18080/`。
+- 页面内数据生成时间：`2026-10-28T05:14:45.612508+00:00`。
+- 保存的 HTML SHA-256：`f01361401b57ea41d8a057cc5efef04246cf722b7906398c28632fe38db149cd`。
+- 论文仿真图元数据标题：`Figure 3 · test132 · 38k`。
+- 论文前瞻比较图元数据标题：`Figure 4 · test132 · 38k`。
+- 共同条件：Isaac Sim、domain randomization 开启。
+- 本地缓存 `.cache/evaluation.html` 不纳入 Git。网站只包含所需聚合数据，不包含页面中的内部服务器路径、无关 checkpoint 或逐动作大数据。
+
+## 配置对应
+
+| 网站 ID | 论文模型 | In-house / Public 输入配置 | Reachability 输入配置 |
+| --- | --- | --- | --- |
+| `anchor-global` | Anchor-0ᴳ | `test132_38k_human_global_reference` | `test132_38k_g1_global_reference` |
+| `anchor-local` | Anchor-0ᴸ | `test132_38k_human_reanchor_reference` | `test132_38k_g1_reanchor_reference` |
+| `scale-global` | ScaleBFMᴳ | `scalebfm_xl_wholebody14` | 同左 |
+| `scale-local` | ScaleBFMᴸ | `scalebfm_xl_wholebody14_local` | 同左 |
+| `sonic` | SONIC v1.1 (G1) | `sonic_v1_1_g1` | 同左 |
+| `mimic` | MimicLite v1.1 | `mimiclite_v1_1` | 同左 |
+
+G、L 表示控制器的输入模式，与评价使用的 global、local 坐标系相互独立。Reachability 使用机器人空间参考，而前两个仿真动作集的 Anchor-0 使用人体参考。
+
+## 指标和聚合
+
+### 仿真图 3A–E
+
+- In-house 有 15,342 条动作，Public 有 2,230 条动作。
+- 成功率读取 `data.records` 的 `local.main` 和 `global.main`，单位为百分比，保留源数据浮点精度。
+- 成功要求腕/踝位置误差全程不超过 10 cm、腕/踝方向误差不超过 1 rad，其他跟踪点位置误差不超过 25 cm。
+- 根部 XY 误差使用 global；腕和踝误差使用 local，单位均为 mm。
+- 误差先在每条动作内平均，再跨动作平均。评价窗口在任一 body14 跟踪点位置误差首次超过 25 cm 前截止，因此不同方法的误差观察窗口可能不同。
+- Global 采用初始骨盆水平位置和朝向对齐；local 在此基础上去除逐帧骨盆水平平移差，保留高度和朝向差。
+- 图 3C 使用 `radarData.datasets.inhouse.results` 的 `mainCounts[axis][0] / totals[axis] × 100`。不是固定 15 cm 的通用 SR。每条结果同时保留分子/分母，便于 tooltip 展示动作数量。
+- 雷达类别允许重叠，同一完整动作可包含多种任务阶段。
+
+提取脚本会将以下 local SR 四舍五入到一位小数后与论文进行断言核对：
+
+| 模型 | In-house local SR | Public local SR |
+| --- | ---: | ---: |
+| Anchor-0ᴳ | 87.1% | 57.0% |
+| Anchor-0ᴸ | 73.2% | 40.8% |
+| ScaleBFMᴳ | 53.4% | 35.2% |
+| ScaleBFMᴸ | 35.4% | 26.0% |
+| SONIC v1.1 (G1) | 33.6% | 25.9% |
+| MimicLite v1.1 | 28.8% | 18.9% |
+
+### Reachability 图 3F、H
+
+- 使用 `reachData` 的全部 3,210 条参考。
+- 任务窗口为 `[5.5, 16.5]` 秒，包含末端采样。
+- 成功使用 `mainComplete == 1 && feetAvailable == 1 && taskSuccess == 1`，分母为所在组的全部动作。
+- 六种所选控制器均具有完整的 3,210 条 tracking 和 foot-event 记录，脚部事件均值的分母也为 3,210。
+- 图 3F 的七个存储姿态合并为五组：standing 804、half_squat 766、deep_squat 482、staggered_left/right 720、half_kneel_left/right 438。左右手、原始/镜像动作均保留。
+- 图 3H 使用每条动作的 `slipCount` 和 `stepCount`，单位为 events / motion；`touchdownCount` 一并保存（此快照中六种配置均为零）。
+
+图 3G 的 reference CoM difficulty 分组没有包含在给定网页的 `reachData` 中。论文描述了 support-margin 五分位分组，但页面没有逐动作 margin 或分组索引。因此 `reachability.difficulty` 明确设为 `null`，不生成精确数值 tooltip。可保留原论文图展示，待取得原始分组后再扩展。
+
+### 前瞻比较图 4
+
+Local SR 复用上述 15,342 条动作的 main 指标。前瞻时间和在线重定向标记来自论文图 4 和对应正文：Anchor-0ᴳ/ᴸ 0.06 s、ScaleBFMᴳ/ᴸ 0.10 s、SONIC G1 0.90 s、SONIC SMPL 0.18 s、MimicLite 0.08 s。
+
+两种 Anchor-0 和 SONIC SMPL 不需要在线人体到机器人重定向，其余配置需要。该图比较完整控制器配置，不能解释成前瞻长度的单变量因果实验，也不是端到端推理延迟。
+
+### 真机与下游结果
+
+- `hardware.trackingErrors` 是论文真机图中明确打印的腕/踝误差。保留各方法 retained/valid 动作数，提示均值来自不同的保留动作集。
+- `hardware.standingReach` 是论文 51 条站立触达动作表；Anchor-0† 数值在稿件中标为 preliminary，JSON 同样保留该状态。
+- 用户新增的六阈值真机雷达图没有打印逐点数值，`hardware.thresholdFigure.numericValuesAvailable` 为 `false`，只展示原图及放大功能。
+- 网页中名为 `real_robot` 的原始数据集是对真机动作参考做的仿真评估，不作为实测真机结果使用。
+- `downstream` 保留论文的示范采集与 VLA 表格数据。Anchor-0* 明确为较早的 test101/59000、encoder 接收误差反馈的版本。当前版本尚未完成的结果使用 `null` 与 `pending: true`，没有以早期结果代替，也没有把缺失值当作零。
+
+## 前端字段
+
+顶层字段为 `snapshot`、`models`、`simulation`、`radars`、`reachability`、`lookahead`、`hardware`、`downstream`、`notes`。
+
+- 多序列雷达数据统一采用 `{axes, series:[{id,label,values,successes,counts}], unit}`。
+- 各轴含英文 `label`、中文 `labelZh` 和 `count`。
+- 柱状图按 `series` 中的命名指标读取，单位由对应 `unit` 或 metric 元数据指定。
+- 数字保留源数据精度；前端可将 tooltip 格式化为两位小数。
+
+## 重新生成与验证
+
+在项目根目录运行：
+
+```sh
+python3 scripts/extract-paper-data.py --input .cache/evaluation.html
+```
+
+脚本只读取 JSON，不执行来源 HTML 的脚本；每个选择条件必须唯一。除论文 SR 数值断言外，还验证参考数量、评价窗口、完整性和输出中没有内部绝对路径。初次导出后另核对所有 radar 数组长度、有限的 0–100% 范围和成功数/分母的精确对应，均通过。
