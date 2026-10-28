@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Code Coming Soon.">
+  <meta name="color-scheme" content="light">
+  <title>Code Coming Soon</title>
+  <link rel="icon" href="data:,">
+  <link rel="preload" href="./vendor/outfit-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="./style.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+</head>
+<body>
+  <main>
+    <div id="viewer" role="group" aria-label="Robot animation. Drag to rotate, scroll or pinch to zoom, and press Space to pause or play. Arrow keys rotate and zoom." aria-busy="true" tabindex="0">
+      <div id="load-state">
+        <p id="status" role="status" aria-live="polite">Loading animation…</p>
+        <button id="retry" type="button" hidden>Try again</button>
+      </div>
+    </div>
+    <h1>Code Coming Soon</h1>
+    <p id="playback-status" class="sr-only" role="status" aria-live="polite"></p>
+    <noscript>Enable JavaScript to view the robot animation.</noscript>
+  </main>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
