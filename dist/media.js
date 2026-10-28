@@ -124,7 +124,7 @@ export async function initializeMedia() {
   document.addEventListener('visibilitychange', reconcile);
   document.addEventListener('fullscreenchange', reconcile);
   document.addEventListener('click', event => {
-    const button = event.target.closest('[data-full-video]');
+    const button = event.target.closest?.('[data-full-video]');
     if (!button || !manifest) return;
     const group = manifest.groups.find(g => g.id === button.dataset.fullVideo);
     const video = $('video', dialog), state = states.get(video);

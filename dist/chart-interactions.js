@@ -6,11 +6,12 @@ const exact = value => Number(value).toLocaleString('en-US',{minimumFractionDigi
 const seen = new Set();
 const charts = new WeakMap();
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
-let pinned = false, hideTimer;
+let pinned = false, hideTimer, activeMarks=[], keyboardTip=false;
 
 export function hideTooltip() {
   tooltip.hidden = true;
   pinned = false;
+  activeMarks=[];
   clearTimeout(hideTimer);
   $$('[aria-describedby="chart-tooltip"]').forEach(mark => mark.removeAttribute('aria-describedby'));
 }
@@ -115,6 +116,8 @@ function marksAt(event, keyboard=false) {
 function showTips(marks, event, keyboard=false) {
   if (!marks.length) return;
   clearTimeout(hideTimer);
+  $$('[aria-describedby="chart-tooltip"]').forEach(mark=>{if(!marks.includes(mark))mark.removeAttribute('aria-describedby');});
+  activeMarks=marks;keyboardTip=keyboard;
   const tips = marks.map(mark => JSON.parse(mark.dataset.tip));
   tooltip.innerHTML = `<div class="tooltip-dataset">${esc(tips[0].dataset||'')}</div>${tips.map(tip => `<div class="tooltip-entry"><strong>${esc(tip.model)}</strong><div>${esc(tip.metric)}</div><div class="tooltip-value">${exact(tip.value)} ${esc(tip.unit)}</div>${tip.count!=null?`<small>${tip.successes!=null?`${tip.successes.toLocaleString('en-US')} / `:''}${tip.count.toLocaleString('en-US')} ${t('motions','条动作')}${tip.retained!=null?` · ${t('retained','保留')} ${tip.retained}`:''}</small>`:''}${tip.note?`<small>${esc(tip.note)}</small>`:''}${tip.config?`<small class="tooltip-config">${esc(tip.config)}</small>`:''}</div>`).join('')}`;
   tooltip.dataset.items = String(tips.length);
@@ -130,10 +133,10 @@ function showTips(marks, event, keyboard=false) {
 document.addEventListener('pointermove', event => {
   const chart=event.target.closest?.('.research-svg');
   if (chart) finishChart(chart);
-  if (tooltip.contains(event.target) || pinned) return;
+  if (tooltip.contains(event.target)) return;
   const marks = marksAt(event);
-  if (marks.length) showTips(marks,event);
-  else if (!tooltip.hidden) { clearTimeout(hideTimer); hideTimer=setTimeout(hideTooltip,160); }
+  if (marks.length) { showTips(marks,event); pinned=false; }
+  else if (!pinned && !tooltip.hidden) { clearTimeout(hideTimer); hideTimer=setTimeout(hideTooltip,160); }
 });
 document.addEventListener('pointerout', event => {
   if (!pinned && !event.relatedTarget) hideTooltip();
@@ -157,5 +160,12 @@ document.addEventListener('keydown', event => {
     event.preventDefault(); showTips(marksAt(event,true),event,true); pinned=true;
   }
 });
-window.addEventListener('scroll',hideTooltip,{passive:true});
+window.addEventListener('scroll',()=>{
+  // Keyboard focus may scroll a newly focused mark into view. Keep its details attached.
+  if(keyboardTip && activeMarks.includes(document.activeElement)){
+    const rect=document.activeElement.getBoundingClientRect();
+    if(rect.bottom>0 && rect.top<innerHeight){showTips(activeMarks,null,true);return;}
+  }
+  hideTooltip();
+},{passive:true});
 window.addEventListener('resize',hideTooltip);

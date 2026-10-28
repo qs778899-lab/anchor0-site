@@ -109,6 +109,14 @@ def run_logged(command: list[str], log: Path):
         subprocess.run(command, stdout=output, stderr=subprocess.STDOUT, check=True)
 
 
+def decoded_frame_count(ffmpeg: str, path: Path, log: Path) -> int:
+    result = subprocess.run([ffmpeg, '-v', 'error', '-nostdin', '-i', str(path),
+                             '-f', 'null', '-', '-progress', 'pipe:1'], capture_output=True, text=True, check=True)
+    log.write_text(result.stderr)
+    assert not result.stderr.strip(), f'Decode error: {path}'
+    return int([line.split('=')[1] for line in result.stdout.splitlines() if line.startswith('frame=')][-1])
+
+
 def prepare_clips(args, ffmpeg, cache):
     """Encode exact frame ranges from originals, keeping every composite frame intact."""
     manifest = json.loads((ROOT / 'scripts/video-clips.json').read_text())
@@ -118,6 +126,8 @@ def prepare_clips(args, ffmpeg, cache):
     for group in manifest['groups']:
         source = args.source_root / group['source']
         original = metadata(ffmpeg, source)
+        assert original['fps'] == fps, 'Clip manifest assumes a 30 fps source'
+        original_frames = decoded_frame_count(ffmpeg, source, cache / f"{group['id']}-source-decode.log")
         published_group = {key: group[key] for key in ('id', 'title', 'description', 'fullVideo', 'fullPoster')}
         published_group['clips'] = []
         previous_frame = 0
@@ -136,9 +146,13 @@ def prepare_clips(args, ffmpeg, cache):
                 temporary = cache / f'{slug}.mp4'
                 print(f'Encoding clip: {slug} ({duration:.2f} s)', flush=True)
                 run_logged([
-                    ffmpeg, '-hide_banner', '-nostdin', '-y', '-ss', f'{start:.9f}', '-i', str(source),
-                    '-t', f'{duration:.9f}', '-map', '0:v:0', '-map', '0:a:0?', '-map_metadata', '-1',
-                    '-vf', "scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease:force_divisible_by=2,fps=30,setsar=1",
+                    ffmpeg, '-hide_banner', '-nostdin', '-y', '-i', str(source),
+                    '-map', '0:v:0', '-map', '0:a:0?', '-map_metadata', '-1',
+                    # Decode and trim by frame index: fractional -ss can skip a boundary frame.
+                    '-vf', f"trim=start_frame={clip['startFrame']}:end_frame={clip['endFrame']},setpts=N/({fps}*TB),"
+                           "scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease:force_divisible_by=2,setsar=1",
+                    '-af', f'atrim=start={start:.9f}:duration={duration:.9f},asetpts=PTS-STARTPTS',
+                    '-r', str(fps), '-fps_mode', 'cfr',
                     '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '22', '-pix_fmt', 'yuv420p',
                     '-maxrate', '5000k', '-bufsize', '10000k', '-g', '30',
                     '-c:a', 'aac', '-b:a', '128k', '-ar', '48000', '-movflags', '+faststart', str(temporary),
@@ -155,8 +169,8 @@ def prepare_clips(args, ffmpeg, cache):
             assert prepared['video_codec'] == 'h264' and prepared['pixel_format'] == 'yuv420p'
             assert prepared['audio_codec'] == original['audio_codec'] == 'aac'
             assert prepared['bytes'] < MAX_BYTES
-            run_logged([ffmpeg, '-v', 'error', '-nostdin', '-i', str(video), '-f', 'null', '-'], cache / f'{slug}-decode.log')
-            assert not (cache / f'{slug}-decode.log').read_text().strip()
+            prepared['frame_count'] = decoded_frame_count(ffmpeg, video, cache / f'{slug}-decode.log')
+            assert prepared['frame_count'] == clip['endFrame'] - clip['startFrame'], f'Frame count changed: {slug}'
             item = {
                 'id': slug, 'title': clip['title'], 'startSeconds': start, 'endSeconds': clip['endFrame'] / fps,
                 'duration': duration, 'output': str(video.relative_to(ROOT / 'dist')),
@@ -165,8 +179,10 @@ def prepare_clips(args, ffmpeg, cache):
             published_group['clips'].append(item)
             records.append({**item, 'source': group['source'], 'startFrame': clip['startFrame'],
                             'endFrame': clip['endFrame'], 'source_sha256': original['sha256'],
+                            'source_frame_count': original_frames,
                             'output_metadata': prepared, 'poster_sha256': sha256(poster)})
         assert abs(previous_frame / fps - original['duration_seconds']) < .06, 'Source coverage incomplete'
+        assert previous_frame == original_frames, 'Source frame coverage incomplete'
         assert sha256(source) == original['sha256'], 'Original input changed'
         published['groups'].append(published_group)
     (ROOT / 'dist/data/video-clips.json').write_text(json.dumps(published, ensure_ascii=False, indent=2) + '\n')

@@ -223,11 +223,11 @@ function changeView(id,view){
 }
 
 document.addEventListener('click',event=>{
-  const tab=event.target.closest('[data-panel-id][data-view]');if(tab)changeView(tab.dataset.panelId,tab.dataset.view);
-  const button=event.target.closest('[data-focus-group]');if(button){const group=button.dataset.focusGroup,id=button.dataset.focusModel;$$('svg',button.closest('.research-figure')||button.closest('#lookahead-chart')).forEach(finishChart);focus.set(group,focus.get(group)===id?null:id);applyHighlight(group);}
+  const tab=event.target.closest?.('[data-panel-id][data-view]');if(tab)changeView(tab.dataset.panelId,tab.dataset.view);
+  const button=event.target.closest?.('[data-focus-group]');if(button){const group=button.dataset.focusGroup,id=button.dataset.focusModel;$$('svg',button.closest('.research-figure')||button.closest('#lookahead-chart')).forEach(finishChart);focus.set(group,focus.get(group)===id?null:id);applyHighlight(group);}
 });
 document.addEventListener('keydown',event=>{
-  const tab=event.target.closest('.view-tab');if(!tab||!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+  const tab=event.target.closest?.('.view-tab');if(!tab||!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
   event.preventDefault();const view=['ArrowLeft','Home'].includes(event.key)?'chart':'data';changeView(tab.dataset.panelId,view);$(`#${tab.dataset.panelId}-${view}-tab`).focus();
 });
 document.addEventListener('change',event=>{if(event.target.id==='lookahead-cohort'){cohort=event.target.value;if(source)renderLookahead();}});

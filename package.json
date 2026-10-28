@@ -3,5 +3,11 @@
   "private": true,
   "type": "module",
   "description": "Anchor-0 paper website and pinned local interactive demo",
-  "scripts": {"start":"python3 scripts/site.py start","stop":"python3 scripts/site.py stop","test":"node --test tests/demo.test.mjs"}
+  "scripts": {
+    "start": "python3 scripts/site.py start",
+    "stop": "python3 scripts/site.py stop",
+    "test": "node --test tests/demo.test.mjs",
+    "test:site": "python3 tests/verify-site.py",
+    "test:browser": "node tests/browser-experience.mjs && node tests/browser-media.mjs"
+  }
 }

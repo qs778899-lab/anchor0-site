@@ -8,6 +8,9 @@ their movements are not perfectly synchronized, so cuts preserve the shared acti
 
 `scripts/video-clips.json` is the editable manifest. Boundaries are integer source frames at 30 fps,
 with an inclusive start and exclusive end. It records source paths and English/Chinese titles.
+The encoder decodes the source and trims by frame index, then resets timestamps. It does not
+use fractional timestamp seeks, which can skip boundary frames. Every decoded output frame
+count must match its manifest range, and each group's ranges cover the source frame count exactly.
 `dist/data/video-clips.json` is the public manifest with exact times, output paths and posters.
 `docs/video-clips.json` records output metadata and source/output/poster SHA-256 hashes.
 

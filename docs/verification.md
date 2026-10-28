@@ -52,3 +52,60 @@ The initial application checks below refer to the original test132 / 38k build. 
 - English / Chinese, Light / Dark, dataset preservation through translation, arrow-key view switching, and the historical test132 / 38k label were checked. Deep links are positioned after asynchronous chart rendering, preventing the added figure from shifting the destination.
 - Both JavaScript modules pass syntax checks. Local data / reference / immutable demo checks and HTTP range, MIME, redirect, and directory-boundary checks pass. The clean homepage preview tab reported no console errors or warnings.
 - The original robot demo remains unchanged. All 134 immutable published demo resources still match the recorded SHA-256 hashes. Hardware and downstream numerical data retain their original experiment versions.
+
+## Floating navigation, action clips and chart interaction — 2026-10-29
+
+The site retains the test134 / 46k evaluation and the original released demo model.
+The new left navigation, front video showcase and chart interactions were checked in an isolated
+Chrome profile at 1440 × 1000, 1024 × 900 and 390 × 844. The responsive menu stays available,
+closes after section selection, links to `/demo/`, and the reading column has no horizontal overflow.
+English/Chinese and light/dark modes were inspected visually.
+
+- All 405 numeric chart/table marks were compared to JSON by dataset, model and metric, including
+  exact sample counts and available controller configurations. Tables use two decimal places;
+  tooltips use four; downloadable JSON is unchanged.
+- All 180 simulation marks were checked with each model selected using actual DOM hit testing
+  at projected coordinates, followed by keyboard focus. All 12 hardware bars were also checked.
+  Both In-house/Public scatter datasets were exercised; a real emulated touch event opened the
+  Anchor-0 tooltip on the 390 px layout.
+- Coincident 100% radar points list both Anchor variants. Adjacent points remain independently
+  selectable. Zero centers were checked, including a temporary DOM-only regression fixture for
+  two zero-valued metrics of the same model; the fixture never changes production data.
+- The first bar animation stays at zero below the entry threshold, starts at quarter visibility,
+  and completes at the original SVG geometry. Chart/Data keeps the same height. Completed
+  animation state survives language, theme and dataset changes; reduced motion shows final geometry.
+- All 15 short clips load, play and loop in Chrome. Visible clips play muted together at normal speed and pause offscreen. A manual
+  pause persists after returning. Unmuting one player mutes the others. Full-film modal playback
+  pauses other players, supports native fullscreen, and releases its source when closed.
+- Switching to a different browser tab pauses playback; returning resumes the existing position.
+  The completed main film stays finished after leaving and returning. Injecting a rejected play
+  promise verifies the visible fallback button and successful manual recovery.
+- All 15 short clips decode without errors. Their frame ranges cover all 4,070 original frames of
+  the three source films, with no dropped boundary frames. First/middle/last frames and source
+  timelines were inspected. Original films and full-length web copies retain their recorded hashes.
+- HTTP checks cover range requests for every short clip, main-film ranges, WASM/JS MIME types,
+  raw gzip delivery and directory protection. All 134 immutable demo files retain their hashes.
+- Final browser suites complete with no JavaScript exceptions.
+
+Reproduce data, asset and transport checks with `python3 tests/verify-site.py` (`--offline` skips HTTP).
+For browser checks, start a separate Chrome instance with `--headless=new`,
+`--remote-debugging-address=127.0.0.1 --remote-debugging-port=9223`, and a new temporary
+`--user-data-dir` (never a personal browser profile). Then run sequentially with Node 24 or newer:
+
+```sh
+node tests/browser-experience.mjs
+node tests/browser-media.mjs
+```
+
+`CDP_URL` and `SITE_URL` can override the localhost defaults. Browser screenshots are saved under
+`.cache/preview/`. The browser client has no external package dependency. These suites use both
+real Chrome events and bounded DOM fixtures; they do not claim testing on a physical iOS device.
+
+The preview host currently has Wi-Fi address `192.168.71.107`, with HTTP 200 verified for the
+home page, clip manifest and `/demo/` at port 18081. The previous `172.16.3.166` address is
+not assigned on this Wi-Fi connection. The service still listens on all interfaces.
+
+Saved previews: [desktop home](previews/desktop-home.png), [video showcase](previews/desktop-videos.png),
+[performance](previews/desktop-performance.png), [combined results](previews/desktop-results.png),
+[Chinese dark mode](previews/desktop-results-dark-zh.png), [mobile navigation](previews/mobile-navigation.png),
+[mobile performance](previews/mobile-performance.png), and [mobile videos](previews/mobile-videos.png).

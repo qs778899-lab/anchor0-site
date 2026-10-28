@@ -28,6 +28,33 @@ for link in parser.links:
     assert target.exists(), f'Missing {link}'
 print(f'PASS: {len(parser.links)} local page references')
 
+clip_manifest=json.loads((ROOT/'scripts/video-clips.json').read_text())
+clip_outputs=json.loads((DIST/'data/video-clips.json').read_text())
+clip_records=json.loads((ROOT/'docs/video-clips.json').read_text())['clips']
+assert len(clip_records)==15
+by_clip={r['id']:r for r in clip_records}
+for group, public in zip(clip_manifest['groups'],clip_outputs['groups']):
+    assert group['id']==public['id']
+    assert (DIST/public['fullVideo']).is_file() and (DIST/public['fullPoster']).is_file()
+    previous=0
+    for clip, output in zip(group['clips'],public['clips']):
+        assert clip['startFrame']==previous, 'Source frames were dropped or reordered'
+        previous=clip['endFrame']
+        assert output['startSeconds']==clip['startFrame']/30 and output['endSeconds']==clip['endFrame']/30
+        assert 5<=output['duration']<=15 and output['title']==clip['title']
+        record=by_clip[output['id']]
+        assert record['output_metadata']['frame_count']==clip['endFrame']-clip['startFrame']
+        for key, digest in [('output',record['output_metadata']['sha256']),('poster',record['poster_sha256'])]:
+            assert hashlib.sha256((DIST/output[key]).read_bytes()).hexdigest()==digest, f'Changed clip asset: {output[key]}'
+    assert previous==by_clip[public['clips'][-1]['id']]['source_frame_count'], 'Missing source end frames'
+full_records=json.loads((ROOT/'docs/video-assets.json').read_text())['videos']
+for record in full_records:
+    assert hashlib.sha256((DIST/record['output']).read_bytes()).hexdigest()==record['output_metadata']['sha256'], 'Full-length video changed'
+    source=Path.home()/'Desktop/demo视频'/record['source']
+    if source.exists():
+        assert hashlib.sha256(source.read_bytes()).hexdigest()==record['source_metadata']['sha256'], 'Original video changed'
+print('PASS: 15 contiguous action clips, manifest paths/hashes, unchanged full films and available originals')
+
 provenance=json.loads((ROOT/'docs/demo-provenance.json').read_text())
 assert provenance['sourceCommit']=='cdcfef07a9109603f36532c182ad0c282e51e748'
 assert len(provenance['immutableFiles'])==134, 'Published demo asset inventory changed'
@@ -109,6 +136,10 @@ except urllib.error.HTTPError as e: assert e.code==416
 else: raise AssertionError('Unsatisfiable range accepted')
 for file,mime in [('demo/assets/lan-compat.js','text/javascript'),('demo/assets/ort-wasm-simd-threaded-CDsxkEtH.wasm','application/wasm')]:
     with get('/'+file, {'Range':'bytes=0-31'}) as r: assert r.headers['Content-Type'].startswith(mime)
+for clip in clip_records:
+    with get('/'+clip['output'], {'Range':'bytes=0-31'}) as r:
+        assert r.status==206 and r.headers['Content-Type'].startswith('video/mp4')
+        assert r.read()==(DIST/clip['output']).read_bytes()[:32]
 gz=next((DIST/'demo/assets').rglob('*.gz'))
 with get('/'+gz.relative_to(DIST).as_posix(), {'Range':'bytes=0-31'}) as r:
     assert r.headers.get('Content-Encoding') is None and r.read()==gz.read_bytes()[:32]
