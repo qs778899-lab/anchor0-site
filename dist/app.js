@@ -1,6 +1,7 @@
 import { renderResearchFigures } from './charts.js';
 import { initializeMedia, translateMedia } from './media.js';
 import './navigation.js';
+import { hideTooltip } from './chart-interactions.js';
 
 const $ = (selector, root=document) => root.querySelector(selector);
 const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
@@ -12,7 +13,6 @@ const t = (en,zh) => language === 'zh' ? zh : en;
 const label = item => language === 'zh' && item.labelZh ? item.labelZh : item.label;
 const esc = value => String(value ?? '').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const number = (n,digits=2) => n == null ? t('Pending','待评估') : Number(n).toLocaleString('en-US',{maximumFractionDigits:digits});
-const tooltip = $('#chart-tooltip');
 
 function translate() {
   document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en';
@@ -47,21 +47,6 @@ $$('[data-zoom]').forEach(button=>button.addEventListener('click',()=>{
 $('#close-image').addEventListener('click',()=>dialog.close());
 dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
 $('#dialog-image').addEventListener('click',event=>event.currentTarget.classList.toggle('expanded'));
-function showTip(mark,event){
-  const tip=JSON.parse(mark.dataset.tip);
-  tooltip.innerHTML=`<strong>${esc(tip.model)}</strong><div>${esc(tip.metric)}</div><div class="tooltip-value">${esc(Number(tip.value).toLocaleString('en-US',{minimumFractionDigits:4,maximumFractionDigits:4}))} ${esc(tip.unit||'')}</div>${tip.note?`<small>${esc(tip.note)}</small>`:''}`;
-  tooltip.hidden=false;
-  const rect=mark.getBoundingClientRect();
-  const x=event?.clientX ?? rect.left+rect.width/2,y=event?.clientY ?? rect.top;
-  tooltip.style.left=`${Math.max(8,Math.min(innerWidth-tooltip.offsetWidth-8,x+16))}px`;
-  tooltip.style.top=`${Math.max(8,Math.min(innerHeight-tooltip.offsetHeight-8,y+18))}px`;
-}
-document.addEventListener('pointermove',event=>{const mark=event.target.closest('[data-tip]');if(mark)showTip(mark,event);});
-document.addEventListener('pointerout',event=>{if(event.target.closest('[data-tip]'))tooltip.hidden=true;});
-document.addEventListener('focusin',event=>{const mark=event.target.closest('[data-tip]');if(mark)showTip(mark);else tooltip.hidden=true;});
-document.addEventListener('click',event=>{const mark=event.target.closest('[data-tip]');if(mark)showTip(mark,event);else tooltip.hidden=true;});
-document.addEventListener('keydown',event=>{if(event.key==='Escape')tooltip.hidden=true;});
-window.addEventListener('scroll',()=>{tooltip.hidden=true;},{passive:true});
 function table(headers, rows, highlight=false){
   return `<div class="table-scroll"><table class="data-table"><thead><tr>${headers.map(h=>`<th scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr${highlight&&String(row[0]).startsWith('Anchor')?' class="highlight"':''}>${row.map((cell,i)=>i===0?`<th scope="row">${esc(cell)}</th>`:`<td>${esc(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
@@ -75,7 +60,7 @@ function renderTables(){
   $('#autonomy-table').innerHTML=table([t('Controller','控制器'),t('Interface','接口'),...autonomy.taskOrder.map(id=>`${label(tasks.find(task=>task.id===id))} (%)`)],autonomy.series.map(s=>[s.label,s.interface,...s.values.map(v=>number(v))]),true)+downstreamNote();
 }
 function renderAll(){
-  tooltip.hidden=true;
+  hideTooltip();
   renderResearchFigures(data,language);
   renderTables();
 }

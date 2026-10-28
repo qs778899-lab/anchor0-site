@@ -29,7 +29,7 @@ function pauseAutomatically(video, state) {
 }
 
 async function play(video, state, manual=false) {
-  if (state.pendingPlay || (!manual && (state.userPaused || state.finished || !available(video, state)))) return;
+  if (!video.paused || state.pendingPlay || (!manual && (state.userPaused || state.finished || !available(video, state)))) return;
   load(video);
   if (manual) { state.userPaused = false; state.finished = false; }
   state.pendingPlay = true;

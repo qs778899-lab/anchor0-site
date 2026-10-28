@@ -42,6 +42,11 @@
 .research-svg.narrow-plot .bubble-axis,.research-svg.narrow-plot .bubble-axis-title{font-size:14px}
 [data-series]{transition:opacity .15s}
 .series-muted{opacity:.16}
+svg .series-muted{pointer-events:none}
+.radar-series>polygon{pointer-events:none}
+.radar-point .point-hit{stroke:none;pointer-events:all}
+.radar-point .point-dot{pointer-events:none}
+.radar-point:hover .point-dot,.radar-point:focus-visible .point-dot{stroke:var(--fg);stroke-width:2}
 .shape-legend{display:flex;justify-content:center;flex-wrap:wrap;gap:12px 25px;padding:18px 0 20px;font-size:11px;color:var(--muted)}
 .shape-legend>span{display:flex;align-items:center;gap:7px}
 .circle-key,.diamond-key{display:inline-block;width:8px;height:8px;background:var(--muted)}
@@ -94,6 +99,11 @@
 .data-section-title{font-size:12px;color:var(--muted);font-weight:550;padding:10px;margin:0;background:var(--soft);border-bottom:1px solid var(--line)}
 .standalone-view-tools{display:flex;justify-content:flex-end;margin-bottom:15px}
 .chart-tooltip small{white-space:pre-line;overflow-wrap:anywhere}
+.chart-tooltip{max-width:min(370px,calc(100vw - 16px));max-height:calc(100dvh - 16px);overflow:auto;pointer-events:auto;overscroll-behavior:contain}
+.tooltip-dataset{font-size:10px;opacity:.75;margin-bottom:7px}
+.tooltip-entry+.tooltip-entry{border-top:1px solid color-mix(in srgb,var(--bg) 25%,transparent);padding-top:10px;margin-top:10px}
+.tooltip-config{margin-top:5px;font-family:ui-monospace,SFMono-Regular,monospace;line-height:1.45}
+.research-figure{container-type:inline-size}
 .historical-label{display:block;color:var(--muted);font-size:12px;margin-top:12px}
 @media(max-width:1099px){
   .paper-matrix{grid-template-columns:1fr 1fr;grid-template-areas:'inhouse inhouse' 'a b' 'c c' 'public public' 'd e'}
@@ -102,6 +112,23 @@
   .radar-stack{grid-template-rows:1fr;grid-template-columns:1fr 1fr;gap:20px}
   .research-panel-head{flex-wrap:wrap}
   .performance-section{padding-top:60px}
+}
+/* Use the reading column width, including when a desktop sidebar is present. */
+@container (max-width:1040px){
+  .paper-matrix{grid-template-columns:1fr 1fr;grid-template-areas:'inhouse inhouse' 'a b' 'c c' 'public public' 'd e'}
+  .panel-c{border-left:0;border-top:1px solid var(--line)}
+  .panel-c .figure-stage{aspect-ratio:800 / 380}
+  .radar-stack{grid-template-rows:1fr;grid-template-columns:1fr 1fr;gap:20px}
+  .research-panel-head{flex-wrap:wrap}
+}
+@container (max-width:620px){
+  .paper-matrix{grid-template-columns:1fr;grid-template-areas:'inhouse' 'a' 'b' 'c' 'public' 'd' 'e'}
+  .research-panel-head{flex-wrap:nowrap}
+  .panel-c .figure-stage{aspect-ratio:400 / 770}
+  .radar-stack{grid-template-columns:1fr;grid-template-rows:1fr 1fr;gap:12px}
+  .panel-b,.panel-e{border-left:0;border-top:1px solid var(--line)}
+  .reach-matrix{grid-template-columns:1fr}
+  .reach-matrix .research-panel+.research-panel{border-left:0;border-top:1px solid var(--line)}
 }
 @media(max-width:760px){
   .performance-section{padding-top:46px;padding-bottom:0}

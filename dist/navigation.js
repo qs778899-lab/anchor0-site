@@ -13,7 +13,7 @@ function setOpen(open, restoreFocus=false) {
   document.body.classList.toggle('menu-open', open);
   content.forEach(el => { el.inert = open; });
   sidebar.inert = compact.matches && !open;
-  if (open) sidebar.querySelector('[aria-current]')?.focus() || links[0].focus();
+  if (open) (sidebar.querySelector('[aria-current]') || links[0]).focus();
   else if (restoreFocus) toggle.focus();
 }
 toggle.addEventListener('click', () => setOpen(toggle.getAttribute('aria-expanded') !== 'true'));
