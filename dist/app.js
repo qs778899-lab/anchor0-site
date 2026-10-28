@@ -1,4 +1,6 @@
 import { renderResearchFigures } from './charts.js';
+import { initializeMedia, translateMedia } from './media.js';
+import './navigation.js';
 
 const $ = (selector, root=document) => root.querySelector(selector);
 const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
@@ -20,6 +22,7 @@ function translate() {
   $('#theme-select').setAttribute('aria-label',t('Color theme','配色模式'));
   $$('.video-cover').forEach(button => button.setAttribute('aria-label',t('Play video','播放视频')));
   $('#close-image').setAttribute('aria-label',t('Close figure','关闭图片'));
+  translateMedia();
   if(data) renderAll();
 }
 $('#language-toggle').addEventListener('click',()=>{language=language==='en'?'zh':'en';savePreference('anchor-language',language);translate();});
@@ -33,21 +36,7 @@ mediaTheme.addEventListener('change',applyTheme);
 applyTheme();
 translate();
 
-$$('.video-frame').forEach(frame=>{
-  const video=$('video',frame),cover=$('.video-cover',frame);
-  video.controls=false;
-  cover.addEventListener('click',()=>{
-    if(!video.dataset.loaded){ $$('source',video).forEach(source=>{source.src=source.dataset.src;});video.load();video.dataset.loaded='true'; }
-    cover.hidden=true;video.controls=true;
-    video.play().catch(()=>{video.controls=true;video.focus();});
-  });
-  video.addEventListener('play',()=>{$$('video').forEach(other=>{if(other!==video)other.pause();});});
-  video.addEventListener('error',()=>{
-    if($('.video-error',frame))return;
-    const message=document.createElement('p');message.className='video-error';message.setAttribute('role','alert');
-    message.textContent=t('Video could not load. Refresh the page to try again.','视频加载失败，请刷新页面后重试。');frame.after(message);
-  });
-});
+initializeMedia();
 
 const dialog=$('#image-dialog');
 $$('[data-zoom]').forEach(button=>button.addEventListener('click',()=>{
@@ -58,11 +47,6 @@ $$('[data-zoom]').forEach(button=>button.addEventListener('click',()=>{
 $('#close-image').addEventListener('click',()=>dialog.close());
 dialog.addEventListener('click',event=>{if(event.target===dialog)dialog.close();});
 $('#dialog-image').addEventListener('click',event=>event.currentTarget.classList.toggle('expanded'));
-let scrollPending=false;
-window.addEventListener('scroll',()=>{if(scrollPending)return;scrollPending=true;requestAnimationFrame(()=>{const total=document.documentElement.scrollHeight-innerHeight;$('.reading-progress').style.width=`${total>0?scrollY/total*100:0}%`;scrollPending=false;});},{passive:true});
-const activeSections=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting){$$('.desktop-nav a').forEach(link=>{if(link.hash===`#${entry.target.id}`)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});}});},{rootMargin:'-15% 0px -65% 0px'});
-$$('section[id]').forEach(section=>activeSections.observe(section));
-
 function showTip(mark,event){
   const tip=JSON.parse(mark.dataset.tip);
   tooltip.innerHTML=`<strong>${esc(tip.model)}</strong><div>${esc(tip.metric)}</div><div class="tooltip-value">${esc(Number(tip.value).toLocaleString('en-US',{minimumFractionDigits:4,maximumFractionDigits:4}))} ${esc(tip.unit||'')}</div>${tip.note?`<small>${esc(tip.note)}</small>`:''}`;

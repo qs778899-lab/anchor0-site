@@ -109,11 +109,77 @@ def run_logged(command: list[str], log: Path):
         subprocess.run(command, stdout=output, stderr=subprocess.STDOUT, check=True)
 
 
+def prepare_clips(args, ffmpeg, cache):
+    """Encode exact frame ranges from originals, keeping every composite frame intact."""
+    manifest = json.loads((ROOT / 'scripts/video-clips.json').read_text())
+    fps = manifest['fps']
+    published = {'version': manifest['version'], 'groups': []}
+    records = []
+    for group in manifest['groups']:
+        source = args.source_root / group['source']
+        original = metadata(ffmpeg, source)
+        published_group = {key: group[key] for key in ('id', 'title', 'description', 'fullVideo', 'fullPoster')}
+        published_group['clips'] = []
+        previous_frame = 0
+        for clip in group['clips']:
+            assert clip['startFrame'] == previous_frame, 'Clips must cover the original continuously'
+            previous_frame = clip['endFrame']
+            slug = f"{group['id']}-{clip['id']}"
+            start = clip['startFrame'] / fps
+            duration = (clip['endFrame'] - clip['startFrame']) / fps
+            assert 5 <= duration <= 15, f'Unexpected clip length: {slug}'
+            video = ROOT / f'dist/assets/videos/clips/{slug}.mp4'
+            poster = ROOT / f'dist/assets/posters/clips/{slug}.jpg'
+            video.parent.mkdir(parents=True, exist_ok=True)
+            poster.parent.mkdir(parents=True, exist_ok=True)
+            if not args.verify_only and (args.force or not video.exists()):
+                temporary = cache / f'{slug}.mp4'
+                print(f'Encoding clip: {slug} ({duration:.2f} s)', flush=True)
+                run_logged([
+                    ffmpeg, '-hide_banner', '-nostdin', '-y', '-ss', f'{start:.9f}', '-i', str(source),
+                    '-t', f'{duration:.9f}', '-map', '0:v:0', '-map', '0:a:0?', '-map_metadata', '-1',
+                    '-vf', "scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease:force_divisible_by=2,fps=30,setsar=1",
+                    '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '22', '-pix_fmt', 'yuv420p',
+                    '-maxrate', '5000k', '-bufsize', '10000k', '-g', '30',
+                    '-c:a', 'aac', '-b:a', '128k', '-ar', '48000', '-movflags', '+faststart', str(temporary),
+                ], cache / f'{slug}-encode.log')
+                temporary.replace(video)
+            if not args.verify_only and (args.force or not poster.exists()):
+                run_logged([ffmpeg, '-hide_banner', '-nostdin', '-y', '-ss', str(min(2, duration / 3)),
+                            '-i', str(video), '-frames:v', '1', '-vf', 'scale=960:-2', '-q:v', '2',
+                            '-update', '1', str(poster)], cache / f'{slug}-poster.log')
+            prepared = metadata(ffmpeg, video)
+            assert abs(prepared['duration_seconds'] - duration) < .06
+            assert abs(original['width'] / original['height'] - prepared['width'] / prepared['height']) < .005
+            assert prepared['fps'] == fps and prepared['faststart']
+            assert prepared['video_codec'] == 'h264' and prepared['pixel_format'] == 'yuv420p'
+            assert prepared['audio_codec'] == original['audio_codec'] == 'aac'
+            assert prepared['bytes'] < MAX_BYTES
+            run_logged([ffmpeg, '-v', 'error', '-nostdin', '-i', str(video), '-f', 'null', '-'], cache / f'{slug}-decode.log')
+            assert not (cache / f'{slug}-decode.log').read_text().strip()
+            item = {
+                'id': slug, 'title': clip['title'], 'startSeconds': start, 'endSeconds': clip['endFrame'] / fps,
+                'duration': duration, 'output': str(video.relative_to(ROOT / 'dist')),
+                'poster': str(poster.relative_to(ROOT / 'dist')), 'width': prepared['width'], 'height': prepared['height'],
+            }
+            published_group['clips'].append(item)
+            records.append({**item, 'source': group['source'], 'startFrame': clip['startFrame'],
+                            'endFrame': clip['endFrame'], 'source_sha256': original['sha256'],
+                            'output_metadata': prepared, 'poster_sha256': sha256(poster)})
+        assert abs(previous_frame / fps - original['duration_seconds']) < .06, 'Source coverage incomplete'
+        assert sha256(source) == original['sha256'], 'Original input changed'
+        published['groups'].append(published_group)
+    (ROOT / 'dist/data/video-clips.json').write_text(json.dumps(published, ensure_ascii=False, indent=2) + '\n')
+    (ROOT / 'docs/video-clips.json').write_text(json.dumps({'editing': manifest['editing'], 'fps': fps, 'clips': records}, ensure_ascii=False, indent=2) + '\n')
+    print(f'Ready: {len(records)} clips, all original frames retained and decoded successfully.', flush=True)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--source-root", type=Path, default=Path.home() / "Desktop/demo视频")
     parser.add_argument("--force", action="store_true", help="Replace generated files only; originals are never written.")
     parser.add_argument("--verify-only", action="store_true", help="Validate existing generated media and regenerate reports.")
+    parser.add_argument("--clips-only", action="store_true", help="Prepare/verify action clips without reprocessing full-length web copies.")
     args = parser.parse_args()
     ffmpeg = ffmpeg_path()
     cache = ROOT / ".cache/video-preparation"
@@ -122,6 +188,9 @@ def main():
     docs = ROOT / "docs"
     for folder in (cache, videos, posters, docs):
         folder.mkdir(parents=True, exist_ok=True)
+    if args.clips_only:
+        prepare_clips(args, ffmpeg, cache)
+        return
     version = subprocess.check_output([ffmpeg, "-version"], text=True).splitlines()[0]
     records = []
     for slug, relative_source, title, maxrate, poster_second in ITEMS:
@@ -198,6 +267,7 @@ Exact bytes, source and output SHA-256 digests, poster digests and tool version 
 [video-assets.json](video-assets.json). Encoding and decoding logs remain in ignored `.cache/video-preparation`.
 """
     (docs / "video-assets.md").write_text(report)
+    prepare_clips(args, ffmpeg, cache)
 
 
 if __name__ == "__main__":

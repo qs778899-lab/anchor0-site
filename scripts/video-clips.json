@@ -1,0 +1,52 @@
+{
+  "version": 1,
+  "fps": 30,
+  "editing": "Continuous, frame-aligned action phases at original speed. All source frames retained; no crop, overlays, or rearrangement. Simultaneous operators/devices stay in the original composite.",
+  "groups": [
+    {
+      "id": "comparison",
+      "source": "双机对比 pico logo/双机对比.mp4",
+      "title": {"en": "Two robots. The same intent.", "zh": "相同意图，双机对照。"},
+      "description": {"en": "Reaching, foot stability and locomotion, side by side.", "zh": "并排观察触达、足部稳定与行走表现。"},
+      "fullVideo": "assets/videos/comparison.mp4",
+      "fullPoster": "assets/posters/comparison.jpg",
+      "clips": [
+        {"id":"standing", "startFrame":0, "endFrame":240, "title":{"en":"Standing movements", "zh":"站姿动作"}},
+        {"id":"kneeling", "startFrame":240, "endFrame":594, "title":{"en":"Kneeling reaches", "zh":"跪姿触达"}},
+        {"id":"lateral", "startFrame":594, "endFrame":919, "title":{"en":"Small lateral steps", "zh":"小幅横移"}},
+        {"id":"foot-stability", "startFrame":919, "endFrame":1123, "title":{"en":"Bending & foot stability", "zh":"弯腰与足部稳定"}},
+        {"id":"ankle", "startFrame":1123, "endFrame":1340, "title":{"en":"Ankle rotation", "zh":"踝部旋转"}},
+        {"id":"turning", "startFrame":1340, "endFrame":1610, "title":{"en":"Turning in place", "zh":"原地转身"}},
+        {"id":"pico-bending", "startFrame":1610, "endFrame":1854, "title":{"en":"PICO · bending", "zh":"PICO · 弯腰"}},
+        {"id":"pico-lateral", "startFrame":1854, "endFrame":2264, "title":{"en":"PICO · lateral steps", "zh":"PICO · 横移"}},
+        {"id":"pico-walking", "startFrame":2264, "endFrame":2513, "title":{"en":"PICO · walking & turning", "zh":"PICO · 行走转向"}}
+      ]
+    },
+    {
+      "id": "body-diversity",
+      "source": "多体型适配/多体型适配.mp4",
+      "title": {"en": "Different bodies. Shared control.", "zh": "不同体型，共同适配。"},
+      "description": {"en": "Four operators, 165–188 cm and 50–80 kg, shown together.", "zh": "四位操作者同屏展示，身高 165–188 cm、体重 50–80 kg。"},
+      "fullVideo": "assets/videos/body-diversity.mp4",
+      "fullPoster": "assets/posters/body-diversity.jpg",
+      "clips": [
+        {"id":"upper-body", "startFrame":0, "endFrame":216, "title":{"en":"Upper-body movements", "zh":"上肢动作"}},
+        {"id":"bending", "startFrame":216, "endFrame":438, "title":{"en":"Bending & reaching", "zh":"俯身触达"}},
+        {"id":"squatting", "startFrame":438, "endFrame":684, "title":{"en":"Squatting & low reaches", "zh":"下蹲与低位触达"}},
+        {"id":"kneeling", "startFrame":684, "endFrame":969, "title":{"en":"Kneeling & recovery", "zh":"跪姿触达与起身"}}
+      ]
+    },
+    {
+      "id": "input-devices",
+      "source": "多设备适配/多设备适配.mp4",
+      "title": {"en": "One interface. Four input devices.", "zh": "统一接口，四种输入设备。"},
+      "description": {"en": "Xsens · CHINGMU · Noitom PN Link · PICO", "zh": "Xsens · CHINGMU · Noitom PN Link · PICO"},
+      "fullVideo": "assets/videos/input-devices.mp4",
+      "fullPoster": "assets/posters/input-devices.jpg",
+      "clips": [
+        {"id":"standing", "startFrame":0, "endFrame":318, "title":{"en":"Standing & bending", "zh":"站姿与俯身"}},
+        {"id":"low-reaches", "startFrame":318, "endFrame":588, "title":{"en":"Low reaches & recovery", "zh":"低姿态触达与起身"}}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,471 @@
+{
+  "editing": "Continuous, frame-aligned action phases at original speed. All source frames retained; no crop, overlays, or rearrangement. Simultaneous operators/devices stay in the original composite.",
+  "fps": 30,
+  "clips": [
+    {
+      "id": "comparison-standing",
+      "title": {
+        "en": "Standing movements",
+        "zh": "站姿动作"
+      },
+      "startSeconds": 0.0,
+      "endSeconds": 8.0,
+      "duration": 8.0,
+      "output": "assets/videos/clips/comparison-standing.mp4",
+      "poster": "assets/posters/clips/comparison-standing.jpg",
+      "width": 1738,
+      "height": 906,
+      "source": "双机对比 pico logo/双机对比.mp4",
+      "startFrame": 0,
+      "endFrame": 240,
+      "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
+      "output_metadata": {
+        "duration_seconds": 8.0,
+        "faststart": true,
+        "width": 1738,
+        "height": 906,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 2074738,
+        "sha256": "32f50a12cb0b48c743555894b2580c7c70a16b495ae50e93badbb3c80aeca934"
+      },
+      "poster_sha256": "5038a8133cc3216a0001a32b6f78f8a670b86bcb4caff4d3e954fbc6e3d6e640"
+    },
+    {
+      "id": "comparison-kneeling",
+      "title": {
+        "en": "Kneeling reaches",
+        "zh": "跪姿触达"
+      },
+      "startSeconds": 8.0,
+      "endSeconds": 19.8,
+      "duration": 11.8,
+      "output": "assets/videos/clips/comparison-kneeling.mp4",
+      "poster": "assets/posters/clips/comparison-kneeling.jpg",
+      "width": 1738,
+      "height": 906,
+      "source": "双机对比 pico logo/双机对比.mp4",
+      "startFrame": 240,
+      "endFrame": 594,
+      "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
+      "output_metadata": {
+        "duration_seconds": 11.8,
+        "faststart": true,
+        "width": 1738,
+        "height": 906,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 3158746,
+        "sha256": "f96e5f2153abd116586d7e06c4917d0eb33d953ad9dea9e89dc11791a70905cb"
+      },
+      "poster_sha256": "e749fda05b03c83da9f105a97e4127b0494e006275c5c8ad6088925a74204c8a"
+    },
+    {
+      "id": "comparison-lateral",
+      "title": {
+        "en": "Small lateral steps",
+        "zh": "小幅横移"
+      },
+      "startSeconds": 19.8,
+      "endSeconds": 30.633333333333333,
+      "duration": 10.833333333333334,
+      "output": "assets/videos/clips/comparison-lateral.mp4",
+      "poster": "assets/posters/clips/comparison-lateral.jpg",
+      "width": 1738,
+      "height": 906,
+      "source": "双机对比 pico logo/双机对比.mp4",
+      "startFrame": 594,
+      "endFrame": 919,
+      "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
+      "output_metadata": {
+        "duration_seconds": 10.834,
+        "faststart": true,
+        "width": 1738,
+        "height": 906,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 2814366,
+        "sha256": "10a964038078d736a5647ccca4ba82fb2c4d5941b837f846a647c16dc2335664"
+      },
+      "poster_sha256": "a6d72eb21732b700e658e85b531f8fc1624ada941b02f4ba7d7fccdd04fc24ec"
+    },
+    {
+      "id": "comparison-foot-stability",
+      "title": {
+        "en": "Bending & foot stability",
+        "zh": "弯腰与足部稳定"
+      },
+      "startSeconds": 30.633333333333333,
+      "endSeconds": 37.43333333333333,
+      "duration": 6.8,
+      "output": "assets/videos/clips/comparison-foot-stability.mp4",
+      "poster": "assets/posters/clips/comparison-foot-stability.jpg",
+      "width": 1738,
+      "height": 906,
+      "source": "双机对比 pico logo/双机对比.mp4",
+      "startFrame": 919,
+      "endFrame": 1123,
+      "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
+      "output_metadata": {
+        "duration_seconds": 6.8,
+        "faststart": true,
+        "width": 1738,
+        "height": 906,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 1640816,
+        "sha256": "a14cb5d3ff2c3bbfd11c544148d9460cecc5445242617179a30bf39ec4ad4300"
+      },
+      "poster_sha256": "2bc945664fb00af55465fe3ca740be66b821591ac59cc667fe3d09fe1b796b0d"
+    },
+    {
+      "id": "comparison-ankle",
+      "title": {
+        "en": "Ankle rotation",
+        "zh": "踝部旋转"
+      },
+      "startSeconds": 37.43333333333333,
+      "endSeconds": 44.666666666666664,
+      "duration": 7.233333333333333,
+      "output": "assets/videos/clips/comparison-ankle.mp4",
+      "poster": "assets/posters/clips/comparison-ankle.jpg",
+      "width": 1738,
+      "height": 906,
+      "source": "双机对比 pico logo/双机对比.mp4",
+      "startFrame": 1123,
+      "endFrame": 1340,
+      "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
+      "output_metadata": {
+        "duration_seconds": 7.234,
+        "faststart": true,
+        "width": 1738,
+        "height": 906,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 1632614,
+        "sha256": "d78ee77d5e277a4b2069797955c02cbfee886fab73059fc0d12cc29dd4c3c3c4"
+      },
+      "poster_sha256": "b09be7fc5076a53173e36be5dd61138c21954c4f6857fefce687e686803a4a4c"
+    },
+    {
+      "id": "comparison-turning",
+      "title": {
+        "en": "Turning in place",
+        "zh": "原地转身"
+      },
+      "startSeconds": 44.666666666666664,
+      "endSeconds": 53.666666666666664,
+      "duration": 9.0,
+      "output": "assets/videos/clips/comparison-turning.mp4",
+      "poster": "assets/posters/clips/comparison-turning.jpg",
+      "width": 1738,
+      "height": 906,
+      "source": "双机对比 pico logo/双机对比.mp4",
+      "startFrame": 1340,
+      "endFrame": 1610,
+      "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
+      "output_metadata": {
+        "duration_seconds": 9.0,
+        "faststart": true,
+        "width": 1738,
+        "height": 906,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 2224786,
+        "sha256": "cf34d8d090e2683bcca8d33809edefcf9249374e6a5a24935596cfd846d0a291"
+      },
+      "poster_sha256": "ae445244dbdc4ce8f1eaf8e19741c96d98626f2849223794317d8221950a5897"
+    },
+    {
+      "id": "comparison-pico-bending",
+      "title": {
+        "en": "PICO · bending",
+        "zh": "PICO · 弯腰"
+      },
+      "startSeconds": 53.666666666666664,
+      "endSeconds": 61.8,
+      "duration": 8.133333333333333,
+      "output": "assets/videos/clips/comparison-pico-bending.mp4",
+      "poster": "assets/posters/clips/comparison-pico-bending.jpg",
+      "width": 1738,
+      "height": 906,
+      "source": "双机对比 pico logo/双机对比.mp4",
+      "startFrame": 1610,
+      "endFrame": 1854,
+      "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
+      "output_metadata": {
+        "duration_seconds": 8.134,
+        "faststart": true,
+        "width": 1738,
+        "height": 906,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 1414267,
+        "sha256": "94ec934bfcab2a15221a798efdf96aa3d9a7ccd5578e0a07981e940d5c5d0be1"
+      },
+      "poster_sha256": "cffcd46c1c8437f223f89c40e250fc408c5c18896854e2e170571b67eb858138"
+    },
+    {
+      "id": "comparison-pico-lateral",
+      "title": {
+        "en": "PICO · lateral steps",
+        "zh": "PICO · 横移"
+      },
+      "startSeconds": 61.8,
+      "endSeconds": 75.46666666666667,
+      "duration": 13.666666666666666,
+      "output": "assets/videos/clips/comparison-pico-lateral.mp4",
+      "poster": "assets/posters/clips/comparison-pico-lateral.jpg",
+      "width": 1738,
+      "height": 906,
+      "source": "双机对比 pico logo/双机对比.mp4",
+      "startFrame": 1854,
+      "endFrame": 2264,
+      "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
+      "output_metadata": {
+        "duration_seconds": 13.667,
+        "faststart": true,
+        "width": 1738,
+        "height": 906,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 2534450,
+        "sha256": "e285d0e2bb2f42f89a110e1d893884d165d02478df540def7e2ef2ca756539f1"
+      },
+      "poster_sha256": "c625007c7ca09fe501838894efedc8e6d2df48278c9f72ccf34bfa59d020c6a6"
+    },
+    {
+      "id": "comparison-pico-walking",
+      "title": {
+        "en": "PICO · walking & turning",
+        "zh": "PICO · 行走转向"
+      },
+      "startSeconds": 75.46666666666667,
+      "endSeconds": 83.76666666666667,
+      "duration": 8.3,
+      "output": "assets/videos/clips/comparison-pico-walking.mp4",
+      "poster": "assets/posters/clips/comparison-pico-walking.jpg",
+      "width": 1738,
+      "height": 906,
+      "source": "双机对比 pico logo/双机对比.mp4",
+      "startFrame": 2264,
+      "endFrame": 2513,
+      "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
+      "output_metadata": {
+        "duration_seconds": 8.3,
+        "faststart": true,
+        "width": 1738,
+        "height": 906,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 2306477,
+        "sha256": "f56adb3812b005867b3b74fc9a48d5c744e66eb572d691ec3186c693323a48cc"
+      },
+      "poster_sha256": "59ea2f55d0864db0312aadfc3e793cb55179265fcded782cf6dc3d718e1d982b"
+    },
+    {
+      "id": "body-diversity-upper-body",
+      "title": {
+        "en": "Upper-body movements",
+        "zh": "上肢动作"
+      },
+      "startSeconds": 0.0,
+      "endSeconds": 7.2,
+      "duration": 7.2,
+      "output": "assets/videos/clips/body-diversity-upper-body.mp4",
+      "poster": "assets/posters/clips/body-diversity-upper-body.jpg",
+      "width": 1920,
+      "height": 1080,
+      "source": "多体型适配/多体型适配.mp4",
+      "startFrame": 0,
+      "endFrame": 216,
+      "source_sha256": "a1a69ccd9e24e8fc6fd47cc5ff44e5b5666803efdb2921c1c15c6586cf96c7dc",
+      "output_metadata": {
+        "duration_seconds": 7.2,
+        "faststart": true,
+        "width": 1920,
+        "height": 1080,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 2364851,
+        "sha256": "079579f5ddb63c745da3ebc25d8cc9c039dac643ae7119d6214e7dcddfa18ccd"
+      },
+      "poster_sha256": "4e32f82e0943468a20c14f2e678724d5b507993f80c06bb2dca7da05e8a27e34"
+    },
+    {
+      "id": "body-diversity-bending",
+      "title": {
+        "en": "Bending & reaching",
+        "zh": "俯身触达"
+      },
+      "startSeconds": 7.2,
+      "endSeconds": 14.6,
+      "duration": 7.4,
+      "output": "assets/videos/clips/body-diversity-bending.mp4",
+      "poster": "assets/posters/clips/body-diversity-bending.jpg",
+      "width": 1920,
+      "height": 1080,
+      "source": "多体型适配/多体型适配.mp4",
+      "startFrame": 216,
+      "endFrame": 438,
+      "source_sha256": "a1a69ccd9e24e8fc6fd47cc5ff44e5b5666803efdb2921c1c15c6586cf96c7dc",
+      "output_metadata": {
+        "duration_seconds": 7.4,
+        "faststart": true,
+        "width": 1920,
+        "height": 1080,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 2557814,
+        "sha256": "bca6de682d4ef968849a6b5ad7d0eb5b175a31785d6a4f157b281f95b1b84256"
+      },
+      "poster_sha256": "619f552da6b74f50b02a89671372193c909e022adc12a86883105c2b3d57763a"
+    },
+    {
+      "id": "body-diversity-squatting",
+      "title": {
+        "en": "Squatting & low reaches",
+        "zh": "下蹲与低位触达"
+      },
+      "startSeconds": 14.6,
+      "endSeconds": 22.8,
+      "duration": 8.2,
+      "output": "assets/videos/clips/body-diversity-squatting.mp4",
+      "poster": "assets/posters/clips/body-diversity-squatting.jpg",
+      "width": 1920,
+      "height": 1080,
+      "source": "多体型适配/多体型适配.mp4",
+      "startFrame": 438,
+      "endFrame": 684,
+      "source_sha256": "a1a69ccd9e24e8fc6fd47cc5ff44e5b5666803efdb2921c1c15c6586cf96c7dc",
+      "output_metadata": {
+        "duration_seconds": 8.2,
+        "faststart": true,
+        "width": 1920,
+        "height": 1080,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 2590225,
+        "sha256": "32d3bb32fe24b394135229b99c3f616bd4ae0490eb5b3d56fa8c6ef76633f0b1"
+      },
+      "poster_sha256": "e74b6828fa0236fbc60cfa698a8b421f3d9cda86de0f08fc4bd8923cef429dfe"
+    },
+    {
+      "id": "body-diversity-kneeling",
+      "title": {
+        "en": "Kneeling & recovery",
+        "zh": "跪姿触达与起身"
+      },
+      "startSeconds": 22.8,
+      "endSeconds": 32.3,
+      "duration": 9.5,
+      "output": "assets/videos/clips/body-diversity-kneeling.mp4",
+      "poster": "assets/posters/clips/body-diversity-kneeling.jpg",
+      "width": 1920,
+      "height": 1080,
+      "source": "多体型适配/多体型适配.mp4",
+      "startFrame": 684,
+      "endFrame": 969,
+      "source_sha256": "a1a69ccd9e24e8fc6fd47cc5ff44e5b5666803efdb2921c1c15c6586cf96c7dc",
+      "output_metadata": {
+        "duration_seconds": 9.5,
+        "faststart": true,
+        "width": 1920,
+        "height": 1080,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 3070484,
+        "sha256": "1ebe16490136d0573f91f0335233061b6fbe84cda86b4152e33c284cb74753fa"
+      },
+      "poster_sha256": "4133dea3a484eb3852bd3173695bedc825609c9853d429c6e519b8d39f4b9f8d"
+    },
+    {
+      "id": "input-devices-standing",
+      "title": {
+        "en": "Standing & bending",
+        "zh": "站姿与俯身"
+      },
+      "startSeconds": 0.0,
+      "endSeconds": 10.6,
+      "duration": 10.6,
+      "output": "assets/videos/clips/input-devices-standing.mp4",
+      "poster": "assets/posters/clips/input-devices-standing.jpg",
+      "width": 1920,
+      "height": 1080,
+      "source": "多设备适配/多设备适配.mp4",
+      "startFrame": 0,
+      "endFrame": 318,
+      "source_sha256": "aa9ad752a83c9a61e178c0b5f76d02d091df77df70063bfaeb4da96d91289583",
+      "output_metadata": {
+        "duration_seconds": 10.6,
+        "faststart": true,
+        "width": 1920,
+        "height": 1080,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 3891337,
+        "sha256": "78f2998ac23d6297cc135c8dec2a54c6111abf0f47ce54d72b9682692989934a"
+      },
+      "poster_sha256": "20c703e984057235c82dac164e68203b2970f7204e7954ebd54b3af4252d1789"
+    },
+    {
+      "id": "input-devices-low-reaches",
+      "title": {
+        "en": "Low reaches & recovery",
+        "zh": "低姿态触达与起身"
+      },
+      "startSeconds": 10.6,
+      "endSeconds": 19.6,
+      "duration": 9.0,
+      "output": "assets/videos/clips/input-devices-low-reaches.mp4",
+      "poster": "assets/posters/clips/input-devices-low-reaches.jpg",
+      "width": 1920,
+      "height": 1080,
+      "source": "多设备适配/多设备适配.mp4",
+      "startFrame": 318,
+      "endFrame": 588,
+      "source_sha256": "aa9ad752a83c9a61e178c0b5f76d02d091df77df70063bfaeb4da96d91289583",
+      "output_metadata": {
+        "duration_seconds": 9.0,
+        "faststart": true,
+        "width": 1920,
+        "height": 1080,
+        "fps": 30.0,
+        "video_codec": "h264",
+        "pixel_format": "yuv420p",
+        "audio_codec": "aac",
+        "bytes": 2907980,
+        "sha256": "3093abce599215d0ff3b49217a989b89123cb07411677567889a16906be3a472"
+      },
+      "poster_sha256": "bc508610a7810394a1416e167aa3ea6dee34a26961183743ce31c07b353e3822"
+    }
+  ]
+}

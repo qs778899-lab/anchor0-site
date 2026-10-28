@@ -1,0 +1,260 @@
+{
+  "version": 1,
+  "groups": [
+    {
+      "id": "comparison",
+      "title": {
+        "en": "Two robots. The same intent.",
+        "zh": "相同意图，双机对照。"
+      },
+      "description": {
+        "en": "Reaching, foot stability and locomotion, side by side.",
+        "zh": "并排观察触达、足部稳定与行走表现。"
+      },
+      "fullVideo": "assets/videos/comparison.mp4",
+      "fullPoster": "assets/posters/comparison.jpg",
+      "clips": [
+        {
+          "id": "comparison-standing",
+          "title": {
+            "en": "Standing movements",
+            "zh": "站姿动作"
+          },
+          "startSeconds": 0.0,
+          "endSeconds": 8.0,
+          "duration": 8.0,
+          "output": "assets/videos/clips/comparison-standing.mp4",
+          "poster": "assets/posters/clips/comparison-standing.jpg",
+          "width": 1738,
+          "height": 906
+        },
+        {
+          "id": "comparison-kneeling",
+          "title": {
+            "en": "Kneeling reaches",
+            "zh": "跪姿触达"
+          },
+          "startSeconds": 8.0,
+          "endSeconds": 19.8,
+          "duration": 11.8,
+          "output": "assets/videos/clips/comparison-kneeling.mp4",
+          "poster": "assets/posters/clips/comparison-kneeling.jpg",
+          "width": 1738,
+          "height": 906
+        },
+        {
+          "id": "comparison-lateral",
+          "title": {
+            "en": "Small lateral steps",
+            "zh": "小幅横移"
+          },
+          "startSeconds": 19.8,
+          "endSeconds": 30.633333333333333,
+          "duration": 10.833333333333334,
+          "output": "assets/videos/clips/comparison-lateral.mp4",
+          "poster": "assets/posters/clips/comparison-lateral.jpg",
+          "width": 1738,
+          "height": 906
+        },
+        {
+          "id": "comparison-foot-stability",
+          "title": {
+            "en": "Bending & foot stability",
+            "zh": "弯腰与足部稳定"
+          },
+          "startSeconds": 30.633333333333333,
+          "endSeconds": 37.43333333333333,
+          "duration": 6.8,
+          "output": "assets/videos/clips/comparison-foot-stability.mp4",
+          "poster": "assets/posters/clips/comparison-foot-stability.jpg",
+          "width": 1738,
+          "height": 906
+        },
+        {
+          "id": "comparison-ankle",
+          "title": {
+            "en": "Ankle rotation",
+            "zh": "踝部旋转"
+          },
+          "startSeconds": 37.43333333333333,
+          "endSeconds": 44.666666666666664,
+          "duration": 7.233333333333333,
+          "output": "assets/videos/clips/comparison-ankle.mp4",
+          "poster": "assets/posters/clips/comparison-ankle.jpg",
+          "width": 1738,
+          "height": 906
+        },
+        {
+          "id": "comparison-turning",
+          "title": {
+            "en": "Turning in place",
+            "zh": "原地转身"
+          },
+          "startSeconds": 44.666666666666664,
+          "endSeconds": 53.666666666666664,
+          "duration": 9.0,
+          "output": "assets/videos/clips/comparison-turning.mp4",
+          "poster": "assets/posters/clips/comparison-turning.jpg",
+          "width": 1738,
+          "height": 906
+        },
+        {
+          "id": "comparison-pico-bending",
+          "title": {
+            "en": "PICO · bending",
+            "zh": "PICO · 弯腰"
+          },
+          "startSeconds": 53.666666666666664,
+          "endSeconds": 61.8,
+          "duration": 8.133333333333333,
+          "output": "assets/videos/clips/comparison-pico-bending.mp4",
+          "poster": "assets/posters/clips/comparison-pico-bending.jpg",
+          "width": 1738,
+          "height": 906
+        },
+        {
+          "id": "comparison-pico-lateral",
+          "title": {
+            "en": "PICO · lateral steps",
+            "zh": "PICO · 横移"
+          },
+          "startSeconds": 61.8,
+          "endSeconds": 75.46666666666667,
+          "duration": 13.666666666666666,
+          "output": "assets/videos/clips/comparison-pico-lateral.mp4",
+          "poster": "assets/posters/clips/comparison-pico-lateral.jpg",
+          "width": 1738,
+          "height": 906
+        },
+        {
+          "id": "comparison-pico-walking",
+          "title": {
+            "en": "PICO · walking & turning",
+            "zh": "PICO · 行走转向"
+          },
+          "startSeconds": 75.46666666666667,
+          "endSeconds": 83.76666666666667,
+          "duration": 8.3,
+          "output": "assets/videos/clips/comparison-pico-walking.mp4",
+          "poster": "assets/posters/clips/comparison-pico-walking.jpg",
+          "width": 1738,
+          "height": 906
+        }
+      ]
+    },
+    {
+      "id": "body-diversity",
+      "title": {
+        "en": "Different bodies. Shared control.",
+        "zh": "不同体型，共同适配。"
+      },
+      "description": {
+        "en": "Four operators, 165–188 cm and 50–80 kg, shown together.",
+        "zh": "四位操作者同屏展示，身高 165–188 cm、体重 50–80 kg。"
+      },
+      "fullVideo": "assets/videos/body-diversity.mp4",
+      "fullPoster": "assets/posters/body-diversity.jpg",
+      "clips": [
+        {
+          "id": "body-diversity-upper-body",
+          "title": {
+            "en": "Upper-body movements",
+            "zh": "上肢动作"
+          },
+          "startSeconds": 0.0,
+          "endSeconds": 7.2,
+          "duration": 7.2,
+          "output": "assets/videos/clips/body-diversity-upper-body.mp4",
+          "poster": "assets/posters/clips/body-diversity-upper-body.jpg",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "id": "body-diversity-bending",
+          "title": {
+            "en": "Bending & reaching",
+            "zh": "俯身触达"
+          },
+          "startSeconds": 7.2,
+          "endSeconds": 14.6,
+          "duration": 7.4,
+          "output": "assets/videos/clips/body-diversity-bending.mp4",
+          "poster": "assets/posters/clips/body-diversity-bending.jpg",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "id": "body-diversity-squatting",
+          "title": {
+            "en": "Squatting & low reaches",
+            "zh": "下蹲与低位触达"
+          },
+          "startSeconds": 14.6,
+          "endSeconds": 22.8,
+          "duration": 8.2,
+          "output": "assets/videos/clips/body-diversity-squatting.mp4",
+          "poster": "assets/posters/clips/body-diversity-squatting.jpg",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "id": "body-diversity-kneeling",
+          "title": {
+            "en": "Kneeling & recovery",
+            "zh": "跪姿触达与起身"
+          },
+          "startSeconds": 22.8,
+          "endSeconds": 32.3,
+          "duration": 9.5,
+          "output": "assets/videos/clips/body-diversity-kneeling.mp4",
+          "poster": "assets/posters/clips/body-diversity-kneeling.jpg",
+          "width": 1920,
+          "height": 1080
+        }
+      ]
+    },
+    {
+      "id": "input-devices",
+      "title": {
+        "en": "One interface. Four input devices.",
+        "zh": "统一接口，四种输入设备。"
+      },
+      "description": {
+        "en": "Xsens · CHINGMU · Noitom PN Link · PICO",
+        "zh": "Xsens · CHINGMU · Noitom PN Link · PICO"
+      },
+      "fullVideo": "assets/videos/input-devices.mp4",
+      "fullPoster": "assets/posters/input-devices.jpg",
+      "clips": [
+        {
+          "id": "input-devices-standing",
+          "title": {
+            "en": "Standing & bending",
+            "zh": "站姿与俯身"
+          },
+          "startSeconds": 0.0,
+          "endSeconds": 10.6,
+          "duration": 10.6,
+          "output": "assets/videos/clips/input-devices-standing.mp4",
+          "poster": "assets/posters/clips/input-devices-standing.jpg",
+          "width": 1920,
+          "height": 1080
+        },
+        {
+          "id": "input-devices-low-reaches",
+          "title": {
+            "en": "Low reaches & recovery",
+            "zh": "低姿态触达与起身"
+          },
+          "startSeconds": 10.6,
+          "endSeconds": 19.6,
+          "duration": 9.0,
+          "output": "assets/videos/clips/input-devices-low-reaches.mp4",
+          "poster": "assets/posters/clips/input-devices-low-reaches.jpg",
+          "width": 1920,
+          "height": 1080
+        }
+      ]
+    }
+  ]
+}
