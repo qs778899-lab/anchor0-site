@@ -1403,11 +1403,6 @@
         "labelZh": "拾取拖鞋"
       },
       {
-        "id": "clothes",
-        "label": "Throw dirty clothes",
-        "labelZh": "投放脏衣物"
-      },
-      {
         "id": "box",
         "label": "Kick cardboard box",
         "labelZh": "踢纸箱"
@@ -1425,13 +1420,11 @@
           "label": "SONIC v1.1 (SMPL)",
           "demosPerHour": [
             41,
-            24,
             9,
             39
           ],
           "success": [
             68.33,
-            55.81,
             37.5,
             81.25
           ]
@@ -1441,13 +1434,11 @@
           "label": "Anchor*",
           "demosPerHour": [
             67,
-            57,
             45,
             74
           ],
           "success": [
             93.1,
-            93.5,
             94.74,
             96.15
           ]
@@ -1458,11 +1449,9 @@
           "demosPerHour": [
             null,
             null,
-            null,
             null
           ],
           "success": [
-            null,
             null,
             null,
             null
@@ -1475,8 +1464,7 @@
       "taskOrder": [
         "box",
         "trash",
-        "slippers",
-        "clothes"
+        "slippers"
       ],
       "unit": "%",
       "series": [
@@ -1487,8 +1475,7 @@
           "values": [
             70,
             0,
-            10,
-            40
+            10
           ]
         },
         {
@@ -1498,8 +1485,7 @@
           "values": [
             85,
             50,
-            45,
-            60
+            45
           ]
         },
         {
@@ -1507,7 +1493,6 @@
           "label": "Anchor* (re-locate)",
           "interface": "Motion token",
           "values": [
-            0,
             0,
             0,
             0
@@ -1520,7 +1505,6 @@
           "values": [
             null,
             null,
-            null,
             null
           ],
           "pending": true
@@ -1530,7 +1514,6 @@
           "label": "Anchor (re-locate + PRED feedback)",
           "interface": "Motion token",
           "values": [
-            null,
             null,
             null,
             null

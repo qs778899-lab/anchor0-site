@@ -178,18 +178,18 @@ def hardware() -> dict:
 
 
 def downstream() -> dict:
-    tasks = [{"id": "slippers", "label": "Pick up slippers", "labelZh": "拾取拖鞋"}, {"id": "clothes", "label": "Throw dirty clothes", "labelZh": "投放脏衣物"}, {"id": "box", "label": "Kick cardboard box", "labelZh": "踢纸箱"}, {"id": "trash", "label": "Clear shelf surface", "labelZh": "清理架面"}]
+    tasks = [{"id": "slippers", "label": "Pick up slippers", "labelZh": "拾取拖鞋"}, {"id": "box", "label": "Kick cardboard box", "labelZh": "踢纸箱"}, {"id": "trash", "label": "Clear shelf surface", "labelZh": "清理架面"}]
     return {"tasks": tasks,
             "collection": {"series": [
-                {"id": "sonic-smpl", "label": "SONIC v1.1 (SMPL)", "demosPerHour": [41, 24, 9, 39], "success": [68.33, 55.81, 37.50, 81.25]},
-                {"id": "anchor-star", "label": "Anchor*", "demosPerHour": [67, 57, 45, 74], "success": [93.10, 93.50, 94.74, 96.15]},
-                {"id": "anchor-current", "label": "Anchor", "demosPerHour": [None] * 4, "success": [None] * 4, "pending": True}]},
-            "autonomy": {"taskOrder": ["box", "trash", "slippers", "clothes"], "unit": "%", "series": [
-                {"id": "sonic-token", "label": "SONIC v1.1 (SMPL)", "interface": "Motion token", "values": [70, 0, 10, 40]},
-                {"id": "anchor-star-sparse", "label": "Anchor* (re-locate)", "interface": "Sparse", "values": [85, 50, 45, 60]},
-                {"id": "anchor-star-token", "label": "Anchor* (re-locate)", "interface": "Motion token", "values": [0, 0, 0, 0]},
-                {"id": "anchor-sparse", "label": "Anchor (re-locate + PRED feedback)", "interface": "Sparse", "values": [None] * 4, "pending": True},
-                {"id": "anchor-token", "label": "Anchor (re-locate + PRED feedback)", "interface": "Motion token", "values": [None] * 4, "pending": True}]},
+                {"id": "sonic-smpl", "label": "SONIC v1.1 (SMPL)", "demosPerHour": [41, 9, 39], "success": [68.33, 37.50, 81.25]},
+                {"id": "anchor-star", "label": "Anchor*", "demosPerHour": [67, 45, 74], "success": [93.10, 94.74, 96.15]},
+                {"id": "anchor-current", "label": "Anchor", "demosPerHour": [None] * 3, "success": [None] * 3, "pending": True}]},
+            "autonomy": {"taskOrder": ["box", "trash", "slippers"], "unit": "%", "series": [
+                {"id": "sonic-token", "label": "SONIC v1.1 (SMPL)", "interface": "Motion token", "values": [70, 0, 10]},
+                {"id": "anchor-star-sparse", "label": "Anchor* (re-locate)", "interface": "Sparse", "values": [85, 50, 45]},
+                {"id": "anchor-star-token", "label": "Anchor* (re-locate)", "interface": "Motion token", "values": [0, 0, 0]},
+                {"id": "anchor-sparse", "label": "Anchor (re-locate + PRED feedback)", "interface": "Sparse", "values": [None] * 3, "pending": True},
+                {"id": "anchor-token", "label": "Anchor (re-locate + PRED feedback)", "interface": "Motion token", "values": [None] * 3, "pending": True}]},
             "note": "Anchor* denotes the variant with error feedback supplied to the encoder.",
             "noteZh": "Anchor* 表示将误差反馈输入编码器的变体。",
             "pendingDefinition": "XXX denotes pending evaluation.",
