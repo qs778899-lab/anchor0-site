@@ -80,7 +80,7 @@ const clip = { id:'coming-soon', title:'COMING SOON 书写回放', english:'COMI
   kind:'policy-rollout',source:'test052/20k · continuous COMING SOON',text:'COMING SOON',
   fps:50,frames:rows.length,duration:(rows.length-1)/50,bodies:model.nbody,poseBytes:poses.byteLength,
   poseUrl:'coming-soon.bin.gz',inkUrl:'coming-soon-ink.json',poseSha256:sha(poseBytes),poseTransportSha256:sha(poseGzip),inkSha256:sha(inkBytes),
-  rootBody,wristBody,playbackRate:4,overviewSeconds:1.2,holdSeconds:3,fadeSeconds:.5,policy:recording.policy};
+  rootBody,wristBody,playbackRate:8,overviewSeconds:0,holdSeconds:3,fadeSeconds:.5,policy:recording.policy};
 await writeFile(resolve(root,'dist/code/assets/replay-robot.bin.gz'),geometryGzip);
 await writeFile(resolve(root,'dist/code/assets/replay-robot.json'),json(robot));
 await writeFile(resolve(root,'dist/code/assets/coming-soon.bin.gz'),poseGzip);

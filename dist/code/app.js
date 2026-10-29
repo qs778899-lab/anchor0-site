@@ -10,6 +10,7 @@ const resetButton = document.getElementById('reset-view');
 const reduced = matchMedia('(prefers-reduced-motion: reduce)');
 let viewer, clip, ready = false, loading = false, failed = false, inView = true;
 let playing = !reduced.matches, time = 0, lastTick = null, animationFrame = null;
+let inspectionSlider;
 
 function language() {
   try { return localStorage.getItem('anchor-language') === 'zh' ? 'zh' : 'en'; }
@@ -21,8 +22,8 @@ const active = () => !document.hidden && inView;
 function updateMessages() {
   document.documentElement.lang = language() === 'zh' ? 'zh-CN' : 'en';
   container.setAttribute('aria-label', t(
-    'Robot writing COMING SOON at 4× speed. Drag to rotate, scroll or pinch to zoom, and press Space to pause or play. Arrow keys rotate and zoom. Home resets the view.',
-    '机器人以四倍速书写 COMING SOON。拖动旋转，滚轮或双指缩放，空格暂停或播放；方向键可旋转和缩放，Home 恢复视角。'
+    'Robot writing COMING SOON at 8× speed in a full-phrase view. Drag to rotate, scroll or pinch to zoom, and press Space to pause or play. Arrow keys rotate and zoom. Home resets the view.',
+    '机器人以八倍速书写 COMING SOON，默认展示全景。拖动旋转，滚轮或双指缩放，空格暂停或播放；方向键可旋转和缩放，Home 恢复视角。'
   ));
   container.setAttribute('aria-busy', String(loading));
   loadState.hidden = ready;
@@ -86,6 +87,7 @@ async function initialize() {
     const manifest = await response.json();
     clip = manifest.clips?.[0];
     if (!clip || clip.kind !== 'policy-rollout' || clip.bodies !== manifest.model?.bodies || !(clip.duration > 0) || !(clip.playbackRate > 0)) throw new Error('Invalid replay manifest');
+    if (inspectionSlider) inspectionSlider.max = String(duration(clip) - .01);
     const module = await import('./viewer.js');
     viewer = await module.createViewer(container, manifest.model);
     const poses = await viewer.loadClip(clip);
@@ -153,7 +155,7 @@ function tick(now) {
 // A visible inspection control, available only in the explicit test URL.
 if (new URLSearchParams(location.search).has('inspect')) {
   const label = document.createElement('label'); label.textContent = 'Replay time '; label.style.cssText = 'font:12px system-ui;position:fixed;bottom:10px;left:10px;background:white;padding:8px';
-  const slider = document.createElement('input'); slider.type = 'range'; slider.min = '0'; slider.max = '59.56'; slider.step = '.01'; slider.setAttribute('aria-label', 'Replay time');
+  const slider = document.createElement('input'); inspectionSlider = slider; slider.type = 'range'; slider.min = '0'; slider.max = '0'; slider.step = '.01'; slider.setAttribute('aria-label', 'Replay time');
   slider.addEventListener('input', () => { if (ready) { playing = false; time = Number(slider.value); syncPlayback(); } });
   label.append(slider); document.body.append(label);
 }

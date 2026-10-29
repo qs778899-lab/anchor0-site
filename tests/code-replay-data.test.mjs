@@ -26,7 +26,7 @@ test('fixed published policy and complete uninterrupted word recording',async()=
  assert(recording.result.records.some(r=>r.sequence.kind==='lateral'&&r.sequence.transfers===2));
 });
 test('baked poses retain physical root motion and normalized body rotations',()=>{
- assert.equal(poseBytes.length,clip.poseBytes);assert.equal(sha(poseBytes),clip.poseSha256);assert.equal(clip.bodies,75);assert.equal(clip.playbackRate,4);assert.equal(clip.holdSeconds,3);
+ assert.equal(poseBytes.length,clip.poseBytes);assert.equal(sha(poseBytes),clip.poseSha256);assert.equal(clip.bodies,75);assert.equal(clip.playbackRate,8);assert.equal(clip.holdSeconds,3);
  assert(poses.every(Number.isFinite));
  for(let f=0;f<clip.frames;f++){
   const root=(f*clip.bodies+clip.rootBody)*7;

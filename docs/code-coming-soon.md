@@ -9,12 +9,12 @@ COMING SOON. The homepage links to it with a relative `/code/` URL.
   recording, one initialization and continuous history across all ten letters.
 - 10,975 frames, 219.48 source seconds and 4,355 pen-down segments. Pose-to-physical
   wrist error is below 0.000001 m; ink coordinates are unchanged from the recording.
-- 4× playback (54.87 seconds writing), a 1.2-second overview transition, a 3-second
+- 8× playback (27.435 seconds writing), no camera transition, a 3-second
   hold, and a 0.5-second fade. Every original ink segment is retained at any render
   rate. Pen lifts, transfers and the space do not join strokes.
-- Automatic front camera follows the robot, then frames the whole phrase. Drag,
+- The front camera frames the whole phrase from the start and stays fixed. Drag,
   wheel/pinch and arrow keys allow manual inspection. Manual input suspends the
-  automatic camera until Home / Reset view or the next loop.
+  default panorama until Home / Reset view or the next loop.
 - Space and the small play button pause/resume. Hidden/offscreen pages pause their
   clock. Reduced-motion preference starts paused; explicit play is still available.
 - White page and Code Coming Soon caption are preserved. Auxiliary messages follow
@@ -36,7 +36,7 @@ See `source/code-replay/README.md`, `provenance.json`, `scripts/code-replay/`, a
 
 - Four data tests check source hashes, complete uninterrupted recording, finite
   poses and normalized quaternions, exact physical ink, body mapping and geometry.
-- Two timing/ink tests check 4× playback, overview/hold/fade, clean looping and
+- Two timing/ink tests check 8× playback, zero-transition timing, hold/fade, clean looping and
   preservation of every pen-down segment across skipped render frames.
 - Three application tests execute the app with DOM/viewer substitutes: pause,
   hidden/offscreen clock suspension, reduced motion, language updates without
@@ -46,3 +46,9 @@ See `source/code-replay/README.md`, `provenance.json`, `scripts/code-replay/`, a
   Screenshots are in `docs/previews/demo-replay/code-*.jpg`.
 - `?inspect=1` adds an explicit visible time slider for repeatable visual review.
   It is absent from the normal visitor URL and does not expose inference controls.
+  Its range follows the current clip's full loop duration (30.935 seconds at 8×).
+
+The 8× update was checked at the first frame and at 27.83 presentation seconds:
+the same full-phrase camera is used throughout, and the end frame retains all
+4,355 ink segments. Desktop and narrow-screen framing and loop restart were
+checked in the browser. Preview: `previews/demo-replay/code-panorama-8x.png`.

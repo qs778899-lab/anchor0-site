@@ -84,11 +84,9 @@ export async function createViewer(container, spec) {
     }
     if(strokeMesh)strokeMesh.geometry.instanceCount=visibleSegments(segmentFrames,frame);
     if(!manual){
-      const root=bodies[clip.rootBody].position;
-      const target=new THREE.Vector3(root.x,root.y+.1,.78).lerp(overviewTarget,clock.overview);
-      controls.target.copy(target);camera.position.copy(target).add(new THREE.Vector3(5,0,0));
+      controls.target.copy(overviewTarget);camera.position.copy(overviewTarget).add(new THREE.Vector3(5,0,0));
       const overviewZoom=Math.min(1,(camera.right-camera.left)/(overviewWidth*1.14));
-      camera.zoom=THREE.MathUtils.lerp(1,overviewZoom,clock.overview);camera.updateProjectionMatrix();controls.update();
+      camera.zoom=overviewZoom;camera.updateProjectionMatrix();controls.update();
     }
     renderer.domElement.style.opacity=String(clock.opacity);
     container.dataset.replayFrame=String(a);container.dataset.inkSegments=String(strokeMesh?.geometry.instanceCount ?? 0);

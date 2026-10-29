@@ -6,7 +6,9 @@ export function sampleTime(elapsed, clip) {
   const total = duration(clip), remainder = elapsed % total;
   const time = remainder < 0 ? remainder + total : remainder;
   const writing = clip.duration / clip.playbackRate;
-  const overview = Math.max(0, Math.min(1, (time - writing) / clip.overviewSeconds));
+  const overview = clip.overviewSeconds > 0
+    ? Math.max(0, Math.min(1, (time - writing) / clip.overviewSeconds))
+    : Number(time >= writing);
   const fade = Math.max(0, Math.min(1, (time - writing - clip.overviewSeconds - clip.holdSeconds) / clip.fadeSeconds));
   return {sourceTime: Math.min(clip.duration, time * clip.playbackRate), overview: overview * overview * (3 - 2 * overview), opacity: 1 - fade};
 }
