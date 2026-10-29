@@ -29,7 +29,8 @@ the same branch, which triggers publication again.
 - Deployment commit: `3ab1fed`; Actions run `40888852205` completed successfully.
 - 234 website files, 387.94 MiB; 232 are byte-identical to `dist/`, and the
   remaining two differ only by the four navigation URLs described above.
-- The source `dist/` tree is unchanged from `6679469`.
+- At deployment commit `3ab1fed`, the source `dist/` tree is unchanged from
+  `6679469`; this deployment task did not modify website content.
 - Public HTML, adapted demo bundle, chart data and METHOD image match the
   packaged files byte for byte. Video Range requests return correct HTTP 206 data.
 - A fresh browser loaded the public homepage with charts, switched languages,
