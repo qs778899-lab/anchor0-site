@@ -12,7 +12,7 @@ const namespace = 'http://www.w3.org/2000/svg';
 const streamColors = {'#156082':'#008eff','#7960af':'#a13cff','#4e887a':'#00b58b','#aa7b26':'#ee9b00','#747474':'#768da8','#7f7f7f':'#768da8'};
 const surfaces = new Set();
 const controls = new Set();
-let modalSurface = null, modalControl = null;
+let modalSurface = null, modalActions = null;
 let userPaused = null, hasStarted = false;
 let elapsed = 0, lastFrame = null, frame = null;
 const layers=buildMethodLayers(original.src);
@@ -80,7 +80,7 @@ function createSurface(image, id) {
     nodes.forEach(({node})=>node.style.strokeDasharray=`${METHOD_PULSE} ${length+28.5+METHOD_PULSE*2}`);
   });
   svg.append(halos,lines,tips);container.append(svg);
-  const surface = {container, image, svg, id, paths, panels, active:null, visible:false, running:false, ready:false};
+  const surface = {container, image, svg, id, paths, panels, active:[], note:null, visible:false, running:false, ready:false};
   renderFrame(surface);
   surfaces.add(surface);visibility.observe(container);
   image.addEventListener('load', reconcile);
@@ -102,6 +102,7 @@ function updateControls() {
     control.dataset.paused = String(isPaused);
     control.querySelector('path').setAttribute('d', isPaused ? 'M4 2.5 10 6 4 9.5Z' : 'M4 2.5v7M8 2.5v7');
   }
+  for(const surface of surfaces)if(surface.note)surface.note.textContent=chinese()?'可选路径（二选一）':'Alternative paths (choose one)';
 }
 function createControl() {
   const control = document.createElement('button');
@@ -112,22 +113,30 @@ function createControl() {
   return control;
 }
 
+function createActions(surface) {
+  const actions=document.createElement('div');actions.className='method-flow-actions';
+  const note=document.createElement('span');note.className='method-flow-note';
+  surface.note=note;actions.append(note,createControl());
+  renderFrame(surface);
+  return actions;
+}
+
 function renderFrame(surface) {
-  const state=methodFrame(elapsed),active=state.entry?.id||null;
-  if(surface.active!==active){
-    if(surface.active)surface.paths.get(surface.active).nodes.forEach(({node})=>node.setAttribute('visibility','hidden'));
-    if(active)surface.paths.get(active).nodes.forEach(({node})=>node.setAttribute('visibility','visible'));
-    surface.active=active;
-  }
-  if(active)surface.paths.get(active).nodes.forEach(({node,shift})=>{node.style.strokeDashoffset=`${state.offset+shift}px`;});
+  const state=methodFrame(elapsed),active=state.flows.map(flow=>flow.id);
+  for(const id of surface.active)if(!active.includes(id))surface.paths.get(id).nodes.forEach(({node})=>node.setAttribute('visibility','hidden'));
+  for(const id of active)if(!surface.active.includes(id))surface.paths.get(id).nodes.forEach(({node})=>node.setAttribute('visibility','visible'));
+  surface.active=active;
+  state.flows.forEach(flow=>surface.paths.get(flow.id).nodes.forEach(({node,shift})=>{node.style.strokeDashoffset=`${flow.offset+shift}px`;}));
   surface.panels.forEach(({group,node})=>{
     node.setAttribute('visibility',state.entry?.group===group?'visible':'hidden');
     node.setAttribute('opacity',state.breath);
   });
   surface.svg.dataset.elapsed=elapsed.toFixed(3);
-  surface.svg.dataset.activeFlow=active||'';
+  surface.svg.dataset.activeFlows=JSON.stringify(active);
+  surface.svg.dataset.activeStep=state.entry?.id||'';
   surface.svg.dataset.stage=state.entry?.group||'';
   surface.svg.dataset.progress=state.progress.toFixed(5);
+  if(surface.note)surface.note.dataset.active=String(surface.svg.dataset.started==='true'&&!!state.entry?.alternative);
 }
 function tick(timestamp) {
   if (lastFrame !== null) elapsed = (elapsed + timestamp - lastFrame) % METHOD_DURATION;
@@ -143,11 +152,11 @@ function reconcile() {
       (surface.id === 'inline' ? !anyModalOpen : dialog.open && surface === modalSurface);
     surface.svg.dataset.running = String(surface.running);
     if (surface.running) {
-      surface.svg.dataset.started = 'true';
-      renderFrame(surface);
       running = true;hasStarted = true;
     }
   }
+  // Keep paused inline/modal views at the same shared frame, including their branch note.
+  for(const surface of surfaces)if(surface.ready&&hasStarted){surface.svg.dataset.started='true';renderFrame(surface);}
   if (running && frame === null) frame = requestAnimationFrame(tick);
   if (!running && frame !== null) {cancelAnimationFrame(frame);frame = null;lastFrame = null;}
   updateControls();
@@ -175,21 +184,20 @@ function updateDialog() {
   if (isMethod && !modalSurface) {
     dialog.classList.add('method-flow-dialog');dialogArea.classList.add('method-flow-area');
     modalSurface = createSurface(dialogImage, 'dialog');
-    modalControl = createControl();document.querySelector('#original-image').before(modalControl);
+    modalActions = createActions(modalSurface);dialogArea.after(modalActions);
   } else if (!isMethod && modalSurface) {
     visibility.unobserve(modalSurface.container);
     dialogImage.removeEventListener('load', reconcile);
     surfaces.delete(modalSurface);
     modalSurface.container.replaceWith(dialogImage);modalSurface = null;
-    controls.delete(modalControl);modalControl.remove();modalControl = null;
+    controls.delete(modalActions.querySelector('.method-flow-toggle'));modalActions.remove();modalActions = null;
     dialog.classList.remove('method-flow-dialog');dialogArea.classList.remove('method-flow-area');
   }
   sizeDialog();reconcile();
 }
 
-createSurface(original, 'inline');
-const actions = document.createElement('div');actions.className = 'method-flow-actions';
-actions.append(createControl());button.after(actions);
+const inlineSurface=createSurface(original, 'inline');
+button.after(createActions(inlineSurface));
 new ResizeObserver(sizeDialog).observe(dialogArea);
 const modalObserver = new MutationObserver(updateDialog);
 document.querySelectorAll('dialog').forEach(modal => modalObserver.observe(modal, {attributes:true, attributeFilter:['open']}));

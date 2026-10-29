@@ -59,7 +59,7 @@ export async function verifyMethodEmphasis() {
     for(const flow of METHOD_FLOWS.filter(f=>f.arrowhead!==false)){
       const path=svg.querySelector('[data-flow="'+flow.id+'"]'),tip=svg.querySelector('[data-flow-tip="'+flow.id+'"]');
       if(!tip||tip.getTotalLength()!==28.5)tipFailures.push(flow.id);
-      if(flow.id===svg.dataset.activeFlow&&Math.abs(parseFloat(tip.style.strokeDashoffset)-parseFloat(path.style.strokeDashoffset)-path.getTotalLength())>.01)tipFailures.push(flow.id);
+      if(JSON.parse(svg.dataset.activeFlows).includes(flow.id)&&Math.abs(parseFloat(tip.style.strokeDashoffset)-parseFloat(path.style.strokeDashoffset)-path.getTotalLength())>.01)tipFailures.push(flow.id);
     }
     const main=getComputedStyle(svg.querySelector('[data-flow]')),core=getComputedStyle(svg.querySelector('.method-flow-core')),halo=getComputedStyle(svg.querySelector('.method-flow-aura'));
     return {shafts,heads,failures,min:Math.min(...range),max:Math.max(...range),width:main.strokeWidth,core:core.strokeWidth,dash:main.strokeDasharray,halo:halo.strokeWidth,expanded,unbounded,darkened,dropped,minimumBackground,tipFailures};
@@ -78,10 +78,15 @@ export async function verifyMethodEmphasis() {
     while(performance.now()<end){
       const state=methodFrame(+svg.dataset.elapsed),active=[...svg.querySelectorAll('[data-flow][visibility="visible"]')];
       const panels=[...svg.querySelectorAll('[data-panel][visibility="visible"]')];
-      if(active.length!==(state.entry?1:0)||active[0]?.dataset.flow!==state.entry?.id)failures.push('overlap or wrong active path');
+      if(JSON.stringify(active.map(p=>p.dataset.flow).sort())!==JSON.stringify(state.flows.map(f=>f.id).sort()))failures.push('wrong active paths');
+      const note=document.querySelector('#method .method-flow-note');
+      if((getComputedStyle(note).visibility==='visible')!==!!state.entry?.alternative)failures.push('wrong alternative-path note');
       if(state.entry){
         if(seen.at(-1)!==state.entry.id)seen.push(state.entry.id);
-        if(Math.abs(parseFloat(active[0].style.strokeDashoffset)-state.offset)>.05)failures.push('wrong position');
+        for(const flow of state.flows){
+          const path=active.find(p=>p.dataset.flow===flow.id);
+          if(!path||Math.abs(parseFloat(path.style.strokeDashoffset)-flow.offset)>.05)failures.push('wrong position');
+        }
         const panel=[state.entry.group];
         if(JSON.stringify(panels.map(p=>p.dataset.panel))!==JSON.stringify(panel))failures.push('wrong breathing panel');
       }else if(panels.length)failures.push('panel active in stage gap');
@@ -89,9 +94,9 @@ export async function verifyMethodEmphasis() {
     }
     return {seen,failures,duration:METHOD_DURATION,expected:METHOD_TIMELINE.map(e=>e.id)};
   })()`);
-  assert.deepEqual(relay.failures,[]);assert.equal(new Set(relay.seen).size,28);
-  for(let i=1;i<relay.seen.length;i++)assert.equal(relay.expected[(relay.expected.indexOf(relay.seen[i-1])+1)%28],relay.seen[i]);
-  console.log(`PASS: full ${(relay.duration/1000).toFixed(3)} s cycle plays all 28 arrows in order, one pulse at a time, with the correct breathing panel`);
+  assert.deepEqual(relay.failures,[]);assert.equal(new Set(relay.seen).size,26);
+  for(let i=1;i<relay.seen.length;i++)assert.equal(relay.expected[(relay.expected.indexOf(relay.seen[i-1])+1)%26],relay.seen[i]);
+  console.log(`PASS: full ${(relay.duration/1000).toFixed(3)} s cycle covers 28 arrows in 26 steps; only the two alternative pairs play together, with the correct note and breathing panel`);
 
   await evaluate(`document.querySelector('.method-flow-toggle').click();document.activeElement.blur()`);
   const bounds=await evaluate(`(()=>{const b=document.querySelector('#method .method-flow-surface>img').getBoundingClientRect();return {x:b.x,y:b.y+scrollY,width:b.width,height:b.height,scale:1};})()`);
