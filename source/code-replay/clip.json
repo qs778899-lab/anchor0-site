@@ -1,0 +1,28 @@
+{
+  "id": "coming-soon",
+  "title": "COMING SOON 书写回放",
+  "english": "COMING SOON writing replay",
+  "kind": "policy-rollout",
+  "source": "test052/20k · continuous COMING SOON",
+  "text": "COMING SOON",
+  "fps": 50,
+  "frames": 10975,
+  "duration": 219.48,
+  "bodies": 88,
+  "poseBytes": 27042400,
+  "poseUrl": "coming-soon.bin",
+  "inkUrl": "coming-soon-ink.json",
+  "poseSha256": "eadd1f8269a9d6805d41b9c5d64c440ee52c6f2e3e1301ee0e470d437bbf881c",
+  "inkSha256": "afc29208e9dbc003aaafb3b0d7dafdc491ed425e6dc997f76360deedaf2aab47",
+  "rootBody": 1,
+  "wristBody": 58,
+  "playbackRate": 2,
+  "overviewSeconds": 1.5,
+  "holdSeconds": 4,
+  "fadeSeconds": 0.5,
+  "policy": {
+    "name": "test052",
+    "step": 20000,
+    "sha256": "e4f393a62ceb64d14fe310dd8f1ac7f9790f945ef22708074ce9e383d0928f3c"
+  }
+}
