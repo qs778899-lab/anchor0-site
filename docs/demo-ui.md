@@ -121,8 +121,9 @@ the actual world vector, body ID, magnitude, start/end simulation time and run/e
 
 The renderer anchors an amber arrow to that body's current position, preserving the
 reported world direction when the camera rotates. Length reflects magnitude with a
-minimum visible length. The label shows magnitude; nearby help specifies the 100 ms
-physical duration. After the pulse the arrow fades over 0.9 seconds. Pause/background
+minimum visible length. The arrow has no text label or label background; the control
+panel retains the magnitude input, numeric feedback and 100 ms duration hint.
+After the pulse the arrow fades over 0.9 seconds. Pause/background
 freeze the indicator; reset/mode changes clear it. New feedback replaces the old arrow.
 
 Browser verification covered 0, 12.5, 50 and 60 N, empty/out-of-range validation,
@@ -148,3 +149,12 @@ and `previews/demo-replay/demo-force-desktop.png`.
 Final checks: all 19 demo/replay tests, TypeScript, byte-for-byte rebuild
 reproducibility and site HTTP/resource checks pass. Current LAN preview:
 `http://172.16.3.166:18081/demo/`.
+
+### Arrow without a text label
+
+Removed the force-label sprite, canvas, texture and background. The amber arrow's
+direction, force-dependent length, fade and pause/reset behavior are unchanged;
+the panel retains its numeric input, feedback and 100 ms hint. Desktop light and
+390 px mobile dark views were checked, including a paused 50 N push. The actual
+downloaded PNG (`previews/demo-replay/demo-arrow-no-label.png`) contains the robot
+and arrow without text. All 10 demo tests and the isolated TypeScript check pass.
