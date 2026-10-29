@@ -8,8 +8,8 @@
         "zh": "遥操作中的精度与稳定性"
       },
       "description": {
-        "en": "Anchor and a baseline compared side by side in motion tracking, foot stability, and whole-body coordination.",
-        "zh": "并排对比 Anchor 与基线在运动跟踪、足部稳定及全身协调方面的表现。"
+        "en": "Anchor 1 and a baseline compared side by side in motion tracking, foot stability, and whole-body coordination.",
+        "zh": "并排对比 Anchor 1 与基线在运动跟踪、足部稳定及全身协调方面的表现。"
       },
       "fullVideo": "assets/videos/comparison.mp4",
       "fullPoster": "assets/posters/comparison.jpg",

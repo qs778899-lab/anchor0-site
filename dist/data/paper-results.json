@@ -24,7 +24,7 @@
   "models": [
     {
       "id": "anchor-global",
-      "label": "Anchorᴳ",
+      "label": "Anchor 1ᴳ",
       "input": "human_scaled H′",
       "checkpointSha256": "5757a7d5a5632ae611060508a86032af5cbc5152098aed32edcb7da71f1f31ea",
       "onlineRetargeting": false,
@@ -33,7 +33,7 @@
     },
     {
       "id": "anchor-local",
-      "label": "Anchorᴸ",
+      "label": "Anchor 1ᴸ",
       "input": "human_scaled H′",
       "checkpointSha256": "5757a7d5a5632ae611060508a86032af5cbc5152098aed32edcb7da71f1f31ea",
       "onlineRetargeting": false,
@@ -87,7 +87,7 @@
         "series": [
           {
             "id": "anchor-global",
-            "label": "Anchorᴳ",
+            "label": "Anchor 1ᴳ",
             "config": "test134_46k_human_global_reference",
             "input": "human_scaled H′",
             "count": 15342,
@@ -101,7 +101,7 @@
           },
           {
             "id": "anchor-local",
-            "label": "Anchorᴸ",
+            "label": "Anchor 1ᴸ",
             "config": "test134_46k_human_reanchor_reference",
             "input": "human_scaled H′",
             "count": 15342,
@@ -179,7 +179,7 @@
         "series": [
           {
             "id": "anchor-global",
-            "label": "Anchorᴳ",
+            "label": "Anchor 1ᴳ",
             "config": "test134_46k_human_global_reference",
             "input": "human_scaled H′",
             "count": 2230,
@@ -193,7 +193,7 @@
           },
           {
             "id": "anchor-local",
-            "label": "Anchorᴸ",
+            "label": "Anchor 1ᴸ",
             "config": "test134_46k_human_reanchor_reference",
             "input": "human_scaled H′",
             "count": 2230,
@@ -347,7 +347,7 @@
       "series": [
         {
           "id": "anchor-global",
-          "label": "Anchorᴳ",
+          "label": "Anchor 1ᴳ",
           "config": "test134_46k_human_global_reference",
           "values": [
             82.97872340425532,
@@ -382,7 +382,7 @@
         },
         {
           "id": "anchor-local",
-          "label": "Anchorᴸ",
+          "label": "Anchor 1ᴸ",
           "config": "test134_46k_human_reanchor_reference",
           "values": [
             88.29787234042553,
@@ -599,7 +599,7 @@
       "series": [
         {
           "id": "anchor-global",
-          "label": "Anchorᴳ",
+          "label": "Anchor 1ᴳ",
           "config": "test134_46k_human_global_reference",
           "values": [
             96.52650822669104,
@@ -625,7 +625,7 @@
         },
         {
           "id": "anchor-local",
-          "label": "Anchorᴸ",
+          "label": "Anchor 1ᴸ",
           "config": "test134_46k_human_reanchor_reference",
           "values": [
             90.49360146252285,
@@ -797,7 +797,7 @@
       "series": [
         {
           "id": "anchor-global",
-          "label": "Anchorᴳ",
+          "label": "Anchor 1ᴳ",
           "config": "test134_46k_g1_global_reference",
           "values": [
             60.19900497512438,
@@ -824,7 +824,7 @@
         },
         {
           "id": "anchor-local",
-          "label": "Anchorᴸ",
+          "label": "Anchor 1ᴸ",
           "config": "test134_46k_g1_reanchor_reference",
           "values": [
             50.62189054726368,
@@ -965,7 +965,7 @@
       "series": [
         {
           "id": "anchor-global",
-          "label": "Anchorᴳ",
+          "label": "Anchor 1ᴳ",
           "config": "test134_46k_g1_global_reference",
           "slips": 0.11214953271028037,
           "steps": 0.33925233644859815,
@@ -974,7 +974,7 @@
         },
         {
           "id": "anchor-local",
-          "label": "Anchorᴸ",
+          "label": "Anchor 1ᴸ",
           "config": "test134_46k_g1_reanchor_reference",
           "slips": 0.14205607476635515,
           "steps": 0.9177570093457944,
@@ -1027,7 +1027,7 @@
     "includeEnd": true,
     "metric": "Global main tracking success with zero foot slips, undesired steps, or undesired touchdowns during the task window.",
     "notes": [
-      "Anchor uses robot-space G1 references for this benchmark, unlike its human references in the other two simulation cohorts.",
+      "Anchor 1 uses robot-space G1 references for this benchmark, unlike its human references in the other two simulation cohorts.",
       "Left and right posture variants and wrist targets are pooled. All 3,210 motions have complete tracking and foot-event records for every selected controller.",
       "Figure 3G's reference CoM difficulty grouping is not present in the supplied dashboard JSON. No values were inferred from the printed figure."
     ]
@@ -1042,7 +1042,7 @@
         "series": [
           {
             "id": "anchor-global",
-            "label": "Anchorᴳ",
+            "label": "Anchor 1ᴳ",
             "config": "test134_46k_human_global_reference",
             "input": "human_scaled H′",
             "lookaheadSeconds": 0.06,
@@ -1051,7 +1051,7 @@
           },
           {
             "id": "anchor-local",
-            "label": "Anchorᴸ",
+            "label": "Anchor 1ᴸ",
             "config": "test134_46k_human_reanchor_reference",
             "input": "human_scaled H′",
             "lookaheadSeconds": 0.06,
@@ -1113,7 +1113,7 @@
         "series": [
           {
             "id": "anchor-global",
-            "label": "Anchorᴳ",
+            "label": "Anchor 1ᴳ",
             "config": "test134_46k_human_global_reference",
             "input": "human_scaled H′",
             "lookaheadSeconds": 0.06,
@@ -1122,7 +1122,7 @@
           },
           {
             "id": "anchor-local",
-            "label": "Anchorᴸ",
+            "label": "Anchor 1ᴸ",
             "config": "test134_46k_human_reanchor_reference",
             "input": "human_scaled H′",
             "lookaheadSeconds": 0.06,
@@ -1180,7 +1180,7 @@
     "series": [
       {
         "id": "anchor-global",
-        "label": "Anchorᴳ",
+        "label": "Anchor 1ᴳ",
         "config": "test134_46k_human_global_reference",
         "input": "human_scaled H′",
         "lookaheadSeconds": 0.06,
@@ -1189,7 +1189,7 @@
       },
       {
         "id": "anchor-local",
-        "label": "Anchorᴸ",
+        "label": "Anchor 1ᴸ",
         "config": "test134_46k_human_reanchor_reference",
         "input": "human_scaled H′",
         "lookaheadSeconds": 0.06,
@@ -1258,7 +1258,7 @@
       "series": [
         {
           "id": "anchor",
-          "label": "Anchor†",
+          "label": "Anchor 1†",
           "wristError": 40.61,
           "ankleError": 49.02,
           "contributing": 71,
@@ -1312,7 +1312,7 @@
         }
       ],
       "unit": "mm",
-      "note": "Mean local errors use nonempty windows ending before the first valid active control tick with any body14 position error above 25 cm, without an orientation gate. Left/right end effectors and valid ticks are averaged within each motion, then motions are weighted equally. Failed motions contribute when their window is nonempty; empty windows are excluded. Local scoring removes per-frame horizontal translation differences, unlike pelvis-relative standing-reach scoring. † Anchor results are preliminary."
+      "note": "Mean local errors use nonempty windows ending before the first valid active control tick with any body14 position error above 25 cm, without an orientation gate. Left/right end effectors and valid ticks are averaged within each motion, then motions are weighted equally. Failed motions contribute when their window is nonempty; empty windows are excluded. Local scoring removes per-frame horizontal translation differences, unlike pelvis-relative standing-reach scoring. † Anchor 1 results are preliminary."
     },
     "standingReach": {
       "count": 51,
@@ -1369,7 +1369,7 @@
         },
         {
           "id": "anchor",
-          "label": "Anchor†",
+          "label": "Anchor 1†",
           "onlineRetargeting": false,
           "globalPosition": 56.66,
           "globalRotation": 6.18,
@@ -1380,7 +1380,7 @@
       ],
       "positionUnit": "mm",
       "rotationUnit": "deg",
-      "note": "† Anchor standing-reach values are preliminary in the supplied paper."
+      "note": "† Anchor 1 standing-reach values are preliminary in the supplied paper."
     },
     "thresholdFigure": {
       "thresholdsCm": [
@@ -1431,7 +1431,7 @@
         },
         {
           "id": "anchor-star",
-          "label": "Anchor*",
+          "label": "Anchor 1*",
           "demosPerHour": [
             67,
             45,
@@ -1445,7 +1445,7 @@
         },
         {
           "id": "anchor-current",
-          "label": "Anchor",
+          "label": "Anchor 1",
           "demosPerHour": [
             null,
             null,
@@ -1480,7 +1480,7 @@
         },
         {
           "id": "anchor-star-sparse",
-          "label": "Anchor* (re-locate)",
+          "label": "Anchor 1* (re-locate)",
           "interface": "Sparse",
           "values": [
             85,
@@ -1490,7 +1490,7 @@
         },
         {
           "id": "anchor-star-token",
-          "label": "Anchor* (re-locate)",
+          "label": "Anchor 1* (re-locate)",
           "interface": "Motion token",
           "values": [
             0,
@@ -1500,7 +1500,7 @@
         },
         {
           "id": "anchor-sparse",
-          "label": "Anchor (re-locate + PRED feedback)",
+          "label": "Anchor 1 (re-locate + PRED feedback)",
           "interface": "Sparse",
           "values": [
             null,
@@ -1511,7 +1511,7 @@
         },
         {
           "id": "anchor-token",
-          "label": "Anchor (re-locate + PRED feedback)",
+          "label": "Anchor 1 (re-locate + PRED feedback)",
           "interface": "Motion token",
           "values": [
             null,
@@ -1522,8 +1522,8 @@
         }
       ]
     },
-    "note": "Anchor* denotes the variant with error feedback supplied to the encoder.",
-    "noteZh": "Anchor* 表示将误差反馈输入编码器的变体。",
+    "note": "Anchor 1* denotes the variant with error feedback supplied to the encoder.",
+    "noteZh": "Anchor 1* 表示将误差反馈输入编码器的变体。",
     "pendingDefinition": "XXX denotes pending evaluation.",
     "pendingDefinitionZh": "论文中的 XXX 表示待评估。",
     "provenance": {

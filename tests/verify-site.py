@@ -156,7 +156,7 @@ if '--offline' in sys.argv:
 def get(path, headers=None):
     return urllib.request.urlopen(urllib.request.Request(BASE+path,headers=headers or {}), timeout=10)
 
-with get('/') as r: assert r.status==200 and b'Anchor:' in r.read()
+with get('/') as r: assert r.status==200 and b'Anchor 1:' in r.read()
 with get('/demo?letter=Z') as r: assert r.geturl().endswith('/demo/?letter=Z')
 video=DIST/'assets/videos/scenes.mp4'
 with get('/assets/videos/scenes.mp4', {'Range':'bytes=0-31'}) as r:

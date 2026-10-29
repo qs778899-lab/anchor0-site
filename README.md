@@ -1,6 +1,6 @@
-# Anchor project website
+# Anchor 1 project website
 
-**Anchor: Precise and stable humanoid control for whole-body manipulation**
+**Anchor 1: Precise and stable humanoid control for whole-body manipulation**
 
 论文项目主页，包含中英双语、浅色/深色主题、交互图表、四组完整视频、VLA 任务序列、真机实验图以及本地机器人交互演示。首次打开默认英文，选择后记住访客偏好。所有运行资源均在仓库内，不依赖外部字体、CDN 或原始评测网页在线。
 
