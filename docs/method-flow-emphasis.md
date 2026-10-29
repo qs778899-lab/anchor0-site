@@ -1,5 +1,8 @@
 # METHOD flow emphasis — 2026-10-29
 
+This is the previous visual revision. See [the brighter stream revision](method-flow-brightness.md)
+for the current appearance, verification and LAN preview.
+
 The visual implementation was committed and pushed as `eb29237` on `codex/anchor0-site`.
 This revision changes only the METHOD arrow presentation. The original **2314 × 1585** PNG
 remains byte-identical, with SHA-256

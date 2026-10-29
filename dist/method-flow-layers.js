@@ -96,6 +96,9 @@ export async function buildMethodLayers(url) {
       const along=nearest.horizontal?x:y;
       const start=nearest.horizontal?nearest.x:nearest.y,end=nearest.horizontal?nearest.nextX:nearest.nextY;
       if(along<Math.min(start,end)||along>Math.max(start,end))continue;
+      // A line crossing a frame may sample that frame as its local "background".
+      // All actual panel fills in this fixed figure are light; keep darker artwork protected.
+      if(background.some(c=>c<223))continue;
       for(let step=-7;step<=7;step++){
         const ax=x+(nearest.horizontal?0:step),ay=y+(nearest.horizontal?step:0);
         if(ax<0||ax>=width||ay<0||ay>=height)continue;
