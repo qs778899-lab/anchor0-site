@@ -55,8 +55,6 @@ function collectionMatrix(tasks,series){
   return `<div class="collection-scroll" tabindex="0" role="region" aria-label="${t('Demonstration collection comparison','示范采集比较表')}"><table class="collection-matrix"><thead><tr><th scope="col" rowspan="2">${t('Controller','控制器')}</th>${tasks.map(task=>`<th scope="colgroup" colspan="2">${esc(label(task))}</th>`).join('')}</tr><tr>${tasks.map(()=>`<th scope="col">${t('Demos / h','示范 / 小时')}</th><th scope="col">${t('Success (%)','成功率 (%)')}</th>`).join('')}</tr></thead><tbody>${series.map(s=>`<tr${s.id.startsWith('anchor')?' class="highlight"':''}><th scope="row">${esc(s.label)}</th>${tasks.map((_,i)=>`<td>${s.demosPerHour[i]==null?`<span class="pending-value">${t('Pending','待评估')}</span>`:number(s.demosPerHour[i],0)}</td><td>${s.success[i]==null?`<span class="pending-value">${t('Pending','待评估')}</span>`:s.success[i].toFixed(2)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
 function renderTables(){
-  const standing=data.hardware.standingReach;
-  $('#standing-table').innerHTML=`<h3>${t('Standing reaches · 51 motions','站姿触达 · 51 条动作')}</h3>`+table([t('Controller','控制器'),t('Global pos. (mm)','全局位置（mm）'),t('Global rot. (°)','全局旋转（°）'),t('Local pos. (mm)','局部位置（mm）'),t('Local rot. (°)','局部旋转（°）')],standing.series.map(s=>[s.label,number(s.globalPosition),number(s.globalRotation),number(s.localPosition),number(s.localRotation)]),true);
   const tasks=data.downstream.tasks,collection=data.downstream.collection.series;
   $('#collection-table').innerHTML=collectionMatrix(tasks,collection)+downstreamNote();
   const autonomy=data.downstream.autonomy;

@@ -24,7 +24,6 @@ const measurement = (series, datasetId, dataset, metricId, metric, value, unit, 
 const cohortTip = (s,c,key,name,unit) => measurement(s,c.id,label(c),key,name,s[key],unit,{count:c.count});
 const radarTip = (s,r,i) => measurement(s,r.id||'reachability',r.datasetLabel|| (r.id?`${t('In-house','自建动作集')} · ${label(r)}`:t('Reachability','可达性')),r.axes[i].id,label(r.axes[i]),s.values[i],'%',{count:s.counts[i],successes:s.successes[i]});
 const footTip = (s,key,name) => measurement(s,'reachability',t('Reachability','可达性'),key,name,s[key],t('events / motion','次 / 动作'),{count:s.count});
-const hardwareTip = (s,key,name) => measurement(s,'hardware',t('Hardware','真机实验'),key,name,s[key],'mm',{count:s.valid,contributing:s.contributing,note:s.preliminary?t('Preliminary result','初步结果'):undefined});
 const niceMax = value => { const power=10**Math.floor(Math.log10(value||1));return Math.ceil(value/power*2)/2*power; };
 
 function dataTable(headers,rows){
@@ -202,20 +201,6 @@ function renderHardwareThresholds(){
   applyHighlight('hardware-thresholds');enhanceCharts($('#hardware-thresholds'));
 }
 
-function renderHardware(){
-  const rows=source.hardware.trackingErrors.series,w=650,h=340,left=155,right=45,top=22,plot=w-left-right;
-  let out='';const maximum=110;
-  [0,25,50,75,100].forEach(v=>{const x=left+v/maximum*plot;out+=line(x,10,x,286)+text(x,308,v,'text-anchor="middle"');});
-  rows.forEach((s,i)=>{
-    const y=top+i*44;out+=text(left-12,y+18,s.label,`text-anchor="end" class="model-label ${s.id==='anchor'?'anchor-label':''}"`);
-    ['wristError','ankleError'].forEach((key,j)=>{const tip=hardwareTip(s,key,j?t('Ankle','踝部'):t('Wrist','腕部'));out+=`<rect class="plot-mark" data-grow="x" ${tipAttrs(tip)} x="${left}" y="${y+j*14}" width="${s[key]/maximum*plot}" height="11" rx="2" fill="${j?'var(--chart-soft)':'var(--chart-blue)'}"/>`+text(left+s[key]/maximum*plot+5,y+j*14+10,short(s[key]),'class="bar-number"');});
-  });
-  out+=text(w/2,h-8,t('Wrist (dark) · Ankle (light) · mm','腕部（深色）· 踝部（浅色）· mm'),'text-anchor="middle" class="plot-key"');
-  const table=dataTable([t('Wrist (mm)','腕部 (mm)'),t('Ankle (mm)','踝部 (mm)')],rows.map(s=>({id:s.id,label:s.label,values:[s.wristError,s.ankleError],tips:['wristError','ankleError'].map((key,i)=>hardwareTip(s,key,i?t('Ankle','踝部'):t('Wrist','腕部')))})));
-  $('#hardware-chart').innerHTML=`<div class="standalone-view-tools">${controls('hardware-errors')}</div>${stage('hardware-errors','650 / 340',svg(w,h,t('Hardware tracking errors','真机跟踪误差'),out),table)}`;
-  enhanceCharts($('#hardware-chart'));
-}
-
 function applyHighlight(group){
   const root=group==='simulation'?$('#simulation-figure'):group==='hardware-thresholds'?$('#hardware-thresholds'):$('#lookahead-chart'),selected=focus.get(group);
   if(!root)return;
@@ -261,5 +246,5 @@ window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setT
 export function renderResearchFigures(data,locale){
   source=data;language=locale;narrow=($('#lookahead-chart')?.clientWidth ?? 1120)<650;
   if($('#lookahead-cohort')) $('#lookahead-cohort').value=cohort;
-  renderLookahead();renderSimulation();renderHardware();renderHardwareThresholds();
+  renderLookahead();renderSimulation();renderHardwareThresholds();
 }
