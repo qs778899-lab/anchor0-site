@@ -8,7 +8,7 @@ import {verifyMethodEmphasis} from './method-visual-checks.mjs';
 const inline = '[data-surface="inline"]';
 const modal = '[data-surface="dialog"]';
 const check = async (name, expression) => {assert(await evaluate(expression), name);console.log(`PASS: ${name}`);};
-const offset = selector => evaluate(`document.querySelector('${selector}').style.getPropertyValue('--flow-offset')`);
+const offset = selector => evaluate(`document.querySelector('${selector}').dataset.elapsed`);
 const scrollToFigure = async () => {
   await evaluate(`document.querySelector('#method .paper-figure').scrollIntoView({behavior:'instant',block:'center'})`);
   await wait(150);
@@ -26,6 +26,7 @@ try {
   console.log('PASS: original PNG hash and 2314 × 1585 pixels unchanged; 32 unique path segments');
   await mkdir('.cache/preview', {recursive:true});
   await viewport(1440,1000);await go();
+  await evaluate(`localStorage.removeItem('anchor-navigation-position');localStorage.setItem('anchor-language','en');localStorage.setItem('anchor-theme','light')`);await go();
   await until(`!!document.querySelector('${inline}')`);
   await check('offscreen diagram starts without animating', `document.querySelector('${inline}').dataset.running==='false' && getComputedStyle(document.querySelector('${inline}')).opacity==='0'`);
   await scrollToFigure();await until(`document.querySelector('${inline}').dataset.running==='true'`);
@@ -66,10 +67,10 @@ try {
   await check('arrow mask is ready and highlights never intercept clicks', `document.querySelector('${inline} mask').style.maskType==='alpha' && document.querySelector('${inline}').dataset.maskReady==='true' && getComputedStyle(document.querySelector('${inline}')).pointerEvents==='none'`);
   await check('desktop overlay exactly matches the original image bounds', aligned(inline));
   const before = parseFloat(await offset(inline));await wait(130);const after = parseFloat(await offset(inline));
-  const travelled = (before-after+128)%128;
-  assert(travelled>6&&travelled<30);console.log('PASS: highlights travel forward at approximately 100 source pixels per second');
+  const travelled = (after-before+31260)%31260;
+  assert(travelled>60&&travelled<450);console.log('PASS: relay clock advances at real time');
   await verifyMethodEmphasis();
-  await screenshot('.cache/preview/method-bright-desktop.png');
+  await screenshot('.cache/preview/method-relay-desktop.png');
 
   // Keyboard activation must not open the image or lose the deliberately paused state.
   await evaluate(`document.querySelector('.method-flow-toggle').focus()`);await press(' ','Space',32);
@@ -83,7 +84,7 @@ try {
   await until(`document.querySelector('${modal}').dataset.running==='true'`);
   await check('only the enlarged view animates while the dialog is open', `document.querySelector('${inline}').dataset.running==='false'`);
   await check('enlarged fit-to-window overlay is aligned', aligned(modal));
-  await evaluate(`document.activeElement.blur()`);await screenshot('.cache/preview/method-bright-enlarged.png');
+  await evaluate(`document.activeElement.blur()`);await screenshot('.cache/preview/method-relay-enlarged.png');
   await evaluate(`document.querySelector('#dialog-image').click()`);await wait(100);
   await check('original-size zoom retains a one-to-one source-pixel view', `${aligned(modal)}&&document.querySelector('#dialog-image').getBoundingClientRect().width===2314&&document.querySelector('#dialog-image').getBoundingClientRect().height===1585`);
   await evaluate(`document.querySelector('#close-image').click()`);await until(`document.querySelector('${inline}').dataset.running==='true'`);
@@ -102,19 +103,19 @@ try {
   await wait(100);
   await check('Chinese and dark theme preserve pause and original image clarity', `document.documentElement.lang==='zh-CN'&&document.documentElement.dataset.theme==='dark'&&document.querySelector('.method-flow-toggle').textContent==='继续播放'&&${aligned(inline)}`);
   await evaluate(`document.querySelector('.method-flow-toggle').click();document.activeElement.blur()`);await wait(100);
-  await screenshot('.cache/preview/method-bright-dark-zh.png');
+  await screenshot('.cache/preview/method-relay-dark-zh.png');
   await evaluate(`document.querySelector('#language-toggle').click();document.querySelector('#theme-select').value='light';document.querySelector('#theme-select').dispatchEvent(new Event('change'))`);
 
   await viewport(1024,900);await scrollToFigure();
   await check('tablet keeps original proportions without page overflow', `${aligned(inline)}&&document.documentElement.scrollWidth===innerWidth`);
-  await screenshot('.cache/preview/method-bright-tablet.png');
+  await screenshot('.cache/preview/method-relay-tablet.png');
   await viewport(390,844,true);await scrollToFigure();
   await check('390 px mobile retains aligned vectors and accessible controls', `${aligned(inline)}&&document.documentElement.scrollWidth===innerWidth&&document.querySelector('.method-flow-toggle').getBoundingClientRect().right<=innerWidth`);
-  await screenshot('.cache/preview/method-bright-mobile.png');
+  await screenshot('.cache/preview/method-relay-mobile.png');
   await evaluate(`document.querySelector('#method [data-zoom]').click()`);await until(`document.querySelector('${modal}')?.dataset.running==='true'`);
   await check('mobile enlarged image fits and its toolbar stays within the screen', `${aligned(modal)}&&document.querySelector('#close-image').getBoundingClientRect().right<=innerWidth&&document.querySelector('#image-dialog .method-flow-toggle').getBoundingClientRect().left>=0`);
   await check('mobile fit view stays vertically centered like the original viewer', `(()=>{const area=document.querySelector('.method-flow-area').getBoundingClientRect(),image=document.querySelector('#dialog-image').getBoundingClientRect();return Math.abs(image.top+image.height/2-area.top-area.height/2)<1;})()`);
-  await evaluate(`document.activeElement.blur()`);await screenshot('.cache/preview/method-bright-mobile-enlarged.png');
+  await evaluate(`document.activeElement.blur()`);await screenshot('.cache/preview/method-relay-mobile-enlarged.png');
   await evaluate(`document.querySelector('#dialog-image').click()`);await wait(100);
   await cdp('Emulation.setTouchEmulationEnabled',{enabled:true,maxTouchPoints:1});
   const touch = await evaluate(`(()=>{const b=document.querySelector('.method-flow-area').getBoundingClientRect();return{x:b.right-30,y:b.top+100};})()`);
@@ -128,7 +129,7 @@ try {
   await evaluate(`document.querySelector('#close-image').click()`);
 
   // A non-METHOD figure must retain the existing viewer behavior and contain no new controls.
-  await evaluate(`document.querySelector('[data-zoom="./assets/images/hardware-thresholds.jpg"]').click()`);
+  await evaluate(`document.querySelector('[data-zoom="./assets/images/hardware-thresholds-current.png"]').click()`);
   await until(`document.querySelector('#dialog-image').complete`);
   await check('other figures retain the original image viewer unchanged', `document.querySelector('#image-dialog').open&&!document.querySelector('${modal}')&&!document.querySelector('#image-dialog .method-flow-toggle')&&!document.querySelector('#image-dialog').classList.contains('method-flow-dialog')`);
   await evaluate(`document.querySelector('#close-image').click()`);

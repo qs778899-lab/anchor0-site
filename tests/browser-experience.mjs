@@ -6,7 +6,7 @@ await mkdir('.cache/preview',{recursive:true});
 const check=async(name,expression)=>{assert(await evaluate(expression),name);console.log(`PASS: ${name}`);};
 const scroll=async(selector)=>{await evaluate(`document.querySelector(${JSON.stringify(selector)}).scrollIntoView({behavior:'instant',block:'start'})`);await wait(150);};
 try {
- await viewport(1440,1000);await go();await wait(450);
+ await viewport(1440,1000);await go();await evaluate(`localStorage.removeItem('anchor-navigation-position');localStorage.setItem('anchor-language','en');localStorage.setItem('anchor-theme','light')`);await go();await wait(450);
  await check('section order and default English',`document.documentElement.lang==='en' && [...document.querySelectorAll('main>section[id]')].map(e=>e.id).join(',')==='videos,performance,overview,benchmark,results,hardware,applications,method'`);
  await check('floating sidebar and desktop reading column',`getComputedStyle(document.querySelector('.floating-nav')).position==='fixed' && document.querySelector('.floating-nav').getBoundingClientRect().right<document.querySelector('.hero').getBoundingClientRect().left && document.documentElement.scrollWidth===innerWidth`);
  await check('only nearby video sources loaded initially',`[...document.querySelectorAll('.clip-card video')].every(v=>!v.currentSrc)`);
@@ -14,7 +14,7 @@ try {
  await screenshot('.cache/preview/desktop-home.png');
  await scroll('#videos');await until(`[...document.querySelectorAll('.clip-card video')].slice(0,3).every(v=>!v.paused&&v.currentTime>0)`);
  await check('visible clips play muted together; hero pauses off screen',`[...document.querySelectorAll('.clip-card video')].slice(0,3).every(v=>!v.paused&&v.muted&&v.loop) && document.querySelector('#scenes-video').paused`);
- await check('all fifteen clips stay in single rows with three desktop cards visible',`document.querySelectorAll('.clip-card').length===15 && [...document.querySelectorAll('.clip-rail')].every(r=>[...r.children].every(c=>Math.abs(c.getBoundingClientRect().top-r.firstElementChild.getBoundingClientRect().top)<1)) && Math.abs(document.querySelector('.clip-card').getBoundingClientRect().width*3+36-document.querySelector('.clip-rail').clientWidth)<2`);
+ await check('all fifteen clips stay in single rows with four desktop cards visible',`document.querySelectorAll('.clip-card').length===15 && [...document.querySelectorAll('.clip-rail')].every(r=>[...r.children].every(c=>Math.abs(c.getBoundingClientRect().top-r.firstElementChild.getBoundingClientRect().top)<1)) && Math.abs(document.querySelector('.clip-card').getBoundingClientRect().width*4+54-document.querySelector('.clip-rail').clientWidth)<2`);
  await screenshot('.cache/preview/desktop-videos.png');
  await evaluate(`document.querySelector('.clip-card video').pause()`);await wait(100);
  await scroll('#performance');await scroll('#videos');await wait(300);
@@ -84,7 +84,7 @@ try {
    const mark=[...svg.querySelectorAll('[data-tip]')].find(m=>{const t=JSON.parse(m.dataset.tip);return t.modelId==='anchor-global'&&t.value===100;});
    mark.focus();return {items:document.querySelector('#chart-tooltip').dataset.items,text:document.querySelector('#chart-tooltip').textContent};
  })()`);
- assert.equal(overlap.items,'2');assert(overlap.text.includes('Anchor-0ᴳ')&&overlap.text.includes('Anchor-0ᴸ'));console.log('PASS: coincident 100% points list both Anchor models');
+ assert.equal(overlap.items,'2');assert(overlap.text.includes('Anchorᴳ')&&overlap.text.includes('Anchorᴸ'));console.log('PASS: coincident 100% points list both Anchor models');
  const edgeCases=await evaluate(`(()=>{
    const failures=[];const tipBox=document.querySelector('#chart-tooltip');const fmt=v=>Number(v).toLocaleString('en-US',{minimumFractionDigits:4,maximumFractionDigits:4});
    const hover=mark=>{document.activeElement.dispatchEvent(new KeyboardEvent('keydown',{key:'Escape',bubbles:true}));const p=new DOMPoint(+mark.dataset.pointX,+mark.dataset.pointY).matrixTransform(mark.getScreenCTM());document.elementFromPoint(p.x,p.y).dispatchEvent(new PointerEvent('pointermove',{clientX:p.x,clientY:p.y,bubbles:true}));};

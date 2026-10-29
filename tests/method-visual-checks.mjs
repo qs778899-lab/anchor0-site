@@ -57,32 +57,52 @@ export async function verifyMethodEmphasis() {
     const tipFailures=[];
     for(const flow of METHOD_FLOWS.filter(f=>f.arrowhead!==false)){
       const path=svg.querySelector('[data-flow="'+flow.id+'"]'),tip=svg.querySelector('[data-flow-tip="'+flow.id+'"]');
-      const expected=(parseFloat(path.style.getPropertyValue('--flow-phase'))+path.getTotalLength())%128;
-      if(!tip||Math.abs(parseFloat(tip.style.getPropertyValue('--flow-phase'))-expected)>.01)tipFailures.push(flow.id);
+      if(!tip||tip.getTotalLength()!==28.5)tipFailures.push(flow.id);
+      if(flow.id===svg.dataset.activeFlow&&Math.abs(parseFloat(tip.style.strokeDashoffset)-parseFloat(path.style.strokeDashoffset)-path.getTotalLength())>.01)tipFailures.push(flow.id);
     }
     const main=getComputedStyle(svg.querySelector('[data-flow]')),core=getComputedStyle(svg.querySelector('.method-flow-core')),halo=getComputedStyle(svg.querySelector('.method-flow-aura'));
     return {shafts,heads,failures,min:Math.min(...range),max:Math.max(...range),width:main.strokeWidth,core:core.strokeWidth,dash:main.strokeDasharray,halo:halo.strokeWidth,expanded,unbounded,darkened,dropped,minimumBackground,tipFailures};
   })()`);
   assert.deepEqual(measured.failures,[]);assert.equal(measured.shafts,32);assert.equal(measured.heads,31);
-  assert.equal(measured.width,'9px');assert.equal(measured.core,'2.5px');assert.equal(measured.halo,'18px');assert.equal(measured.dash,'64px, 64px');
+  assert.equal(measured.width,'7px');assert.equal(measured.core,'2px');assert.equal(measured.halo,'14px');assert.equal(measured.dash,'64px, 250.5px');
   assert(measured.expanded>20000);assert.equal(measured.unbounded,0);assert.equal(measured.darkened,0);assert.equal(measured.dropped,0);assert.deepEqual(measured.tipFailures,[]);
-  console.log(`PASS: all 32 shafts and 31 fixed heads retain approximately 30% contrast (${measured.min.toFixed(3)}–${measured.max.toFixed(3)}); 9 px streams, 2.5 px cores, synchronized tips`);
+  console.log(`PASS: all 32 shafts and 31 fixed heads retain approximately 30% contrast (${measured.min.toFixed(3)}–${measured.max.toFixed(3)}); 7 px streams, 2 px cores, synchronized tips`);
   console.log(`PASS: ${measured.expanded} added glow-mask pixels stay within 7 source pixels of the original arrows, only on light background (minimum channel ${measured.minimumBackground.toFixed(1)})`);
 
-  // Compare actual browser screenshots, not a regenerated copy of the figure.
-  // The aura mask contains only exact arrows and verified adjacent background.
-  // A 2-screen-pixel tolerance accounts for browser resampling of that bounded mask.
+  // Sample the real shared timeline for a full cycle. Never reposition plotted arrows.
+  const relay=await evaluate(`(async()=>{
+    const {METHOD_DURATION,METHOD_TIMELINE,methodFrame}=await import('./method-flow-timeline.js');
+    const svg=document.querySelector('[data-surface="inline"]'),seen=[],failures=[];
+    const end=performance.now()+METHOD_DURATION+400;
+    while(performance.now()<end){
+      const state=methodFrame(+svg.dataset.elapsed),active=[...svg.querySelectorAll('[data-flow][visibility="visible"]')];
+      const panels=[...svg.querySelectorAll('[data-panel][visibility="visible"]')];
+      if(active.length!==(state.entry?1:0)||active[0]?.dataset.flow!==state.entry?.id)failures.push('overlap or wrong active path');
+      if(state.entry){
+        if(seen.at(-1)!==state.entry.id)seen.push(state.entry.id);
+        if(Math.abs(parseFloat(active[0].style.strokeDashoffset)-state.offset)>.05)failures.push('wrong position');
+        const panel=state.entry.group==='benchmark'?[]:[state.entry.group];
+        if(JSON.stringify(panels.map(p=>p.dataset.panel))!==JSON.stringify(panel))failures.push('wrong breathing panel');
+      }else if(panels.length)failures.push('panel active in stage gap');
+      await new Promise(resolve=>setTimeout(resolve,45));
+    }
+    return {seen,failures,expected:METHOD_TIMELINE.map(e=>e.id)};
+  })()`);
+  assert.deepEqual(relay.failures,[]);assert.equal(new Set(relay.seen).size,32);
+  for(let i=1;i<relay.seen.length;i++)assert.equal(relay.expected[(relay.expected.indexOf(relay.seen[i-1])+1)%32],relay.seen[i]);
+  console.log('PASS: full 31.26 s cycle plays all 32 arrows in order, one pulse at a time, with the correct breathing panel');
+
   await evaluate(`document.querySelector('.method-flow-toggle').click();document.activeElement.blur()`);
   const bounds=await evaluate(`(()=>{const b=document.querySelector('#method .method-flow-surface>img').getBoundingClientRect();return {x:b.x,y:b.y+scrollY,width:b.width,height:b.height,scale:1};})()`);
   const capture=async()=> (await cdp('Page.captureScreenshot',{format:'png',captureBeyondViewport:true,clip:bounds})).data;
   await evaluate(`document.querySelector('[data-surface="inline"]').style.opacity='0'`);await wait(50);
-  const before=await capture();await writeFile('.cache/preview/method-bright-original.png',Buffer.from(before,'base64'));
+  const before=await capture();await writeFile('.cache/preview/method-relay-original.png',Buffer.from(before,'base64'));
   await evaluate(`document.querySelector('[data-surface="inline"]').style.opacity=''`);
-  let changed=0,lastPhase=null,temporalChanges=0;
-  for(const phase of [0,32,64,96]){
-    await evaluate(`document.querySelector('[data-surface="inline"]').style.setProperty('--flow-offset','-${phase}px')`);await wait(35);
-    const after=await capture();
-    if(phase===32)await writeFile('.cache/preview/method-bright-figure.png',Buffer.from(after,'base64'));
+  let changed=0;
+  for(let phase=0;phase<3;phase++){
+    if(phase){await evaluate(`document.querySelector('.method-flow-toggle').click()`);await wait(390);await evaluate(`document.querySelector('.method-flow-toggle').click();document.activeElement.blur()`);}
+    await wait(35);const after=await capture();
+    if(phase===1)await writeFile('.cache/preview/method-relay-figure.png',Buffer.from(after,'base64'));
     const result=await evaluate(`(async()=>{
       const load=async(src)=>{const im=new Image();im.src=src;await im.decode();return im;};
       const a=await load('data:image/png;base64,${before}'),b=await load('data:image/png;base64,${after}');
@@ -91,24 +111,23 @@ export async function verifyMethodEmphasis() {
       const ctx=canvas.getContext('2d',{willReadFrequently:true});
       ctx.drawImage(a,0,0);const before=ctx.getImageData(0,0,a.width,a.height).data;
       ctx.clearRect(0,0,a.width,a.height);ctx.drawImage(b,0,0);const after=ctx.getImageData(0,0,a.width,a.height).data;
-      ctx.clearRect(0,0,a.width,a.height);ctx.drawImage(mask,0,0,a.width,a.height);const allowed=ctx.getImageData(0,0,a.width,a.height).data;
-      let previous=null;
-      ${lastPhase?`ctx.clearRect(0,0,a.width,a.height);ctx.drawImage(await load('data:image/png;base64,${lastPhase}'),0,0);previous=ctx.getImageData(0,0,a.width,a.height).data;`:''}
-      let changed=0,outside=0,temporal=0;const examples=[];
+      ctx.clearRect(0,0,a.width,a.height);ctx.drawImage(mask,0,0,a.width,a.height);
+      const {METHOD_PANELS}=await import('./method-flow-timeline.js');
+      ctx.save();ctx.scale(a.width/2314,a.height/1585);ctx.strokeStyle='white';ctx.lineWidth=26;
+      for(const p of METHOD_PANELS){ctx.beginPath();ctx.roundRect(p.x,p.y,p.width,p.height,p.rx);ctx.stroke();}ctx.restore();
+      const allowed=ctx.getImageData(0,0,a.width,a.height).data;
+      let changed=0,outside=0;const examples=[];
       for(let y=0;y<a.height;y++)for(let x=0;x<a.width;x++){
         const at=(y*a.width+x)*4;
-        if(previous&&[0,1,2].some(c=>Math.abs(previous[at+c]-after[at+c])>8))temporal++;
         if([0,1,2].every(c=>Math.abs(before[at+c]-after[at+c])<=1))continue;
         changed++;let arrow=false;
         for(let yy=Math.max(0,y-2);yy<=Math.min(a.height-1,y+2)&&!arrow;yy++)for(let xx=Math.max(0,x-2);xx<=Math.min(a.width-1,x+2);xx++)if(allowed[(yy*a.width+xx)*4+3]>0){arrow=true;break;}
         if(!arrow){outside++;if(examples.length<4)examples.push([x,y]);}
       }
-      return {changed,outside,examples,temporal};
+      return {changed,outside,examples};
     })()`);
     assert.equal(result.outside,0,JSON.stringify(result));changed+=result.changed;
-    if(lastPhase){assert(result.temporal>5000,'Flow must visibly move between rendered phases');temporalChanges+=result.temporal;}
-    lastPhase=after;
   }
-  console.log(`PASS: four rendered phases changed ${changed} arrow-region pixels and zero pixels outside the safe mask; ${temporalChanges} visible changes between phases`);
+  console.log(`PASS: three rendered states changed ${changed} arrow/frame pixels and zero pixels outside the allowed arrow and breathing-border regions`);
   await evaluate(`document.querySelector('.method-flow-toggle').click()`);
 }

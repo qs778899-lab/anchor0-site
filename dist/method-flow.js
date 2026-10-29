@@ -1,5 +1,6 @@
 import {METHOD_IMAGE, METHOD_FLOWS} from './method-flow-paths.js';
 import {buildMethodLayers} from './method-flow-layers.js';
+import {METHOD_PULSE, METHOD_PANELS, METHOD_DURATION, methodFrame} from './method-flow-timeline.js';
 
 const button = document.querySelector('#method [data-zoom="./assets/images/method.png"]');
 const original = button.querySelector('img');
@@ -8,7 +9,6 @@ const dialogImage = document.querySelector('#dialog-image');
 const dialogArea = dialogImage.parentElement;
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const namespace = 'http://www.w3.org/2000/svg';
-const period = 128;
 const streamColors = {'#156082':'#008eff','#7960af':'#a13cff','#4e887a':'#00b58b','#aa7b26':'#ee9b00','#747474':'#768da8','#7f7f7f':'#768da8'};
 const surfaces = new Set();
 const controls = new Set();
@@ -43,6 +43,13 @@ function createSurface(image, id) {
   defs.append(mask,auraMask,glow);svg.append(defs);
   const fade=element('image', {class:'method-flow-fade', x:0, y:0, width:METHOD_IMAGE.width, height:METHOD_IMAGE.height});
   svg.append(fade);
+  const panels=METHOD_PANELS.map(({group,...geometry})=>{
+    const node=element('g',{'data-panel':group,visibility:'hidden'});
+    const {color,...bounds}=geometry;
+    node.append(element('rect',{...bounds,stroke:color,class:'method-panel-glow method-panel-glow-soft',filter:`url(#${glowId})`}),
+      element('rect',{...bounds,stroke:color,class:'method-panel-glow'}));
+    svg.append(node);return {group,node};
+  });
   const halos = element('g', {mask:`url(#${auraId})`});
   const haloPaths=element('g',{filter:`url(#${glowId})`});halos.append(haloPaths);
   const lines = element('g', {mask:`url(#${auraId})`});
@@ -51,32 +58,35 @@ function createSurface(image, id) {
   METHOD_FLOWS.forEach((flow, index) => {
     const color=streamColors[flow.color]||flow.color;
     const path = element('path', {d:flow.d, stroke:color, class:'method-flow-highlight', 'data-flow':flow.id, 'data-group':flow.group});
-    const preceding = paths.get(flow.continues);
-    const phase = preceding ? preceding.phase + preceding.path.getTotalLength() : index * 37 % period;
-    path.style.setProperty('--flow-phase', `${phase % period}px`);
+    path.setAttribute('visibility','hidden');
     const halo=path.cloneNode();halo.removeAttribute('data-flow');halo.setAttribute('class','method-flow-highlight method-flow-aura');haloPaths.append(halo);
     const core=path.cloneNode();core.removeAttribute('data-flow');core.setAttribute('class','method-flow-highlight method-flow-core');core.setAttribute('stroke','#f4fcff');
-    lines.append(path,core);paths.set(flow.id, {path, phase});
+    lines.append(path,core);
+    const length=path.getTotalLength(),nodes=[{node:path,shift:0},{node:core,shift:0},{node:halo,shift:0}];
+    paths.set(flow.id, {path,nodes,length});
     if(flow.arrowhead!==false){
-      const length=path.getTotalLength(),end=path.getPointAtLength(length),previous=path.getPointAtLength(length-1);
+      const end=path.getPointAtLength(length),previous=path.getPointAtLength(length-1);
       const dx=Math.sign(end.x-previous.x),dy=Math.sign(end.y-previous.y);
       const clipId=`method-flow-tip-${id}-${index}`,clip=element('clipPath',{id:clipId,clipPathUnits:'userSpaceOnUse'});
       clip.append(element('polygon',{points:`${end.x-dy*15.5},${end.y+dx*15.5} ${end.x+dx*28.5},${end.y+dy*28.5} ${end.x+dy*15.5},${end.y-dx*15.5}`}));
       defs.append(clip);
       const tip=element('path',{d:`M${end.x} ${end.y} l${dx*28.5} ${dy*28.5}`,stroke:color,class:'method-flow-highlight method-flow-tip','clip-path':`url(#${clipId})`,'data-flow-tip':flow.id});
-      tip.style.setProperty('--flow-phase',`${(phase+length)%period}px`);
+      tip.setAttribute('visibility','hidden');
       const tipCore=tip.cloneNode();tipCore.removeAttribute('data-flow-tip');tipCore.setAttribute('class','method-flow-highlight method-flow-core');tipCore.setAttribute('stroke','#f4fcff');
       tips.append(tip,tipCore);
+      nodes.push({node:tip,shift:length},{node:tipCore,shift:length});
     }
+    nodes.forEach(({node})=>node.style.strokeDasharray=`${METHOD_PULSE} ${length+28.5+METHOD_PULSE*2}`);
   });
   svg.append(halos,lines,tips);container.append(svg);
-  const surface = {container, image, svg, id, visible:false, running:false, ready:false};
+  const surface = {container, image, svg, id, paths, panels, active:null, visible:false, running:false, ready:false};
+  renderFrame(surface);
   surfaces.add(surface);visibility.observe(container);
   image.addEventListener('load', reconcile);
   layers.then(({fadeHref,maskHref,auraHref,stats})=>{
     maskImage.setAttribute('href',maskHref);auraImage.setAttribute('href',auraHref);fade.setAttribute('href',fadeHref);
     svg.dataset.maskPixels=stats.pixels;svg.dataset.maskReady='true';surface.ready=true;
-    if(hasStarted){svg.dataset.started='true';svg.style.setProperty('--flow-offset',`${-elapsed/10}px`);}
+    if(hasStarted){svg.dataset.started='true';renderFrame(surface);}
     reconcile();
   }).catch(error=>console.error('METHOD arrow layer:',error));
   return surface;
@@ -101,10 +111,27 @@ function createControl() {
   return control;
 }
 
+function renderFrame(surface) {
+  const state=methodFrame(elapsed),active=state.entry?.id||null;
+  if(surface.active!==active){
+    if(surface.active)surface.paths.get(surface.active).nodes.forEach(({node})=>node.setAttribute('visibility','hidden'));
+    if(active)surface.paths.get(active).nodes.forEach(({node})=>node.setAttribute('visibility','visible'));
+    surface.active=active;
+  }
+  if(active)surface.paths.get(active).nodes.forEach(({node,shift})=>{node.style.strokeDashoffset=`${state.offset+shift}px`;});
+  surface.panels.forEach(({group,node})=>{
+    node.setAttribute('visibility',state.entry?.group===group?'visible':'hidden');
+    node.setAttribute('opacity',state.breath);
+  });
+  surface.svg.dataset.elapsed=elapsed.toFixed(3);
+  surface.svg.dataset.activeFlow=active||'';
+  surface.svg.dataset.stage=state.entry?.group||'';
+  surface.svg.dataset.progress=state.progress.toFixed(5);
+}
 function tick(timestamp) {
-  if (lastFrame !== null) elapsed = (elapsed + timestamp - lastFrame) % (period * 10);
+  if (lastFrame !== null) elapsed = (elapsed + timestamp - lastFrame) % METHOD_DURATION;
   lastFrame = timestamp;
-  for (const surface of surfaces) if (surface.running) surface.svg.style.setProperty('--flow-offset', `${-elapsed / 10}px`);
+  for (const surface of surfaces) if (surface.running) renderFrame(surface);
   frame = requestAnimationFrame(tick);
 }
 function reconcile() {
@@ -116,7 +143,7 @@ function reconcile() {
     surface.svg.dataset.running = String(surface.running);
     if (surface.running) {
       surface.svg.dataset.started = 'true';
-      surface.svg.style.setProperty('--flow-offset', `${-elapsed / 10}px`);
+      renderFrame(surface);
       running = true;hasStarted = true;
     }
   }

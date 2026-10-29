@@ -1,0 +1,12 @@
+{
+  "source": "Chrome Page.screencastFrame",
+  "frames": 911,
+  "seconds": 32.91554403305054,
+  "viewport": [
+    1440,
+    1100
+  ],
+  "fps": 30,
+  "speed": 1,
+  "output": "docs/previews/method-relay-motion.mp4"
+}

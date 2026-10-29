@@ -166,8 +166,8 @@ function bubbleFigure(dataset){
     const width=narrow?181:197;
     out+=`<rect x="${align==='end'?lx-width:lx-5}" y="${ly-18}" width="${width+8}" height="43" fill="transparent"/>`+text(lx,ly,s.label,`text-anchor="${align}" class="bubble-name ${anchor?'anchor-label':''}"`)+text(lx,ly+21,`${fmt(s.localSuccess,1)}% · ${fmt(s.lookaheadSeconds)} s`,`text-anchor="${align}" class="bubble-value"`)+'</g>';
   });
-  const rows=dataset.series.map(s=>({id:s.id,label:s.label,values:[s.localSuccess,s.lookaheadSeconds,s.onlineRetargeting?t('Required','需要'):t('Not required','无需')],tips:[measurement(s,dataset.id,label(dataset),'localSuccess',t('Local success','局部成功率'),s.localSuccess,'%',{count:dataset.count}),measurement(s,dataset.id,label(dataset),'lookaheadSeconds',t('Look-ahead','未来帧窗口'),s.lookaheadSeconds,'s',{count:dataset.count})]}));
-  return [svg(w,h,t('Performance and reference look-ahead','跟踪性能与未来帧'),out,narrow?'narrow-plot':''),dataTable([t('Local success (%)','局部成功率 (%)'),t('Look-ahead (s)','未来帧窗口 (s)'),t('Online retargeting','在线重定向')],rows),`${w} / ${h}`];
+  const rows=dataset.series.map(s=>({id:s.id,label:s.label,values:[s.localSuccess,s.lookaheadSeconds,s.onlineRetargeting?t('Required','需要'):t('Not required','无需')],tips:[measurement(s,dataset.id,label(dataset),'localSuccess',t('Local success','局部成功率'),s.localSuccess,'%',{count:dataset.count}),measurement(s,dataset.id,label(dataset),'lookaheadSeconds',t('Look-ahead','未来参考帧窗口'),s.lookaheadSeconds,'s',{count:dataset.count})]}));
+  return [svg(w,h,t('Performance and reference look-ahead','跟踪性能与未来帧'),out,narrow?'narrow-plot':''),dataTable([t('Local success (%)','局部成功率 (%)'),t('Look-ahead (s)','未来参考帧窗口 (s)'),t('Online retargeting','在线重定向')],rows),`${w} / ${h}`];
 }
 
 function renderLookahead(){
