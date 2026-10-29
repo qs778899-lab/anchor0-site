@@ -141,7 +141,7 @@ for row in data['hardware']['trackingErrors']['series']:
     assert row['preliminary']==(row['id']=='anchor')
 assert data['hardware']['standingReach']['count']==51
 assert 'nonempty windows' in data['hardware']['trackingErrors']['note']
-branding_text=(DIST/'index.html').read_text().replace('Build on Anchor-0','').replace('基于 Anchor-0 持续拓展','')+(DIST/'data/paper-results.json').read_text()
+branding_text=(DIST/'index.html').read_text()+(DIST/'data/paper-results.json').read_text()
 assert all(name not in branding_text for name in ['Anchor-0','Anchor-1'])
 assert ' download ' not in (DIST/'index.html').read_text()
 print('PASS: main@5be61b7 measured hardware values, contributing windows and Anchor naming')

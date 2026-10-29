@@ -1,7 +1,7 @@
 # Future section
 
 Added after Method, numbered 08 and linked from the floating navigation.
-The requested heading is exactly `FUTURE / Build on Anchor-0`; this is a deliberate exception to the current Anchor 1 site branding.
+The requested heading is exactly `FUTURE / Build on Anchor 1`; this matches the latest paper title and Anchor 1 site branding.
 
 Two native-resolution extracts from the original `场景/场景.mp4`:
 

@@ -5,7 +5,7 @@ try {
   await go();
   await evaluate(`if(document.documentElement.lang.startsWith('zh'))document.querySelector('#language-toggle').click();document.querySelector('#theme-select').value='light';document.querySelector('#theme-select').dispatchEvent(new Event('change'));`);
   assert.equal(await evaluate(`document.querySelector('#method').nextElementSibling.id`),'future');
-  assert.equal(await evaluate(`document.querySelector('#future-title').textContent`),'Build on Anchor-0');
+  assert.equal(await evaluate(`document.querySelector('#future-title').textContent`),'Build on Anchor 1');
   assert.equal(await evaluate(`document.querySelectorAll('#future video').length`),2);
   await evaluate(`document.querySelector('#future').scrollIntoView()`);
   await until(`[...document.querySelectorAll('#future video')].every(v=>v.readyState>=2&&!v.paused)`,60000);
@@ -23,7 +23,7 @@ try {
     await screenshot(`docs/previews/future-${width}.png`);
   }
   await evaluate(`document.querySelector('#language-toggle').click();document.querySelector('#theme-select').value='dark';document.querySelector('#theme-select').dispatchEvent(new Event('change'))`);
-  assert.equal(await evaluate(`document.querySelector('#future-title').textContent`),'基于 Anchor-0 持续拓展');
+  assert.equal(await evaluate(`document.querySelector('#future-title').textContent`),'基于 Anchor 1 持续拓展');
   await screenshot('docs/previews/future-mobile-zh-dark.png');
   assert.equal(events.filter(e=>e.method==='Runtime.exceptionThrown').length,0);
   console.log('PASS: Future order/navigation, 4K videos, autoplay, offscreen and manual pause, desktop/tablet/mobile, bilingual and dark theme.',media);
