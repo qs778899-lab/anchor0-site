@@ -20,14 +20,12 @@ export class S0Renderer {
   private readonly renderer: THREE.WebGLRenderer;
   private readonly controls: OrbitControls;
   private readonly geometryGroup = new THREE.Group();
-  private readonly referenceGroup = new THREE.Group();
   private readonly objects = new Map<number, THREE.Mesh>();
   private readonly visualObjects: { mesh: THREE.Mesh; bodyId: number; local: THREE.Matrix4 }[] = [];
   private readonly bodyMatrix = new THREE.Matrix4();
   private readonly bodyPosition = new THREE.Vector3();
   private readonly bodyQuaternion = new THREE.Quaternion();
   private readonly unitScale = new THREE.Vector3(1, 1, 1);
-  private readonly referenceMarkers: THREE.Mesh[] = [];
   private readonly root = new THREE.Vector3(0, 0, 0.8);
   private readonly previousRoot = new THREE.Vector3(0, 0, 0.8);
   private readonly delta = new THREE.Vector3();
@@ -35,7 +33,6 @@ export class S0Renderer {
   private grid!: THREE.GridHelper;
   private animationId = 0;
   private hasFrame = false;
-  private showReference = true;
   private disposed = false;
   private letterMode = false;
   private wordMode = false;
@@ -48,10 +45,7 @@ export class S0Renderer {
   private motionId = '';
   private readonly ink = new InkTrace();
   private readonly inkMaterial = new LineMaterial({ color: 0x55bcff, linewidth: 4, depthTest: true });
-  private readonly targetMaterial = new LineMaterial({ color: 0xb6cddd, linewidth: 2, transparent: true, opacity: .35, depthTest: true });
   private readonly inkLine = new LineSegments2(new LineSegmentsGeometry(), this.inkMaterial);
-  private readonly targetLine = new LineSegments2(new LineSegmentsGeometry(), this.targetMaterial);
-  private showTarget = true;
 
   constructor(private readonly container: HTMLElement) {
     this.scene.background = new THREE.Color('#101a23');
@@ -94,23 +88,9 @@ export class S0Renderer {
     grid.position.z = 0.003;
     grid.material.transparent = true;
     grid.material.opacity = 0.52;
-    this.inkLine.visible = false; this.targetLine.visible = false;
-    this.inkLine.frustumCulled = false; this.targetLine.frustumCulled = false;
-    this.scene.add(grid, this.geometryGroup, this.referenceGroup, this.inkLine, this.targetLine);
-
-    const markerGeometry = new THREE.SphereGeometry(0.033, 12, 8);
-    for (let index = 0; index < 5; index += 1) {
-      const marker = new THREE.Mesh(markerGeometry, new THREE.MeshBasicMaterial({
-        color: index === 0 ? '#ffd48a' : '#85f6d0',
-        depthTest: false,
-        transparent: true,
-        opacity: 0.9,
-      }));
-      marker.renderOrder = 10;
-      marker.visible = false;
-      this.referenceMarkers.push(marker);
-      this.referenceGroup.add(marker);
-    }
+    this.inkLine.visible = false;
+    this.inkLine.frustumCulled = false;
+    this.scene.add(grid, this.geometryGroup, this.inkLine);
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableDamping = !matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -197,9 +177,6 @@ export class S0Renderer {
     const grid = this.grid.material as THREE.LineBasicMaterial;
     grid.color.set(dark ? '#687585' : '#bdc8d5'); grid.opacity = dark ? .3 : .24;
     this.inkMaterial.color.set(dark ? '#80b4f8' : '#1769d2');
-    this.targetMaterial.color.set(dark ? '#aeb8c5' : '#525252');
-    this.targetMaterial.opacity = dark ? .45 : .27;
-    this.referenceMarkers.forEach((mesh, i) => (mesh.material as THREE.MeshBasicMaterial).color.set(i === 0 ? (dark ? '#e1c577' : '#b4933e') : (dark ? '#80b4f8' : '#1769d2')));
     this.renderer.domElement.dataset.theme = dark ? 'dark' : 'light';
   }
 
@@ -221,14 +198,6 @@ export class S0Renderer {
     this.controls.object = this.camera;
     this.clearInk();
     this.allocateInk(motion.sequence?.inkCapacity ?? motion.numFrames);
-    const points: number[] = [];
-    for (const stroke of motion.handwriting?.targetStrokes ?? []) {
-      for (let i = 1; i < stroke.length; i++) points.push(...stroke[i - 1], ...stroke[i]);
-    }
-    this.targetLine.geometry.dispose();
-    this.targetLine.geometry = new LineSegmentsGeometry();
-    if (points.length) this.targetLine.geometry.setPositions(points);
-    this.targetLine.visible = this.letterMode && this.showTarget && points.length > 0;
     this.resize(); this.resetCamera();
   }
 
@@ -247,7 +216,6 @@ export class S0Renderer {
   inkSnapshot() { return { motion: this.motionId, segments: [...this.ink.segments], orthographic: this.letterMode,
     cameraPosition: this.camera.position.toArray(), cameraTarget: this.controls.target.toArray(),
     overview: this.overviewMode, inkCapacity: this.inkCapacity }; }
-  setShowTarget(show: boolean): void { this.showTarget = show; this.targetLine.visible = show && this.letterMode; }
 
   setFrame(frame: RenderFrame): void {
     if (this.ink.append(frame)) {
@@ -302,22 +270,9 @@ export class S0Renderer {
       }
     }
     this.previousRoot.copy(this.root);
-    const points = frame.referencePoints;
-    for (let index = 0; index < this.referenceMarkers.length; index += 1) {
-      const marker = this.referenceMarkers[index];
-      const offset = index * 3;
-      marker.visible = Boolean(points && offset + 2 < points.length);
-      if (points && marker.visible) marker.position.set(points[offset], points[offset + 1], points[offset + 2]);
-    }
-    this.referenceGroup.visible = this.showReference;
     if (this.wordMode && frame.completed && this.completedRun !== frame.runId) {
       this.completedRun = frame.runId; this.showOverview();
     }
-  }
-
-  setShowReference(show: boolean): void {
-    this.showReference = show;
-    this.referenceGroup.visible = show;
   }
 
   resetCamera(): void {
@@ -364,8 +319,8 @@ export class S0Renderer {
     this.controls.dispose();
     this.clearGeometries();
     this.clearVisuals();
-    this.inkLine.geometry.dispose(); this.targetLine.geometry.dispose();
-    this.inkMaterial.dispose(); this.targetMaterial.dispose();
+    this.inkLine.geometry.dispose();
+    this.inkMaterial.dispose();
     this.scene.traverse((object) => {
       if (object instanceof THREE.Mesh || object instanceof THREE.LineSegments) {
         object.geometry.dispose();
@@ -432,7 +387,7 @@ export class S0Renderer {
     this.orthographic.top = halfHeight; this.orthographic.bottom = -halfHeight;
     this.orthographic.left = -halfHeight * width / height; this.orthographic.right = halfHeight * width / height;
     this.orthographic.updateProjectionMatrix();
-    this.inkMaterial.resolution.set(width, height); this.targetMaterial.resolution.set(width, height);
+    this.inkMaterial.resolution.set(width, height);
     this.renderer.setSize(width, height);
   }
 

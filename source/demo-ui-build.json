@@ -5,12 +5,12 @@
   "three": "0.181.0",
   "outputs": {
     "dist/demo/assets/demo-ui.js": {
-      "bytes": 605480,
-      "sha256": "a204a586425aeea3bb001523353b99923c23e14f18a50773ebe8d6587b97cdf6"
+      "bytes": 600570,
+      "sha256": "f10d79a5044ef232652b2c8f1d19affa9f501c4d2fac260c3eee0a9db49e05ca"
     },
     "dist/demo/assets/demo-ui.css": {
-      "bytes": 11548,
-      "sha256": "24f86d163351aee83e62c4b0f7e8548e528acbdb99f7d343181dfd4c1580c638"
+      "bytes": 10916,
+      "sha256": "0ac77e0b04363002c743e0e2953a976a56f2dba0c39098e87f904f045fdc2d90"
     }
   }
 }
