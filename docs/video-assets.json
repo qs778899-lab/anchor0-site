@@ -54,7 +54,7 @@
       },
       "output": "assets/videos/comparison.mp4",
       "output_metadata": {
-        "duration_seconds": 83.777,
+        "duration_seconds": 83.776,
         "faststart": true,
         "width": 1738,
         "height": 906,
@@ -62,13 +62,21 @@
         "video_codec": "h264",
         "pixel_format": "yuv420p",
         "audio_codec": "aac",
-        "bytes": 19156602,
-        "sha256": "75e06eca5b026b7ea89d8a67c400a1914b2bd7aef56fce73295a765328e2b335"
+        "bytes": 19147614,
+        "sha256": "5919a4fedbcdbc9ca1dd551ab66a606035b3831b6f58f329d99fd89337673e17"
       },
       "poster": "assets/posters/comparison.jpg",
       "poster_time_seconds": 10,
       "poster_bytes": 135719,
       "poster_sha256": "358776066625681f85b4073f0fb8e7e401a109d5681abf14a95619126dcbf0ab",
+      "frameRepairs": [
+        {
+          "startFrame": 12,
+          "endFrame": 13,
+          "replacementFrame": 13,
+          "reason": "Remove the single-frame burned-in title at 0.400 s using the immediately following clean frame; keep timing and audio unchanged."
+        }
+      ],
       "validation": "complete decode without errors"
     },
     {

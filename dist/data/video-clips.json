@@ -13,6 +13,7 @@
       },
       "fullVideo": "assets/videos/comparison.mp4",
       "fullPoster": "assets/posters/comparison.jpg",
+      "fullVideoRevision": "5919a4fedbcd",
       "clips": [
         {
           "id": "comparison-standing",
@@ -26,7 +27,8 @@
           "output": "assets/videos/clips/comparison-standing.mp4",
           "poster": "assets/posters/clips/comparison-standing.jpg",
           "width": 1738,
-          "height": 906
+          "height": 906,
+          "revision": "d9b82c1a2f71"
         },
         {
           "id": "comparison-kneeling",

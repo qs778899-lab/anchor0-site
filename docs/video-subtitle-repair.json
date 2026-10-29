@@ -1,0 +1,53 @@
+{
+  "sourceFrames": 2513,
+  "changedSourceFrames": [
+    12
+  ],
+  "replacementMatchesFrame": 13,
+  "audioUnchanged": {
+    "comparison.mp4": "SHA256=c271d3b7fa0941096ff6ef2f288389eef3f4f0f0afbec1aa9c6f298b01bcc54f",
+    "comparison-standing.mp4": "SHA256=a5aebb742ea5c138c5cf38854e4974e3964f263aaf370e2b29c967222532d643"
+  },
+  "outputs": {
+    "comparison.mp4": {
+      "duration_seconds": 83.776,
+      "faststart": true,
+      "width": 1738,
+      "height": 906,
+      "fps": 30.0,
+      "video_codec": "h264",
+      "pixel_format": "yuv420p",
+      "audio_codec": "aac",
+      "bytes": 19147614,
+      "sha256": "5919a4fedbcdbc9ca1dd551ab66a606035b3831b6f58f329d99fd89337673e17",
+      "frame_count": 2512,
+      "previous_frame_count": 2512
+    },
+    "comparison-standing.mp4": {
+      "duration_seconds": 8.0,
+      "faststart": true,
+      "width": 1738,
+      "height": 906,
+      "fps": 30.0,
+      "video_codec": "h264",
+      "pixel_format": "yuv420p",
+      "audio_codec": "aac",
+      "bytes": 2067340,
+      "sha256": "d9b82c1a2f714e53b05f366444ae47ef524eadbd273fafa5429d701860d97ad4",
+      "frame_count": 240,
+      "previous_frame_count": 240
+    }
+  },
+  "changedPublishedAssets": [
+    "dist/assets/videos/comparison.mp4",
+    "dist/assets/videos/clips/comparison-standing.mp4"
+  ],
+  "verified": [
+    "Only source frame 12 is replaced by adjacent clean frame 13 before encoding",
+    "First 30 frames inspected in both generated videos",
+    "AAC packets are byte-identical to previous published versions",
+    "Published frame counts and 30 fps unchanged; full MP4 header duration rounds 1 ms lower after audio-preserving remux",
+    "Browser tested 0.400 s seeking, versioned media URLs and clip looping",
+    "All other published media and posters remain byte-identical"
+  ]
+}

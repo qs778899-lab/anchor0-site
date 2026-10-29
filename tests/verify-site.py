@@ -43,17 +43,26 @@ for group, public in zip(clip_manifest['groups'],clip_outputs['groups']):
         assert output['startSeconds']==clip['startFrame']/30 and output['endSeconds']==clip['endFrame']/30
         assert 5<=output['duration']<=15 and output['title']==clip['title']
         record=by_clip[output['id']]
+        repairs=[r for r in group.get('frameRepairs',[]) if r['startFrame']<clip['endFrame'] and r['endFrame']>clip['startFrame']]
+        assert record.get('frameRepairs',[])==repairs, 'Declared subtitle repair not applied to clip'
+        if repairs:
+            assert output['revision']==record['output_metadata']['sha256'][:12], 'Repaired clip cache revision is stale'
         assert record['output_metadata']['frame_count']==clip['endFrame']-clip['startFrame']
         for key, digest in [('output',record['output_metadata']['sha256']),('poster',record['poster_sha256'])]:
             assert hashlib.sha256((DIST/output[key]).read_bytes()).hexdigest()==digest, f'Changed clip asset: {output[key]}'
     assert previous==by_clip[public['clips'][-1]['id']]['source_frame_count'], 'Missing source end frames'
 full_records=json.loads((ROOT/'docs/video-assets.json').read_text())['videos']
 for record in full_records:
+    group=next((g for g in clip_manifest['groups'] if g['id']==record['slug']),{})
+    assert record.get('frameRepairs',[])==group.get('frameRepairs',[]), 'Declared subtitle repair not applied to full video'
+    if group.get('frameRepairs'):
+        public=next(g for g in clip_outputs['groups'] if g['id']==record['slug'])
+        assert public['fullVideoRevision']==record['output_metadata']['sha256'][:12], 'Repaired full-video cache revision is stale'
     assert hashlib.sha256((DIST/record['output']).read_bytes()).hexdigest()==record['output_metadata']['sha256'], 'Full-length video changed'
     source=Path.home()/'Desktop/demo视频'/record['source']
     if source.exists():
         assert hashlib.sha256(source.read_bytes()).hexdigest()==record['source_metadata']['sha256'], 'Original video changed'
-print('PASS: 15 contiguous action clips, manifest paths/hashes, unchanged full films and available originals')
+print('PASS: 15 contiguous action clips, declared frame repairs, output hashes and unchanged available originals')
 
 provenance=json.loads((ROOT/'docs/demo-provenance.json').read_text())
 assert provenance['sourceCommit']=='cdcfef07a9109603f36532c182ad0c282e51e748'

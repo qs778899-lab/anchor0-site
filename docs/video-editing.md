@@ -2,8 +2,8 @@
 
 The original 228.867-second main film and all three full-length comparison films remain available.
 The front-page showcase adds 15 contiguous action clips: nine comparison clips, four body-diversity
-clips and two input-device clips. Clips are 6.8–13.667 seconds long. All original video frames are
-retained at normal speed. The four operators/devices remain together in their original composite;
+clips and two input-device clips. Clips are 6.8–13.667 seconds long. All original frame positions are
+retained at normal speed, with the isolated correction recorded below. The four operators/devices remain together in their original composite;
 their movements are not perfectly synchronized, so cuts preserve the shared action phase.
 
 `scripts/video-clips.json` is the editable manifest. Boundaries are integer source frames at 30 fps,
@@ -14,12 +14,23 @@ count must match its manifest range, and each group's ranges cover the source fr
 `dist/data/video-clips.json` is the public manifest with exact times, output paths and posters.
 `docs/video-clips.json` records output metadata and source/output/poster SHA-256 hashes.
 
+The comparison source contains a one-frame burned-in title at frame 12 (zero-based, 0.400 s).
+Its `frameRepairs` entry substitutes the next clean frame, 13, at that position. This applies to
+`comparison-standing.mp4` and the full web `comparison.mp4`; no frame is removed, no time shift
+is introduced, and audio is unchanged. Original input files and posters remain intact. The encoder
+automatically rebuilds affected outputs when the declared repairs change; subsequent forced
+regeneration also applies the repair. Verification refuses to certify an unapplied repair.
+Repaired web copies use content-hash URL revisions so a normal page refresh bypasses the
+previously cached MP4. Other video URLs and playback behavior are unchanged.
+Verification: [frame/audio record](video-subtitle-repair.json) and [browser at 0.400 s](previews/comparison-subtitle-fixed.png).
+
 Run `python3 scripts/prepare-videos.py --clips-only` to prepare missing clips. Add `--force` to
 regenerate the generated clips and posters, or `--verify-only` to decode existing clips and refresh
 their validation records. The normal preparation command also prepares these clips after the
 full-length files. Originals are read only; hashes are checked before and after processing.
 
-Each of the three groups uses a single horizontal rail: three cards on desktop, two on tablet,
+Each of the three groups uses a single horizontal rail: four desktop cards for comparison and
+body diversity (the input-device group contains only two clips), two on tablet,
 and one plus a glimpse of the next on mobile. Rails support native horizontal wheel/touch scrolling,
 a scrollbar, and previous/next buttons. When the rail itself has keyboard focus, Left/Right advances
 one card and Home/End goes to either end. Video controls retain their own keyboard shortcuts.

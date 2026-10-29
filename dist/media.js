@@ -4,6 +4,7 @@ const locale = () => document.documentElement.lang.startsWith('zh') ? 'zh' : 'en
 const t = (en, zh) => locale() === 'zh' ? zh : en;
 const esc = value => String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const bilingual = (tag, title) => `<${tag} data-en="${esc(title.en)}" data-zh="${esc(title.zh)}">${esc(title[locale()])}</${tag}>`;
+const videoUrl = (path, revision) => `./${path}${revision ? `?v=${encodeURIComponent(revision)}` : ''}`;
 const states = new Map();
 const rails = new Map();
 let manifest;
@@ -162,7 +163,7 @@ function render() {
     <div class="video-group-heading"><div><h3 id="${group.id}-title">${bilingual('span', group.title)}</h3>${bilingual('p', group.description)}</div><div class="video-group-actions"><button type="button" class="full-video-link" data-full-video="${group.id}" data-en="Watch full video ↗" data-zh="查看完整视频 ↗">${t('Watch full video ↗','查看完整视频 ↗')}</button><div class="rail-controls" hidden><button type="button" class="rail-arrow" data-rail-step="-1" aria-controls="${group.id}-clips" aria-label="${t('Previous video','上一段视频')}" disabled><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m14 6-6 6 6 6"/></svg></button><button type="button" class="rail-arrow" data-rail-step="1" aria-controls="${group.id}-clips" aria-label="${t('Next video','下一段视频')}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></svg></button></div></div></div>
     <div class="clip-rail" id="${group.id}-clips" role="region" aria-labelledby="${group.id}-title" tabindex="0">${group.clips.map((clip, i) => `<article class="clip-card">
       <div class="video-frame" data-video="${clip.id}" style="--video-ratio:${clip.width} / ${clip.height}">
-        <video preload="none" muted playsinline controls loop poster="./${clip.poster}" aria-label="${esc(clip.title[locale()])}" data-label-en="${esc(clip.title.en)}" data-label-zh="${esc(clip.title.zh)}"><source data-src="./${clip.output}" type="video/mp4"></video>
+        <video preload="none" muted playsinline controls loop poster="./${clip.poster}" aria-label="${esc(clip.title[locale()])}" data-label-en="${esc(clip.title.en)}" data-label-zh="${esc(clip.title.zh)}"><source data-src="${videoUrl(clip.output, clip.revision)}" type="video/mp4"></video>
         <button class="video-cover" type="button" aria-label="${t('Play video','播放视频')}"><span class="play-circle" aria-hidden="true">▶</span></button>
       </div><div class="clip-caption"><span class="clip-number">${String(gi + 1).padStart(2,'0')}.${String(i + 1).padStart(2,'0')}</span>${bilingual('h4', clip.title)}<span class="clip-duration">${Math.round(clip.duration)} s</span></div>
     </article>`).join('')}</div></section>`).join('');
@@ -189,7 +190,7 @@ export async function initializeMedia() {
     const video = $('video', dialog), state = states.get(video);
     pauseAutomatically(video, state);
     state.finished = false; state.userPaused = false;
-    video.src = `./${group.fullVideo}`; video.poster = `./${group.fullPoster}`;
+    video.src = videoUrl(group.fullVideo, group.fullVideoRevision); video.poster = `./${group.fullPoster}`;
     video.dataset.loaded = 'true'; video.muted = true; video.load();
     dialog.dataset.group = group.id;
     $('#full-video-title').textContent = group.title[locale()];

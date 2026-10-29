@@ -25,7 +25,7 @@ try {
  await check('only the explicitly unmuted player has sound',`document.querySelector('.clip-card video').muted && !document.querySelectorAll('.clip-card video')[1].muted`);
  await evaluate(`document.querySelectorAll('.clip-card video')[1].muted=true`);
  await evaluate(`document.querySelector('[data-full-video]').click()`);await until(`document.querySelector('#video-dialog').open && !document.querySelector('#video-dialog video').paused`);
- await check('full video modal pauses the showcase',`[...document.querySelectorAll('.clip-card video')].every(v=>v.paused) && document.querySelector('#video-dialog video').currentSrc.endsWith('/comparison.mp4')`);
+ await check('full video modal pauses the showcase',`[...document.querySelectorAll('.clip-card video')].every(v=>v.paused) && document.querySelector('#video-dialog video').currentSrc.split('?')[0].endsWith('/comparison.mp4')`);
  await evaluate(`document.querySelector('#video-dialog video').requestFullscreen()`);await until(`!!document.fullscreenElement`);
  await check('native fullscreen',`document.fullscreenElement===document.querySelector('#video-dialog video')`);
  await evaluate(`document.exitFullscreen()`);await evaluate(`document.querySelector('#close-video').click()`);await wait(200);

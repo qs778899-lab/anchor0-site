@@ -1,14 +1,16 @@
 # Website video assets
 
 All four supplied MP4 videos are included at full duration. Their GIF duplicates are intentionally omitted.
-Original source files are read only. Output keeps the original aspect ratio, logos, frame content and audio;
+Original source files are read only. Output keeps the original aspect ratio, logos, timing and audio;
 there is no cropping or upscaling. The web copies use H.264, yuv420p, 30 fps, AAC audio, and MP4 faststart.
 Each file is below 90 MiB. Posters are real frames extracted from the generated videos, with no image generation.
+Declared frame repairs in `scripts/video-clips.json` also apply to the full web copies: comparison
+frame 12 (0.400 s) is replaced with clean frame 13 to remove an isolated burned-in subtitle.
 
 | Video | Duration | Resolution | Size | Poster frame |
 |---|---:|---:|---:|---:|
 | scenes.mp4 | 228.878 s | 1920 × 1080 | 67.15 MiB | 125 s |
-| comparison.mp4 | 83.777 s | 1738 × 906 | 18.27 MiB | 10 s |
+| comparison.mp4 | 83.776 s | 1738 × 906 | 18.26 MiB | 10 s |
 | body-diversity.mp4 | 32.321 s | 1920 × 1080 | 9.32 MiB | 6 s |
 | input-devices.mp4 | 19.620 s | 1920 × 1080 | 6.38 MiB | 4 s |
 

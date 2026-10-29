@@ -117,11 +117,39 @@ def decoded_frame_count(ffmpeg: str, path: Path, log: Path) -> int:
     return int([line.split('=')[1] for line in result.stdout.splitlines() if line.startswith('frame=')][-1])
 
 
+def video_filter_args(filters: str, repairs: list[dict]) -> list[str]:
+    """Replace only declared source-frame intervals, then apply the existing web filters."""
+    if not repairs:
+        return ['-map', '0:v:0', '-vf', filters]
+    graph = []
+    current = '0:v:0'
+    for i, repair in enumerate(repairs):
+        start, end, replacement = (repair[k] for k in ('startFrame', 'endFrame', 'replacementFrame'))
+        assert all(isinstance(n, int) and n >= 0 for n in (start, end, replacement))
+        assert start < end and not start <= replacement < end
+        graph.append(f'[{current}]split[main{i}][copy{i}]')
+        graph.append(f'[main{i}][copy{i}]freezeframes=first={start}:last={end-1}:replace={replacement}[fixed{i}]')
+        current = f'fixed{i}'
+    graph.append(f'[{current}]{filters}[video]')
+    return ['-filter_complex', ';'.join(graph), '-map', '[video]']
+
+
+def preserve_published_audio(ffmpeg: str, temporary: Path, existing: Path, cache: Path):
+    """A frame-only repair must keep the already-published AAC packets unchanged."""
+    remux = cache / f'{temporary.stem}-audio-preserved.mp4'
+    run_logged([ffmpeg, '-hide_banner', '-nostdin', '-y', '-i', str(temporary), '-i', str(existing),
+                '-map', '0:v:0', '-map', '1:a:0?', '-map_metadata', '-1', '-c', 'copy',
+                '-movflags', '+faststart', str(remux)], cache / f'{temporary.stem}-audio-preserved.log')
+    remux.replace(temporary)
+
+
 def prepare_clips(args, ffmpeg, cache):
     """Encode exact frame ranges from originals, keeping every composite frame intact."""
     manifest = json.loads((ROOT / 'scripts/video-clips.json').read_text())
     fps = manifest['fps']
     published = {'version': manifest['version'], 'groups': []}
+    record_path = ROOT / 'docs/video-clips.json'
+    previous_records = {r['id']: r for r in json.loads(record_path.read_text())['clips']} if record_path.exists() else {}
     records = []
     for group in manifest['groups']:
         source = args.source_root / group['source']
@@ -129,12 +157,17 @@ def prepare_clips(args, ffmpeg, cache):
         assert original['fps'] == fps, 'Clip manifest assumes a 30 fps source'
         original_frames = decoded_frame_count(ffmpeg, source, cache / f"{group['id']}-source-decode.log")
         published_group = {key: group[key] for key in ('id', 'title', 'description', 'fullVideo', 'fullPoster')}
+        if group.get('frameRepairs'):
+            published_group['fullVideoRevision'] = sha256(ROOT / 'dist' / group['fullVideo'])[:12]
         published_group['clips'] = []
         previous_frame = 0
         for clip in group['clips']:
             assert clip['startFrame'] == previous_frame, 'Clips must cover the original continuously'
             previous_frame = clip['endFrame']
             slug = f"{group['id']}-{clip['id']}"
+            repairs = [r for r in group.get('frameRepairs', []) if r['startFrame'] < clip['endFrame'] and r['endFrame'] > clip['startFrame']]
+            repair_changed = previous_records.get(slug, {}).get('frameRepairs', []) != repairs
+            assert not (args.verify_only and repair_changed), f'Generate declared frame repairs before verification: {slug}'
             start = clip['startFrame'] / fps
             duration = (clip['endFrame'] - clip['startFrame']) / fps
             assert 5 <= duration <= 15, f'Unexpected clip length: {slug}'
@@ -142,21 +175,23 @@ def prepare_clips(args, ffmpeg, cache):
             poster = ROOT / f'dist/assets/posters/clips/{slug}.jpg'
             video.parent.mkdir(parents=True, exist_ok=True)
             poster.parent.mkdir(parents=True, exist_ok=True)
-            if not args.verify_only and (args.force or not video.exists()):
+            if not args.verify_only and (args.force or not video.exists() or repair_changed):
                 temporary = cache / f'{slug}.mp4'
                 print(f'Encoding clip: {slug} ({duration:.2f} s)', flush=True)
                 run_logged([
                     ffmpeg, '-hide_banner', '-nostdin', '-y', '-i', str(source),
-                    '-map', '0:v:0', '-map', '0:a:0?', '-map_metadata', '-1',
+                    '-map', '0:a:0?', '-map_metadata', '-1',
                     # Decode and trim by frame index: fractional -ss can skip a boundary frame.
-                    '-vf', f"trim=start_frame={clip['startFrame']}:end_frame={clip['endFrame']},setpts=N/({fps}*TB),"
-                           "scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease:force_divisible_by=2,setsar=1",
+                    *video_filter_args(f"trim=start_frame={clip['startFrame']}:end_frame={clip['endFrame']},setpts=N/({fps}*TB),"
+                           "scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease:force_divisible_by=2,setsar=1", repairs),
                     '-af', f'atrim=start={start:.9f}:duration={duration:.9f},asetpts=PTS-STARTPTS',
                     '-r', str(fps), '-fps_mode', 'cfr',
                     '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '22', '-pix_fmt', 'yuv420p',
                     '-maxrate', '5000k', '-bufsize', '10000k', '-g', '30',
                     '-c:a', 'aac', '-b:a', '128k', '-ar', '48000', '-movflags', '+faststart', str(temporary),
                 ], cache / f'{slug}-encode.log')
+                if repairs and video.exists():
+                    preserve_published_audio(ffmpeg, temporary, video, cache)
                 temporary.replace(video)
             if not args.verify_only and (args.force or not poster.exists()):
                 run_logged([ffmpeg, '-hide_banner', '-nostdin', '-y', '-ss', str(min(2, duration / 3)),
@@ -175,11 +210,13 @@ def prepare_clips(args, ffmpeg, cache):
                 'id': slug, 'title': clip['title'], 'startSeconds': start, 'endSeconds': clip['endFrame'] / fps,
                 'duration': duration, 'output': str(video.relative_to(ROOT / 'dist')),
                 'poster': str(poster.relative_to(ROOT / 'dist')), 'width': prepared['width'], 'height': prepared['height'],
+                **({'revision': prepared['sha256'][:12]} if repairs else {}),
             }
             published_group['clips'].append(item)
             records.append({**item, 'source': group['source'], 'startFrame': clip['startFrame'],
                             'endFrame': clip['endFrame'], 'source_sha256': original['sha256'],
                             'source_frame_count': original_frames,
+                            **({'frameRepairs': repairs} if repairs else {}),
                             'output_metadata': prepared, 'poster_sha256': sha256(poster)})
         assert abs(previous_frame / fps - original['duration_seconds']) < .06, 'Source coverage incomplete'
         assert previous_frame == original_frames, 'Source frame coverage incomplete'
@@ -187,7 +224,7 @@ def prepare_clips(args, ffmpeg, cache):
         published['groups'].append(published_group)
     (ROOT / 'dist/data/video-clips.json').write_text(json.dumps(published, ensure_ascii=False, indent=2) + '\n')
     (ROOT / 'docs/video-clips.json').write_text(json.dumps({'editing': manifest['editing'], 'fps': fps, 'clips': records}, ensure_ascii=False, indent=2) + '\n')
-    print(f'Ready: {len(records)} clips, all original frames retained and decoded successfully.', flush=True)
+    print(f'Ready: {len(records)} clips, all frame positions retained and decoded successfully.', flush=True)
 
 
 def main():
@@ -208,25 +245,34 @@ def main():
         prepare_clips(args, ffmpeg, cache)
         return
     version = subprocess.check_output([ffmpeg, "-version"], text=True).splitlines()[0]
+    manifest = json.loads((ROOT / 'scripts/video-clips.json').read_text())
+    repairs_by_group = {g['id']: g.get('frameRepairs', []) for g in manifest['groups']}
+    record_path = docs / 'video-assets.json'
+    previous_records = {r['slug']: r for r in json.loads(record_path.read_text())['videos']} if record_path.exists() else {}
     records = []
     for slug, relative_source, title, maxrate, poster_second in ITEMS:
         source = args.source_root / relative_source
         destination = videos / f"{slug}.mp4"
         poster = posters / f"{slug}.jpg"
+        repairs = repairs_by_group.get(slug, [])
+        repair_changed = previous_records.get(slug, {}).get('frameRepairs', []) != repairs
+        assert not (args.verify_only and repair_changed), f'Generate declared frame repairs before verification: {slug}'
         if not source.is_file():
             raise SystemExit(f"Missing input: {source}")
-        if not args.verify_only and (args.force or not destination.exists()):
+        if not args.verify_only and (args.force or not destination.exists() or repair_changed):
             temporary = cache / f"{slug}.mp4"
             print(f"Encoding {slug} …", flush=True)
             run_logged([
                 ffmpeg, "-hide_banner", "-nostdin", "-y", "-i", str(source),
-                "-map", "0:v:0", "-map", "0:a:0?", "-map_metadata", "-1",
-                "-vf", "scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease:force_divisible_by=2,fps=30,setsar=1",
+                "-map", "0:a:0?", "-map_metadata", "-1",
+                *video_filter_args("scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease:force_divisible_by=2,fps=30,setsar=1", repairs),
                 "-c:v", "libx264", "-preset", "veryfast", "-crf", "21", "-pix_fmt", "yuv420p",
                 "-maxrate", f"{maxrate}k", "-bufsize", f"{maxrate * 2}k",
                 "-g", "60", "-c:a", "aac", "-b:a", "128k", "-ar", "48000",
                 "-movflags", "+faststart", str(temporary),
             ], cache / f"{slug}-encode.log")
+            if repairs and destination.exists():
+                preserve_published_audio(ffmpeg, temporary, destination, cache)
             temporary.replace(destination)
         if not args.verify_only and (args.force or not poster.exists()):
             run_logged([
@@ -254,6 +300,7 @@ def main():
             "output": f"assets/videos/{slug}.mp4", "output_metadata": prepared,
             "poster": f"assets/posters/{slug}.jpg", "poster_time_seconds": poster_second,
             "poster_bytes": poster.stat().st_size, "poster_sha256": sha256(poster),
+            **({'frameRepairs': repairs} if repairs else {}),
             "validation": "complete decode without errors",
         })
         (docs / "video-assets.json").write_text(json.dumps({"ffmpeg": version, "videos": records}, indent=2, ensure_ascii=False) + "\n")
@@ -265,9 +312,11 @@ def main():
     report = """# Website video assets
 
 All four supplied MP4 videos are included at full duration. Their GIF duplicates are intentionally omitted.
-Original source files are read only. Output keeps the original aspect ratio, logos, frame content and audio;
+Original source files are read only. Output keeps the original aspect ratio, logos, timing and audio;
 there is no cropping or upscaling. The web copies use H.264, yuv420p, 30 fps, AAC audio, and MP4 faststart.
 Each file is below 90 MiB. Posters are real frames extracted from the generated videos, with no image generation.
+Declared frame repairs in `scripts/video-clips.json` also apply to the full web copies: comparison
+frame 12 (0.400 s) is replaced with clean frame 13 to remove an isolated burned-in subtitle.
 
 """ + "\n".join(rows) + """
 

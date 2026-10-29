@@ -1,5 +1,5 @@
 {
-  "editing": "Continuous, frame-aligned action phases at original speed. All source frames retained; no crop, overlays, or rearrangement. Simultaneous operators/devices stay in the original composite.",
+  "editing": "Continuous, frame-aligned action phases at original speed. All frame positions retained; explicit frameRepairs replace isolated subtitle artifacts with adjacent clean frames. No crop, overlays, or rearrangement. Simultaneous operators/devices stay in the original composite.",
   "fps": 30,
   "clips": [
     {
@@ -15,11 +15,20 @@
       "poster": "assets/posters/clips/comparison-standing.jpg",
       "width": 1738,
       "height": 906,
+      "revision": "d9b82c1a2f71",
       "source": "双机对比 pico logo/双机对比.mp4",
       "startFrame": 0,
       "endFrame": 240,
       "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
       "source_frame_count": 2513,
+      "frameRepairs": [
+        {
+          "startFrame": 12,
+          "endFrame": 13,
+          "replacementFrame": 13,
+          "reason": "Remove the single-frame burned-in title at 0.400 s using the immediately following clean frame; keep timing and audio unchanged."
+        }
+      ],
       "output_metadata": {
         "duration_seconds": 8.0,
         "faststart": true,
@@ -29,8 +38,8 @@
         "video_codec": "h264",
         "pixel_format": "yuv420p",
         "audio_codec": "aac",
-        "bytes": 2074738,
-        "sha256": "32f50a12cb0b48c743555894b2580c7c70a16b495ae50e93badbb3c80aeca934",
+        "bytes": 2067340,
+        "sha256": "d9b82c1a2f714e53b05f366444ae47ef524eadbd273fafa5429d701860d97ad4",
         "frame_count": 240
       },
       "poster_sha256": "5038a8133cc3216a0001a32b6f78f8a670b86bcb4caff4d3e954fbc6e3d6e640"
