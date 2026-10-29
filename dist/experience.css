@@ -126,4 +126,7 @@ body{padding-left:264px}
 .benchmark-examples>h3{font-size:26px;letter-spacing:-.025em}
 .benchmark-examples>p{font-size:14px;margin-top:10px}
 #benchmark-videos .video-frame{background:#fff;border:1px solid var(--line)}
-#benchmark-videos video{object-fit:contain;background:#fff}
+#benchmark-videos video{aspect-ratio:4/3;object-fit:contain;background:#fff}
+#benchmark-videos .video-group{padding-top:26px}
+#benchmark-videos .video-group-heading{margin-bottom:16px}
+#benchmark-videos .clip-caption{padding-block:9px 4px}
