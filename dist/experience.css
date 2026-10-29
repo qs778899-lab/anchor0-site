@@ -130,3 +130,9 @@ body{padding-left:264px}
 #benchmark-videos .video-group{padding-top:26px}
 #benchmark-videos .video-group-heading{margin-bottom:16px}
 #benchmark-videos .clip-caption{padding-block:9px 4px}
+
+.benchmark-challenge{display:flex;align-items:center;justify-content:space-between;gap:28px;margin-top:32px;padding:26px 28px;border:1px solid var(--line);border-radius:12px;background:var(--accent)}
+.benchmark-challenge h3{font-size:21px;letter-spacing:-.025em}
+.benchmark-challenge p{max-width:740px;margin-top:10px;font-size:14px;line-height:1.7}
+.benchmark-challenge .button{flex-shrink:0;white-space:nowrap}
+@media(max-width:760px){.benchmark-challenge{align-items:flex-start;flex-direction:column;gap:18px;padding:22px 20px}.benchmark-challenge h3{font-size:20px}.benchmark-challenge p{font-size:13px}}
