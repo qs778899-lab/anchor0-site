@@ -7,18 +7,17 @@ No reference animation is substituted for actual policy output.
 
 - `coming-soon-rollout.json.gz`: complete compressed recorder output, including
   joint/root state, actions, physical wrist positions, pen state and word phase.
-- `robot-kinematics.xml`: kinematic subset of the user's `web.zip` presentation
-  robot. It preserves joints, body frames, inertial definitions and defaults;
-  meshes, contact, actuators and solver settings are omitted because export calls
-  only `mj_kinematics`. It is not a new dynamics model or policy evaluation.
-- `clip.json`: presentation manifest entry, activated separately by the page change.
-- `provenance.json`: source hashes, output hashes, validation and playback settings.
+- `robot-kinematics.xml`: kinematic subset of the exact pinned `/demo/` physics
+  model, retaining all 75 body frames and 36 qpos coordinates. Export evaluates
+  `mj_kinematics` only; it does not run a second simulation.
+- `clip.json`: 4× playback configuration; 1.2-second overview transition,
+  3-second hold and 0.5-second fade.
+- `provenance.json`: source, geometry and pose hashes plus validation results.
 
-The source MuJoCo model SHA-256 is recorded in provenance. Upstream asset/license
-notes remain in `dist/code/licenses/`. The 29 shared joints are mapped by name;
-extra finger/head joints retain the presentation model's default pose. The two
-models have a small wrist-attachment difference: maximum presentation wrist offset
-is 5.03 mm in this recording. Blue ink always uses the original physical wrist.
+The replay now uses the demo's own 1020 visual assets, indexed without changing
+vertices, and its exact physical skeleton. The maximum wrist mismatch must be
+below 1 micrometre. Blue ink is the original physical wrist trace. The earlier
+88-body presentation export remains recoverable in commit fa11884.
 
 ## Reproduce
 
@@ -30,7 +29,7 @@ is used; the recorder never opens a personal browser profile.
 ```sh
 # Existing site must be running. Never overwrite an earlier capture.
 REPLAY_RECORDING=.cache/new-coming-soon-rollout.json.gz node scripts/code-replay/record.mjs
-python3 scripts/code-replay/prepare-kinematics.py /path/to/web.zip
+python3 scripts/code-replay/prepare-kinematics.py
 node scripts/code-replay/export.mjs
 node --test tests/code-replay-data.test.mjs
 ```
@@ -45,3 +44,11 @@ served to website visitors. Exported poses and ink are served below `/code/asset
 0.6958 m. Minimum upright-axis dot product: 0.99419. No detected fall, missing
 frame or history reset during the phrase. Exported body rotations are normalized,
 all samples finite, and all actual ink coordinates exactly match the raw recording.
+
+## Matched-skeleton export
+
+The current export compresses the geometry and pose buffers losslessly with gzip.
+The viewing page loads only these static assets, never MuJoCo or ONNX. Source
+robot licenses are retained under `/code/licenses/demo/`. Existing recordings can
+be re-exported entirely offline. Re-recording is optional and must produce a new
+file rather than overwriting the pinned capture.

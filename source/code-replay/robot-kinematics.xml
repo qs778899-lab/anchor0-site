@@ -1,165 +1,157 @@
-<!-- Kinematic subset of supplied Archon G1; see provenance.json. -->
-<mujoco model="new_assemble">
-  <compiler angle="radian" inertiafromgeom="false" balanceinertia="false" fusestatic="false" />
+<!-- Kinematic subset of the pinned demo physics; see provenance.json. -->
+<mujoco model="g1">
+  <compiler angle="radian" inertiafromgeom="false" fusestatic="false" />
   <worldbody>
-    <body name="pelvis" pos="0 0 0.85">
-      <freejoint name="floating_base" />
-      <inertial pos="0 0 -0.07605" quat="1 0 -0.000399148 0" mass="3.813" diaginertia="0.010549 0.0093089 0.0079184" />
-      <body name="left_hip_pitch_link" pos="0 0.064452 -0.1027">
-        <inertial pos="0.002741 0.047791 -0.02606" quat="0.954862 0.293964 0.0302556 0.0301222" mass="1.35" diaginertia="0.00181517 0.00153422 0.00116212" />
-        <joint name="left_hip_pitch_joint" range="-2.5307 2.8798" actuatorfrcrange="-139 139" damping="0.15" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-        <body name="left_hip_roll_link" pos="0 0.052 -0.030465" quat="0.996179 0 -0.0873386 0">
-          <inertial pos="0.029812 -0.001045 -0.087934" quat="0.977808 -1.97102e-05 0.205576 -0.0403793" mass="1.52" diaginertia="0.00254986 0.00241169 0.00148755" />
-          <joint name="left_hip_roll_joint" range="-0.5236 2.9671" actuatorfrcrange="-139 139" damping="0.15" axis="1 0 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-          <body name="left_hip_yaw_link" pos="0.025001 0 -0.12412">
-            <inertial pos="-0.057709 -0.010981 -0.15078" quat="0.600598 0.15832 0.223482 0.751181" mass="1.702" diaginertia="0.00776166 0.00717575 0.00160139" />
-            <joint name="left_hip_yaw_joint" range="-2.7576 2.7576" actuatorfrcrange="-88 88" damping="0.15" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-            <body name="left_knee_link" pos="-0.078273 0.0021489 -0.17734" quat="0.996179 0 0.0873386 0">
-              <inertial pos="0.005457 0.003964 -0.12074" quat="0.923418 -0.0327699 0.0158246 0.382067" mass="1.932" diaginertia="0.0113804 0.0112778 0.00146458" />
-              <joint name="left_knee_joint" range="-0.087267 2.8798" actuatorfrcrange="-139 139" damping="0.15" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-              <body name="left_ankle_pitch_link" pos="0 -9.4445e-05 -0.30001">
-                <inertial pos="-0.007269 0 0.011137" quat="0.603053 0.369225 0.369225 0.603053" mass="0.074" diaginertia="1.89e-05 1.40805e-05 6.9195e-06" />
-                <joint name="left_ankle_pitch_joint" range="-0.87267 0.5236" actuatorfrcrange="-35 35" damping="0.15" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-                <body name="left_ankle_roll_link" pos="0 0 -0.017558">
-                  <inertial pos="0.026505 0 -0.016425" quat="-0.000481092 0.728482 -0.000618967 0.685065" mass="0.608" diaginertia="0.00167218 0.0016161 0.000217621" />
-                  <joint name="left_ankle_roll_joint" range="-0.2618 0.2618" actuatorfrcrange="-35 35" damping="0.15" axis="1 0 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
+    <body name="pelvis" pos="0 0 0" quat="1 0 0 0">
+      <inertial pos="0 0 -0.076050000000000006" quat="0.99999992034038054 0 -0.00039914813342649348 0" mass="3.8130000000000002" diaginertia="0.010549001676422559 0.0093088999999999967 0.0079183983235774375" />
+      <joint name="floating_base_joint" type="free" />
+      <body name="pelvis_contour_link" pos="0 0 0" quat="1 0 0 0">
+        <inertial pos="0 0 0" mass="0.001" diaginertia="9.9999999999999995e-08 9.9999999999999995e-08 9.9999999999999995e-08" quat="1 0 0 0" />
+      </body>
+      <body name="left_hip_pitch_link" pos="0 0.064451999999999995 -0.1027" quat="1 0 0 0">
+        <inertial pos="0.0027409999999999999 0.047791 -0.02606" quat="0.9548623707110766 0.29396447786790297 0.030255609148063307 0.030122032915346406" mass="1.3500000000000001" diaginertia="0.001815165120427254 0.0015342169280737805 0.0011621179514989645" />
+        <joint name="left_hip_pitch_joint" pos="0 0 0" axis="0 1 0" range="-2.5306999999999999 2.8797999999999999" actuatorfrclimited="true" actuatorfrcrange="-139 139" armature="0.025101924315094948" damping="0 0 0" frictionloss="0" />
+        <body name="left_hip_roll_link" pos="0 0.051999999999999998 -0.030464999999999999" quat="0.99617868497449569 0 -0.087338580263732465 0">
+          <inertial pos="0.029812000000000002 -0.0010449999999999999 -0.087933999999999998" quat="0.97780782313321002 -1.9711943542453067e-05 0.20557571472198835 -0.040379278689398557" mass="1.52" diaginertia="0.0025498595878875913 0.002411691789435043 0.0014875486226773682" />
+          <joint name="left_hip_roll_joint" pos="0 0 0" axis="1 0 0" range="-0.52359999999999995 2.9670999999999998" actuatorfrclimited="true" actuatorfrcrange="-139 139" armature="0.025101924315094948" damping="0 0 0" frictionloss="0" />
+          <body name="left_hip_yaw_link" pos="0.025000999999999999 0 -0.12411999999999999" quat="1 0 0 0">
+            <inertial pos="-0.057709000000000003 -0.010980999999999999 -0.15078" quat="0.60059751919859805 0.15831997443306917 0.22348155177746054 0.75118133739007498" mass="1.702" diaginertia="0.0077616582265165488 0.0071757481701984066 0.0016013936032850504" />
+            <joint name="left_hip_yaw_joint" pos="0 0 0" axis="0 0 1" range="-2.7576000000000001 2.7576000000000001" actuatorfrclimited="true" actuatorfrcrange="-88 88" armature="0.010177520103752613" damping="0 0 0" frictionloss="0" />
+            <body name="left_knee_link" pos="-0.078272999999999995 0.0021489 -0.17734" quat="0.99617868497449569 0 0.087338580263732465 0">
+              <inertial pos="0.005457 0.0039639999999999996 -0.12074" quat="0.9234179622640204 -0.032769857503649913 0.015824588296549522 0.3820667295284958" mass="1.9319999999999999" diaginertia="0.011380441191436368 0.011277774014862999 0.0014645847937006312" />
+              <joint name="left_knee_joint" pos="0 0 0" axis="0 1 0" range="-0.087266999999999997 2.8797999999999999" actuatorfrclimited="true" actuatorfrcrange="-139 139" armature="0.025101924315094948" damping="0 0 0" frictionloss="0" />
+              <body name="left_ankle_pitch_link" pos="0 -9.4444999999999994e-05 -0.30001" quat="1 0 0 0">
+                <inertial pos="-0.0072690000000000003 0 0.011136999999999999" quat="0.6030531292653768 0.36922475984586689 0.36922475984586689 0.6030531292653768" mass="0.073999999999999996" diaginertia="1.8899999999999992e-05 1.4080502757993629e-05 6.9194972420063675e-06" />
+                <joint name="left_ankle_pitch_joint" pos="0 0 0" axis="0 1 0" range="-0.87266999999999995 0.52359999999999995" actuatorfrclimited="true" actuatorfrcrange="-50 50" armature="0.0072194500826299191" damping="0 0 0" frictionloss="0" />
+                <body name="left_ankle_roll_link" pos="0 0 -0.017558000000000001" quat="1 0 0 0">
+                  <inertial pos="0.026505000000000001 0 -0.016424999999999999" quat="-0.00048109225024878244 0.72848153043118602 -0.00061896686487356023 0.68506499345018956" mass="0.60799999999999998" diaginertia="0.0016721786596314648 0.0016160998936305909 0.00021762144673794645" />
+                  <joint name="left_ankle_roll_joint" pos="0 0 0" axis="1 0 0" range="-0.26179999999999998 0.26179999999999998" actuatorfrclimited="true" actuatorfrcrange="-50 50" armature="0.0072194500826299191" damping="0 0 0" frictionloss="0" />
+                  <body name="LL_FOOT" pos="0.040000000000000001 0 -0.036999999999999998" quat="1 0 0 0">
+                    <inertial pos="0 0 0" mass="1.0000000000000001e-09" diaginertia="0 0 0" quat="1 0 0 0" />
+                  </body>
                 </body>
               </body>
             </body>
           </body>
         </body>
       </body>
-      <body name="right_hip_pitch_link" pos="0 -0.064452 -0.1027">
-        <inertial pos="0.002741 -0.047791 -0.02606" quat="0.954862 -0.293964 0.0302556 -0.0301222" mass="1.35" diaginertia="0.00181517 0.00153422 0.00116212" />
-        <joint name="right_hip_pitch_joint" range="-2.5307 2.8798" actuatorfrcrange="-139 139" damping="0.15" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-        <body name="right_hip_roll_link" pos="0 -0.052 -0.030465" quat="0.996179 0 -0.0873386 0">
-          <inertial pos="0.029812 0.001045 -0.087934" quat="0.977808 1.97102e-05 0.205576 0.0403793" mass="1.52" diaginertia="0.00254986 0.00241169 0.00148755" />
-          <joint name="right_hip_roll_joint" range="-2.9671 0.5236" actuatorfrcrange="-139 139" damping="0.15" axis="1 0 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-          <body name="right_hip_yaw_link" pos="0.025001 0 -0.12412">
-            <inertial pos="-0.057709 0.010981 -0.15078" quat="0.751181 0.223482 0.15832 0.600598" mass="1.702" diaginertia="0.00776166 0.00717575 0.00160139" />
-            <joint name="right_hip_yaw_joint" range="-2.7576 2.7576" actuatorfrcrange="-88 88" damping="0.15" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-            <body name="right_knee_link" pos="-0.078273 -0.0021489 -0.17734" quat="0.996179 0 0.0873386 0">
-              <inertial pos="0.005457 -0.003964 -0.12074" quat="0.923439 0.0345276 0.0116333 -0.382012" mass="1.932" diaginertia="0.011374 0.0112843 0.00146452" />
-              <joint name="right_knee_joint" range="-0.087267 2.8798" actuatorfrcrange="-139 139" damping="0.15" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-              <body name="right_ankle_pitch_link" pos="0 9.4445e-05 -0.30001">
-                <inertial pos="-0.007269 0 0.011137" quat="0.603053 0.369225 0.369225 0.603053" mass="0.074" diaginertia="1.89e-05 1.40805e-05 6.9195e-06" />
-                <joint name="right_ankle_pitch_joint" range="-0.87267 0.5236" actuatorfrcrange="-35 35" damping="0.15" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-                <body name="right_ankle_roll_link" pos="0 0 -0.017558">
-                  <inertial pos="0.026505 0 -0.016425" quat="0.000481092 0.728482 0.000618967 0.685065" mass="0.608" diaginertia="0.00167218 0.0016161 0.000217621" />
-                  <joint name="right_ankle_roll_joint" range="-0.2618 0.2618" actuatorfrcrange="-35 35" damping="0.15" axis="1 0 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
+      <body name="right_hip_pitch_link" pos="0 -0.064451999999999995 -0.1027" quat="1 0 0 0">
+        <inertial pos="0.0027409999999999999 -0.047791 -0.02606" quat="0.9548623707110766 -0.29396447786790297 0.030255609148063307 -0.030122032915346406" mass="1.3500000000000001" diaginertia="0.001815165120427254 0.0015342169280737805 0.0011621179514989645" />
+        <joint name="right_hip_pitch_joint" pos="0 0 0" axis="0 1 0" range="-2.5306999999999999 2.8797999999999999" actuatorfrclimited="true" actuatorfrcrange="-139 139" armature="0.025101924315094948" damping="0 0 0" frictionloss="0" />
+        <body name="right_hip_roll_link" pos="0 -0.051999999999999998 -0.030464999999999999" quat="0.99617868497449569 0 -0.087338580263732465 0">
+          <inertial pos="0.029812000000000002 0.0010449999999999999 -0.087933999999999998" quat="0.97780782313321002 1.9711943542453067e-05 0.20557571472198835 0.040379278689398557" mass="1.52" diaginertia="0.0025498595878875913 0.002411691789435043 0.0014875486226773682" />
+          <joint name="right_hip_roll_joint" pos="0 0 0" axis="1 0 0" range="-2.9670999999999998 0.52359999999999995" actuatorfrclimited="true" actuatorfrcrange="-139 139" armature="0.025101924315094948" damping="0 0 0" frictionloss="0" />
+          <body name="right_hip_yaw_link" pos="0.025000999999999999 0 -0.12411999999999999" quat="1 0 0 0">
+            <inertial pos="-0.057709000000000003 0.010980999999999999 -0.15078" quat="0.75118133739007498 0.22348155177746054 0.15831997443306917 0.60059751919859805" mass="1.702" diaginertia="0.0077616582265165488 0.0071757481701984066 0.0016013936032850504" />
+            <joint name="right_hip_yaw_joint" pos="0 0 0" axis="0 0 1" range="-2.7576000000000001 2.7576000000000001" actuatorfrclimited="true" actuatorfrcrange="-88 88" armature="0.010177520103752613" damping="0 0 0" frictionloss="0" />
+            <body name="right_knee_link" pos="-0.078272999999999995 -0.0021489 -0.17734" quat="0.99617868497449569 0 0.087338580263732465 0">
+              <inertial pos="0.005457 -0.0039639999999999996 -0.12074" quat="0.92343880776267173 0.034527572530750089 0.011633304249513273 -0.38201214808593092" mass="1.9319999999999999" diaginertia="0.011373950329010426 0.011284328449948842 0.0014645212210407238" />
+              <joint name="right_knee_joint" pos="0 0 0" axis="0 1 0" range="-0.087266999999999997 2.8797999999999999" actuatorfrclimited="true" actuatorfrcrange="-139 139" armature="0.025101924315094948" damping="0 0 0" frictionloss="0" />
+              <body name="right_ankle_pitch_link" pos="0 9.4444999999999994e-05 -0.30001" quat="1 0 0 0">
+                <inertial pos="-0.0072690000000000003 0 0.011136999999999999" quat="0.6030531292653768 0.36922475984586689 0.36922475984586689 0.6030531292653768" mass="0.073999999999999996" diaginertia="1.8899999999999992e-05 1.4080502757993629e-05 6.9194972420063675e-06" />
+                <joint name="right_ankle_pitch_joint" pos="0 0 0" axis="0 1 0" range="-0.87266999999999995 0.52359999999999995" actuatorfrclimited="true" actuatorfrcrange="-50 50" armature="0.0072194500826299191" damping="0 0 0" frictionloss="0" />
+                <body name="right_ankle_roll_link" pos="0 0 -0.017558000000000001" quat="1 0 0 0">
+                  <inertial pos="0.026505000000000001 0 -0.016424999999999999" quat="0.00048109225024878244 0.72848153043118602 0.00061896686487356023 0.68506499345018956" mass="0.60799999999999998" diaginertia="0.0016721786596314648 0.0016160998936305909 0.00021762144673794645" />
+                  <joint name="right_ankle_roll_joint" pos="0 0 0" axis="1 0 0" range="-0.26179999999999998 0.26179999999999998" actuatorfrclimited="true" actuatorfrcrange="-50 50" armature="0.0072194500826299191" damping="0 0 0" frictionloss="0" />
+                  <body name="LR_FOOT" pos="0.040000000000000001 0 -0.036999999999999998" quat="1 0 0 0">
+                    <inertial pos="0 0 0" mass="1.0000000000000001e-09" diaginertia="0 0 0" quat="1 0 0 0" />
+                  </body>
                 </body>
               </body>
             </body>
           </body>
         </body>
       </body>
-      <body name="waist_yaw_link">
-        <inertial pos="0.003494 0.000233 0.018034" quat="0.289697 0.591001 -0.337795 0.672821" mass="0.214" diaginertia="0.000163531 0.000107714 0.000102205" />
-        <joint name="waist_yaw_joint" range="-2.618 2.618" actuatorfrcrange="-88 88" damping="0.15" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-        <body name="waist_roll_link" pos="-0.0039635 0 0.044">
-          <inertial pos="0 2.3e-05 0" quat="0.5 0.5 -0.5 0.5" mass="0.086" diaginertia="8.245e-06 7.079e-06 6.339e-06" />
-          <joint name="waist_roll_joint" range="-0.52 0.52" actuatorfrcrange="-35 35" damping="0.15" axis="1 0 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-          <body name="torso_link">
-            <inertial pos="0.000931 0.000346 0.15082" quat="0.99965 -0.000442591 0.0264193 0.00143178" mass="6.78" diaginertia="0.0591438 0.0470139 0.0255583" />
-            <joint name="waist_pitch_joint" range="-0.52 0.52" actuatorfrcrange="-35 35" damping="0.15" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-            <body name="imu_in_torso" pos="-0.03959 -0.00224 0.14792" />
-            <body name="d435_link" pos="0.0576235 0.01753 0.42987" quat="0.91496 0 0.403545 0" />
-            <body name="mid360_link" pos="0.0002835 3e-05 0.41618" quat="0.999799 0 0.0200699 0" />
-            <body name="left_shoulder_pitch_link" pos="0.0039563 0.10022 0.24778" quat="0.990264 0.139201 1.38722e-05 -9.86868e-05">
-              <inertial pos="0 0.035892 -0.011628" quat="0.654152 0.0130458 -0.326267 0.68225" mass="0.718" diaginertia="0.000465864 0.000432842 0.000406394" />
-              <joint name="left_shoulder_pitch_joint" range="-3.0892 2.6704" actuatorfrcrange="-25 25" damping="0.05" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-              <body name="left_shoulder_roll_link" pos="0 0.038 -0.013831" quat="0.990268 -0.139172 0 0">
-                <inertial pos="-0.000227 0.00727 -0.063243" quat="0.701256 -0.0196219 -0.00710356 0.712604" mass="0.643" diaginertia="0.000691311 0.000618011 0.000388977" />
-                <joint name="left_shoulder_roll_joint" range="-1.5882 2.2515" actuatorfrcrange="-25 25" damping="0.05" axis="1 0 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-                <body name="left_shoulder_yaw_link" pos="0 0.00624 -0.1032">
-                  <inertial pos="0.010773 -0.002949 -0.072009" quat="0.716879 -0.0964829 -0.0679942 0.687134" mass="0.734" diaginertia="0.00106187 0.00103217 0.000400661" />
-                  <joint name="left_shoulder_yaw_joint" range="-2.618 2.618" actuatorfrcrange="-25 25" damping="0.05" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-                  <body name="left_elbow_link" pos="0.015783 0 -0.080518">
-                    <inertial pos="0.064956 0.004454 -0.010062" quat="0.541765 0.636132 0.388821 0.388129" mass="0.6" diaginertia="0.000443035 0.000421612 0.000259353" />
-                    <joint name="left_elbow_joint" range="-1.0472 2.0944" actuatorfrcrange="-25 25" damping="0.05" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-                    <body name="left_wrist_roll_link" pos="0.1 0.00188791 -0.01">
-                      <inertial pos="0.0171394 0.000537591 4.8864e-07" quat="0.575338 0.411667 -0.574906 0.411094" mass="0.085445" diaginertia="5.48211e-05 4.96646e-05 3.57798e-05" />
-                      <joint name="left_wrist_roll_joint" range="-1.97222 1.97222" actuatorfrcrange="-25 25" damping="0.02" axis="1 0 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.001" />
-                      <body name="left_wrist_pitch_link" pos="0.038 0 0">
-                        <inertial pos="0.0229999 -0.00111685 -0.00111658" quat="0.249997 0.661363 0.293035 0.643608" mass="0.48405" diaginertia="0.000430353 0.000429873 0.000164648" />
-                        <joint name="left_wrist_pitch_joint" range="-1.61443 1.61443" actuatorfrcrange="-5 5" damping="0.02" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.001" />
-                        <body name="left_wrist_yaw_link" pos="0.051 -0.0005 0">
-                          <inertial pos="0.0272565 -0.00140072 -0.000442292" quat="0.726245 0.0490667 0.0647043 0.682623" mass="0.123157" diaginertia="0.000103532 8.42309e-05 7.10725e-05" />
-                          <joint name="left_wrist_yaw_joint" range="-1.61443 1.61443" actuatorfrcrange="-5 5" damping="0.02" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.001" />
-                          <body name="left_base2_link" pos="0.0590001 -0.0008504 -0.00150053" quat="0.499956 -0.499956 0.500043 -0.500043">
-                            <inertial pos="-0.002834 0 1.45e-06" mass="0.0228063" diaginertia="7.68e-06 5.8e-06 4.27e-06" />
+      <body name="waist_yaw_link" pos="0 0 0" quat="1 0 0 0">
+        <inertial pos="0.0034940000000000001 0.000233 0.018034000000000001" quat="0.28969709346435724 0.59100117023850252 -0.33779539335903075 0.6728205429685129" mass="0.214" diaginertia="0.00016353058117292698 0.00010771440203670127 0.0001022050167903716" />
+        <joint name="waist_yaw_joint" pos="0 0 0" axis="0 0 1" range="-2.6179999999999999 2.6179999999999999" actuatorfrclimited="true" actuatorfrcrange="-88 88" armature="0.010177520103752613" damping="0 0 0" frictionloss="0" />
+        <body name="waist_roll_link" pos="-0.0039635 0 0.043999999999999997" quat="1 0 0 0">
+          <inertial pos="0 2.3e-05 0" quat="0.50000000000000067 0.50000000000000067 -0.50000000000000067 0.50000000000000067" mass="0.085999999999999993" diaginertia="8.2449999999999998e-06 7.0790000000000003e-06 6.3389999999999998e-06" />
+          <joint name="waist_roll_joint" pos="0 0 0" axis="1 0 0" range="-0.52000000000000002 0.52000000000000002" actuatorfrclimited="true" actuatorfrcrange="-50 50" armature="0.0072194500826299191" damping="0 0 0" frictionloss="0" />
+          <body name="torso_link" pos="0 0 0" quat="1 0 0 0">
+            <inertial pos="0.00093099999999999997 0.00034600000000000001 0.15082000000000001" quat="0.99964982571012007 -0.00044259080383838689 0.026419312830409544 0.0014317753580441982" mass="6.7800000000000002" diaginertia="0.059143798967193004 0.047013922017807998 0.025558279014999005" />
+            <joint name="waist_pitch_joint" pos="0 0 0" axis="0 1 0" range="-0.52000000000000002 0.52000000000000002" actuatorfrclimited="true" actuatorfrcrange="-50 50" armature="0.0072194500826299191" damping="0 0 0" frictionloss="0" />
+            <body name="logo_link" pos="0.0039635 0 -0.043999999999999997" quat="1 0 0 0">
+              <inertial pos="0 0 0" mass="0.001" diaginertia="9.9999999999999995e-08 9.9999999999999995e-08 9.9999999999999995e-08" quat="1 0 0 0" />
+            </body>
+            <body name="head_link" pos="0.0039635 0 -0.043999999999999997" quat="1 0 0 0">
+              <inertial pos="0.005267 0.000299 0.44986900000000002" quat="0.69821395610751502 0.010345187175570644 0.011208259296442473 0.71572664022134924" mass="1.036" diaginertia="0.0041852781775451094 0.0040871073750415876 0.0018057884474133063" />
+            </body>
+            <body name="imu_in_torso" pos="-0.03959 -0.0022399999999999998 0.14792" quat="1 0 0 0" />
+            <body name="mid360_link" pos="0.00028350000000000001 3.0000000000000001e-05 0.41617999999999999" quat="9.4019921405917205e-07 -0.99979403555699242 4.6317253257156373e-05 0.020294933320695006" />
+            <body name="left_shoulder_pitch_link" pos="0.0039563000000000003 0.10022 0.24778" quat="0.99026407437221953 0.13920148374281427 1.3872204401988457e-05 -9.8686838424204368e-05">
+              <inertial pos="0 0.035892 -0.011627999999999999" quat="0.65415210485371433 0.013045834275438317 -0.32626674646624737 0.68224983699070474" mass="0.71799999999999997" diaginertia="0.00046586367495465825 0.00043284241524135417 0.00040639390980398661" />
+              <joint name="left_shoulder_pitch_joint" pos="0 0 0" axis="0 1 0" range="-3.0891999999999999 2.6703999999999999" actuatorfrclimited="true" actuatorfrcrange="-25 25" armature="0.0036097250413149595" damping="0 0 0" frictionloss="0" />
+              <body name="left_shoulder_roll_link" pos="0 0.037999999999999999 -0.013831" quat="0.99026825525484086 -0.13917177384273469 0 0">
+                <inertial pos="-0.00022699999999999999 0.0072700000000000004 -0.063242999999999994" quat="0.70125646577030565 -0.01962234219982769 -0.007103165371358887 0.7126035910263443" mass="0.64300000000000002" diaginertia="0.00069131115364121835 0.00061801138809184036 0.00038897745826694077" />
+                <joint name="left_shoulder_roll_joint" pos="0 0 0" axis="1 0 0" range="-1.5882000000000001 2.2515000000000001" actuatorfrclimited="true" actuatorfrcrange="-25 25" armature="0.0036097250413149595" damping="0 0 0" frictionloss="0" />
+                <body name="left_shoulder_yaw_link" pos="0 0.0062399999999999999 -0.1032" quat="1 0 0 0">
+                  <inertial pos="0.010773 -0.0029489999999999998 -0.072009000000000004" quat="0.71687857668891708 -0.096482907694997538 -0.067994212161634371 0.68713386026283929" mass="0.73399999999999999" diaginertia="0.0010618733024710244 0.0010321659314327732 0.00040066076609620221" />
+                  <joint name="left_shoulder_yaw_joint" pos="0 0 0" axis="0 0 1" range="-2.6179999999999999 2.6179999999999999" actuatorfrclimited="true" actuatorfrcrange="-25 25" armature="0.0036097250413149595" damping="0 0 0" frictionloss="0" />
+                  <body name="left_elbow_link" pos="0.015782999999999998 0 -0.080518000000000006" quat="1 0 0 0">
+                    <inertial pos="0.064956 0.0044539999999999996 -0.010062" quat="0.54176511644867997 0.636132437674919 0.38882075725942489 0.38812948749267051" mass="0.59999999999999998" diaginertia="0.00044303497406210634 0.00042161157213546906 0.00025935345380242363" />
+                    <joint name="left_elbow_joint" pos="0 0 0" axis="0 1 0" range="-1.0471999999999999 2.0943999999999998" actuatorfrclimited="true" actuatorfrcrange="-25 25" armature="0.0036097250413149595" damping="0 0 0" frictionloss="0" />
+                    <body name="left_wrist_roll_link" pos="0.10000000000000001 0.00188791 -0.01" quat="1 0 0 0">
+                      <inertial pos="0.017139447780000001 0.00053759094000000005 4.8864000000000001e-07" quat="0.5753381793560679 0.41166746998586812 -0.57490631906248113 0.41109439041746909" mass="0.085444980000000004" diaginertia="5.4821070729239837e-05 4.9664578582795455e-05 3.5779847257964644e-05" />
+                      <joint name="left_wrist_roll_joint" pos="0 0 0" axis="1 0 0" range="-1.9722220539999999 1.9722220539999999" actuatorfrclimited="true" actuatorfrcrange="-25 25" armature="0.0036097250413149595" damping="0 0 0" frictionloss="0" />
+                      <body name="left_wrist_pitch_link" pos="0.037999999999999999 0 0" quat="1 0 0 0">
+                        <inertial pos="0.022999898370000001 -0.00111685314 -0.0011165809599999999" quat="0.24999755471050672 0.66136267847311059 0.29303558433883203 0.64360762617672729" mass="0.48404955999999999" diaginertia="0.00043035295759758153 0.00042987310541120412 0.00016464795036121404" />
+                        <joint name="left_wrist_pitch_joint" pos="0 0 0" axis="0 1 0" range="-1.6144295580000001 1.6144295580000001" actuatorfrclimited="true" actuatorfrcrange="-5 5" armature="0.0042500002309679985" damping="0 0 0" frictionloss="0" />
+                        <body name="left_wrist_yaw_link" pos="0.045999999999999999 0 0" quat="1 0 0 0">
+                          <inertial pos="0.02200381568 0.00049485095999999998 0.00053861122999999999" quat="0.68276135250150338 -0.12133658081581854 -0.13511889097702243 0.70771269240235124" mass="0.084576470000000001" diaginertia="5.9756400841460761e-05 5.0980672176780819e-05 3.7568434861758368e-05" />
+                          <joint name="left_wrist_yaw_joint" pos="0 0 0" axis="0 0 1" range="-1.6144295580000001 1.6144295580000001" actuatorfrclimited="true" actuatorfrcrange="-5 5" armature="0.0042500002309679985" damping="0 0 0" frictionloss="0" />
+                          <body name="left_base2_link" pos="0.041500000000000002 0 0" quat="1 0 0 0">
+                            <inertial pos="-0.0028340000000000001 0 1.4500000000000001e-06" mass="0.02280635" diaginertia="7.6799999999999993e-06 5.8000000000000004e-06 4.2699999999999998e-06" quat="1 0 0 0" />
                           </body>
-                          <body name="left_base_link" pos="0.0590001 -0.0008504 -0.00150053" quat="0.499956 -0.499956 0.500043 -0.500043">
-                            <inertial pos="-0.00526251 0.00339256 0.0521379" quat="0.996626 0.0819697 -0.00350077 -0.00212104" mass="0.238" diaginertia="2.1091e-05 1.46413e-05 7.81497e-06" />
-                            <body name="left_thumb_metacarpal_link" pos="0.0045 -0.019 0.027825" quat="0.993943 0 0 0.109893">
-                              <inertial pos="1.52304e-05 -0.0070724 -0.0042084" quat="0.882816 0.058674 -0.0302436 0.465058" mass="0.01" diaginertia="1.66114e-07 1.56005e-07 4.93864e-08" />
-                              <joint name="left_thumb_metacarpal_joint" range="0 1.55334" actuatorfrcrange="-0.5 0.5" damping="0.0005" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="1e-05" />
-                              <body name="left_thumb_proximal_link" pos="0 -0.014227 0" quat="0.977545 -0.153479 0.130104 -0.0626373">
-                                <inertial pos="-3.69149e-07 -0.0277016 -0.00202668" quat="0.503512 0.49651 -0.496419 0.50351" mass="0.05" diaginertia="2.56296e-06 2.40451e-06 5.11892e-07" />
-                                <joint name="left_thumb_proximal_joint" range="0 1.0472" actuatorfrcrange="-1.1 1.1" damping="0.0005" axis="-1 0 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="1e-05" />
-                                <body name="left_thumb_distal_link" pos="0 -0.052 0" quat="0.99863 0.0523361 0 0">
-                                  <inertial pos="1.65619e-07 -0.0117551 1.13666e-05" quat="0.469583 0.528674 -0.528501 0.469769" mass="0.01" diaginertia="2.21049e-07 1.67809e-07 1.13875e-07" />
-                                  <joint name="left_thumb_distal_joint" range="0 1.15192" actuatorfrcrange="-1.1 1.1" damping="0.0005" axis="-1 0 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.0" />
-                                  <body name="left_thumb_tip_link" pos="0 -0.026529 -0.0017734" quat="0.999443 0.0333688 0 0" />
-                                  <body name="left_thumb_touch_link" pos="0 -0.013836 0.0076686" quat="0.99618 0.0873286 0 0">
-                                    <inertial pos="1.35699e-07 0.000717207 -0.00790252" quat="0.513957 0.485646 -0.485458 0.514127" mass="0.002" diaginertia="2.21049e-07 1.67809e-07 1.13875e-07" />
+                          <body name="left_base_link" pos="0.0591 0 0" quat="0.5000000003974483 -0.5 0.4999999996025517 -0.5">
+                            <inertial pos="-0.0047867062324034402 0.00141981128680179 0.050523907717653499" quat="0.99597030329940717 0.087597595598858768 -0.0065934977141926532 -0.018064937832123189" mass="0.23799999999999999" diaginertia="2.2278123903287979e-05 1.5752184087343792e-05 8.3596173830333287e-06" />
+                            <body name="left_thumb_metacarpal_Link" pos="0.0044999999999999997 -0.019 0.027824999999999999" quat="0.99647952545239715 0 0 0.083836479853136567">
+                              <inertial pos="1.5230369628700701e-05 -0.0070724028348226799 -0.0042083983290362899" quat="0.88281438406736856 0.058673884124519911 -0.030243845823493549 0.46506069323831384" mass="0.01" diaginertia="1.6611388234031605e-07 1.5600498788543136e-07 4.9386389228900898e-08" />
+                              <body name="left_thumb_proximal_Link" pos="0 -0.014227 0" quat="0.072636445042168804 0.12480470321781956 0.076519191604377992 0.98655590121521264">
+                                <inertial pos="3.4100151314123102e-07 0.025009068817499199 -0.0017505675193663999" quat="0.50439679952781491 0.49553492486016848 -0.49553443972291766 0.5044547808460349" mass="0.050000000000000003" diaginertia="3.4001826112046446e-06 3.2331866679445885e-06 5.6359167873258056e-07" />
+                                <body name="left_thumb_distal_Link" pos="0 0.051999999999999998 0" quat="1 0 0 0">
+                                  <inertial pos="-1.65618684180163e-07 0.0117550891981017 1.1366609064184999e-05" quat="0.52850321453098026 0.46977053146235354 -0.46958070120699852 0.52867188789829278" mass="0.01" diaginertia="2.2104883144005673e-07 1.678092924864058e-07 1.1387455372628348e-07" />
+                                  <body name="left_thumb_tip_Link" pos="0 0.026528781163582999 -0.00177344281307927" quat="1.6146448758231693e-15 5.3909154663654752e-17 0.033369029562424039 0.99944309886359317">
+                                    <inertial pos="-4.8572257327350599e-17 -4.1633363423443401e-17 -3.46944695195361e-18" mass="0.001" diaginertia="1.63624617374468e-07 1.63624617374468e-07 1.63624617374468e-07" quat="1 0 0 0" />
                                   </body>
                                 </body>
                               </body>
                             </body>
-                            <body name="left_index_proximal_link" pos="-0.0021349 -0.029578 0.080876" quat="0.992147 0.0522807 0.0783652 0.0822789">
-                              <inertial pos="-0.00223539 -3.80545e-06 0.0176439" quat="0.999799 -0.000616966 0.020006 -0.000754874" mass="0.009" diaginertia="2.52119e-07 2.36343e-07 9.27846e-08" />
-                              <joint name="left_index_proximal_joint" range="0 1.41" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="1e-05" />
-                              <body name="left_index_distal_link" pos="0 0 0.032">
-                                <inertial pos="0.00330166 6.31887e-08 0.0142076" quat="0.988289 -6.21671e-06 0.152591 -6.33287e-05" mass="0.009" diaginertia="3.67638e-07 3.62235e-07 6.33539e-08" />
-                                <joint name="left_index_distal_joint" range="0 1.69297" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.0" />
-                                <body name="left_index_tip_link" pos="0.011097 0 0.035739" quat="0.970472 0 0.241212 0" />
-                                <body name="left_index_touch_link" pos="0.014497 0 0.023303" quat="0.971859 0 0.235565 0">
-                                  <inertial pos="-0.00299918 7.01975e-09 0.0025237" quat="0.984655 0.000111841 -0.17451 9.32134e-05" mass="0.002" diaginertia="7.33176e-09 5.41485e-09 2.63711e-09" />
+                            <body name="left_index_proximal_Link" pos="-0.0021348999999999999 -0.029578 0.080876000000000003" quat="0.99214706336219638 0.052280683348506593 0.078365246255648127 0.082278934057718786">
+                              <inertial pos="-0.0022353874260120001 -3.8054461517934198e-06 0.0176439423080373" quat="0.99979938593794349 -0.0006169663562350581 0.020005934015521684 -0.00075487402465768138" mass="0.0089999999999999993" diaginertia="2.5211855929683785e-07 2.3634338163710644e-07 9.2784551218448228e-08" />
+                              <body name="left_index_distal_Link" pos="0 0 0.032000000000000001" quat="1 0 0 0">
+                                <inertial pos="0.0041832588637958296 -8.4560797281030302e-08 0.0153641608762859" quat="0.98615553910450959 0 0.16582295587009077 0" mass="0.0089999999999999993" diaginertia="4.0068314238393682e-07 3.9696153085565402e-07 6.9574852279432244e-08" />
+                                <body name="left_index_tip_Link" pos="0.011096999999999999 0 0.035739" quat="0.73602618800674002 0 0.67695306378527231 0">
+                                  <inertial pos="6.6983224522587597e-13 9.7349558969561704e-12 2.2355728379608301e-13" mass="0.001" diaginertia="1.63624617374468e-07 1.63624617374468e-07 1.63624617374468e-07" quat="1 0 0 0" />
                                 </body>
                               </body>
                             </body>
-                            <body name="left_middle_proximal_link" pos="-0.0045935 -0.010061 0.084993" quat="0.996681 0.0175235 0.0746069 0.0274369">
-                              <inertial pos="-0.00222419 -3.61991e-06 0.020305" quat="0.999816 -0.000555887 0.019164 -0.000888931" mass="0.009" diaginertia="3.6726e-07 3.52522e-07 1.11867e-07" />
-                              <joint name="left_middle_proximal_joint" range="0 1.3362" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="1e-05" />
-                              <body name="left_middle_distal_link" pos="0 0 0.037" quat="0.997999 0 0.0632278 0">
-                                <inertial pos="0.00189418 -2.26466e-08 0.0168711" quat="0.995973 2.23694e-05 0.0896546 0.000233088" mass="0.009" diaginertia="5.55693e-07 5.49812e-07 8.0402e-08" />
-                                <joint name="left_middle_distal_joint" range="0 1.69297" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.0" />
-                                <body name="left_middle_tip_link" pos="0.0073534 0 0.041703" quat="0.984807 0 0.17365 0" />
-                                <body name="left_middle_touch_link" pos="0.012493 0 0.028393" quat="0.984807 0 0.17365 0">
-                                  <inertial pos="-0.00319289 -2.94335e-08 0.0029786" quat="0.985763 2.14114e-05 -0.168142 6.42724e-06" mass="0.002" diaginertia="1.08425e-08 8.23231e-09 3.61893e-09" />
+                            <body name="left_middle_proximal_Link" pos="-0.0045935000000000004 -0.010061 0.084992999999999999" quat="0.99668147107578398 0.017523494301651749 0.074606879475830168 0.027436944008948989">
+                              <inertial pos="-0.0022241944530993099 -3.6199082081361499e-06 0.020304952604543399" quat="0.99981580479359589 -0.00055588656697664425 0.019163957735054624 -0.00088893137417801293" mass="0.0089999999999999993" diaginertia="3.672604299758271e-07 3.5252161887552282e-07 1.118669432066322e-07" />
+                              <body name="left_middle_distal_Link" pos="0 0 0.036999999999999998" quat="0.99799912115894307 0 0.063227795833615152 0">
+                                <inertial pos="0.0026975013930186499 3.2721010373697899e-07 0.018307646115678599" quat="0.99465492820567303 9.8134945037085035e-06 0.10325466714259147 0.00021774557470476523" mass="0.0089999999999999993" diaginertia="6.1032547508566477e-07 6.0711892699959292e-07 8.9281878912014217e-08" />
+                                <body name="left_middle_tip_Link" pos="0.0073534000000000004 0 0.041702999999999997" quat="0.78099744397007487 0 0.62453422044929596 0">
+                                  <inertial pos="3.1225022567582498e-16 -1.90819582357449e-17 5.5511151231257802e-17" mass="0.001" diaginertia="1.63624617374468e-07 1.63624617374468e-07 1.63624617374468e-07" quat="1 0 0 0" />
                                 </body>
                               </body>
                             </body>
-                            <body name="left_ring_proximal_link" pos="-0.0046877 0.010026 0.083982" quat="0.996722 -0.0175386 0.0740633 -0.0274276">
-                              <inertial pos="-0.00234461 -5.32058e-06 0.0191786" quat="0.999832 -0.00064229 0.0183098 -0.000744974" mass="0.009" diaginertia="3.14467e-07 2.97624e-07 1.01836e-07" />
-                              <joint name="left_ring_proximal_joint" range="0 1.35221" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="1e-05" />
-                              <body name="left_ring_distal_link" pos="0 0 0.035" quat="0.997999 0 0.0632278 0">
-                                <inertial pos="0.00177054 6.44491e-08 0.016389" quat="0.995807 -4.6502e-06 0.0914748 -9.97314e-06" mass="0.009" diaginertia="5.12424e-07 5.06076e-07 7.51358e-08" />
-                                <joint name="left_ring_distal_joint" range="0 1.69297" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.0" />
-                                <body name="left_ring_tip_link" pos="0.0071824 0 0.040734" quat="0.984807 0 0.17365 0" />
-                                <body name="left_ring_touch_link" pos="0.012028 0 0.027796" quat="0.984807 0 0.17365 0">
-                                  <inertial pos="-0.00302346 -4.05745e-08 0.00304076" quat="0.985816 1.04475e-05 -0.167827 -3.36247e-06" mass="0.002" diaginertia="8.84423e-09 6.63651e-09 2.97683e-09" />
+                            <body name="left_ring_proximal_Link" pos="-0.0046876781585858699 0.0100262714211602 0.083981954879593895" quat="0.99672203886609434 -0.017538584170962112 0.074062849822164406 -0.027427533248788553">
+                              <inertial pos="-0.0023446136011886498 -5.3205809649042902e-06 0.019178593152092301" quat="0.99983187931604756 -0.0006422903823695786 0.01830971273938619 -0.0007449736951097765" mass="0.0089999999999999993" diaginertia="3.1446730382066094e-07 2.9762365889511178e-07 1.0183558240882027e-07" />
+                              <body name="left_ring_distal_Link" pos="0 0 0.035000000000000003" quat="0.99799912115894307 0 0.063227795833615152 0">
+                                <inertial pos="0.0024983954087730601 -2.7899637627948301e-08 0.017705553860316199" quat="0.99453874567749967 -3.1368322723091477e-05 0.10436773344019011 -0.0002420305998286425" mass="0.0089999999999999993" diaginertia="5.6099151035565401e-07 5.5681835882895992e-07 8.2474556872987724e-08" />
+                                <body name="left_ring_tip_Link" pos="0.0071824000000000002 0 0.040733999999999999" quat="0.78099744397007487 0 0.62453422044929596 0">
+                                  <inertial pos="3.05311331771918e-16 3.4694469519536099e-17 2.7755575615628901e-17" mass="0.001" diaginertia="1.63624617374468e-07 1.63624617374468e-07 1.63624617374468e-07" quat="1 0 0 0" />
                                 </body>
                               </body>
                             </body>
-                            <body name="left_pinky_proximal_link" pos="-0.0023733 0.029356 0.078694" quat="0.992245 -0.052387 0.0771065 -0.0822136">
-                              <inertial pos="-0.00213267 -7.0226e-06 0.016068" quat="0.999803 -0.000517111 0.0198307 -0.000287779" mass="0.009" diaginertia="1.97736e-07 1.82023e-07 8.19937e-08" />
-                              <joint name="left_pinky_proximal_joint" range="0 1.332" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="1e-05" />
-                              <body name="left_pinky_distal_link" pos="0 0 0.029">
-                                <inertial pos="0.00307951 -1.22881e-07 0.0130239" quat="0.988303 -9.05477e-06 0.1525 -8.87762e-05" mass="0.009" diaginertia="2.91214e-07 2.85233e-07 5.7872e-08" />
-                                <joint name="left_pinky_distal_joint" range="0 1.69297" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.0" />
-                                <body name="left_pinky_tip_link" pos="0.010221 0 0.032918" quat="0.971859 0 0.235565 0" />
-                                <body name="left_pinky_touch_link" pos="0.01401 0 0.021124" quat="0.971859 0 0.235565 0">
-                                  <inertial pos="-0.00289142 -2.11562e-07 0.00165388" quat="0.986187 -2.37368e-05 -0.165636 1.42419e-05" mass="0.002" diaginertia="7.41257e-09 5.34361e-09 2.7895e-09" />
+                            <body name="left_pinky_proximal_Link" pos="-0.0023733000000000001 0.029356 0.078694" quat="0.99224549362228687 -0.052386954901063626 0.077106528300900076 -0.082213567224883627">
+                              <inertial pos="-0.0021326660857404699 -7.02260316783054e-06 0.016068035059326399" quat="0.99980317762801885 -0.0005171109702776707 0.019830677855542492 -0.00028777934342666145" mass="0.0089999999999999993" diaginertia="1.9773608029712504e-07 1.8202258247604642e-07 8.1993714897155097e-08" />
+                              <body name="left_pinky_distal_Link" pos="0 0 0.029000000000000001" quat="1 0 0 0">
+                                <inertial pos="0.0039856213046875998 -8.0855193013151805e-08 0.014106664402408001" quat="0.98605957786740495 -2.6174750088738752e-05 0.16639256038175543 -0.00015511428494201205" mass="0.0089999999999999993" diaginertia="3.1528080576080723e-07 3.1083311370793542e-07 6.4257045330294313e-08" />
+                                <body name="left_pinky_tip_Link" pos="0.010220999999999999 0 0.032918000000000003" quat="0.73995020384534249 0 0.67266165033338721 0">
+                                  <inertial pos="2.6367796834847502e-16 -4.0939474033052598e-16 5.5511151231257802e-17" mass="0.001" diaginertia="1.63624617374468e-07 1.63624617374468e-07 1.63624617374468e-07" quat="1 0 0 0" />
                                 </body>
                               </body>
-                            </body>
-                          </body>
-                          <body name="left_wrist_camera_link" pos="0.0477851 -0.0264111 -0.0198367" quat="0.584413 -0.338991 -0.310224 -0.668811">
-                            <inertial pos="0 0.00226929 0" quat="0.5 0.5 0.5 0.5" mass="0.000574949" diaginertia="1.10928e-08 7.54425e-09 6.61125e-09" />
-                            <body name="left_wrist_camera_PCB_link" pos="-0.00258333 -0.0123117 0.00400569" quat="0.991282 0.130459 -0.0179425 -0.00419816">
-                              <inertial pos="3.78181e-05 0.000587064 0.00149854" quat="0.704335 0.0519238 -0.0141813 0.707824" mass="0.000713476" diaginertia="3.87902e-08 2.25457e-08 1.78373e-08" />
                             </body>
                           </body>
                         </body>
@@ -169,101 +161,79 @@
                 </body>
               </body>
             </body>
-            <body name="right_shoulder_pitch_link" pos="0.0039563 -0.10021 0.24778" quat="0.990264 -0.139201 1.38722e-05 9.86868e-05">
-              <inertial pos="0 -0.035892 -0.011628" quat="0.68225 -0.326267 0.0130458 0.654152" mass="0.718" diaginertia="0.000465864 0.000432842 0.000406394" />
-              <joint name="right_shoulder_pitch_joint" range="-3.0892 2.6704" actuatorfrcrange="-25 25" damping="0.05" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-              <body name="right_shoulder_roll_link" pos="0 -0.038 -0.013831" quat="0.990268 0.139172 0 0">
-                <inertial pos="-0.000227 -0.00727 -0.063243" quat="0.712604 -0.00710356 -0.0196219 0.701256" mass="0.643" diaginertia="0.000691311 0.000618011 0.000388977" />
-                <joint name="right_shoulder_roll_joint" range="-2.2515 1.5882" actuatorfrcrange="-25 25" damping="0.05" axis="1 0 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-                <body name="right_shoulder_yaw_link" pos="0 -0.00624 -0.1032">
-                  <inertial pos="0.010773 0.002949 -0.072009" quat="0.687134 -0.0679942 -0.0964829 0.716879" mass="0.734" diaginertia="0.00106187 0.00103217 0.000400661" />
-                  <joint name="right_shoulder_yaw_joint" range="-2.618 2.618" actuatorfrcrange="-25 25" damping="0.05" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-                  <body name="right_elbow_link" pos="0.015783 0 -0.080518">
-                    <inertial pos="0.064956 -0.004454 -0.010062" quat="0.388129 0.388821 0.636132 0.541765" mass="0.6" diaginertia="0.000443035 0.000421612 0.000259353" />
-                    <joint name="right_elbow_joint" range="-1.0472 2.0944" actuatorfrcrange="-25 25" damping="0.05" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.01" />
-                    <body name="right_wrist_roll_link" pos="0.1 -0.00188791 -0.01">
-                      <inertial pos="0.0171394 -0.000537591 4.8864e-07" quat="0.411667 0.575338 -0.411094 0.574906" mass="0.085445" diaginertia="5.48211e-05 4.96646e-05 3.57798e-05" />
-                      <joint name="right_wrist_roll_joint" range="-1.97222 1.97222" actuatorfrcrange="-25 25" damping="0.02" axis="1 0 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.001" />
-                      <body name="right_wrist_pitch_link" pos="0.038 0 0">
-                        <inertial pos="0.0229999 0.00111685 -0.00111658" quat="0.643608 0.293035 0.661363 0.249997" mass="0.48405" diaginertia="0.000430353 0.000429873 0.000164648" />
-                        <joint name="right_wrist_pitch_joint" range="-1.61443 1.61443" actuatorfrcrange="-5 5" damping="0.02" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.001" />
-                        <body name="right_wrist_yaw_link" pos="0.051 0.0005 0">
-                          <inertial pos="0.0272783 0.00142801 0.00195966" quat="0.671238 -0.0829623 -0.0988773 0.729918" mass="0.123287" diaginertia="0.000103391 8.48867e-05 7.06361e-05" />
-                          <joint name="right_wrist_yaw_joint" range="-1.61443 1.61443" actuatorfrcrange="-5 5" damping="0.02" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.001" />
-                          <body name="right_base2_link" pos="0.059 0.000851551 0.00349947" quat="0.5 0.5 0.5 0.5">
-                            <inertial pos="-0.002834 0 1.45e-06" mass="0.0228063" diaginertia="7.68e-06 5.8e-06 4.27e-06" />
+            <body name="right_shoulder_pitch_link" pos="0.0039563000000000003 -0.10020999999999999 0.24778" quat="0.99026407437221953 -0.13920148374281427 1.3872204401988457e-05 9.8686838424204368e-05">
+              <inertial pos="0 -0.035892 -0.011627999999999999" quat="0.68224983699070474 -0.32626674646624737 0.013045834275438317 0.65415210485371433" mass="0.71799999999999997" diaginertia="0.00046586367495465825 0.00043284241524135417 0.00040639390980398661" />
+              <joint name="right_shoulder_pitch_joint" pos="0 0 0" axis="0 1 0" range="-3.0891999999999999 2.6703999999999999" actuatorfrclimited="true" actuatorfrcrange="-25 25" armature="0.0036097250413149595" damping="0 0 0" frictionloss="0" />
+              <body name="right_shoulder_roll_link" pos="0 -0.037999999999999999 -0.013831" quat="0.99026825525484086 0.13917177384273469 0 0">
+                <inertial pos="-0.00022699999999999999 -0.0072700000000000004 -0.063242999999999994" quat="0.7126035910263443 -0.007103165371358887 -0.01962234219982769 0.70125646577030565" mass="0.64300000000000002" diaginertia="0.00069131115364121835 0.00061801138809184036 0.00038897745826694077" />
+                <joint name="right_shoulder_roll_joint" pos="0 0 0" axis="1 0 0" range="-2.2515000000000001 1.5882000000000001" actuatorfrclimited="true" actuatorfrcrange="-25 25" armature="0.0036097250413149595" damping="0 0 0" frictionloss="0" />
+                <body name="right_shoulder_yaw_link" pos="0 -0.0062399999999999999 -0.1032" quat="1 0 0 0">
+                  <inertial pos="0.010773 0.0029489999999999998 -0.072009000000000004" quat="0.68713386026283929 -0.067994212161634371 -0.096482907694997538 0.71687857668891708" mass="0.73399999999999999" diaginertia="0.0010618733024710244 0.0010321659314327732 0.00040066076609620221" />
+                  <joint name="right_shoulder_yaw_joint" pos="0 0 0" axis="0 0 1" range="-2.6179999999999999 2.6179999999999999" actuatorfrclimited="true" actuatorfrcrange="-25 25" armature="0.0036097250413149595" damping="0 0 0" frictionloss="0" />
+                  <body name="right_elbow_link" pos="0.015782999999999998 0 -0.080518000000000006" quat="1 0 0 0">
+                    <inertial pos="0.064956 -0.0044539999999999996 -0.010062" quat="0.38812948749267051 0.38882075725942489 0.636132437674919 0.54176511644867997" mass="0.59999999999999998" diaginertia="0.00044303497406210634 0.00042161157213546906 0.00025935345380242363" />
+                    <joint name="right_elbow_joint" pos="0 0 0" axis="0 1 0" range="-1.0471999999999999 2.0943999999999998" actuatorfrclimited="true" actuatorfrcrange="-25 25" armature="0.0036097250413149595" damping="0 0 0" frictionloss="0" />
+                    <body name="right_wrist_roll_link" pos="0.10000000000000001 -0.00188791 -0.01" quat="1 0 0 0">
+                      <inertial pos="0.017139447780000001 -0.00053759094000000005 4.8864000000000001e-07" quat="0.41166746998586812 0.5753381793560679 -0.41109439041746909 0.57490631906248113" mass="0.085444980000000004" diaginertia="5.4821070729239837e-05 4.9664578582795455e-05 3.5779847257964644e-05" />
+                      <joint name="right_wrist_roll_joint" pos="0 0 0" axis="1 0 0" range="-1.9722220539999999 1.9722220539999999" actuatorfrclimited="true" actuatorfrcrange="-25 25" armature="0.0036097250413149595" damping="0 0 0" frictionloss="0" />
+                      <body name="right_wrist_pitch_link" pos="0.037999999999999999 0 0" quat="1 0 0 0">
+                        <inertial pos="0.022999898370000001 0.00111685314 -0.0011165809599999999" quat="0.64360762617672729 0.29303558433883203 0.66136267847311059 0.24999755471050672" mass="0.48404955999999999" diaginertia="0.00043035295759758153 0.00042987310541120412 0.00016464795036121404" />
+                        <joint name="right_wrist_pitch_joint" pos="0 0 0" axis="0 1 0" range="-1.6144295580000001 1.6144295580000001" actuatorfrclimited="true" actuatorfrcrange="-5 5" armature="0.0042500002309679985" damping="0 0 0" frictionloss="0" />
+                        <body name="right_wrist_yaw_link" pos="0.045999999999999999 0 0" quat="1 0 0 0">
+                          <inertial pos="0.02200381568 -0.00049485095999999998 0.00053861122999999999" quat="0.70771269240235124 -0.13511889097702243 -0.12133658081581854 0.68276135250150338" mass="0.084576470000000001" diaginertia="5.9756400841460761e-05 5.0980672176780819e-05 3.7568434861758368e-05" />
+                          <joint name="right_wrist_yaw_joint" pos="0 0 0" axis="0 0 1" range="-1.6144295580000001 1.6144295580000001" actuatorfrclimited="true" actuatorfrcrange="-5 5" armature="0.0042500002309679985" damping="0 0 0" frictionloss="0" />
+                          <body name="right_base2_link" pos="0.041500000000000002 0 0" quat="1 0 0 0">
+                            <inertial pos="-0.0028340000000000001 0 1.4500000000000001e-06" mass="0.02280635" diaginertia="7.6799999999999993e-06 5.8000000000000004e-06 4.2699999999999998e-06" quat="1 0 0 0" />
                           </body>
-                          <body name="right_base_link" pos="0.059 0.000851551 0.00349947" quat="0.5 0.5 0.5 0.5">
-                            <inertial pos="-0.00524378 -0.0034038 0.0521267" quat="0.996653 -0.0816451 -0.00355954 0.00207135" mass="0.238" diaginertia="2.1092e-05 1.46428e-05 7.81668e-06" />
-                            <body name="right_thumb_metacarpal_link" pos="0.005619 0.019867 0.027825" quat="0.993943 0 0 -0.109893">
-                              <inertial pos="1.51106e-05 0.00707243 -0.00420847" quat="0.465072 -0.0302436 0.0586744 0.882809" mass="0.01" diaginertia="1.66115e-07 1.56006e-07 4.9387e-08" />
-                              <joint name="right_thumb_metacarpal_joint" range="0 1.55334" actuatorfrcrange="-0.5 0.5" damping="0.0005" axis="0 0 -1" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="1e-05" />
-                              <body name="right_thumb_proximal_link" pos="0 0.014227 0" quat="0.977545 0.153479 0.130104 0.0626373">
-                                <inertial pos="-4.6972e-07 0.0277015 -0.00202656" quat="0.496496 0.503512 -0.503514 0.496429" mass="0.05" diaginertia="2.56295e-06 2.40452e-06 5.11916e-07" />
-                                <joint name="right_thumb_proximal_joint" range="0 1.0472" actuatorfrcrange="-1.1 1.1" damping="0.0005" axis="1 0 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="1e-05" />
-                                <body name="right_thumb_distal_link" pos="0 0.052 0" quat="0.99863 -0.0523361 0 0">
-                                  <inertial pos="-5.88258e-09 0.0117545 1.13324e-05" quat="0.528527 0.469685 -0.46966 0.528654" mass="0.01" diaginertia="2.21036e-07 1.67794e-07 1.13879e-07" />
-                                  <joint name="right_thumb_distal_joint" range="0 1.15192" actuatorfrcrange="-1.1 1.1" damping="0.0005" axis="1 0 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.0" />
-                                  <body name="right_thumb_tip_link" pos="0 0.0265288 -0.00177344" quat="0.999443 -0.033369 0 0" />
-                                  <body name="right_thumb_touch_link" pos="0 0.0137928 0.0076766" quat="0.999443 -0.033369 0 0">
-                                    <inertial pos="-1.1806e-08 -0.00152253 -0.00778418" quat="0.512559 0.487059 -0.487039 0.512688" mass="0.002" diaginertia="2.21036e-07 1.67794e-07 1.13879e-07" />
+                          <body name="right_base_link" pos="0.0591 0 0" quat="0.5000000003974483 0.5 0.4999999996025517 0.5">
+                            <inertial pos="-0.0047721015741521702 -0.0014368255627065999 0.050518681507831502" quat="0.99599811109671166 -0.087296982307631568 -0.0066550398752873137 0.01796413137399289" mass="0.23799999999999999" diaginertia="2.227687559264372e-05 1.5752721168671646e-05 8.359325784077701e-06" />
+                            <body name="right_thumb_metacarpal_link" pos="0.0056189999999999999 0.019866999999999999 0.027824999999999999" quat="-3.2628746961937926e-07 0.088829090790466581 0.99604688273988717 -3.6586844928772825e-06">
+                              <inertial pos="-1.51105893291953e-05 0.0070724253201697503 0.0042084729342709397" quat="0.88280697588099055 0.058674263661106785 -0.030243779861276396 0.46507471216933649" mass="0.01" diaginertia="1.6611506270979721e-07 1.5600629924137308e-07 4.9386957259946616e-08" />
+                              <body name="right_thumb_proximal_link" pos="0 0.014227 0" quat="0.12480516277121149 -0.072635655426955659 -0.98655541707423677 0.076525433339687587">
+                                <inertial pos="-4.57221370792071e-07 0.025009011115798799 -0.0017504940716868" quat="0.50445092108309497 0.49554030443313724 -0.49553219384937941 0.50439758104054633" mass="0.050000000000000003" diaginertia="3.4001805864224892e-06 3.2331986903085935e-06 5.6360974504253194e-07" />
+                                <body name="right_thumb_distal_link" pos="0 0.051999999999999998 0" quat="1 0 0 0">
+                                  <inertial pos="-5.8825831358855202e-09 0.011754471624714199 1.1332439743896899e-05" quat="0.52852671779412985 0.4696849932252688 -0.46965959372415944 0.52865431213563718" mass="0.01" diaginertia="2.2103592859552517e-07 1.6779354581381339e-07 1.1387937805821144e-07" />
+                                  <body name="right_thumb_tip" pos="0 0.026529 -0.0017734000000000001" quat="0.99944310638359402 -0.033368804328473528 0 0">
+                                    <inertial pos="0 -8.7992203935627304e-05 -1.7347234759768102e-18" mass="0.001" diaginertia="1.63624617374468e-07 1.63624617374468e-07 1.63624617374469e-07" quat="1 0 0 0" />
                                   </body>
                                 </body>
                               </body>
                             </body>
-                            <body name="right_index_proximal_link" pos="-0.0021181 0.029568 0.080876" quat="0.992147 -0.0522807 0.0783652 -0.0822789">
-                              <inertial pos="-0.00223495 3.15875e-06 0.0176402" quat="0.9998 0.000578854 0.0200071 0.00015863" mass="0.009" diaginertia="2.52201e-07 2.36436e-07 9.27798e-08" />
-                              <joint name="right_index_proximal_joint" range="0 1.41" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="1e-05" />
-                              <body name="right_index_distal_link" pos="0 0 0.032">
-                                <inertial pos="0.0033017 1.80503e-07 0.0142077" quat="0.988289 -2.81294e-05 0.152591 -0.000134591" mass="0.009" diaginertia="3.67649e-07 3.62245e-07 6.33535e-08" />
-                                <joint name="right_index_distal_joint" range="0 1.69297" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.0" />
-                                <body name="right_index_tip_link" pos="0.011097 0 0.035739" quat="0.971859 0 0.235565 0" />
-                                <body name="right_index_touch_link" pos="0.014497 0 0.023303" quat="0.6361 0.734769 0.154182 -0.178098">
-                                  <inertial pos="-0.00299912 0.00249743 -0.000361458" quat="0.744424 0.644493 0.131959 0.114232" mass="0.002" diaginertia="7.33137e-09 5.41343e-09 2.63805e-09" />
+                            <body name="right_index_proximal_link" pos="-0.0021180999999999999 0.029568000000000001 0.080876000000000003" quat="0.99214706336219638 -0.052280683348506593 0.078365246255648127 -0.082278934057718786">
+                              <inertial pos="-0.0022349519319956501 3.1587457778731202e-06 0.0176402020341366" quat="0.99979965732665732 0.00057885424846311755 0.020007123074828912 0.00015863015561674165" mass="0.0089999999999999993" diaginertia="2.5220084576733958e-07 2.364355246715705e-07 9.277975873267488e-08" />
+                              <body name="right_index_distal_link" pos="0 0 0.032000000000000001" quat="1 0 0 0">
+                                <inertial pos="0.0041834128909843003 1.1643001661398899e-07 0.0153643358620559" quat="0.98615568104793627 -4.057600536912226e-05 0.16582198503600651 -0.00020092084775364367" mass="0.0089999999999999993" diaginertia="4.0069705095296302e-07 3.9697328514998549e-07 6.9576954685261149e-08" />
+                                <body name="right_index_tip" pos="0.011096999999999999 0 0.035739" quat="0.9718585695713754 0 0.23556510936613689 0">
+                                  <inertial pos="0 6.9388939039072299e-18 2.7755575615628901e-17" mass="0.001" diaginertia="1.63624617374468e-07 1.63624617374468e-07 1.63624617374468e-07" quat="1 0 0 0" />
                                 </body>
                               </body>
                             </body>
-                            <body name="right_middle_proximal_link" pos="-0.0045767 0.010051 0.084993" quat="0.996681 -0.0175235 0.0746069 -0.0274369">
-                              <inertial pos="-0.00222511 5.25632e-06 0.0203008" quat="0.999816 0.00054813 0.0191912 0.000563992" mass="0.009" diaginertia="3.67373e-07 3.52646e-07 1.11857e-07" />
-                              <joint name="right_middle_proximal_joint" range="0 1.3362" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="1e-05" />
-                              <body name="right_middle_distal_link" pos="0 0 0.037">
-                                <inertial pos="0.00400815 -2.93852e-08 0.0164974" quat="0.988311 2.82915e-05 0.152449 0.000170488" mass="0.009" diaginertia="5.5571e-07 5.49828e-07 8.04011e-08" />
-                                <joint name="right_middle_distal_joint" range="0 1.69297" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.0" />
-                                <body name="right_middle_tip_link" pos="0.012558 0 0.040442" quat="0.971859 0 0.235565 0" />
-                                <body name="right_middle_touch_link" pos="0.0159759 0 0.0265894" quat="0.971858 0 0.235566 0">
-                                  <inertial pos="-0.00319289 -1.92251e-08 0.0029786" quat="0.985763 1.87715e-05 -0.168142 -1.51183e-06" mass="0.002" diaginertia="1.08425e-08 8.23228e-09 3.61893e-09" />
+                            <body name="right_middle_proximal_link" pos="-0.0045767000000000004 0.010050999999999999 0.084992999999999999" quat="0.99668147107578398 -0.017523494301651749 0.074606879475830168 -0.027436944008948989">
+                              <inertial pos="-0.0022251110122374698 5.2563228662323696e-06 0.020300777629512299" quat="0.99981552416435937 0.00054813024232907572 0.019191120516594082 0.00056399158018297796" mass="0.0089999999999999993" diaginertia="3.6737255395847039e-07 3.5264560644846892e-07 1.1185735724452107e-07" />
+                              <body name="right_middle_distal_link" pos="0 0 0.036999999999999998" quat="1 0 0 0">
+                                <inertial pos="0.00498634699274855 3.2079960620920402e-07 0.0178210324631583" quat="0.98613612927117078 -1.2034685181897233e-05 0.16593834516813222 2.0250913483713598e-06" mass="0.0089999999999999993" diaginertia="6.1034179359955797e-07 6.0713328524175084e-07 8.9280614792638457e-08" />
+                                <body name="right_middle_tip" pos="0.012558 0 0.040441999999999999" quat="0.9718585695713754 0 0.23556510936613689 0">
+                                  <inertial pos="0 -3.46944695195361e-18 0" mass="0.001" diaginertia="1.63624617374468e-07 1.63624617374468e-07 1.63624617374468e-07" quat="1 0 0 0" />
                                 </body>
                               </body>
                             </body>
-                            <body name="right_ring_proximal_link" pos="-0.0046709 -0.010037 0.083982" quat="0.996722 0.0175386 0.0740633 0.0274276">
-                              <inertial pos="-0.00234495 5.87955e-06 0.0191774" quat="0.999831 0.000632097 0.0183325 0.000717657" mass="0.009" diaginertia="3.14463e-07 2.97613e-07 1.01829e-07" />
-                              <joint name="right_ring_proximal_joint" range="0 1.35221" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="1e-05" />
-                              <body name="right_ring_distal_link" pos="0 0 0.035">
-                                <inertial pos="0.0038246 7.80179e-08 0.0160344" quat="0.988031 -2.5576e-06 0.154253 9.30365e-07" mass="0.009" diaginertia="5.12422e-07 5.06072e-07 7.51336e-08" />
-                                <joint name="right_ring_distal_joint" range="0 1.69297" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.0" />
-                                <body name="right_ring_tip_link" pos="0.012266 0 0.039501" quat="0.971859 0 0.235565 0" />
-                                <body name="right_ring_touch_link" pos="0.0154392 0 0.0260561" quat="0.971858 0 0.235566 0">
-                                  <inertial pos="-0.00302346 -4.42585e-08 0.00304076" quat="0.985816 1.50055e-05 -0.167827 5.40109e-06" mass="0.002" diaginertia="8.84423e-09 6.63652e-09 2.97684e-09" />
+                            <body name="right_ring_proximal_link" pos="-0.0046709000000000004 -0.010037000000000001 0.083982000000000001" quat="0.99672200466126359 0.017538639769858019 0.074063263792864958 0.027427622853679421">
+                              <inertial pos="-0.0023449452642145198 5.8795475561595703e-06 0.019177402549596999" quat="0.99983149017962203 0.00063209690453086662 0.01833239391338886 0.0007176573722263446" mass="0.0089999999999999993" diaginertia="3.1446348394103196e-07 2.9761343422581728e-07 1.0182936916913152e-07" />
+                              <body name="right_ring_distal_link" pos="0 0 0.035000000000000003" quat="1 0 0 0">
+                                <inertial pos="0.0047128205390484 -2.41851534580478e-08 0.0172486576240172" quat="0.98595010219884105 -3.858036309884083e-05 0.16703998047818233 -0.0001985132209191521" mass="0.0089999999999999993" diaginertia="5.6099284756147866e-07 5.5681801986826567e-07 8.2471928498540315e-08" />
+                                <body name="right_ring_tip" pos="0.012266000000000001 0 0.039501000000000001" quat="0.9718585695713754 0 0.23556510936613689 0">
+                                  <inertial pos="0 0 0" mass="0.001" diaginertia="1.63624617374468e-07 1.63624617374468e-07 1.63624617374468e-07" quat="1 0 0 0" />
                                 </body>
                               </body>
                             </body>
-                            <body name="right_pinky_proximal_link" pos="-0.0023566 -0.029366 0.078694" quat="0.992245 0.052387 0.0771065 0.0822136">
-                              <inertial pos="-0.00213212 7.75039e-06 0.0160672" quat="0.999803 0.000555178 0.0198192 0.000562874" mass="0.009" diaginertia="1.97745e-07 1.82023e-07 8.19805e-08" />
-                              <joint name="right_pinky_proximal_joint" range="0 1.332" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="1e-05" />
-                              <body name="right_pinky_distal_link" pos="0 0 0.029">
-                                <inertial pos="0.00307974 -1.54572e-07 0.0130247" quat="0.988303 1.24826e-05 0.152502 3.39359e-06" mass="0.009" diaginertia="2.91257e-07 2.85275e-07 5.78737e-08" />
-                                <joint name="right_pinky_distal_joint" range="0 1.69297" actuatorfrcrange="-2 2" damping="0.0005" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.0" />
-                                <body name="right_pinky_tip_link" pos="0.010221 0 0.032918" quat="0.971859 0 0.235565 0" />
-                                <body name="right_pinky_touch_link" pos="0.01401 0 0.021124" quat="0.971859 0 0.235565 0">
-                                  <inertial pos="-0.00289142 -2.00563e-07 0.00165388" quat="0.986187 -1.52274e-07 -0.165638 3.39102e-05" mass="0.002" diaginertia="7.41255e-09 5.34365e-09 2.78946e-09" />
+                            <body name="right_pinky_proximal_link" pos="-0.0023565999999999999 -0.029366 0.078694" quat="0.99224549362228687 0.052386954901063626 0.077106528300900076 0.082213567224883627">
+                              <inertial pos="-0.0021321202118417802 7.7503944609803205e-06 0.016067158356038301" quat="0.99980327004068037 0.00055517800790912683 0.019819085914048826 0.00056287376320990107" mass="0.0089999999999999993" diaginertia="1.9774505587224564e-07 1.8202314076723765e-07 8.1980531197225339e-08" />
+                              <body name="right_pinky_distal_link" pos="0 0 0.029000000000000001" quat="1 0 0 0">
+                                <inertial pos="0.0039857570981282299 -1.1873345450753901e-07 0.014107352022554099" quat="0.98605978083740298 6.6593853949621781e-06 0.16639143177844992 -1.1237297090560173e-06" mass="0.0089999999999999993" diaginertia="3.1532119549678989e-07 3.1087349288246332e-07 6.4259669227939542e-08" />
+                                <body name="right_pinky_tip" pos="0.010220999999999999 0 0.032918000000000003" quat="0.9718585695713754 0 0.23556510936613689 0">
+                                  <inertial pos="3.46944695195361e-18 -5.2041704279304197e-18 0" mass="0.001" diaginertia="1.63624617374468e-07 1.63624617374468e-07 1.63624617374468e-07" quat="1 0 0 0" />
                                 </body>
                               </body>
-                            </body>
-                          </body>
-                          <body name="right_wrist_camera_link" pos="0.0474875 0.0263738 -0.0148423" quat="-0.338991 0.584413 0.668811 0.310224">
-                            <inertial pos="0 0.00226929 0" quat="0.5 0.5 0.5 0.5" mass="0.000574949" diaginertia="1.10928e-08 7.54425e-09 6.61125e-09" />
-                            <body name="right_wrist_camera_PCB_link" pos="-0.00389946 -0.0123553 -0.00421597" quat="0.00448267 0.000590154 0.991435 -0.130525">
-                              <inertial pos="3.78181e-05 0.000587064 0.00149854" quat="0.704335 0.0519238 -0.0141813 0.707824" mass="0.000713476" diaginertia="3.87902e-08 2.25457e-08 1.78373e-08" />
                             </body>
                           </body>
                         </body>
@@ -273,21 +243,10 @@
                 </body>
               </body>
             </body>
-            <body name="neck_link" pos="0.01246 -0.0010296 0.357161">
-              <inertial mass="0.24729282800699998" pos="-0.00580274301971 0.000318934538083 -0.0267811413056" fullinertia="0.00020894745869 0.000198120884045 0.000199529011645 1.25861065287e-06 -2.59368802321e-05 6.29086433153e-07" />
-              <body name="head_yaw_link">
-                <inertial mass="0.204183088585" pos="0.000108831669538 -3.32137833822e-05 0.0368950088636" fullinertia="9.23412344323e-05 8.41308359359e-05 8.03752373719e-05 -1.95633833896e-07 -1.45471471808e-07 2.9548602414e-06" />
-                <joint name="head_yaw_joint" range="-1.13446 1.13446" actuatorfrcrange="-.8 .8" damping="0.02" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.00031116176" actuatorfrclimited="true" />
-                <body name="head_link" pos="0 0 0.04">
-                  <inertial pos="0.0172968 -0.00188814 0.0282409" quat="0.0371071 0.681485 -0.0851997 0.725908" mass="0.167215" diaginertia="0.000554604 0.000456399 0.000404334" />
-                  <joint name="head_pitch_joint" range="-0.785398 0.6353" actuatorfrcrange="-.8 .8" damping="0.02" axis="0 1 0" solreflimit=".001 1" solimplimit=".9999 .9999 .001" armature="0.00031116176" actuatorfrclimited="true" />
-                </body>
-              </body>
-            </body>
           </body>
         </body>
       </body>
-      <body name="imu_in_pelvis" pos="0.04525 0 -0.08339" />
+      <body name="imu_in_pelvis" pos="0.045249999999999999 0 -0.083390000000000006" quat="1 0 0 0" />
     </body>
   </worldbody>
 </mujoco>

@@ -10,7 +10,7 @@ const recording=JSON.parse(gunzipSync(raw));
 const provenance=JSON.parse(await file('source/code-replay/provenance.json'));
 const clip=JSON.parse(await file('source/code-replay/clip.json'));
 const inkBytes=await file('dist/code/assets/coming-soon-ink.json'),ink=JSON.parse(inkBytes);
-const poseBytes=await file('dist/code/assets/coming-soon.bin');
+const poseBytes=gunzipSync(await file('dist/code/assets/coming-soon.bin.gz'));
 const poses=new Float32Array(poseBytes.buffer,poseBytes.byteOffset,poseBytes.byteLength/4);
 const rows=[recording.initial,...recording.result.records];
 test('fixed published policy and complete uninterrupted word recording',async()=>{
@@ -26,7 +26,7 @@ test('fixed published policy and complete uninterrupted word recording',async()=
  assert(recording.result.records.some(r=>r.sequence.kind==='lateral'&&r.sequence.transfers===2));
 });
 test('baked poses retain physical root motion and normalized body rotations',()=>{
- assert.equal(poseBytes.length,clip.poseBytes);assert.equal(sha(poseBytes),clip.poseSha256);assert.equal(clip.bodies,88);
+ assert.equal(poseBytes.length,clip.poseBytes);assert.equal(sha(poseBytes),clip.poseSha256);assert.equal(clip.bodies,75);assert.equal(clip.playbackRate,4);assert.equal(clip.holdSeconds,3);
  assert(poses.every(Number.isFinite));
  for(let f=0;f<clip.frames;f++){
   const root=(f*clip.bodies+clip.rootBody)*7;
@@ -44,4 +44,13 @@ test('every ink sample equals the recorded physical wrist; no pen-up joins',()=>
   if(f&&ink.penDown[f]&&ink.penDown[f-1]&&ink.strokeId[f]===ink.strokeId[f-1])segments++;
  });
  assert.equal(segments,provenance.inkSegments);assert.equal(segments,4355);
+ assert(provenance.maxWristPresentationOffsetM<1e-6);
+ for(let f=0;f<clip.frames;f++){const offset=(f*clip.bodies+clip.wristBody)*7;for(let a=0;a<3;a++)assert(Math.abs(poses[offset+a]-ink.actualWrist[f*3+a])<1e-6);}
+});
+
+test('indexed release geometry has valid bounds and exact source mapping',async()=>{
+ const robot=JSON.parse(await file('dist/code/assets/replay-robot.json'));
+ const data=gunzipSync(await file('dist/code/assets/replay-robot.bin.gz'));
+ assert.equal(sha(data),robot.sha256);assert.equal(data.length,robot.bytes);assert.equal(robot.bodies,75);assert.equal(robot.geoms.length,76);
+ for(const m of robot.meshes){assert(m.offset+m.vertices*12+m.faces*12<=data.length);for(let i=0;i<m.faces*3;i++)assert(data.readUInt32LE(m.offset+m.vertices*12+i*4)<m.vertices);}
 });
