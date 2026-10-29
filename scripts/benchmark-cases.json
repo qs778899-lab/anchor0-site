@@ -19,7 +19,15 @@
           "title": {
             "en": "Wide-stance reach",
             "zh": "宽站姿触达"
-          }
+          },
+          "crop": {
+            "x": 200,
+            "y": 200,
+            "width": 550,
+            "height": 736
+          },
+          "sourceFrames": 127,
+          "sourceSha256": "ee9eb2053e925d0eceb74cab54b947694e92ee17a472d241846e2d8c6c857054"
         },
         {
           "id": "benchmark-inhouse-7",
@@ -27,7 +35,15 @@
           "title": {
             "en": "End-effector stability",
             "zh": "末端稳定"
-          }
+          },
+          "crop": {
+            "x": 140,
+            "y": 216,
+            "width": 692,
+            "height": 678
+          },
+          "sourceFrames": 244,
+          "sourceSha256": "fc360cecbde20efdaa29eedff6f2f6782dc04d52e7d9673d4923d2f709feefe8"
         },
         {
           "id": "benchmark-inhouse-15",
@@ -35,7 +51,15 @@
           "title": {
             "en": "Torso-assisted reaching",
             "zh": "躯干配合触达"
-          }
+          },
+          "crop": {
+            "x": 234,
+            "y": 192,
+            "width": 520,
+            "height": 718
+          },
+          "sourceFrames": 176,
+          "sourceSha256": "cebdad88f1e7be71077fe0bb8594a5050bde4eed602915abed63a6afec01587b"
         },
         {
           "id": "benchmark-inhouse-21",
@@ -43,7 +67,15 @@
           "title": {
             "en": "Lower-body movement",
             "zh": "下肢移动"
-          }
+          },
+          "crop": {
+            "x": 282,
+            "y": 258,
+            "width": 498,
+            "height": 672
+          },
+          "sourceFrames": 221,
+          "sourceSha256": "0741feea358451e773134be80cf995ea435b03b06ca09711ff9e2cacead6ece9"
         },
         {
           "id": "benchmark-inhouse-44",
@@ -51,7 +83,15 @@
           "title": {
             "en": "Coordinated reaching",
             "zh": "协调触达"
-          }
+          },
+          "crop": {
+            "x": 194,
+            "y": 206,
+            "width": 622,
+            "height": 718
+          },
+          "sourceFrames": 167,
+          "sourceSha256": "59312a5e0f5e2481c036a3645966215e86312c7ff975b8bfea8e28433620526c"
         },
         {
           "id": "benchmark-inhouse-50",
@@ -59,7 +99,15 @@
           "title": {
             "en": "Multi-phase coordination",
             "zh": "多阶段协调"
-          }
+          },
+          "crop": {
+            "x": 242,
+            "y": 260,
+            "width": 538,
+            "height": 674
+          },
+          "sourceFrames": 306,
+          "sourceSha256": "bc0f3852fadb677618347c479b3da8a3c6c43c3fd8b30c6cf0763169db530d7b"
         },
         {
           "id": "benchmark-inhouse-inhouse_low_reach",
@@ -67,7 +115,15 @@
           "title": {
             "en": "Low reaching",
             "zh": "低位触达"
-          }
+          },
+          "crop": {
+            "x": 164,
+            "y": 218,
+            "width": 614,
+            "height": 718
+          },
+          "sourceFrames": 131,
+          "sourceSha256": "039af9f0a2092774cf7bd43a9d497c04ef2bdfcab5be5b8acfa7abc2acfd5d77"
         }
       ]
     },
@@ -88,7 +144,15 @@
           "title": {
             "en": "Overhead reaching",
             "zh": "高位触达"
-          }
+          },
+          "crop": {
+            "x": 198,
+            "y": 212,
+            "width": 516,
+            "height": 710
+          },
+          "sourceFrames": 164,
+          "sourceSha256": "4bb4fd037d057bcbcc5f2b1a18cc1c4aa6d564b5bea0e0810e85b4baae73e923"
         },
         {
           "id": "benchmark-public-5",
@@ -96,7 +160,15 @@
           "title": {
             "en": "Dance movements",
             "zh": "舞蹈动作"
-          }
+          },
+          "crop": {
+            "x": 156,
+            "y": 192,
+            "width": 636,
+            "height": 744
+          },
+          "sourceFrames": 381,
+          "sourceSha256": "b1c25076326fae350049c6ed958ceb57721e4bf5b3d9d019de3075a0b1df7dfc"
         },
         {
           "id": "benchmark-public-7",
@@ -104,7 +176,15 @@
           "title": {
             "en": "Punch-to-kick transition",
             "zh": "出拳与踢腿衔接"
-          }
+          },
+          "crop": {
+            "x": 128,
+            "y": 294,
+            "width": 698,
+            "height": 504
+          },
+          "sourceFrames": 257,
+          "sourceSha256": "a3c4b29ae5dfcb383da93715062323628cb2ca2017ca34ef7fcbfec3e11ba62e"
         },
         {
           "id": "benchmark-public-10",
@@ -112,7 +192,15 @@
           "title": {
             "en": "Bending & lifting motion",
             "zh": "俯身与抬举动作"
-          }
+          },
+          "crop": {
+            "x": 108,
+            "y": 338,
+            "width": 694,
+            "height": 500
+          },
+          "sourceFrames": 164,
+          "sourceSha256": "6753e93a141d817cb05466aaf07d8dee01ca2eea3c52e4fe6dde38c5a7e812ce"
         },
         {
           "id": "benchmark-public-31",
@@ -120,7 +208,15 @@
           "title": {
             "en": "Sideways movement & running",
             "zh": "侧向移动与跑步"
-          }
+          },
+          "crop": {
+            "x": 228,
+            "y": 320,
+            "width": 624,
+            "height": 530
+          },
+          "sourceFrames": 220,
+          "sourceSha256": "d2723fc8a2706f656e4c834bb2076b192b730f56427fd1d9a7f276a13cb06cb8"
         },
         {
           "id": "benchmark-public-public_jump_turn",
@@ -128,7 +224,15 @@
           "title": {
             "en": "Jumping & turning",
             "zh": "跳跃与转身"
-          }
+          },
+          "crop": {
+            "x": 198,
+            "y": 242,
+            "width": 582,
+            "height": 658
+          },
+          "sourceFrames": 213,
+          "sourceSha256": "3ba8174c710284614600e8dbe2e8417f97d2dba0d9a421901a730483dbc7266b"
         }
       ]
     },
@@ -149,7 +253,15 @@
           "title": {
             "en": "Standing reach",
             "zh": "站姿触达"
-          }
+          },
+          "crop": {
+            "x": 198,
+            "y": 206,
+            "width": 540,
+            "height": 668
+          },
+          "sourceFrames": 826,
+          "sourceSha256": "3ceabec6a3f8417a548d1e829beb30b76622a3af50024fc43c137e28829a86f2"
         },
         {
           "id": "benchmark-reachability-9",
@@ -157,7 +269,15 @@
           "title": {
             "en": "Shallow-squat reach",
             "zh": "浅蹲触达"
-          }
+          },
+          "crop": {
+            "x": 230,
+            "y": 210,
+            "width": 500,
+            "height": 648
+          },
+          "sourceFrames": 826,
+          "sourceSha256": "8391571b4e6697dea4d7eda530c7b39712254b6b1e6fbf150c1bbf63d72ac077"
         },
         {
           "id": "benchmark-reachability-3",
@@ -165,7 +285,15 @@
           "title": {
             "en": "Deep-squat reach",
             "zh": "深蹲触达"
-          }
+          },
+          "crop": {
+            "x": 222,
+            "y": 194,
+            "width": 528,
+            "height": 722
+          },
+          "sourceFrames": 826,
+          "sourceSha256": "7b1facd1a59a4d979043c2c5601c093ce54184fb3b32b115a2c2bbccb62ebb3e"
         },
         {
           "id": "benchmark-reachability-12",
@@ -173,7 +301,15 @@
           "title": {
             "en": "Staggered-stance reach",
             "zh": "错步站姿触达"
-          }
+          },
+          "crop": {
+            "x": 224,
+            "y": 186,
+            "width": 512,
+            "height": 718
+          },
+          "sourceFrames": 826,
+          "sourceSha256": "dd2ea38b32a7b89db08476886e884e278266f506e09816da309ce28fd9a26511"
         },
         {
           "id": "benchmark-reachability-13",
@@ -181,9 +317,18 @@
           "title": {
             "en": "Half-kneeling reach",
             "zh": "半跪触达"
-          }
+          },
+          "crop": {
+            "x": 198,
+            "y": 222,
+            "width": 564,
+            "height": 664
+          },
+          "sourceFrames": 826,
+          "sourceSha256": "ee8450678541e8859a66cb298a5745d3233eb4bafa09a72f30c31f0e1b3c4583"
         }
       ]
     }
-  ]
+  ],
+  "cropPolicy": "Per-clip fixed crop enclosing motion and floor over every decoded frame (320x340 analysis, intensity <235), plus 18 native pixels safety margin. No scaling or timing changes."
 }

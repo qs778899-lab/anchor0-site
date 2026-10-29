@@ -35,6 +35,8 @@ for spec, group in zip(benchmark_spec['groups'],benchmark_cases['groups']):
     assert spec['id']==group['id']
     for selected, clip in zip(spec['clips'],group['clips']):
         assert selected['source']==clip['source'] and selected['title']==clip['title']
+        assert selected['crop']==clip['crop'] and selected['sourceSha256']==clip['sourceSha256']
+        assert (clip['width'],clip['height'])==(clip['crop']['width'],clip['crop']['height'])
         digest=hashlib.sha256((DIST/clip['output']).read_bytes()).hexdigest()
         assert digest==clip['sha256'] and digest[:12]==clip['revision']
         assert hashlib.sha256((DIST/clip['poster']).read_bytes()).hexdigest()[:12]==clip['posterRevision']

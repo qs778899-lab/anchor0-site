@@ -20,15 +20,23 @@
             "en": "Wide-stance reach",
             "zh": "宽站姿触达"
           },
+          "crop": {
+            "x": 200,
+            "y": 200,
+            "width": 550,
+            "height": 736
+          },
+          "sourceFrames": 127,
+          "sourceSha256": "ee9eb2053e925d0eceb74cab54b947694e92ee17a472d241846e2d8c6c857054",
           "output": "assets/videos/benchmark/benchmark-inhouse-1.mp4",
           "poster": "assets/posters/benchmark/benchmark-inhouse-1.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 550,
+          "height": 736,
           "duration": 4.23,
-          "sha256": "ee9eb2053e925d0eceb74cab54b947694e92ee17a472d241846e2d8c6c857054",
-          "revision": "ee9eb2053e92",
-          "posterRevision": "481368ce2c2f",
-          "bytes": 488505
+          "sha256": "1f12f7d97a194f03fd711fad7fe5c7d539321499b5e5b1a2db7095c77cb82884",
+          "revision": "1f12f7d97a19",
+          "posterRevision": "b34103f1eca0",
+          "bytes": 501799
         },
         {
           "id": "benchmark-inhouse-7",
@@ -37,15 +45,23 @@
             "en": "End-effector stability",
             "zh": "末端稳定"
           },
+          "crop": {
+            "x": 140,
+            "y": 216,
+            "width": 692,
+            "height": 678
+          },
+          "sourceFrames": 244,
+          "sourceSha256": "fc360cecbde20efdaa29eedff6f2f6782dc04d52e7d9673d4923d2f709feefe8",
           "output": "assets/videos/benchmark/benchmark-inhouse-7.mp4",
           "poster": "assets/posters/benchmark/benchmark-inhouse-7.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 692,
+          "height": 678,
           "duration": 8.13,
-          "sha256": "fc360cecbde20efdaa29eedff6f2f6782dc04d52e7d9673d4923d2f709feefe8",
-          "revision": "fc360cecbde2",
-          "posterRevision": "bb28849401e5",
-          "bytes": 748814
+          "sha256": "eca74f906e0993d670079a9503841b84d2bb1486be7c65c463a88f6fef0804f5",
+          "revision": "eca74f906e09",
+          "posterRevision": "a0334a64f563",
+          "bytes": 801936
         },
         {
           "id": "benchmark-inhouse-15",
@@ -54,15 +70,23 @@
             "en": "Torso-assisted reaching",
             "zh": "躯干配合触达"
           },
+          "crop": {
+            "x": 234,
+            "y": 192,
+            "width": 520,
+            "height": 718
+          },
+          "sourceFrames": 176,
+          "sourceSha256": "cebdad88f1e7be71077fe0bb8594a5050bde4eed602915abed63a6afec01587b",
           "output": "assets/videos/benchmark/benchmark-inhouse-15.mp4",
           "poster": "assets/posters/benchmark/benchmark-inhouse-15.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 520,
+          "height": 718,
           "duration": 5.87,
-          "sha256": "cebdad88f1e7be71077fe0bb8594a5050bde4eed602915abed63a6afec01587b",
-          "revision": "cebdad88f1e7",
-          "posterRevision": "7a65a2893675",
-          "bytes": 578623
+          "sha256": "854426666a26cead27510c4cc95edc796b419bd0ae1da7dbfca51df6d226a9f2",
+          "revision": "854426666a26",
+          "posterRevision": "5604121111a8",
+          "bytes": 626695
         },
         {
           "id": "benchmark-inhouse-21",
@@ -71,15 +95,23 @@
             "en": "Lower-body movement",
             "zh": "下肢移动"
           },
+          "crop": {
+            "x": 282,
+            "y": 258,
+            "width": 498,
+            "height": 672
+          },
+          "sourceFrames": 221,
+          "sourceSha256": "0741feea358451e773134be80cf995ea435b03b06ca09711ff9e2cacead6ece9",
           "output": "assets/videos/benchmark/benchmark-inhouse-21.mp4",
           "poster": "assets/posters/benchmark/benchmark-inhouse-21.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 498,
+          "height": 672,
           "duration": 7.37,
-          "sha256": "0741feea358451e773134be80cf995ea435b03b06ca09711ff9e2cacead6ece9",
-          "revision": "0741feea3584",
-          "posterRevision": "4cd7d6ebb1b5",
-          "bytes": 613492
+          "sha256": "0933cc21fe44f9694bcc1e35beb2836c4d22288c95aef7b49f8621c426659a53",
+          "revision": "0933cc21fe44",
+          "posterRevision": "69639934b755",
+          "bytes": 662256
         },
         {
           "id": "benchmark-inhouse-44",
@@ -88,15 +120,23 @@
             "en": "Coordinated reaching",
             "zh": "协调触达"
           },
+          "crop": {
+            "x": 194,
+            "y": 206,
+            "width": 622,
+            "height": 718
+          },
+          "sourceFrames": 167,
+          "sourceSha256": "59312a5e0f5e2481c036a3645966215e86312c7ff975b8bfea8e28433620526c",
           "output": "assets/videos/benchmark/benchmark-inhouse-44.mp4",
           "poster": "assets/posters/benchmark/benchmark-inhouse-44.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 622,
+          "height": 718,
           "duration": 5.57,
-          "sha256": "59312a5e0f5e2481c036a3645966215e86312c7ff975b8bfea8e28433620526c",
-          "revision": "59312a5e0f5e",
-          "posterRevision": "cb3988914053",
-          "bytes": 520866
+          "sha256": "51b7346968eb9ee3c29ae04d80708ccbdd9d57d153a6982f7489577471e3de3d",
+          "revision": "51b7346968eb",
+          "posterRevision": "a6790f2b2a93",
+          "bytes": 557402
         },
         {
           "id": "benchmark-inhouse-50",
@@ -105,15 +145,23 @@
             "en": "Multi-phase coordination",
             "zh": "多阶段协调"
           },
+          "crop": {
+            "x": 242,
+            "y": 260,
+            "width": 538,
+            "height": 674
+          },
+          "sourceFrames": 306,
+          "sourceSha256": "bc0f3852fadb677618347c479b3da8a3c6c43c3fd8b30c6cf0763169db530d7b",
           "output": "assets/videos/benchmark/benchmark-inhouse-50.mp4",
           "poster": "assets/posters/benchmark/benchmark-inhouse-50.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 538,
+          "height": 674,
           "duration": 10.2,
-          "sha256": "bc0f3852fadb677618347c479b3da8a3c6c43c3fd8b30c6cf0763169db530d7b",
-          "revision": "bc0f3852fadb",
-          "posterRevision": "38580b6c300b",
-          "bytes": 723028
+          "sha256": "543476f9fae194bdadcfaf60b860ab05dffb83112c1b0afb02740fc5178d013f",
+          "revision": "543476f9fae1",
+          "posterRevision": "5bd6cb3bd26e",
+          "bytes": 773354
         },
         {
           "id": "benchmark-inhouse-inhouse_low_reach",
@@ -122,15 +170,23 @@
             "en": "Low reaching",
             "zh": "低位触达"
           },
+          "crop": {
+            "x": 164,
+            "y": 218,
+            "width": 614,
+            "height": 718
+          },
+          "sourceFrames": 131,
+          "sourceSha256": "039af9f0a2092774cf7bd43a9d497c04ef2bdfcab5be5b8acfa7abc2acfd5d77",
           "output": "assets/videos/benchmark/benchmark-inhouse-inhouse_low_reach.mp4",
           "poster": "assets/posters/benchmark/benchmark-inhouse-inhouse_low_reach.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 614,
+          "height": 718,
           "duration": 4.37,
-          "sha256": "039af9f0a2092774cf7bd43a9d497c04ef2bdfcab5be5b8acfa7abc2acfd5d77",
-          "revision": "039af9f0a209",
-          "posterRevision": "296b2fd0d540",
-          "bytes": 395980
+          "sha256": "24f62fae8d373168a6dd6e4fb9e307eb6d6f5b5e5e5b0425e245cba41fd5ee65",
+          "revision": "24f62fae8d37",
+          "posterRevision": "7596b57bdca1",
+          "bytes": 433402
         }
       ]
     },
@@ -152,15 +208,23 @@
             "en": "Overhead reaching",
             "zh": "高位触达"
           },
+          "crop": {
+            "x": 198,
+            "y": 212,
+            "width": 516,
+            "height": 710
+          },
+          "sourceFrames": 164,
+          "sourceSha256": "4bb4fd037d057bcbcc5f2b1a18cc1c4aa6d564b5bea0e0810e85b4baae73e923",
           "output": "assets/videos/benchmark/benchmark-public-2.mp4",
           "poster": "assets/posters/benchmark/benchmark-public-2.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 516,
+          "height": 710,
           "duration": 5.47,
-          "sha256": "4bb4fd037d057bcbcc5f2b1a18cc1c4aa6d564b5bea0e0810e85b4baae73e923",
-          "revision": "4bb4fd037d05",
-          "posterRevision": "25802ffc3218",
-          "bytes": 492836
+          "sha256": "306d23213ac8b19d81594805ef8594da2daf98a0244e98e331ce1ee67bee8088",
+          "revision": "306d23213ac8",
+          "posterRevision": "5fa8008b32a8",
+          "bytes": 544472
         },
         {
           "id": "benchmark-public-5",
@@ -169,15 +233,23 @@
             "en": "Dance movements",
             "zh": "舞蹈动作"
           },
+          "crop": {
+            "x": 156,
+            "y": 192,
+            "width": 636,
+            "height": 744
+          },
+          "sourceFrames": 381,
+          "sourceSha256": "b1c25076326fae350049c6ed958ceb57721e4bf5b3d9d019de3075a0b1df7dfc",
           "output": "assets/videos/benchmark/benchmark-public-5.mp4",
           "poster": "assets/posters/benchmark/benchmark-public-5.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 636,
+          "height": 744,
           "duration": 12.7,
-          "sha256": "b1c25076326fae350049c6ed958ceb57721e4bf5b3d9d019de3075a0b1df7dfc",
-          "revision": "b1c25076326f",
-          "posterRevision": "48b284585940",
-          "bytes": 1991733
+          "sha256": "df889893074548d53dfa799037549de10887bf206e647c981e7cd08514b9d23a",
+          "revision": "df8898930745",
+          "posterRevision": "5c0162fedd75",
+          "bytes": 2134877
         },
         {
           "id": "benchmark-public-7",
@@ -186,15 +258,23 @@
             "en": "Punch-to-kick transition",
             "zh": "出拳与踢腿衔接"
           },
+          "crop": {
+            "x": 128,
+            "y": 294,
+            "width": 698,
+            "height": 504
+          },
+          "sourceFrames": 257,
+          "sourceSha256": "a3c4b29ae5dfcb383da93715062323628cb2ca2017ca34ef7fcbfec3e11ba62e",
           "output": "assets/videos/benchmark/benchmark-public-7.mp4",
           "poster": "assets/posters/benchmark/benchmark-public-7.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 698,
+          "height": 504,
           "duration": 8.57,
-          "sha256": "a3c4b29ae5dfcb383da93715062323628cb2ca2017ca34ef7fcbfec3e11ba62e",
-          "revision": "a3c4b29ae5df",
-          "posterRevision": "22fdfc8e6886",
-          "bytes": 758677
+          "sha256": "c8a81e5eb773c9230317c9437f0cfe190ab6dda29451ce7b0cec092a2053867b",
+          "revision": "c8a81e5eb773",
+          "posterRevision": "f8976deb4b02",
+          "bytes": 821022
         },
         {
           "id": "benchmark-public-10",
@@ -203,15 +283,23 @@
             "en": "Bending & lifting motion",
             "zh": "俯身与抬举动作"
           },
+          "crop": {
+            "x": 108,
+            "y": 338,
+            "width": 694,
+            "height": 500
+          },
+          "sourceFrames": 164,
+          "sourceSha256": "6753e93a141d817cb05466aaf07d8dee01ca2eea3c52e4fe6dde38c5a7e812ce",
           "output": "assets/videos/benchmark/benchmark-public-10.mp4",
           "poster": "assets/posters/benchmark/benchmark-public-10.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 694,
+          "height": 500,
           "duration": 5.47,
-          "sha256": "6753e93a141d817cb05466aaf07d8dee01ca2eea3c52e4fe6dde38c5a7e812ce",
-          "revision": "6753e93a141d",
-          "posterRevision": "8f60cfd1299d",
-          "bytes": 404378
+          "sha256": "7db1e5356121636a5638335eb8c424387183cb0ab94ae39d5001b830e0cd6c63",
+          "revision": "7db1e5356121",
+          "posterRevision": "b3a4e4a60d0e",
+          "bytes": 445466
         },
         {
           "id": "benchmark-public-31",
@@ -220,15 +308,23 @@
             "en": "Sideways movement & running",
             "zh": "侧向移动与跑步"
           },
+          "crop": {
+            "x": 228,
+            "y": 320,
+            "width": 624,
+            "height": 530
+          },
+          "sourceFrames": 220,
+          "sourceSha256": "d2723fc8a2706f656e4c834bb2076b192b730f56427fd1d9a7f276a13cb06cb8",
           "output": "assets/videos/benchmark/benchmark-public-31.mp4",
           "poster": "assets/posters/benchmark/benchmark-public-31.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 624,
+          "height": 530,
           "duration": 7.33,
-          "sha256": "d2723fc8a2706f656e4c834bb2076b192b730f56427fd1d9a7f276a13cb06cb8",
-          "revision": "d2723fc8a270",
-          "posterRevision": "038889a51e99",
-          "bytes": 397748
+          "sha256": "b80665865fbd9fba915d4551f389d6fb63c5f564923d2e1deccd360a83947056",
+          "revision": "b80665865fbd",
+          "posterRevision": "4a5793df38a5",
+          "bytes": 424286
         },
         {
           "id": "benchmark-public-public_jump_turn",
@@ -237,15 +333,23 @@
             "en": "Jumping & turning",
             "zh": "跳跃与转身"
           },
+          "crop": {
+            "x": 198,
+            "y": 242,
+            "width": 582,
+            "height": 658
+          },
+          "sourceFrames": 213,
+          "sourceSha256": "3ba8174c710284614600e8dbe2e8417f97d2dba0d9a421901a730483dbc7266b",
           "output": "assets/videos/benchmark/benchmark-public-public_jump_turn.mp4",
           "poster": "assets/posters/benchmark/benchmark-public-public_jump_turn.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 582,
+          "height": 658,
           "duration": 7.1,
-          "sha256": "3ba8174c710284614600e8dbe2e8417f97d2dba0d9a421901a730483dbc7266b",
-          "revision": "3ba8174c7102",
-          "posterRevision": "6963a7b97aeb",
-          "bytes": 874735
+          "sha256": "9ddc3e93392e966adf6c3a07ab16281e3b9bd9f025b15fa045856d77e7dd3497",
+          "revision": "9ddc3e93392e",
+          "posterRevision": "b0db2f2219b0",
+          "bytes": 958388
         }
       ]
     },
@@ -267,15 +371,23 @@
             "en": "Standing reach",
             "zh": "站姿触达"
           },
+          "crop": {
+            "x": 198,
+            "y": 206,
+            "width": 540,
+            "height": 668
+          },
+          "sourceFrames": 826,
+          "sourceSha256": "3ceabec6a3f8417a548d1e829beb30b76622a3af50024fc43c137e28829a86f2",
           "output": "assets/videos/benchmark/benchmark-reachability-1.mp4",
           "poster": "assets/posters/benchmark/benchmark-reachability-1.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 540,
+          "height": 668,
           "duration": 16.52,
-          "sha256": "3ceabec6a3f8417a548d1e829beb30b76622a3af50024fc43c137e28829a86f2",
-          "revision": "3ceabec6a3f8",
-          "posterRevision": "0faf8bbce04c",
-          "bytes": 903073
+          "sha256": "0868c5dd52f47c5a1958e38d78052059efc91a929c295f052786e8ef8df6890c",
+          "revision": "0868c5dd52f4",
+          "posterRevision": "c07bf3116624",
+          "bytes": 960238
         },
         {
           "id": "benchmark-reachability-9",
@@ -284,15 +396,23 @@
             "en": "Shallow-squat reach",
             "zh": "浅蹲触达"
           },
+          "crop": {
+            "x": 230,
+            "y": 210,
+            "width": 500,
+            "height": 648
+          },
+          "sourceFrames": 826,
+          "sourceSha256": "8391571b4e6697dea4d7eda530c7b39712254b6b1e6fbf150c1bbf63d72ac077",
           "output": "assets/videos/benchmark/benchmark-reachability-9.mp4",
           "poster": "assets/posters/benchmark/benchmark-reachability-9.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 500,
+          "height": 648,
           "duration": 16.52,
-          "sha256": "8391571b4e6697dea4d7eda530c7b39712254b6b1e6fbf150c1bbf63d72ac077",
-          "revision": "8391571b4e66",
-          "posterRevision": "b01fe6277ad1",
-          "bytes": 1094273
+          "sha256": "bcc45a18a8c19374ce0034f747ec3e3c4d6ab927012139bd8bf54dd0b57deb66",
+          "revision": "bcc45a18a8c1",
+          "posterRevision": "ef54ecb0e0eb",
+          "bytes": 1162068
         },
         {
           "id": "benchmark-reachability-3",
@@ -301,15 +421,23 @@
             "en": "Deep-squat reach",
             "zh": "深蹲触达"
           },
+          "crop": {
+            "x": 222,
+            "y": 194,
+            "width": 528,
+            "height": 722
+          },
+          "sourceFrames": 826,
+          "sourceSha256": "7b1facd1a59a4d979043c2c5601c093ce54184fb3b32b115a2c2bbccb62ebb3e",
           "output": "assets/videos/benchmark/benchmark-reachability-3.mp4",
           "poster": "assets/posters/benchmark/benchmark-reachability-3.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 528,
+          "height": 722,
           "duration": 16.52,
-          "sha256": "7b1facd1a59a4d979043c2c5601c093ce54184fb3b32b115a2c2bbccb62ebb3e",
-          "revision": "7b1facd1a59a",
-          "posterRevision": "93237005341c",
-          "bytes": 1305449
+          "sha256": "34c57ae3b4a09913883457ecb29f42726388181fdb8815979d3a6620b41d144a",
+          "revision": "34c57ae3b4a0",
+          "posterRevision": "f454861bbcc8",
+          "bytes": 1375810
         },
         {
           "id": "benchmark-reachability-12",
@@ -318,15 +446,23 @@
             "en": "Staggered-stance reach",
             "zh": "错步站姿触达"
           },
+          "crop": {
+            "x": 224,
+            "y": 186,
+            "width": 512,
+            "height": 718
+          },
+          "sourceFrames": 826,
+          "sourceSha256": "dd2ea38b32a7b89db08476886e884e278266f506e09816da309ce28fd9a26511",
           "output": "assets/videos/benchmark/benchmark-reachability-12.mp4",
           "poster": "assets/posters/benchmark/benchmark-reachability-12.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 512,
+          "height": 718,
           "duration": 16.52,
-          "sha256": "dd2ea38b32a7b89db08476886e884e278266f506e09816da309ce28fd9a26511",
-          "revision": "dd2ea38b32a7",
-          "posterRevision": "36c53efe89c8",
-          "bytes": 435835
+          "sha256": "4836e8426ee952c788cc0f7fa0cc17caa00c1fa81a8d9a28c36d797eee62d39f",
+          "revision": "4836e8426ee9",
+          "posterRevision": "4aa58095fc6c",
+          "bytes": 457426
         },
         {
           "id": "benchmark-reachability-13",
@@ -335,17 +471,26 @@
             "en": "Half-kneeling reach",
             "zh": "半跪触达"
           },
+          "crop": {
+            "x": 198,
+            "y": 222,
+            "width": 564,
+            "height": 664
+          },
+          "sourceFrames": 826,
+          "sourceSha256": "ee8450678541e8859a66cb298a5745d3233eb4bafa09a72f30c31f0e1b3c4583",
           "output": "assets/videos/benchmark/benchmark-reachability-13.mp4",
           "poster": "assets/posters/benchmark/benchmark-reachability-13.jpg",
-          "width": 960,
-          "height": 1020,
+          "width": 564,
+          "height": 664,
           "duration": 16.52,
-          "sha256": "ee8450678541e8859a66cb298a5745d3233eb4bafa09a72f30c31f0e1b3c4583",
-          "revision": "ee8450678541",
-          "posterRevision": "dc8c0b9fbcd0",
-          "bytes": 1241517
+          "sha256": "358c58065dc5e2fb3ed11a2fd88e0670bbdbefbd82619abf8cef1f3912be8058",
+          "revision": "358c58065dc5",
+          "posterRevision": "bd4cdd2907db",
+          "bytes": 1319646
         }
       ]
     }
-  ]
+  ],
+  "cropPolicy": "Per-clip fixed crop enclosing motion and floor over every decoded frame (320x340 analysis, intensity <235), plus 18 native pixels safety margin. No scaling or timing changes."
 }
