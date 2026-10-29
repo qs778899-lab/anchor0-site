@@ -188,7 +188,7 @@ reference: a pointed tail expands linearly into the triangular head. The mesh is
 scaled uniformly by the existing `0.14 + 0.0034 × forceN` length, so 50 N remains
 31 cm long and 60 N remains 34.4 cm. There are no overlapping shaft/head meshes.
 
-Maximum opacity is now 29% in both themes, matching the selected preview setting.
+Maximum opacity was initially 29% in both themes, matching the selected preview setting.
 The existing low-saturation amber colors, local silhouette softening, world-space
 orientation, pelvis attachment and temporal fade remain. No physics, worker,
 model or motion resources changed; the original-release hash checks pass.
@@ -203,3 +203,11 @@ labels or UI. All 10 demo tests and TypeScript checking pass.
 Previews: `previews/demo-replay/demo-linear-arrow-desktop.png`,
 `previews/demo-replay/demo-linear-arrow-mobile.png`, and the actual downloaded
 `previews/demo-replay/demo-linear-arrow.png`.
+
+### Arrow visibility adjustment
+
+Raised maximum opacity from 29% to 40% in both themes after visual feedback that
+the arrow was too faint. The pointed linear profile, dimensions, colors, soft
+silhouette and force/fade behavior are unchanged.
+Checked a paused 50 N arrow in both themes on the LAN site, with no browser errors;
+all 10 demo tests pass. Actual PNG export: `previews/demo-replay/demo-linear-arrow-40.png`.

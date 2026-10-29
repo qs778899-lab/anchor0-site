@@ -52,7 +52,7 @@ export class S0Renderer {
   private readonly forceMaterial = new THREE.ShaderMaterial({
     uniforms: {
       arrowColor: {value:new THREE.Color('#c39455')},
-      maxOpacity: {value:.29},
+      maxOpacity: {value:.40},
       fade: {value:1},
     },
     vertexShader: `
