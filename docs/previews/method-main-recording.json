@@ -1,0 +1,14 @@
+{
+  "source": "Chrome Page.screencastFrame",
+  "paperCommit": "7bdfcc7f280c6190d74c963995c5bd530b1d8229",
+  "cycleSeconds": 25.405714285714282,
+  "frames": 790,
+  "seconds": 27.166101932525635,
+  "viewport": [
+    1440,
+    1100
+  ],
+  "fps": 30,
+  "speed": 1,
+  "output": "docs/previews/method-main-motion.mp4"
+}
