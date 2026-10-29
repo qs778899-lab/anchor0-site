@@ -3,6 +3,7 @@ import {readFile, mkdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {METHOD_IMAGE, METHOD_FLOWS} from '../dist/method-flow-paths.js';
 import {cdp, evaluate, wait, until, viewport, go, screenshot, close, events} from './browser-client.mjs';
+import {verifyMethodEmphasis} from './method-visual-checks.mjs';
 
 const inline = '[data-surface="inline"]';
 const modal = '[data-surface="dialog"]';
@@ -29,14 +30,17 @@ try {
   await check('offscreen diagram starts without animating', `document.querySelector('${inline}').dataset.running==='false' && getComputedStyle(document.querySelector('${inline}')).opacity==='0'`);
   await scrollToFigure();await until(`document.querySelector('${inline}').dataset.running==='true'`);
 
-  // Check the entire highlight width against the actual PNG, including bends and arrow endpoints.
-  // Read alpha before RGB: transparent gaps in the Benchmark lines are deliberately masked out.
+  // Sample the five-pixel highlight width wherever its exact arrow mask is opaque.
+  // Transparent dash gaps and antialiased mask boundaries cannot draw an opaque highlight.
   const pixels = await evaluate(`(async()=>{
     const {METHOD_FLOWS}=await import('./method-flow-paths.js');
     const image=document.querySelector('#method .method-flow-surface>img');await image.decode();
     const canvas=document.createElement('canvas');canvas.width=image.naturalWidth;canvas.height=image.naturalHeight;
     const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(image,0,0);
     const bitmap=ctx.getImageData(0,0,canvas.width,canvas.height).data;
+    const mask=new Image();mask.src=document.querySelector('${inline} mask image').getAttribute('href');await mask.decode();
+    ctx.clearRect(0,0,canvas.width,canvas.height);ctx.drawImage(mask,0,0);
+    const maskBitmap=ctx.getImageData(0,0,canvas.width,canvas.height).data;
     const failures=[];let checked=0,gaps=0;
     for(const flow of METHOD_FLOWS){
       const path=document.querySelector('${inline} [data-flow="'+flow.id+'"]');
@@ -44,10 +48,11 @@ try {
       const length=path.getTotalLength();let coverage=0;
       for(let distance=0;distance<length;distance++){
         const point=path.getPointAtLength(distance);
-        for(const dx of [-1,0,1])for(const dy of [-1,0,1]){
+        for(const dx of [-2,-1,0,1,2])for(const dy of [-2,-1,0,1,2]){
           const x=Math.round(point.x)+dx,y=Math.round(point.y)+dy,index=(y*canvas.width+x)*4;
           const alpha=bitmap[index+3];
           if(alpha<240){if(flow.group==='benchmark')gaps++;continue;}
+          if(maskBitmap[index+3]<240)continue;
           checked++;coverage++;
           if(expected.some((value,i)=>Math.abs(value-bitmap[index+i])>25))failures.push({id:flow.id,x,y});
         }
@@ -58,12 +63,13 @@ try {
   })()`);
   assert.deepEqual(pixels.failures, []);assert(pixels.gaps>100);
   console.log(`PASS: ${pixels.checked} original line pixels match all 32 centerlines and highlight widths`);
-  await check('source alpha preserves the actual dashed gaps; highlights never intercept clicks', `document.querySelector('${inline} mask').style.maskType==='alpha' && document.querySelector('${inline} mask image').getAttribute('href')===document.querySelector('#method .method-flow-surface>img').src && getComputedStyle(document.querySelector('${inline}')).pointerEvents==='none'`);
+  await check('arrow mask is ready and highlights never intercept clicks', `document.querySelector('${inline} mask').style.maskType==='alpha' && document.querySelector('${inline}').dataset.maskReady==='true' && getComputedStyle(document.querySelector('${inline}')).pointerEvents==='none'`);
   await check('desktop overlay exactly matches the original image bounds', aligned(inline));
   const before = parseFloat(await offset(inline));await wait(130);const after = parseFloat(await offset(inline));
-  const travelled = (before-after+200)%200;
+  const travelled = (before-after+160)%160;
   assert(travelled>6&&travelled<30);console.log('PASS: highlights travel forward at approximately 100 source pixels per second');
-  await screenshot('.cache/preview/method-desktop.png');
+  await verifyMethodEmphasis();
+  await screenshot('.cache/preview/method-emphasis-desktop.png');
 
   // Keyboard activation must not open the image or lose the deliberately paused state.
   await evaluate(`document.querySelector('.method-flow-toggle').focus()`);await press(' ','Space',32);
@@ -77,7 +83,7 @@ try {
   await until(`document.querySelector('${modal}').dataset.running==='true'`);
   await check('only the enlarged view animates while the dialog is open', `document.querySelector('${inline}').dataset.running==='false'`);
   await check('enlarged fit-to-window overlay is aligned', aligned(modal));
-  await evaluate(`document.activeElement.blur()`);await screenshot('.cache/preview/method-enlarged.png');
+  await evaluate(`document.activeElement.blur()`);await screenshot('.cache/preview/method-emphasis-enlarged.png');
   await evaluate(`document.querySelector('#dialog-image').click()`);await wait(100);
   await check('original-size zoom retains a one-to-one source-pixel view', `${aligned(modal)}&&document.querySelector('#dialog-image').getBoundingClientRect().width===2314&&document.querySelector('#dialog-image').getBoundingClientRect().height===1585`);
   await evaluate(`document.querySelector('#close-image').click()`);await until(`document.querySelector('${inline}').dataset.running==='true'`);
@@ -95,19 +101,19 @@ try {
   await wait(100);
   await check('Chinese and dark theme preserve pause and original image clarity', `document.documentElement.lang==='zh-CN'&&document.documentElement.dataset.theme==='dark'&&document.querySelector('.method-flow-toggle').textContent==='继续播放'&&${aligned(inline)}`);
   await evaluate(`document.querySelector('.method-flow-toggle').click();document.activeElement.blur()`);await wait(100);
-  await screenshot('.cache/preview/method-dark-zh.png');
+  await screenshot('.cache/preview/method-emphasis-dark-zh.png');
   await evaluate(`document.querySelector('#language-toggle').click();document.querySelector('#theme-select').value='light';document.querySelector('#theme-select').dispatchEvent(new Event('change'))`);
 
   await viewport(1024,900);await scrollToFigure();
   await check('tablet keeps original proportions without page overflow', `${aligned(inline)}&&document.documentElement.scrollWidth===innerWidth`);
-  await screenshot('.cache/preview/method-tablet.png');
+  await screenshot('.cache/preview/method-emphasis-tablet.png');
   await viewport(390,844,true);await scrollToFigure();
   await check('390 px mobile retains aligned vectors and accessible controls', `${aligned(inline)}&&document.documentElement.scrollWidth===innerWidth&&document.querySelector('.method-flow-toggle').getBoundingClientRect().right<=innerWidth`);
-  await screenshot('.cache/preview/method-mobile.png');
+  await screenshot('.cache/preview/method-emphasis-mobile.png');
   await evaluate(`document.querySelector('#method [data-zoom]').click()`);await until(`document.querySelector('${modal}')?.dataset.running==='true'`);
   await check('mobile enlarged image fits and its toolbar stays within the screen', `${aligned(modal)}&&document.querySelector('#close-image').getBoundingClientRect().right<=innerWidth&&document.querySelector('#image-dialog .method-flow-toggle').getBoundingClientRect().left>=0`);
   await check('mobile fit view stays vertically centered like the original viewer', `(()=>{const area=document.querySelector('.method-flow-area').getBoundingClientRect(),image=document.querySelector('#dialog-image').getBoundingClientRect();return Math.abs(image.top+image.height/2-area.top-area.height/2)<1;})()`);
-  await evaluate(`document.activeElement.blur()`);await screenshot('.cache/preview/method-mobile-enlarged.png');
+  await evaluate(`document.activeElement.blur()`);await screenshot('.cache/preview/method-emphasis-mobile-enlarged.png');
   await evaluate(`document.querySelector('#dialog-image').click()`);await wait(100);
   await cdp('Emulation.setTouchEmulationEnabled',{enabled:true,maxTouchPoints:1});
   const touch = await evaluate(`(()=>{const b=document.querySelector('.method-flow-area').getBoundingClientRect();return{x:b.right-30,y:b.top+100};})()`);

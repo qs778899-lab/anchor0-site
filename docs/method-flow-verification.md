@@ -1,5 +1,8 @@
 # METHOD arrow flow — 2026-10-29
 
+This records the initial animation release. The current contrast revision and its pixel-comparison
+results are documented in [METHOD flow emphasis](method-flow-emphasis.md).
+
 The initial implementation was committed and pushed as `d87b56f` on `codex/anchor0-site`.
 This acceptance pass refines three line origins to stay clear of box borders and preserves the
 existing centered mobile image view. No source image was edited or re-encoded.
