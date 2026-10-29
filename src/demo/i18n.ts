@@ -1,5 +1,5 @@
 export const messages: Record<string, [string,string]> = {
- title:['Interactive demo','交互演示'], home:['Back to project','返回主页'], local:['Runs in your browser','在浏览器中运行'],
+ title:['Interactive Demo','交互演示'], home:['Back to project','返回主页'], local:['Runs in your browser','在浏览器中运行'],
  language:['Switch to Chinese','Switch to English'], theme:['Appearance','外观'], system:['System','跟随系统'],light:['Light','浅色'],dark:['Dark','深色'],
  simulation:['3D simulation','三维仿真'],controls:['Simulation controls','仿真控制'],
  camera:['Reset view','恢复视角'],overview:['Show full phrase','查看全景'],rotate:['Drag to rotate · Scroll or pinch to zoom','拖动旋转 · 滚轮或双指缩放'],

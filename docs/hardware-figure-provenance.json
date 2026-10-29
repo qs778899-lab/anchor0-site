@@ -1,0 +1,21 @@
+{
+  "sourceCommit": "5be61b757506e6bf0b7f8e8370bab585294bf907",
+  "sourcePath": "figures/realworld_position_threshold_sensitivity.pdf",
+  "sourceSha256": "f4b0c437fdc153efded5ba738e8878f748419b39f6a8cec00695df69b834e587",
+  "change": "Only the -0 glyphs are removed from the Anchor legend; all other content-stream bytes, plot operators and font positioning remain intact.",
+  "output": "dist/assets/images/hardware-thresholds-current.png",
+  "outputSha256": "02d79a7a4f3f2e3f138b8cea3dc029140440cdfee03a271459bdc50c1856c0d0",
+  "verification": {
+    "dimensions": [
+      3414,
+      2271
+    ],
+    "changedPixelBounds": [
+      1229,
+      2142,
+      1259,
+      2168
+    ],
+    "pixelsOutsideLegendChanged": 0
+  }
+}

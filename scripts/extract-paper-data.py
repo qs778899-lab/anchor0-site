@@ -17,8 +17,8 @@ from statistics import mean
 ROOT = Path(__file__).resolve().parents[1]
 ANCHOR_CHECKPOINT_SHA256 = "5757a7d5a5632ae611060508a86032af5cbc5152098aed32edcb7da71f1f31ea"
 MODELS = [
-    ("anchor-global", "Anchor-0ᴳ", "test134_46k_human_global_reference", "test134_46k_g1_global_reference", False, 0.06),
-    ("anchor-local", "Anchor-0ᴸ", "test134_46k_human_reanchor_reference", "test134_46k_g1_reanchor_reference", False, 0.06),
+    ("anchor-global", "Anchorᴳ", "test134_46k_human_global_reference", "test134_46k_g1_global_reference", False, 0.06),
+    ("anchor-local", "Anchorᴸ", "test134_46k_human_reanchor_reference", "test134_46k_g1_reanchor_reference", False, 0.06),
     ("scale-global", "ScaleBFMᴳ", "scalebfm_xl_wholebody14", "scalebfm_xl_wholebody14", True, 0.10),
     ("scale-local", "ScaleBFMᴸ", "scalebfm_xl_wholebody14_local", "scalebfm_xl_wholebody14_local", True, 0.10),
     ("sonic", "SONIC v1.1 (G1)", "sonic_v1_1_g1", "sonic_v1_1_g1", True, 0.90),
@@ -38,7 +38,7 @@ def selected_record(data: dict, config: str, dataset: str) -> dict:
     matches = [r for r in data["records"] if r["config"] == config and r["dataset"] == dataset and r["simulator"] == "isaacsim" and r["dr"] is True]
     assert len(matches) == 1, (config, dataset, len(matches))
     if config.startswith("test134_46k_"):
-        assert matches[0]["checkpointSha256"] == ANCHOR_CHECKPOINT_SHA256, "Anchor-0 checkpoint hash changed"
+        assert matches[0]["checkpointSha256"] == ANCHOR_CHECKPOINT_SHA256, "Anchor checkpoint hash changed"
     return matches[0]
 
 
@@ -127,7 +127,7 @@ def reachability(data: dict) -> dict:
     return {"count": 3210, "postures": {"axes": axes, "series": series, "unit": "%"}, "difficulty": None,
             "footEvents": {"series": foot, "unit": "events / motion"}, "windowSeconds": [5.5, 16.5], "includeEnd": True,
             "metric": "Global main tracking success with zero foot slips, undesired steps, or undesired touchdowns during the task window.",
-            "notes": ["Anchor-0 uses robot-space G1 references for this benchmark, unlike its human references in the other two simulation cohorts.",
+            "notes": ["Anchor uses robot-space G1 references for this benchmark, unlike its human references in the other two simulation cohorts.",
                       "Left and right posture variants and wrist targets are pooled. All 3,210 motions have complete tracking and foot-event records for every selected controller.",
                       "Figure 3G's reference CoM difficulty grouping is not present in the supplied dashboard JSON. No values were inferred from the printed figure."]}
 
@@ -153,12 +153,12 @@ def hardware() -> dict:
     # These printed values are transcribed from the supplied paper, not inferred
     # from radar pixels and not from the dashboard's simulated real_robot set.
     errors = [
-        ("anchor", "Anchor-0", 37.8, 45.7, 59, 72),
-        ("scale14", "ScaleBFM (14-point)", 56.5, 60.2, 57, 72),
-        ("scale5", "ScaleBFM (5-point)", 52.0, 64.9, 56, 71),
-        ("sonic-g1", "SONIC v1.1 (G1)", 43.6, 64.1, 53, 69),
-        ("sonic-smpl", "SONIC v1.1 (SMPL)", 92.3, 75.6, 51, 70),
-        ("mimic-roa", "MimicLite (ROA)", 43.3, 59.4, 53, 72),
+        ("anchor", "Anchor", 40.61, 49.02, 71, 72),
+        ("scale14", "ScaleBFM (14-point)", 58.68, 61.65, 71, 72),
+        ("scale5", "ScaleBFM (5-point)", 54.74, 68.42, 70, 71),
+        ("sonic-g1", "SONIC v1.1 (G1)", 45.51, 67.90, 67, 69),
+        ("sonic-smpl", "SONIC v1.1 (SMPL)", 96.11, 76.89, 66, 70),
+        ("mimic-roa", "MimicLite (ROA)", 46.53, 62.98, 71, 72),
     ]
     standing = [
         ("mimic-roa", "MimicLite (ROA)", True, 65.05, 9.13, 46.44, 9.71, False),
@@ -166,12 +166,13 @@ def hardware() -> dict:
         ("scale5", "ScaleBFM (5-point)", True, 72.69, 8.34, 51.22, 8.25, False),
         ("sonic-g1", "SONIC v1.1 (G1)", True, 98.15, 10.19, 42.38, 9.42, False),
         ("sonic-smpl", "SONIC v1.1 (SMPL)", False, 166.70, 19.20, 85.87, 18.75, False),
-        ("anchor", "Anchor-0†", False, 56.66, 6.18, 35.38, 5.80, True),
+        ("anchor", "Anchor†", False, 56.66, 6.18, 35.38, 5.80, True),
     ]
     return {
-        "trackingErrors": {"series": [{"id": mid, "label": label, "wristError": wrist, "ankleError": ankle, "retained": retained, "valid": valid} for mid, label, wrist, ankle, retained, valid in errors], "unit": "mm",
-            "note": "Mean local errors are conditional on retained complete motions within the body14 25 cm position threshold, without an orientation gate. Retained motion sets differ by controller."},
-        "standingReach": {"count": 51, "series": [{"id": mid, "label": label, "onlineRetargeting": retarget, "globalPosition": gp, "globalRotation": gr, "localPosition": lp, "localRotation": lr, "preliminary": preliminary} for mid, label, retarget, gp, gr, lp, lr, preliminary in standing], "positionUnit": "mm", "rotationUnit": "deg", "note": "† Anchor-0 standing-reach values are preliminary in the supplied paper."},
+        "provenance": {"repository": "ilnehc/S0_Report", "branch": "main", "commit": "5be61b757506e6bf0b7f8e8370bab585294bf907", "table": "tab:real-main", "figure": "fig:real-results", "source": "sections/results.tex"},
+        "trackingErrors": {"series": [{"id": mid, "label": label + ("†" if mid == "anchor" else ""), "wristError": wrist, "ankleError": ankle, "contributing": retained, "valid": valid, "preliminary": mid == "anchor"} for mid, label, wrist, ankle, retained, valid in errors], "unit": "mm",
+            "note": "Mean local errors use nonempty windows ending before the first valid active control tick with any body14 position error above 25 cm, without an orientation gate. Left/right end effectors and valid ticks are averaged within each motion, then motions are weighted equally. Failed motions contribute when their window is nonempty; empty windows are excluded. Local scoring removes per-frame horizontal translation differences, unlike pelvis-relative standing-reach scoring. † Anchor results are preliminary."},
+        "standingReach": {"count": 51, "series": [{"id": mid, "label": label, "onlineRetargeting": retarget, "globalPosition": gp, "globalRotation": gr, "localPosition": lp, "localRotation": lr, "preliminary": preliminary} for mid, label, retarget, gp, gr, lp, lr, preliminary in standing], "positionUnit": "mm", "rotationUnit": "deg", "note": "† Anchor standing-reach values are preliminary in the supplied paper."},
         "thresholdFigure": {"thresholdsCm": [10, 12.5, 15, 17.5, 20, 25], "numericValuesAvailable": False, "note": "The supplied radar image does not print the per-point success rates. It is shown as an image; exact numeric tooltips are not fabricated."}
     }
 
@@ -181,14 +182,14 @@ def downstream() -> dict:
     return {"tasks": tasks,
             "collection": {"series": [
                 {"id": "sonic-smpl", "label": "SONIC v1.1 (SMPL)", "demosPerHour": [41, 24, 9, 39], "success": [68.33, 55.81, 37.50, 81.25]},
-                {"id": "anchor-star", "label": "Anchor-0*", "demosPerHour": [67, 57, 45, 74], "success": [93.10, 93.50, 94.74, 96.15]},
-                {"id": "anchor-current", "label": "Anchor-0", "demosPerHour": [None] * 4, "success": [None] * 4, "pending": True}]},
+                {"id": "anchor-star", "label": "Anchor*", "demosPerHour": [67, 57, 45, 74], "success": [93.10, 93.50, 94.74, 96.15]},
+                {"id": "anchor-current", "label": "Anchor", "demosPerHour": [None] * 4, "success": [None] * 4, "pending": True}]},
             "autonomy": {"taskOrder": ["box", "trash", "slippers", "clothes"], "unit": "%", "series": [
                 {"id": "sonic-token", "label": "SONIC v1.1 (SMPL)", "interface": "Motion token", "values": [70, 0, 10, 40]},
-                {"id": "anchor-star-sparse", "label": "Anchor-0* (re-locate)", "interface": "Sparse", "values": [85, 50, 45, 60]},
-                {"id": "anchor-star-token", "label": "Anchor-0* (re-locate)", "interface": "Motion token", "values": [0, 0, 0, 0]},
-                {"id": "anchor-sparse", "label": "Anchor-0 (re-locate + PRED feedback)", "interface": "Sparse", "values": [None] * 4, "pending": True},
-                {"id": "anchor-token", "label": "Anchor-0 (re-locate + PRED feedback)", "interface": "Motion token", "values": [None] * 4, "pending": True}]},
+                {"id": "anchor-star-sparse", "label": "Anchor* (re-locate)", "interface": "Sparse", "values": [85, 50, 45, 60]},
+                {"id": "anchor-star-token", "label": "Anchor* (re-locate)", "interface": "Motion token", "values": [0, 0, 0, 0]},
+                {"id": "anchor-sparse", "label": "Anchor (re-locate + PRED feedback)", "interface": "Sparse", "values": [None] * 4, "pending": True},
+                {"id": "anchor-token", "label": "Anchor (re-locate + PRED feedback)", "interface": "Motion token", "values": [None] * 4, "pending": True}]},
             "note": "* denotes the earlier variant with error feedback supplied to the encoder (test101/59000). Current-model collection and autonomy results are pending in the supplied paper; they are not replaced with earlier-variant results."}
 
 

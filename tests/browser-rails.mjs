@@ -6,18 +6,18 @@ const rail='#comparison-clips';
 try {
  await viewport(1440,1000);await go();
  await evaluate(`document.querySelector('#videos').scrollIntoView({behavior:'instant'})`);
- await until(`[...document.querySelectorAll('${rail} video')].slice(0,3).every(v=>!v.paused&&v.currentTime>0)`);
+ await until(`[...document.querySelectorAll('${rail} video')].slice(0,4).every(v=>!v.paused&&v.currentTime>0)`);
  await check('every group has exactly one row, no page overflow',`[...document.querySelectorAll('.clip-rail')].every(r=>[...r.children].every(c=>Math.abs(c.getBoundingClientRect().top-r.firstElementChild.getBoundingClientRect().top)<1))&&document.documentElement.scrollWidth===innerWidth`);
- await check('three desktop cards and only one adjacent clip preloaded',`(()=>{const r=document.querySelector('${rail}'),v=[...r.querySelectorAll('video')];return Math.abs(r.firstElementChild.getBoundingClientRect().width*3+36-r.clientWidth)<2&&v.slice(0,4).every(v=>v.currentSrc)&&v.slice(4).every(v=>!v.currentSrc);})()`);
+ await check('four desktop cards and only one adjacent clip preloaded',`(()=>{const r=document.querySelector('${rail}'),v=[...r.querySelectorAll('video')];return Math.abs(r.firstElementChild.getBoundingClientRect().width*4+54-r.clientWidth)<2&&v.slice(0,5).every(v=>v.currentSrc)&&v.slice(5).every(v=>!v.currentSrc);})()`);
  await check('first arrow disabled; a fully fitting group hides arrows',`document.querySelector('[aria-controls="comparison-clips"][data-rail-step="-1"]').disabled&&document.querySelector('#input-devices-clips').closest('.video-group').querySelector('.rail-controls').hidden`);
  const start=await evaluate(`document.querySelector('${rail} video').currentTime`);
  await evaluate(`document.querySelector('[aria-controls="comparison-clips"][data-rail-step="1"]').click()`);
- await until(`Math.abs(document.querySelector('${rail}').scrollLeft-document.querySelector('${rail} .clip-card').getBoundingClientRect().width-18)<2&&document.querySelector('${rail} video').paused&&!document.querySelectorAll('${rail} video')[3].paused`);
+ await until(`Math.abs(document.querySelector('${rail}').scrollLeft-document.querySelector('${rail} .clip-card').getBoundingClientRect().width-18)<2&&document.querySelector('${rail} video').paused&&!document.querySelectorAll('${rail} video')[4].paused`);
  await check('next arrow moves one card without moving other groups',`(()=>{const r=document.querySelector('${rail}');return Math.abs(r.scrollLeft-r.firstElementChild.getBoundingClientRect().width-18)<2&&document.querySelector('#body-diversity-clips').scrollLeft===0;})()`);
  await evaluate(`document.querySelector('[aria-controls="comparison-clips"][data-rail-step="-1"]').click()`);await until(`document.querySelector('${rail}').scrollLeft<1&&!document.querySelector('${rail} video').paused`);
  await check('returning resumes the existing playback position',`document.querySelector('${rail} video').currentTime>=${start}`);
  await evaluate(`document.querySelector('${rail} video').pause()`);await wait(100);
- await evaluate(`document.querySelector('[aria-controls="comparison-clips"][data-rail-step="1"]').click()`);await until(`document.querySelector('${rail}').scrollLeft>300`);await wait(500);
+ await evaluate(`document.querySelector('[aria-controls="comparison-clips"][data-rail-step="1"]').click()`);await until(`document.querySelector('${rail}').scrollLeft>100`);await wait(500);
  await evaluate(`document.querySelector('[aria-controls="comparison-clips"][data-rail-step="-1"]').click()`);await until(`document.querySelector('${rail}').scrollLeft<1`);await wait(150);
  await check('manual pause survives horizontal browsing',`document.querySelector('${rail} video').paused`);
  await evaluate(`document.querySelector('${rail}').focus()`);await cdp('Input.dispatchKeyEvent',{type:'keyDown',key:'End',code:'End'});await cdp('Input.dispatchKeyEvent',{type:'keyUp',key:'End',code:'End'});
@@ -28,7 +28,7 @@ try {
  // Wheel input must keep the two scroll directions independent.
  const point=await evaluate(`(()=>{const r=document.querySelector('${rail}').getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+80,page:scrollY};})()`);
  await cdp('Input.dispatchMouseEvent',{type:'mouseWheel',x:point.x,y:point.y,deltaX:360,deltaY:0});
- await until(`document.querySelector('${rail}').scrollLeft>300`);await wait(500);
+ await until(`document.querySelector('${rail}').scrollLeft>100`);await wait(500);
  await check('horizontal wheel scrolls the rail, not the page',`Math.abs(scrollY-${point.page})<2`);
  const beforeWheel=await evaluate(`({page:scrollY,left:document.querySelector('${rail}').scrollLeft})`);
  await cdp('Input.dispatchMouseEvent',{type:'mouseWheel',x:point.x,y:point.y,deltaX:0,deltaY:250});

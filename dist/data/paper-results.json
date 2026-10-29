@@ -24,7 +24,7 @@
   "models": [
     {
       "id": "anchor-global",
-      "label": "Anchor-0ᴳ",
+      "label": "Anchorᴳ",
       "input": "human_scaled H′",
       "checkpointSha256": "5757a7d5a5632ae611060508a86032af5cbc5152098aed32edcb7da71f1f31ea",
       "onlineRetargeting": false,
@@ -33,7 +33,7 @@
     },
     {
       "id": "anchor-local",
-      "label": "Anchor-0ᴸ",
+      "label": "Anchorᴸ",
       "input": "human_scaled H′",
       "checkpointSha256": "5757a7d5a5632ae611060508a86032af5cbc5152098aed32edcb7da71f1f31ea",
       "onlineRetargeting": false,
@@ -87,7 +87,7 @@
         "series": [
           {
             "id": "anchor-global",
-            "label": "Anchor-0ᴳ",
+            "label": "Anchorᴳ",
             "config": "test134_46k_human_global_reference",
             "input": "human_scaled H′",
             "count": 15342,
@@ -101,7 +101,7 @@
           },
           {
             "id": "anchor-local",
-            "label": "Anchor-0ᴸ",
+            "label": "Anchorᴸ",
             "config": "test134_46k_human_reanchor_reference",
             "input": "human_scaled H′",
             "count": 15342,
@@ -179,7 +179,7 @@
         "series": [
           {
             "id": "anchor-global",
-            "label": "Anchor-0ᴳ",
+            "label": "Anchorᴳ",
             "config": "test134_46k_human_global_reference",
             "input": "human_scaled H′",
             "count": 2230,
@@ -193,7 +193,7 @@
           },
           {
             "id": "anchor-local",
-            "label": "Anchor-0ᴸ",
+            "label": "Anchorᴸ",
             "config": "test134_46k_human_reanchor_reference",
             "input": "human_scaled H′",
             "count": 2230,
@@ -347,7 +347,7 @@
       "series": [
         {
           "id": "anchor-global",
-          "label": "Anchor-0ᴳ",
+          "label": "Anchorᴳ",
           "config": "test134_46k_human_global_reference",
           "values": [
             82.97872340425532,
@@ -382,7 +382,7 @@
         },
         {
           "id": "anchor-local",
-          "label": "Anchor-0ᴸ",
+          "label": "Anchorᴸ",
           "config": "test134_46k_human_reanchor_reference",
           "values": [
             88.29787234042553,
@@ -599,7 +599,7 @@
       "series": [
         {
           "id": "anchor-global",
-          "label": "Anchor-0ᴳ",
+          "label": "Anchorᴳ",
           "config": "test134_46k_human_global_reference",
           "values": [
             96.52650822669104,
@@ -625,7 +625,7 @@
         },
         {
           "id": "anchor-local",
-          "label": "Anchor-0ᴸ",
+          "label": "Anchorᴸ",
           "config": "test134_46k_human_reanchor_reference",
           "values": [
             90.49360146252285,
@@ -797,7 +797,7 @@
       "series": [
         {
           "id": "anchor-global",
-          "label": "Anchor-0ᴳ",
+          "label": "Anchorᴳ",
           "config": "test134_46k_g1_global_reference",
           "values": [
             60.19900497512438,
@@ -824,7 +824,7 @@
         },
         {
           "id": "anchor-local",
-          "label": "Anchor-0ᴸ",
+          "label": "Anchorᴸ",
           "config": "test134_46k_g1_reanchor_reference",
           "values": [
             50.62189054726368,
@@ -965,7 +965,7 @@
       "series": [
         {
           "id": "anchor-global",
-          "label": "Anchor-0ᴳ",
+          "label": "Anchorᴳ",
           "config": "test134_46k_g1_global_reference",
           "slips": 0.11214953271028037,
           "steps": 0.33925233644859815,
@@ -974,7 +974,7 @@
         },
         {
           "id": "anchor-local",
-          "label": "Anchor-0ᴸ",
+          "label": "Anchorᴸ",
           "config": "test134_46k_g1_reanchor_reference",
           "slips": 0.14205607476635515,
           "steps": 0.9177570093457944,
@@ -1027,7 +1027,7 @@
     "includeEnd": true,
     "metric": "Global main tracking success with zero foot slips, undesired steps, or undesired touchdowns during the task window.",
     "notes": [
-      "Anchor-0 uses robot-space G1 references for this benchmark, unlike its human references in the other two simulation cohorts.",
+      "Anchor uses robot-space G1 references for this benchmark, unlike its human references in the other two simulation cohorts.",
       "Left and right posture variants and wrist targets are pooled. All 3,210 motions have complete tracking and foot-event records for every selected controller.",
       "Figure 3G's reference CoM difficulty grouping is not present in the supplied dashboard JSON. No values were inferred from the printed figure."
     ]
@@ -1042,7 +1042,7 @@
         "series": [
           {
             "id": "anchor-global",
-            "label": "Anchor-0ᴳ",
+            "label": "Anchorᴳ",
             "config": "test134_46k_human_global_reference",
             "input": "human_scaled H′",
             "lookaheadSeconds": 0.06,
@@ -1051,7 +1051,7 @@
           },
           {
             "id": "anchor-local",
-            "label": "Anchor-0ᴸ",
+            "label": "Anchorᴸ",
             "config": "test134_46k_human_reanchor_reference",
             "input": "human_scaled H′",
             "lookaheadSeconds": 0.06,
@@ -1113,7 +1113,7 @@
         "series": [
           {
             "id": "anchor-global",
-            "label": "Anchor-0ᴳ",
+            "label": "Anchorᴳ",
             "config": "test134_46k_human_global_reference",
             "input": "human_scaled H′",
             "lookaheadSeconds": 0.06,
@@ -1122,7 +1122,7 @@
           },
           {
             "id": "anchor-local",
-            "label": "Anchor-0ᴸ",
+            "label": "Anchorᴸ",
             "config": "test134_46k_human_reanchor_reference",
             "input": "human_scaled H′",
             "lookaheadSeconds": 0.06,
@@ -1180,7 +1180,7 @@
     "series": [
       {
         "id": "anchor-global",
-        "label": "Anchor-0ᴳ",
+        "label": "Anchorᴳ",
         "config": "test134_46k_human_global_reference",
         "input": "human_scaled H′",
         "lookaheadSeconds": 0.06,
@@ -1189,7 +1189,7 @@
       },
       {
         "id": "anchor-local",
-        "label": "Anchor-0ᴸ",
+        "label": "Anchorᴸ",
         "config": "test134_46k_human_reanchor_reference",
         "input": "human_scaled H′",
         "lookaheadSeconds": 0.06,
@@ -1246,59 +1246,73 @@
     "note": "This compares complete controller configurations; look-ahead is the furthest future reference time, not end-to-end inference latency. It does not isolate the causal effect of look-ahead. Durations and retargeting requirements retain the documented controller settings; success rates use the fixed test134/46k snapshot for each cohort."
   },
   "hardware": {
+    "provenance": {
+      "repository": "ilnehc/S0_Report",
+      "branch": "main",
+      "commit": "5be61b757506e6bf0b7f8e8370bab585294bf907",
+      "table": "tab:real-main",
+      "figure": "fig:real-results",
+      "source": "sections/results.tex"
+    },
     "trackingErrors": {
       "series": [
         {
           "id": "anchor",
-          "label": "Anchor-0",
-          "wristError": 37.8,
-          "ankleError": 45.7,
-          "retained": 59,
-          "valid": 72
+          "label": "Anchor†",
+          "wristError": 40.61,
+          "ankleError": 49.02,
+          "contributing": 71,
+          "valid": 72,
+          "preliminary": true
         },
         {
           "id": "scale14",
           "label": "ScaleBFM (14-point)",
-          "wristError": 56.5,
-          "ankleError": 60.2,
-          "retained": 57,
-          "valid": 72
+          "wristError": 58.68,
+          "ankleError": 61.65,
+          "contributing": 71,
+          "valid": 72,
+          "preliminary": false
         },
         {
           "id": "scale5",
           "label": "ScaleBFM (5-point)",
-          "wristError": 52.0,
-          "ankleError": 64.9,
-          "retained": 56,
-          "valid": 71
+          "wristError": 54.74,
+          "ankleError": 68.42,
+          "contributing": 70,
+          "valid": 71,
+          "preliminary": false
         },
         {
           "id": "sonic-g1",
           "label": "SONIC v1.1 (G1)",
-          "wristError": 43.6,
-          "ankleError": 64.1,
-          "retained": 53,
-          "valid": 69
+          "wristError": 45.51,
+          "ankleError": 67.9,
+          "contributing": 67,
+          "valid": 69,
+          "preliminary": false
         },
         {
           "id": "sonic-smpl",
           "label": "SONIC v1.1 (SMPL)",
-          "wristError": 92.3,
-          "ankleError": 75.6,
-          "retained": 51,
-          "valid": 70
+          "wristError": 96.11,
+          "ankleError": 76.89,
+          "contributing": 66,
+          "valid": 70,
+          "preliminary": false
         },
         {
           "id": "mimic-roa",
           "label": "MimicLite (ROA)",
-          "wristError": 43.3,
-          "ankleError": 59.4,
-          "retained": 53,
-          "valid": 72
+          "wristError": 46.53,
+          "ankleError": 62.98,
+          "contributing": 71,
+          "valid": 72,
+          "preliminary": false
         }
       ],
       "unit": "mm",
-      "note": "Mean local errors are conditional on retained complete motions within the body14 25 cm position threshold, without an orientation gate. Retained motion sets differ by controller."
+      "note": "Mean local errors use nonempty windows ending before the first valid active control tick with any body14 position error above 25 cm, without an orientation gate. Left/right end effectors and valid ticks are averaged within each motion, then motions are weighted equally. Failed motions contribute when their window is nonempty; empty windows are excluded. Local scoring removes per-frame horizontal translation differences, unlike pelvis-relative standing-reach scoring. † Anchor results are preliminary."
     },
     "standingReach": {
       "count": 51,
@@ -1355,7 +1369,7 @@
         },
         {
           "id": "anchor",
-          "label": "Anchor-0†",
+          "label": "Anchor†",
           "onlineRetargeting": false,
           "globalPosition": 56.66,
           "globalRotation": 6.18,
@@ -1366,7 +1380,7 @@
       ],
       "positionUnit": "mm",
       "rotationUnit": "deg",
-      "note": "† Anchor-0 standing-reach values are preliminary in the supplied paper."
+      "note": "† Anchor standing-reach values are preliminary in the supplied paper."
     },
     "thresholdFigure": {
       "thresholdsCm": [
@@ -1424,7 +1438,7 @@
         },
         {
           "id": "anchor-star",
-          "label": "Anchor-0*",
+          "label": "Anchor*",
           "demosPerHour": [
             67,
             57,
@@ -1440,7 +1454,7 @@
         },
         {
           "id": "anchor-current",
-          "label": "Anchor-0",
+          "label": "Anchor",
           "demosPerHour": [
             null,
             null,
@@ -1479,7 +1493,7 @@
         },
         {
           "id": "anchor-star-sparse",
-          "label": "Anchor-0* (re-locate)",
+          "label": "Anchor* (re-locate)",
           "interface": "Sparse",
           "values": [
             85,
@@ -1490,7 +1504,7 @@
         },
         {
           "id": "anchor-star-token",
-          "label": "Anchor-0* (re-locate)",
+          "label": "Anchor* (re-locate)",
           "interface": "Motion token",
           "values": [
             0,
@@ -1501,7 +1515,7 @@
         },
         {
           "id": "anchor-sparse",
-          "label": "Anchor-0 (re-locate + PRED feedback)",
+          "label": "Anchor (re-locate + PRED feedback)",
           "interface": "Sparse",
           "values": [
             null,
@@ -1513,7 +1527,7 @@
         },
         {
           "id": "anchor-token",
-          "label": "Anchor-0 (re-locate + PRED feedback)",
+          "label": "Anchor (re-locate + PRED feedback)",
           "interface": "Motion token",
           "values": [
             null,

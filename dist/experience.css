@@ -1,8 +1,18 @@
 /* The reading column stays independent of the floating table of contents. */
 html{scroll-padding-top:32px}
-body{padding-left:236px}
+body{padding-left:264px}
 .container{width:min(1200px,calc(100% - 64px))}
-.floating-nav{position:fixed;left:20px;top:clamp(24px,8vh,88px);width:204px;max-height:calc(100dvh - 48px);overflow:auto;padding:24px 14px 14px;border:1px solid var(--line);border-radius:16px;background:var(--header);box-shadow:0 10px 40px #10223b0c;backdrop-filter:blur(18px);z-index:60}
+.floating-nav{position:fixed;left:20px;top:clamp(24px,8vh,88px);width:232px;max-height:calc(100dvh - 32px);overflow:auto;padding:8px 14px 14px;border:1px solid color-mix(in srgb,var(--primary) 18%,var(--line));border-radius:18px;background:color-mix(in srgb,var(--bg) 90%,transparent);box-shadow:0 18px 48px #10223b26,0 3px 10px #10223b12,inset 0 1px 0 #ffffff55;backdrop-filter:blur(22px);z-index:60}
+[data-theme="dark"] .floating-nav{box-shadow:0 18px 48px #0008,0 3px 10px #0004,inset 0 1px 0 #ffffff0d}
+.nav-window-controls{display:flex;align-items:center;gap:8px;margin:0 0 12px}
+.nav-drag-handle{flex:1;min-height:28px;display:flex;align-items:center;justify-content:center;cursor:grab;touch-action:none;color:var(--muted);border-radius:6px}
+.nav-drag-handle:hover{background:var(--soft);color:var(--primary)}
+.nav-drag-handle svg{width:24px;height:12px;fill:none;stroke:currentColor;stroke-width:1.5}
+.floating-nav.is-dragging{user-select:none;transition:none}
+.is-dragging .nav-drag-handle{cursor:grabbing}
+.nav-reset{font-size:10px;color:var(--muted);padding:6px 2px}
+.nav-reset:hover{color:var(--primary)}
+.intro-number{display:block;margin-bottom:12px}
 .floating-nav .brand{display:flex;align-items:flex-start;flex-direction:column;gap:17px;padding:0 14px 23px;font-size:23px;letter-spacing:-.04em}
 .floating-nav .brand img{width:118px;max-height:29px}
 .section-nav{display:flex;flex-direction:column;gap:3px;padding-bottom:20px}
@@ -39,6 +49,7 @@ body{padding-left:236px}
 .rail-arrow:hover:not(:disabled){background:var(--accent);border-color:var(--primary)}
 .rail-arrow:disabled{opacity:.32;cursor:default}
 .clip-rail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 36px)/3);grid-template-rows:auto;gap:18px;max-width:100%;min-width:0;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:var(--border) transparent;padding-bottom:13px}
+@media(min-width:1200px){#comparison-clips,#body-diversity-clips{grid-auto-columns:calc((100% - 54px)/4)}}
 .clip-rail::-webkit-scrollbar{height:5px}
 .clip-rail::-webkit-scrollbar-track{background:transparent}
 .clip-rail::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}
@@ -58,6 +69,16 @@ body{padding-left:236px}
 .video-dialog .dialog-toolbar button{font-size:28px;padding:0 5px}
 .video-dialog .dialog-toolbar p{margin:0}
 .evaluation-notes .chart-note{font-size:13px;margin:0 0 20px}
+.collection-scroll{overflow:auto;max-width:100%;border:1px solid var(--line);border-radius:8px}
+.collection-matrix{min-width:880px;border-collapse:separate;border-spacing:0;width:100%;font-size:12px;font-variant-numeric:tabular-nums;text-align:right}
+.collection-matrix th,.collection-matrix td{padding:13px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+.collection-matrix thead th{background:var(--soft);font-weight:500;text-align:center}
+.collection-matrix thead tr:nth-child(2) th{font-size:10px;color:var(--muted)}
+.collection-matrix th:first-child[rowspan],.collection-matrix tbody th{position:sticky;left:0;z-index:1;text-align:left;background:var(--bg);border-right:1px solid var(--line);min-width:170px}
+.collection-matrix th:first-child[rowspan]{background:var(--soft)}
+.collection-matrix th[scope="colgroup"],.collection-matrix td:nth-child(2n+1){border-right:1px solid var(--line)}
+.collection-matrix .highlight td,.collection-matrix .highlight th{background:var(--accent)}
+.collection-matrix tr:last-child td,.collection-matrix tr:last-child th{border-bottom:0}
 @media(max-width:1199px){
   body{padding-left:0}
   html{scroll-padding-top:74px}

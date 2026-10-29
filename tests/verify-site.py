@@ -111,6 +111,16 @@ for series in data['reachability']['postures']['series']:
     assert math.isclose(series['overallSuccess'],100*sum(series['successes'])/3210,abs_tol=1e-10)
     if series['id'] in ('anchor-global','anchor-local'):
         assert sum(series['successes'])=={'anchor-global':1909,'anchor-local':1448}[series['id']]
+assert data['hardware']['provenance']['commit']=='5be61b757506e6bf0b7f8e8370bab585294bf907'
+expected_hardware={'anchor':(40.61,49.02,71,72),'scale14':(58.68,61.65,71,72),'scale5':(54.74,68.42,70,71),'sonic-g1':(45.51,67.90,67,69),'sonic-smpl':(96.11,76.89,66,70),'mimic-roa':(46.53,62.98,71,72)}
+for row in data['hardware']['trackingErrors']['series']:
+    assert tuple(row[k] for k in ['wristError','ankleError','contributing','valid'])==expected_hardware[row['id']]
+    assert row['preliminary']==(row['id']=='anchor')
+assert data['hardware']['standingReach']['count']==51
+assert 'nonempty windows' in data['hardware']['trackingErrors']['note']
+assert all(name not in (DIST/'index.html').read_text()+(DIST/'data/paper-results.json').read_text() for name in ['Anchor-0','Anchor-1'])
+assert ' download ' not in (DIST/'index.html').read_text()
+print('PASS: main@5be61b7 measured hardware values, contributing windows and Anchor naming')
 assert data['hardware']['thresholdFigure']['numericValuesAvailable'] is False
 assert all(v is None for s in data['downstream']['autonomy']['series'] if s.get('pending') for v in s['values'])
 print('PASS: test134/46k snapshot, cohort/look-ahead consistency, exact count aggregation, pending-result semantics')
@@ -123,7 +133,7 @@ if '--offline' in sys.argv:
 def get(path, headers=None):
     return urllib.request.urlopen(urllib.request.Request(BASE+path,headers=headers or {}), timeout=10)
 
-with get('/') as r: assert r.status==200 and b'Anchor-0:' in r.read()
+with get('/') as r: assert r.status==200 and b'Anchor:' in r.read()
 with get('/demo?letter=Z') as r: assert r.geturl().endswith('/demo/?letter=Z')
 video=DIST/'assets/videos/scenes.mp4'
 with get('/assets/videos/scenes.mp4', {'Range':'bytes=0-31'}) as r:

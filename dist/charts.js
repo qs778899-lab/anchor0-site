@@ -24,7 +24,7 @@ const measurement = (series, datasetId, dataset, metricId, metric, value, unit, 
 const cohortTip = (s,c,key,name,unit) => measurement(s,c.id,label(c),key,name,s[key],unit,{count:c.count});
 const radarTip = (s,r,i) => measurement(s,r.id||'reachability',r.id?`${t('In-house','自建动作集')} · ${label(r)}`:t('Reachability','可达性'),r.axes[i].id,label(r.axes[i]),s.values[i],'%',{count:s.counts[i],successes:s.successes[i]});
 const footTip = (s,key,name) => measurement(s,'reachability',t('Reachability','可达性'),key,name,s[key],t('events / motion','次 / 动作'),{count:s.count});
-const hardwareTip = (s,key,name) => measurement(s,'hardware',t('Hardware','真机实验'),key,name,s[key],'mm',{count:s.valid,retained:s.retained});
+const hardwareTip = (s,key,name) => measurement(s,'hardware',t('Hardware','真机实验'),key,name,s[key],'mm',{count:s.valid,contributing:s.contributing,note:s.preliminary?t('Preliminary result','初步结果'):undefined});
 const niceMax = value => { const power=10**Math.floor(Math.log10(value||1));return Math.ceil(value/power*2)/2*power; };
 
 function dataTable(headers,rows){
@@ -147,8 +147,8 @@ function bubbleFigure(dataset){
   let out=text(left,18,t('Local success rate','局部成功率'),'class="bubble-axis-title"');
   [0,20,40,60,80,100].forEach(v=>{out+=line(left,y(v),w-right,y(v))+text(left-13,y(v)+5,`${v}%`,'text-anchor="end" class="bubble-axis"');});
   for(let i=0;i<=10;i++){const v=i/10;out+=text(x(v),h-56,fmt(v,1),'text-anchor="middle" class="bubble-axis"');}
-  out+=text(w/2,h-15,t('Look-ahead time (s)','前瞻时长（秒）'),'text-anchor="middle" class="bubble-axis-title"');
-  if(!narrow)out+=text(w-right,h-15,t('Less look-ahead →','更短前瞻 →'),'text-anchor="end" class="bubble-axis-title"');
+  out+=text(w/2,h-15,t('Look-ahead time (s)','未来参考帧窗口（秒）'),'text-anchor="middle" class="bubble-axis-title"');
+  if(!narrow)out+=text(w-right,h-15,t('Less look-ahead →','更短未来窗口 →'),'text-anchor="end" class="bubble-axis-title"');
   const cluster=dataset.series.filter(s=>s.lookaheadSeconds<.5).sort((a,b)=>b.localSuccess-a.localSuccess);
   const labels=new Map();let previous=-100;
   const gap=narrow?57:53;
@@ -166,8 +166,8 @@ function bubbleFigure(dataset){
     const width=narrow?181:197;
     out+=`<rect x="${align==='end'?lx-width:lx-5}" y="${ly-18}" width="${width+8}" height="43" fill="transparent"/>`+text(lx,ly,s.label,`text-anchor="${align}" class="bubble-name ${anchor?'anchor-label':''}"`)+text(lx,ly+21,`${fmt(s.localSuccess,1)}% · ${fmt(s.lookaheadSeconds)} s`,`text-anchor="${align}" class="bubble-value"`)+'</g>';
   });
-  const rows=dataset.series.map(s=>({id:s.id,label:s.label,values:[s.localSuccess,s.lookaheadSeconds,s.onlineRetargeting?t('Required','需要'):t('Not required','无需')],tips:[measurement(s,dataset.id,label(dataset),'localSuccess',t('Local success','局部成功率'),s.localSuccess,'%',{count:dataset.count}),measurement(s,dataset.id,label(dataset),'lookaheadSeconds',t('Look-ahead','前瞻'),s.lookaheadSeconds,'s',{count:dataset.count})]}));
-  return [svg(w,h,t('Performance and reference look-ahead','性能与参考前瞻'),out,narrow?'narrow-plot':''),dataTable([t('Local success (%)','局部成功率 (%)'),t('Look-ahead (s)','前瞻 (s)'),t('Online retargeting','在线重定向')],rows),`${w} / ${h}`];
+  const rows=dataset.series.map(s=>({id:s.id,label:s.label,values:[s.localSuccess,s.lookaheadSeconds,s.onlineRetargeting?t('Required','需要'):t('Not required','无需')],tips:[measurement(s,dataset.id,label(dataset),'localSuccess',t('Local success','局部成功率'),s.localSuccess,'%',{count:dataset.count}),measurement(s,dataset.id,label(dataset),'lookaheadSeconds',t('Look-ahead','未来帧窗口'),s.lookaheadSeconds,'s',{count:dataset.count})]}));
+  return [svg(w,h,t('Performance and reference look-ahead','跟踪性能与未来帧'),out,narrow?'narrow-plot':''),dataTable([t('Local success (%)','局部成功率 (%)'),t('Look-ahead (s)','未来帧窗口 (s)'),t('Online retargeting','在线重定向')],rows),`${w} / ${h}`];
 }
 
 function renderLookahead(){

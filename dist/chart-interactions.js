@@ -119,7 +119,7 @@ function showTips(marks, event, keyboard=false) {
   $$('[aria-describedby="chart-tooltip"]').forEach(mark=>{if(!marks.includes(mark))mark.removeAttribute('aria-describedby');});
   activeMarks=marks;keyboardTip=keyboard;
   const tips = marks.map(mark => JSON.parse(mark.dataset.tip));
-  tooltip.innerHTML = `<div class="tooltip-dataset">${esc(tips[0].dataset||'')}</div>${tips.map(tip => `<div class="tooltip-entry"><strong>${esc(tip.model)}</strong><div>${esc(tip.metric)}</div><div class="tooltip-value">${exact(tip.value)} ${esc(tip.unit)}</div>${tip.count!=null?`<small>${tip.successes!=null?`${tip.successes.toLocaleString('en-US')} / `:''}${tip.count.toLocaleString('en-US')} ${t('motions','条动作')}${tip.retained!=null?` · ${t('retained','保留')} ${tip.retained}`:''}</small>`:''}${tip.note?`<small>${esc(tip.note)}</small>`:''}${tip.config?`<small class="tooltip-config">${esc(tip.config)}</small>`:''}</div>`).join('')}`;
+  tooltip.innerHTML = `<div class="tooltip-dataset">${esc(tips[0].dataset||'')}</div>${tips.map(tip => `<div class="tooltip-entry"><strong>${esc(tip.model)}</strong><div>${esc(tip.metric)}</div><div class="tooltip-value">${exact(tip.value)} ${esc(tip.unit)}</div>${tip.count!=null?`<small>${tip.successes!=null?`${tip.successes.toLocaleString('en-US')} / `:''}${tip.count.toLocaleString('en-US')} ${t('motions','条动作')}${tip.contributing!=null?` · ${t('contributing to error mean','参与误差统计')} ${tip.contributing}`:''}</small>`:''}${tip.note?`<small>${esc(tip.note)}</small>`:''}${tip.config?`<small class="tooltip-config">${esc(tip.config)}</small>`:''}</div>`).join('')}`;
   tooltip.dataset.items = String(tips.length);
   tooltip.hidden = false;
   marks.forEach(mark => mark.setAttribute('aria-describedby','chart-tooltip'));
