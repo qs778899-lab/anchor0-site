@@ -2,9 +2,9 @@ import {METHOD_FLOWS} from './method-flow-paths.js';
 
 export const METHOD_PULSE = 64;
 export const METHOD_PANELS = [
-  {group:'A', x:48, y:15, width:1627, height:548, rx:30, color:'#438eff'},
-  {group:'B', x:48, y:583, width:1624, height:869, rx:37, color:'#a779ed'},
-  {group:'C', x:1697, y:15, width:609, height:1437, rx:28, color:'#36b8a1'},
+  {group:'A', x:7, y:15, width:1628, height:547, rx:30, color:'#438eff'},
+  {group:'B', x:7, y:582, width:1626, height:868, rx:37, color:'#a779ed'},
+  {group:'C', x:1655, y:15, width:611, height:1435, rx:28, color:'#36b8a1'},
 ];
 // Pedagogical relay order. The source arrows and branch directions remain unchanged.
 export const METHOD_STAGES = [
@@ -15,7 +15,6 @@ export const METHOD_STAGES = [
   ['C', ['teleoperation-reference', 'policy-reference', 'deployment-reference-encoder',
     'deployment-encoder-token', 'policy-token', 'deployment-token-decoder',
     'deployment-decoder-robot', 'deployment-state-error', 'deployment-error-decoder', 'deployment-state-decoder']],
-  ['benchmark', ['execution-benchmark', 'benchmark-trunk', 'benchmark-training', 'benchmark-curation']],
 ];
 function pathLength(d) {
   const tokens=d.match(/[MHV]|-?\d+(?:\.\d+)?/g);let x=0,y=0,length=0;

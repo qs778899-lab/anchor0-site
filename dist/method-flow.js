@@ -2,7 +2,7 @@ import {METHOD_IMAGE, METHOD_FLOWS} from './method-flow-paths.js';
 import {buildMethodLayers} from './method-flow-layers.js';
 import {METHOD_PULSE, METHOD_PANELS, METHOD_DURATION, methodFrame} from './method-flow-timeline.js';
 
-const button = document.querySelector('#method [data-zoom="./assets/images/method.png"]');
+const button = document.querySelector('#method [data-method-figure]');
 const original = button.querySelector('img');
 const dialog = document.querySelector('#image-dialog');
 const dialogImage = document.querySelector('#dialog-image');
@@ -27,6 +27,7 @@ function element(name, attributes = {}) {
 function createSurface(image, id) {
   const container = document.createElement('span');
   container.className = 'method-flow-surface';
+  container.style.aspectRatio = `${METHOD_IMAGE.width}/${METHOD_IMAGE.height}`;
   image.before(container);container.append(image);
   const svg = element('svg', {viewBox:`0 0 ${METHOD_IMAGE.width} ${METHOD_IMAGE.height}`, class:'method-flow-overlay', 'aria-hidden':'true', focusable:'false', 'data-surface':id});
   const defs = element('defs');

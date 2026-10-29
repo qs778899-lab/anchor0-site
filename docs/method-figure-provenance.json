@@ -1,0 +1,13 @@
+{
+  "repository": "ilnehc/S0_Report",
+  "branch": "main",
+  "commit": "7bdfcc7f280c6190d74c963995c5bd530b1d8229",
+  "sourcePath": "figures/method.png",
+  "output": "dist/assets/images/method.png",
+  "sha256": "aa8008e9762172bbe90088b4bd58bddbfb8696f6a047e2847633adfd8d366cf7",
+  "dimensions": [2273, 1462],
+  "colorMode": "RGBA",
+  "transformation": "None; published file is byte-identical to the paper source.",
+  "animationGroups": {"A": 4, "B": 14, "C": 10},
+  "removed": "The earlier Benchmark box and four associated animation segments."
+}

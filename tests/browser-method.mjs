@@ -3,6 +3,7 @@ import {readFile, mkdir} from 'node:fs/promises';
 import {createHash} from 'node:crypto';
 import {METHOD_IMAGE, METHOD_FLOWS} from '../dist/method-flow-paths.js';
 import {cdp, evaluate, wait, until, viewport, go, screenshot, close, events} from './browser-client.mjs';
+import {METHOD_DURATION} from '../dist/method-flow-timeline.js';
 import {verifyMethodEmphasis} from './method-visual-checks.mjs';
 
 const inline = '[data-surface="inline"]';
@@ -13,7 +14,7 @@ const scrollToFigure = async () => {
   await evaluate(`document.querySelector('#method .paper-figure').scrollIntoView({behavior:'instant',block:'center'})`);
   await wait(150);
 };
-const aligned = selector => `(()=>{const svg=document.querySelector('${selector}'),image=svg.previousElementSibling,a=svg.getBoundingClientRect(),b=image.getBoundingClientRect();return ['x','y','width','height'].every(k=>Math.abs(a[k]-b[k])<.1)&&image.naturalWidth===2314&&image.naturalHeight===1585;})()`;
+const aligned = selector => `(()=>{const svg=document.querySelector('${selector}'),image=svg.previousElementSibling,a=svg.getBoundingClientRect(),b=image.getBoundingClientRect();return ['x','y','width','height'].every(k=>Math.abs(a[k]-b[k])<.1)&&image.naturalWidth===${METHOD_IMAGE.width}&&image.naturalHeight===${METHOD_IMAGE.height};})()`;
 const press = async (key, code, virtualKey) => {
   for (const type of ['keyDown','keyUp']) await cdp('Input.dispatchKeyEvent', {type, key, code, windowsVirtualKeyCode:virtualKey, ...(type==='keyDown'&&key==='Enter'?{text:'\r'}:{})});
 };
@@ -22,8 +23,8 @@ try {
   const png = await readFile('dist/assets/images/method.png');
   assert.equal(createHash('sha256').update(png).digest('hex'), METHOD_IMAGE.sha256);
   assert.equal(png.readUInt32BE(16), METHOD_IMAGE.width);assert.equal(png.readUInt32BE(20), METHOD_IMAGE.height);
-  assert.equal(new Set(METHOD_FLOWS.map(flow=>flow.id)).size, 32);
-  console.log('PASS: original PNG hash and 2314 × 1585 pixels unchanged; 32 unique path segments');
+  assert.equal(new Set(METHOD_FLOWS.map(flow=>flow.id)).size, 28);
+  console.log('PASS: original PNG hash and 2273 × 1462 pixels unchanged; 28 unique path segments');
   await mkdir('.cache/preview', {recursive:true});
   await viewport(1440,1000);await go();
   await evaluate(`localStorage.removeItem('anchor-navigation-position');localStorage.setItem('anchor-language','en');localStorage.setItem('anchor-theme','light')`);await go();
@@ -52,22 +53,23 @@ try {
         for(const dx of [-2,-1,0,1,2])for(const dy of [-2,-1,0,1,2]){
           const x=Math.round(point.x)+dx,y=Math.round(point.y)+dy,index=(y*canvas.width+x)*4;
           const alpha=bitmap[index+3];
-          if(alpha<240){if(flow.group==='benchmark')gaps++;continue;}
+          if(alpha<240)continue;
           if(maskBitmap[index+3]<240)continue;
           checked++;coverage++;
           if(expected.some((value,i)=>Math.abs(value-bitmap[index+i])>25))failures.push({id:flow.id,x,y});
         }
       }
-      if(flow.group!=='benchmark'&&coverage<length*7)failures.push({id:flow.id,reason:'insufficient line coverage'});
+      if(coverage<length*7)failures.push({id:flow.id,reason:'insufficient line coverage'});
     }
     return {checked,gaps,failures};
   })()`);
-  assert.deepEqual(pixels.failures, []);assert(pixels.gaps>100);
-  console.log(`PASS: ${pixels.checked} original line pixels match all 32 centerlines and highlight widths`);
+  assert.deepEqual(pixels.failures, []);assert(METHOD_FLOWS.every(flow=>flow.group!=='benchmark'));
+  console.log(`PASS: ${pixels.checked} original line pixels match all 28 centerlines and highlight widths`);
   await check('arrow mask is ready and highlights never intercept clicks', `document.querySelector('${inline} mask').style.maskType==='alpha' && document.querySelector('${inline}').dataset.maskReady==='true' && getComputedStyle(document.querySelector('${inline}')).pointerEvents==='none'`);
   await check('desktop overlay exactly matches the original image bounds', aligned(inline));
+  await check('enlarge label sits below the diagram without covering its new bottom caption', `(()=>{const figure=document.querySelector('#method .method-flow-surface').getBoundingClientRect(),label=document.querySelector('#method .zoom-label').getBoundingClientRect();return label.top>=figure.bottom;})()`);
   const before = parseFloat(await offset(inline));await wait(130);const after = parseFloat(await offset(inline));
-  const travelled = (after-before+31260)%31260;
+  const travelled = (after-before+METHOD_DURATION)%METHOD_DURATION;
   assert(travelled>60&&travelled<450);console.log('PASS: relay clock advances at real time');
   await verifyMethodEmphasis();
   await screenshot('.cache/preview/method-relay-desktop.png');
@@ -86,7 +88,7 @@ try {
   await check('enlarged fit-to-window overlay is aligned', aligned(modal));
   await evaluate(`document.activeElement.blur()`);await screenshot('.cache/preview/method-relay-enlarged.png');
   await evaluate(`document.querySelector('#dialog-image').click()`);await wait(100);
-  await check('original-size zoom retains a one-to-one source-pixel view', `${aligned(modal)}&&document.querySelector('#dialog-image').getBoundingClientRect().width===2314&&document.querySelector('#dialog-image').getBoundingClientRect().height===1585`);
+  await check('original-size zoom retains a one-to-one source-pixel view', `${aligned(modal)}&&document.querySelector('#dialog-image').getBoundingClientRect().width===${METHOD_IMAGE.width}&&document.querySelector('#dialog-image').getBoundingClientRect().height===${METHOD_IMAGE.height}`);
   await evaluate(`document.querySelector('#close-image').click()`);await until(`document.querySelector('${inline}').dataset.running==='true'`);
   await check('closing restores the ordinary image viewer DOM', `!document.querySelector('${modal}')&&!document.querySelector('#image-dialog .method-flow-toggle')&&document.querySelector('#dialog-image').parentElement.className==='dialog-image-area'`);
 
