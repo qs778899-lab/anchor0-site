@@ -1,11 +1,13 @@
 {
   "version": 1,
   "fps": 30,
-  "editing": "Continuous, frame-aligned action phases at original speed. All frame positions retained; explicit frameRepairs replace isolated subtitle artifacts with adjacent clean frames. No crop, overlays, or rearrangement. Simultaneous operators/devices stay in the original composite.",
+  "editing": "Continuous, frame-aligned action phases at original speed. All frame positions retained; explicit frameRepairs replace isolated subtitle artifacts with adjacent clean frames. Only the comparison group's declared outer black margins are cropped. No overlays, scaling up, or rearrangement. Simultaneous operators/devices stay in the original composite.",
   "groups": [
     {
       "id": "comparison",
       "source": "双机对比 pico logo/双机对比.mp4",
+      "crop": {"x":64, "y":0, "width":1610, "height":906},
+      "encoding": {"crf":16, "preset":"slow"},
       "frameRepairs": [{"startFrame":12, "endFrame":13, "replacementFrame":13, "reason":"Remove the single-frame burned-in title at 0.400 s using the immediately following clean frame; keep timing and audio unchanged."}],
       "title": {"en": "Two robots. The same intent.", "zh": "相同意图，双机对照。"},
       "description": {"en": "Reaching, foot stability and locomotion, side by side.", "zh": "并排观察触达、足部稳定与行走表现。"},

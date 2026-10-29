@@ -56,19 +56,19 @@
       "output_metadata": {
         "duration_seconds": 83.776,
         "faststart": true,
-        "width": 1738,
+        "width": 1610,
         "height": 906,
         "fps": 30.0,
         "video_codec": "h264",
         "pixel_format": "yuv420p",
         "audio_codec": "aac",
-        "bytes": 19147614,
-        "sha256": "5919a4fedbcdbc9ca1dd551ab66a606035b3831b6f58f329d99fd89337673e17"
+        "bytes": 49073127,
+        "sha256": "53d7e3bc9f3dedcb89119a6a9a3bc92d484feed91dcc67b0b7821d01639ef94a"
       },
       "poster": "assets/posters/comparison.jpg",
       "poster_time_seconds": 10,
-      "poster_bytes": 135719,
-      "poster_sha256": "358776066625681f85b4073f0fb8e7e401a109d5681abf14a95619126dcbf0ab",
+      "poster_bytes": 138612,
+      "poster_sha256": "7136d4594bec4aba9d819cdd742b56be712405eb3b9377906a0be94a46d9c0fb",
       "frameRepairs": [
         {
           "startFrame": 12,
@@ -77,6 +77,16 @@
           "reason": "Remove the single-frame burned-in title at 0.400 s using the immediately following clean frame; keep timing and audio unchanged."
         }
       ],
+      "crop": {
+        "x": 64,
+        "y": 0,
+        "width": 1610,
+        "height": 906
+      },
+      "encoding": {
+        "crf": 16,
+        "preset": "slow"
+      },
       "validation": "complete decode without errors"
     },
     {

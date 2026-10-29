@@ -13,7 +13,10 @@
       },
       "fullVideo": "assets/videos/comparison.mp4",
       "fullPoster": "assets/posters/comparison.jpg",
-      "fullVideoRevision": "5919a4fedbcd",
+      "fullVideoRevision": "53d7e3bc9f3d",
+      "fullWidth": 1610,
+      "fullHeight": 906,
+      "fullPosterRevision": "7136d4594bec",
       "clips": [
         {
           "id": "comparison-standing",
@@ -26,9 +29,10 @@
           "duration": 8.0,
           "output": "assets/videos/clips/comparison-standing.mp4",
           "poster": "assets/posters/clips/comparison-standing.jpg",
-          "width": 1738,
+          "width": 1610,
           "height": 906,
-          "revision": "d9b82c1a2f71"
+          "revision": "6953d3bf1bce",
+          "posterRevision": "0cff6e07630f"
         },
         {
           "id": "comparison-kneeling",
@@ -41,8 +45,10 @@
           "duration": 11.8,
           "output": "assets/videos/clips/comparison-kneeling.mp4",
           "poster": "assets/posters/clips/comparison-kneeling.jpg",
-          "width": 1738,
-          "height": 906
+          "width": 1610,
+          "height": 906,
+          "revision": "91b8b431c674",
+          "posterRevision": "b562c50041e7"
         },
         {
           "id": "comparison-lateral",
@@ -55,8 +61,10 @@
           "duration": 10.833333333333334,
           "output": "assets/videos/clips/comparison-lateral.mp4",
           "poster": "assets/posters/clips/comparison-lateral.jpg",
-          "width": 1738,
-          "height": 906
+          "width": 1610,
+          "height": 906,
+          "revision": "697cb9304412",
+          "posterRevision": "66b773e4fd9a"
         },
         {
           "id": "comparison-foot-stability",
@@ -69,8 +77,10 @@
           "duration": 6.8,
           "output": "assets/videos/clips/comparison-foot-stability.mp4",
           "poster": "assets/posters/clips/comparison-foot-stability.jpg",
-          "width": 1738,
-          "height": 906
+          "width": 1610,
+          "height": 906,
+          "revision": "bbe4ede804ac",
+          "posterRevision": "2ab04d70c9e7"
         },
         {
           "id": "comparison-ankle",
@@ -83,8 +93,10 @@
           "duration": 7.233333333333333,
           "output": "assets/videos/clips/comparison-ankle.mp4",
           "poster": "assets/posters/clips/comparison-ankle.jpg",
-          "width": 1738,
-          "height": 906
+          "width": 1610,
+          "height": 906,
+          "revision": "7352131396fb",
+          "posterRevision": "cfe83aba953a"
         },
         {
           "id": "comparison-turning",
@@ -97,8 +109,10 @@
           "duration": 9.0,
           "output": "assets/videos/clips/comparison-turning.mp4",
           "poster": "assets/posters/clips/comparison-turning.jpg",
-          "width": 1738,
-          "height": 906
+          "width": 1610,
+          "height": 906,
+          "revision": "39ca5bf126db",
+          "posterRevision": "5f1e7517ca35"
         },
         {
           "id": "comparison-pico-bending",
@@ -111,8 +125,10 @@
           "duration": 8.133333333333333,
           "output": "assets/videos/clips/comparison-pico-bending.mp4",
           "poster": "assets/posters/clips/comparison-pico-bending.jpg",
-          "width": 1738,
-          "height": 906
+          "width": 1610,
+          "height": 906,
+          "revision": "55e34fbb9856",
+          "posterRevision": "21d9450feea1"
         },
         {
           "id": "comparison-pico-lateral",
@@ -125,8 +141,10 @@
           "duration": 13.666666666666666,
           "output": "assets/videos/clips/comparison-pico-lateral.mp4",
           "poster": "assets/posters/clips/comparison-pico-lateral.jpg",
-          "width": 1738,
-          "height": 906
+          "width": 1610,
+          "height": 906,
+          "revision": "2f8cff733b9e",
+          "posterRevision": "f10e5fcaf970"
         },
         {
           "id": "comparison-pico-walking",
@@ -139,8 +157,10 @@
           "duration": 8.3,
           "output": "assets/videos/clips/comparison-pico-walking.mp4",
           "poster": "assets/posters/clips/comparison-pico-walking.jpg",
-          "width": 1738,
-          "height": 906
+          "width": 1610,
+          "height": 906,
+          "revision": "76598368435b",
+          "posterRevision": "c526e47000c8"
         }
       ]
     },

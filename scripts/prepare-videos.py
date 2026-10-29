@@ -135,7 +135,7 @@ def video_filter_args(filters: str, repairs: list[dict]) -> list[str]:
 
 
 def preserve_published_audio(ffmpeg: str, temporary: Path, existing: Path, cache: Path):
-    """A frame-only repair must keep the already-published AAC packets unchanged."""
+    """Visual-only changes keep the already-published AAC packets unchanged."""
     remux = cache / f'{temporary.stem}-audio-preserved.mp4'
     run_logged([ffmpeg, '-hide_banner', '-nostdin', '-y', '-i', str(temporary), '-i', str(existing),
                 '-map', '0:v:0', '-map', '1:a:0?', '-map_metadata', '-1', '-c', 'copy',
@@ -143,8 +143,40 @@ def preserve_published_audio(ffmpeg: str, temporary: Path, existing: Path, cache
     remux.replace(temporary)
 
 
+def visual_settings(group):
+    return {key: group[key] for key in ('crop', 'encoding') if key in group}
+
+
+def spatial_filter(group):
+    crop = group.get('crop')
+    if crop:
+        assert all(isinstance(crop[k], int) and crop[k] >= 0 for k in ('x', 'y', 'width', 'height'))
+        assert crop['width'] > 0 and crop['height'] > 0
+        assert all(crop[k] % 2 == 0 for k in ('x', 'y', 'width', 'height')), 'Align H.264 chroma samples'
+        # Keep source pixels at their native resolution; only remove declared outer margins.
+        return f"crop={crop['width']}:{crop['height']}:{crop['x']}:{crop['y']},setsar=1"
+    return "scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease:force_divisible_by=2,setsar=1"
+
+
+def encoding_args(group, default_crf, maxrate):
+    profile = group.get('encoding')
+    if profile:
+        return ['-c:v', 'libx264', '-preset', profile['preset'], '-crf', str(profile['crf']), '-pix_fmt', 'yuv420p']
+    return ['-c:v', 'libx264', '-preset', 'veryfast', '-crf', str(default_crf), '-pix_fmt', 'yuv420p',
+            '-maxrate', f'{maxrate}k', '-bufsize', f'{maxrate * 2}k']
+
+
+def validate_dimensions(original, prepared, group):
+    crop = group.get('crop')
+    if crop:
+        assert crop['x'] + crop['width'] <= original['width'] and crop['y'] + crop['height'] <= original['height']
+        assert (prepared['width'], prepared['height']) == (crop['width'], crop['height']), 'Crop must preserve native pixels'
+    else:
+        assert abs(original['width'] / original['height'] - prepared['width'] / prepared['height']) < .005
+
+
 def prepare_clips(args, ffmpeg, cache):
-    """Encode exact frame ranges from originals, keeping every composite frame intact."""
+    """Encode exact source frame ranges, applying only declared repairs and outer crops."""
     manifest = json.loads((ROOT / 'scripts/video-clips.json').read_text())
     fps = manifest['fps']
     published = {'version': manifest['version'], 'groups': []}
@@ -157,8 +189,12 @@ def prepare_clips(args, ffmpeg, cache):
         assert original['fps'] == fps, 'Clip manifest assumes a 30 fps source'
         original_frames = decoded_frame_count(ffmpeg, source, cache / f"{group['id']}-source-decode.log")
         published_group = {key: group[key] for key in ('id', 'title', 'description', 'fullVideo', 'fullPoster')}
-        if group.get('frameRepairs'):
+        if group.get('frameRepairs') or group.get('crop'):
             published_group['fullVideoRevision'] = sha256(ROOT / 'dist' / group['fullVideo'])[:12]
+        if group.get('crop'):
+            full = metadata(ffmpeg, ROOT / 'dist' / group['fullVideo'])
+            published_group.update(fullWidth=full['width'], fullHeight=full['height'],
+                                   fullPosterRevision=sha256(ROOT / 'dist' / group['fullPoster'])[:12])
         published_group['clips'] = []
         previous_frame = 0
         for clip in group['clips']:
@@ -167,7 +203,9 @@ def prepare_clips(args, ffmpeg, cache):
             slug = f"{group['id']}-{clip['id']}"
             repairs = [r for r in group.get('frameRepairs', []) if r['startFrame'] < clip['endFrame'] and r['endFrame'] > clip['startFrame']]
             repair_changed = previous_records.get(slug, {}).get('frameRepairs', []) != repairs
-            assert not (args.verify_only and repair_changed), f'Generate declared frame repairs before verification: {slug}'
+            visual_changed = visual_settings(previous_records.get(slug, {})) != visual_settings(group)
+            changed = repair_changed or visual_changed
+            assert not (args.verify_only and changed), f'Generate declared visual changes before verification: {slug}'
             start = clip['startFrame'] / fps
             duration = (clip['endFrame'] - clip['startFrame']) / fps
             assert 5 <= duration <= 15, f'Unexpected clip length: {slug}'
@@ -175,7 +213,8 @@ def prepare_clips(args, ffmpeg, cache):
             poster = ROOT / f'dist/assets/posters/clips/{slug}.jpg'
             video.parent.mkdir(parents=True, exist_ok=True)
             poster.parent.mkdir(parents=True, exist_ok=True)
-            if not args.verify_only and (args.force or not video.exists() or repair_changed):
+            regenerate = not args.verify_only and (args.force or not video.exists() or changed)
+            if regenerate:
                 temporary = cache / f'{slug}.mp4'
                 print(f'Encoding clip: {slug} ({duration:.2f} s)', flush=True)
                 run_logged([
@@ -183,23 +222,22 @@ def prepare_clips(args, ffmpeg, cache):
                     '-map', '0:a:0?', '-map_metadata', '-1',
                     # Decode and trim by frame index: fractional -ss can skip a boundary frame.
                     *video_filter_args(f"trim=start_frame={clip['startFrame']}:end_frame={clip['endFrame']},setpts=N/({fps}*TB),"
-                           "scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease:force_divisible_by=2,setsar=1", repairs),
+                           + spatial_filter(group), repairs),
                     '-af', f'atrim=start={start:.9f}:duration={duration:.9f},asetpts=PTS-STARTPTS',
                     '-r', str(fps), '-fps_mode', 'cfr',
-                    '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '22', '-pix_fmt', 'yuv420p',
-                    '-maxrate', '5000k', '-bufsize', '10000k', '-g', '30',
+                    *encoding_args(group, 22, 5000), '-g', '30',
                     '-c:a', 'aac', '-b:a', '128k', '-ar', '48000', '-movflags', '+faststart', str(temporary),
                 ], cache / f'{slug}-encode.log')
-                if repairs and video.exists():
+                if (repairs or group.get('crop')) and video.exists():
                     preserve_published_audio(ffmpeg, temporary, video, cache)
                 temporary.replace(video)
-            if not args.verify_only and (args.force or not poster.exists()):
+            if not args.verify_only and (regenerate or not poster.exists()):
                 run_logged([ffmpeg, '-hide_banner', '-nostdin', '-y', '-ss', str(min(2, duration / 3)),
                             '-i', str(video), '-frames:v', '1', '-vf', 'scale=960:-2', '-q:v', '2',
                             '-update', '1', str(poster)], cache / f'{slug}-poster.log')
             prepared = metadata(ffmpeg, video)
             assert abs(prepared['duration_seconds'] - duration) < .06
-            assert abs(original['width'] / original['height'] - prepared['width'] / prepared['height']) < .005
+            validate_dimensions(original, prepared, group)
             assert prepared['fps'] == fps and prepared['faststart']
             assert prepared['video_codec'] == 'h264' and prepared['pixel_format'] == 'yuv420p'
             assert prepared['audio_codec'] == original['audio_codec'] == 'aac'
@@ -210,13 +248,15 @@ def prepare_clips(args, ffmpeg, cache):
                 'id': slug, 'title': clip['title'], 'startSeconds': start, 'endSeconds': clip['endFrame'] / fps,
                 'duration': duration, 'output': str(video.relative_to(ROOT / 'dist')),
                 'poster': str(poster.relative_to(ROOT / 'dist')), 'width': prepared['width'], 'height': prepared['height'],
-                **({'revision': prepared['sha256'][:12]} if repairs else {}),
+                **({'revision': prepared['sha256'][:12]} if repairs or group.get('crop') else {}),
+                **({'posterRevision': sha256(poster)[:12]} if group.get('crop') else {}),
             }
             published_group['clips'].append(item)
             records.append({**item, 'source': group['source'], 'startFrame': clip['startFrame'],
                             'endFrame': clip['endFrame'], 'source_sha256': original['sha256'],
                             'source_frame_count': original_frames,
                             **({'frameRepairs': repairs} if repairs else {}),
+                            **visual_settings(group),
                             'output_metadata': prepared, 'poster_sha256': sha256(poster)})
         assert abs(previous_frame / fps - original['duration_seconds']) < .06, 'Source coverage incomplete'
         assert previous_frame == original_frames, 'Source frame coverage incomplete'
@@ -246,7 +286,7 @@ def main():
         return
     version = subprocess.check_output([ffmpeg, "-version"], text=True).splitlines()[0]
     manifest = json.loads((ROOT / 'scripts/video-clips.json').read_text())
-    repairs_by_group = {g['id']: g.get('frameRepairs', []) for g in manifest['groups']}
+    groups = {g['id']: g for g in manifest['groups']}
     record_path = docs / 'video-assets.json'
     previous_records = {r['slug']: r for r in json.loads(record_path.read_text())['videos']} if record_path.exists() else {}
     records = []
@@ -254,27 +294,30 @@ def main():
         source = args.source_root / relative_source
         destination = videos / f"{slug}.mp4"
         poster = posters / f"{slug}.jpg"
-        repairs = repairs_by_group.get(slug, [])
+        group = groups.get(slug, {})
+        repairs = group.get('frameRepairs', [])
         repair_changed = previous_records.get(slug, {}).get('frameRepairs', []) != repairs
-        assert not (args.verify_only and repair_changed), f'Generate declared frame repairs before verification: {slug}'
+        visual_changed = visual_settings(previous_records.get(slug, {})) != visual_settings(group)
+        changed = repair_changed or visual_changed
+        assert not (args.verify_only and changed), f'Generate declared visual changes before verification: {slug}'
         if not source.is_file():
             raise SystemExit(f"Missing input: {source}")
-        if not args.verify_only and (args.force or not destination.exists() or repair_changed):
+        regenerate = not args.verify_only and (args.force or not destination.exists() or changed)
+        if regenerate:
             temporary = cache / f"{slug}.mp4"
             print(f"Encoding {slug} …", flush=True)
             run_logged([
                 ffmpeg, "-hide_banner", "-nostdin", "-y", "-i", str(source),
                 "-map", "0:a:0?", "-map_metadata", "-1",
-                *video_filter_args("scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease:force_divisible_by=2,fps=30,setsar=1", repairs),
-                "-c:v", "libx264", "-preset", "veryfast", "-crf", "21", "-pix_fmt", "yuv420p",
-                "-maxrate", f"{maxrate}k", "-bufsize", f"{maxrate * 2}k",
+                *video_filter_args(spatial_filter(group) + ',fps=30', repairs),
+                *encoding_args(group, 21, maxrate),
                 "-g", "60", "-c:a", "aac", "-b:a", "128k", "-ar", "48000",
                 "-movflags", "+faststart", str(temporary),
             ], cache / f"{slug}-encode.log")
-            if repairs and destination.exists():
+            if (repairs or group.get('crop')) and destination.exists():
                 preserve_published_audio(ffmpeg, temporary, destination, cache)
             temporary.replace(destination)
-        if not args.verify_only and (args.force or not poster.exists()):
+        if not args.verify_only and (regenerate or not poster.exists()):
             run_logged([
                 ffmpeg, "-hide_banner", "-nostdin", "-y", "-ss", str(poster_second), "-i", str(destination),
                 "-frames:v", "1", "-q:v", "2", "-update", "1", str(poster),
@@ -286,7 +329,7 @@ def main():
         assert abs(original["duration_seconds"] - prepared["duration_seconds"]) <= 0.1, "Duration changed"
         assert prepared["width"] <= min(1920, original["width"]), "Unexpected upscale"
         assert prepared["height"] <= min(1080, original["height"]), "Unexpected upscale"
-        assert abs(original["width"] / original["height"] - prepared["width"] / prepared["height"]) < 0.005, "Aspect ratio changed"
+        validate_dimensions(original, prepared, group)
         assert prepared["fps"] == 30, "Unexpected frame rate"
         assert prepared["video_codec"] == "h264", "Unexpected video codec"
         assert prepared["pixel_format"] == "yuv420p", "Unexpected pixel format"
@@ -301,6 +344,7 @@ def main():
             "poster": f"assets/posters/{slug}.jpg", "poster_time_seconds": poster_second,
             "poster_bytes": poster.stat().st_size, "poster_sha256": sha256(poster),
             **({'frameRepairs': repairs} if repairs else {}),
+            **visual_settings(group),
             "validation": "complete decode without errors",
         })
         (docs / "video-assets.json").write_text(json.dumps({"ffmpeg": version, "videos": records}, indent=2, ensure_ascii=False) + "\n")
@@ -312,8 +356,12 @@ def main():
     report = """# Website video assets
 
 All four supplied MP4 videos are included at full duration. Their GIF duplicates are intentionally omitted.
-Original source files are read only. Output keeps the original aspect ratio, logos, timing and audio;
-there is no cropping or upscaling. The web copies use H.264, yuv420p, 30 fps, AAC audio, and MP4 faststart.
+Original source files are read only. Logos, timing and audio are preserved; there is no upscaling.
+Only the comparison group's outer black margins are cropped: 1610 × 906 at x=64, y=0, preserving
+native pixels. Its full video and nine clips use H.264 CRF 16 / slow without a bitrate cap,
+generated directly from the original source, with the previously published AAC packets retained.
+Other groups keep their existing resolution and encoding. All web copies use H.264, yuv420p,
+30 fps, AAC audio, and MP4 faststart.
 Each file is below 90 MiB. Posters are real frames extracted from the generated videos, with no image generation.
 Declared frame repairs in `scripts/video-clips.json` also apply to the full web copies: comparison
 frame 12 (0.400 s) is replaced with clean frame 13 to remove an isolated burned-in subtitle.

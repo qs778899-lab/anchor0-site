@@ -1,5 +1,5 @@
 {
-  "editing": "Continuous, frame-aligned action phases at original speed. All frame positions retained; explicit frameRepairs replace isolated subtitle artifacts with adjacent clean frames. No crop, overlays, or rearrangement. Simultaneous operators/devices stay in the original composite.",
+  "editing": "Continuous, frame-aligned action phases at original speed. All frame positions retained; explicit frameRepairs replace isolated subtitle artifacts with adjacent clean frames. Only the comparison group's declared outer black margins are cropped. No overlays, scaling up, or rearrangement. Simultaneous operators/devices stay in the original composite.",
   "fps": 30,
   "clips": [
     {
@@ -13,9 +13,10 @@
       "duration": 8.0,
       "output": "assets/videos/clips/comparison-standing.mp4",
       "poster": "assets/posters/clips/comparison-standing.jpg",
-      "width": 1738,
+      "width": 1610,
       "height": 906,
-      "revision": "d9b82c1a2f71",
+      "revision": "6953d3bf1bce",
+      "posterRevision": "0cff6e07630f",
       "source": "双机对比 pico logo/双机对比.mp4",
       "startFrame": 0,
       "endFrame": 240,
@@ -29,20 +30,30 @@
           "reason": "Remove the single-frame burned-in title at 0.400 s using the immediately following clean frame; keep timing and audio unchanged."
         }
       ],
+      "crop": {
+        "x": 64,
+        "y": 0,
+        "width": 1610,
+        "height": 906
+      },
+      "encoding": {
+        "crf": 16,
+        "preset": "slow"
+      },
       "output_metadata": {
         "duration_seconds": 8.0,
         "faststart": true,
-        "width": 1738,
+        "width": 1610,
         "height": 906,
         "fps": 30.0,
         "video_codec": "h264",
         "pixel_format": "yuv420p",
         "audio_codec": "aac",
-        "bytes": 2067340,
-        "sha256": "d9b82c1a2f714e53b05f366444ae47ef524eadbd273fafa5429d701860d97ad4",
+        "bytes": 5925745,
+        "sha256": "6953d3bf1bce32b6bccd64a24d11eec331c0d6eb9e3d83c4c69d01aafffd6db9",
         "frame_count": 240
       },
-      "poster_sha256": "5038a8133cc3216a0001a32b6f78f8a670b86bcb4caff4d3e954fbc6e3d6e640"
+      "poster_sha256": "0cff6e07630fe7e062e44520304539564c4ec15917b64edcc1bd018695bdc3a3"
     },
     {
       "id": "comparison-kneeling",
@@ -55,27 +66,39 @@
       "duration": 11.8,
       "output": "assets/videos/clips/comparison-kneeling.mp4",
       "poster": "assets/posters/clips/comparison-kneeling.jpg",
-      "width": 1738,
+      "width": 1610,
       "height": 906,
+      "revision": "91b8b431c674",
+      "posterRevision": "b562c50041e7",
       "source": "双机对比 pico logo/双机对比.mp4",
       "startFrame": 240,
       "endFrame": 594,
       "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
       "source_frame_count": 2513,
+      "crop": {
+        "x": 64,
+        "y": 0,
+        "width": 1610,
+        "height": 906
+      },
+      "encoding": {
+        "crf": 16,
+        "preset": "slow"
+      },
       "output_metadata": {
         "duration_seconds": 11.8,
         "faststart": true,
-        "width": 1738,
+        "width": 1610,
         "height": 906,
         "fps": 30.0,
         "video_codec": "h264",
         "pixel_format": "yuv420p",
         "audio_codec": "aac",
-        "bytes": 3158739,
-        "sha256": "dcbcf25a05c43b04fe74c5edffb990414e8c4df8044389da6e7c290949688cb3",
+        "bytes": 9072330,
+        "sha256": "91b8b431c67474f8f77806befc4493f42c9b46e01d9697d6b3b0cf1a5861e5d7",
         "frame_count": 354
       },
-      "poster_sha256": "e749fda05b03c83da9f105a97e4127b0494e006275c5c8ad6088925a74204c8a"
+      "poster_sha256": "b562c50041e7a4167ab2693156f6034de8fd830d8dcaf6086f372ccb7a053234"
     },
     {
       "id": "comparison-lateral",
@@ -88,27 +111,39 @@
       "duration": 10.833333333333334,
       "output": "assets/videos/clips/comparison-lateral.mp4",
       "poster": "assets/posters/clips/comparison-lateral.jpg",
-      "width": 1738,
+      "width": 1610,
       "height": 906,
+      "revision": "697cb9304412",
+      "posterRevision": "66b773e4fd9a",
       "source": "双机对比 pico logo/双机对比.mp4",
       "startFrame": 594,
       "endFrame": 919,
       "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
       "source_frame_count": 2513,
+      "crop": {
+        "x": 64,
+        "y": 0,
+        "width": 1610,
+        "height": 906
+      },
+      "encoding": {
+        "crf": 16,
+        "preset": "slow"
+      },
       "output_metadata": {
         "duration_seconds": 10.834,
         "faststart": true,
-        "width": 1738,
+        "width": 1610,
         "height": 906,
         "fps": 30.0,
         "video_codec": "h264",
         "pixel_format": "yuv420p",
         "audio_codec": "aac",
-        "bytes": 2814366,
-        "sha256": "10a964038078d736a5647ccca4ba82fb2c4d5941b837f846a647c16dc2335664",
+        "bytes": 8326100,
+        "sha256": "697cb9304412d123d169db4e7bdc23a181584a1e14306188c2c8370c9e90d108",
         "frame_count": 325
       },
-      "poster_sha256": "a6d72eb21732b700e658e85b531f8fc1624ada941b02f4ba7d7fccdd04fc24ec"
+      "poster_sha256": "66b773e4fd9a8c9fef8df8cf00f2c971f5969bf6e5d14ccd8d6f95b47aa40687"
     },
     {
       "id": "comparison-foot-stability",
@@ -121,27 +156,39 @@
       "duration": 6.8,
       "output": "assets/videos/clips/comparison-foot-stability.mp4",
       "poster": "assets/posters/clips/comparison-foot-stability.jpg",
-      "width": 1738,
+      "width": 1610,
       "height": 906,
+      "revision": "bbe4ede804ac",
+      "posterRevision": "2ab04d70c9e7",
       "source": "双机对比 pico logo/双机对比.mp4",
       "startFrame": 919,
       "endFrame": 1123,
       "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
       "source_frame_count": 2513,
+      "crop": {
+        "x": 64,
+        "y": 0,
+        "width": 1610,
+        "height": 906
+      },
+      "encoding": {
+        "crf": 16,
+        "preset": "slow"
+      },
       "output_metadata": {
         "duration_seconds": 6.8,
         "faststart": true,
-        "width": 1738,
+        "width": 1610,
         "height": 906,
         "fps": 30.0,
         "video_codec": "h264",
         "pixel_format": "yuv420p",
         "audio_codec": "aac",
-        "bytes": 1640817,
-        "sha256": "d70dde707ef8b5fc91e220efdf6cf87be441cc42019f5f46f03483839beed000",
+        "bytes": 4806902,
+        "sha256": "bbe4ede804acb073bcbeb6b2ab41ff5de58523953ecd2404b47dc62e1813b67f",
         "frame_count": 204
       },
-      "poster_sha256": "2bc945664fb00af55465fe3ca740be66b821591ac59cc667fe3d09fe1b796b0d"
+      "poster_sha256": "2ab04d70c9e7fb08dbc6818708eeaf4b2641bbb28b8bd016cc101d12955f62de"
     },
     {
       "id": "comparison-ankle",
@@ -154,27 +201,39 @@
       "duration": 7.233333333333333,
       "output": "assets/videos/clips/comparison-ankle.mp4",
       "poster": "assets/posters/clips/comparison-ankle.jpg",
-      "width": 1738,
+      "width": 1610,
       "height": 906,
+      "revision": "7352131396fb",
+      "posterRevision": "cfe83aba953a",
       "source": "双机对比 pico logo/双机对比.mp4",
       "startFrame": 1123,
       "endFrame": 1340,
       "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
       "source_frame_count": 2513,
+      "crop": {
+        "x": 64,
+        "y": 0,
+        "width": 1610,
+        "height": 906
+      },
+      "encoding": {
+        "crf": 16,
+        "preset": "slow"
+      },
       "output_metadata": {
         "duration_seconds": 7.234,
         "faststart": true,
-        "width": 1738,
+        "width": 1610,
         "height": 906,
         "fps": 30.0,
         "video_codec": "h264",
         "pixel_format": "yuv420p",
         "audio_codec": "aac",
-        "bytes": 1632611,
-        "sha256": "b25f282ace57d4d217958f90d1c04e360943c967ff8d67af7782318655e1d4f1",
+        "bytes": 4908911,
+        "sha256": "7352131396fb94f6a91a140296d4daae9e19e796129f8febda5623d86cd8eab4",
         "frame_count": 217
       },
-      "poster_sha256": "b09be7fc5076a53173e36be5dd61138c21954c4f6857fefce687e686803a4a4c"
+      "poster_sha256": "cfe83aba953a411ce02da8ed2673705b39839db4cc3bba982e0bc3ef1ee5368e"
     },
     {
       "id": "comparison-turning",
@@ -187,27 +246,39 @@
       "duration": 9.0,
       "output": "assets/videos/clips/comparison-turning.mp4",
       "poster": "assets/posters/clips/comparison-turning.jpg",
-      "width": 1738,
+      "width": 1610,
       "height": 906,
+      "revision": "39ca5bf126db",
+      "posterRevision": "5f1e7517ca35",
       "source": "双机对比 pico logo/双机对比.mp4",
       "startFrame": 1340,
       "endFrame": 1610,
       "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
       "source_frame_count": 2513,
+      "crop": {
+        "x": 64,
+        "y": 0,
+        "width": 1610,
+        "height": 906
+      },
+      "encoding": {
+        "crf": 16,
+        "preset": "slow"
+      },
       "output_metadata": {
         "duration_seconds": 9.0,
         "faststart": true,
-        "width": 1738,
+        "width": 1610,
         "height": 906,
         "fps": 30.0,
         "video_codec": "h264",
         "pixel_format": "yuv420p",
         "audio_codec": "aac",
-        "bytes": 2224787,
-        "sha256": "88eb7d2389d8ca8e4d1336fcaa6890c47a53f738543c717d2277f22e5f07ab84",
+        "bytes": 6553938,
+        "sha256": "39ca5bf126db4ea72fe4012cb068d549f74fc5b7d66c1e72027603877fd31674",
         "frame_count": 270
       },
-      "poster_sha256": "ae445244dbdc4ce8f1eaf8e19741c96d98626f2849223794317d8221950a5897"
+      "poster_sha256": "5f1e7517ca3595c6ce95fd46ad9492c3a73e790842baeaaadd0746803a63e988"
     },
     {
       "id": "comparison-pico-bending",
@@ -220,27 +291,39 @@
       "duration": 8.133333333333333,
       "output": "assets/videos/clips/comparison-pico-bending.mp4",
       "poster": "assets/posters/clips/comparison-pico-bending.jpg",
-      "width": 1738,
+      "width": 1610,
       "height": 906,
+      "revision": "55e34fbb9856",
+      "posterRevision": "21d9450feea1",
       "source": "双机对比 pico logo/双机对比.mp4",
       "startFrame": 1610,
       "endFrame": 1854,
       "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
       "source_frame_count": 2513,
+      "crop": {
+        "x": 64,
+        "y": 0,
+        "width": 1610,
+        "height": 906
+      },
+      "encoding": {
+        "crf": 16,
+        "preset": "slow"
+      },
       "output_metadata": {
         "duration_seconds": 8.134,
         "faststart": true,
-        "width": 1738,
+        "width": 1610,
         "height": 906,
         "fps": 30.0,
         "video_codec": "h264",
         "pixel_format": "yuv420p",
         "audio_codec": "aac",
-        "bytes": 1414267,
-        "sha256": "31a4c62e612be3e7cf2435f3477d1f1a458bea77f3350d9ece0381a30da43a49",
+        "bytes": 3508112,
+        "sha256": "55e34fbb9856b7bb48cee51380c5ce553031c55600bf131be06a311383b4ce97",
         "frame_count": 244
       },
-      "poster_sha256": "cffcd46c1c8437f223f89c40e250fc408c5c18896854e2e170571b67eb858138"
+      "poster_sha256": "21d9450feea1176e55b7dc322bbc39f26705482b0e77c075edf0a3fefd351e75"
     },
     {
       "id": "comparison-pico-lateral",
@@ -253,27 +336,39 @@
       "duration": 13.666666666666666,
       "output": "assets/videos/clips/comparison-pico-lateral.mp4",
       "poster": "assets/posters/clips/comparison-pico-lateral.jpg",
-      "width": 1738,
+      "width": 1610,
       "height": 906,
+      "revision": "2f8cff733b9e",
+      "posterRevision": "f10e5fcaf970",
       "source": "双机对比 pico logo/双机对比.mp4",
       "startFrame": 1854,
       "endFrame": 2264,
       "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
       "source_frame_count": 2513,
+      "crop": {
+        "x": 64,
+        "y": 0,
+        "width": 1610,
+        "height": 906
+      },
+      "encoding": {
+        "crf": 16,
+        "preset": "slow"
+      },
       "output_metadata": {
         "duration_seconds": 13.667,
         "faststart": true,
-        "width": 1738,
+        "width": 1610,
         "height": 906,
         "fps": 30.0,
         "video_codec": "h264",
         "pixel_format": "yuv420p",
         "audio_codec": "aac",
-        "bytes": 2534449,
-        "sha256": "5f6be1eb0ea246835fd740ae5e218e0585e37273f3d63500a3588fed9a11e07e",
+        "bytes": 6216397,
+        "sha256": "2f8cff733b9ef5a5a759870b6c159976c0dc3f4869a6d886e4ae57c3641f643d",
         "frame_count": 410
       },
-      "poster_sha256": "c625007c7ca09fe501838894efedc8e6d2df48278c9f72ccf34bfa59d020c6a6"
+      "poster_sha256": "f10e5fcaf970607f4b8f1380f6122d08e6d0d1ee9c721a1a39a5639661377f20"
     },
     {
       "id": "comparison-pico-walking",
@@ -286,27 +381,39 @@
       "duration": 8.3,
       "output": "assets/videos/clips/comparison-pico-walking.mp4",
       "poster": "assets/posters/clips/comparison-pico-walking.jpg",
-      "width": 1738,
+      "width": 1610,
       "height": 906,
+      "revision": "76598368435b",
+      "posterRevision": "c526e47000c8",
       "source": "双机对比 pico logo/双机对比.mp4",
       "startFrame": 2264,
       "endFrame": 2513,
       "source_sha256": "62583c1742367ecd10bf62f5ebce4e4e1692ff3db264b18e79e3f778595d497b",
       "source_frame_count": 2513,
+      "crop": {
+        "x": 64,
+        "y": 0,
+        "width": 1610,
+        "height": 906
+      },
+      "encoding": {
+        "crf": 16,
+        "preset": "slow"
+      },
       "output_metadata": {
         "duration_seconds": 8.3,
         "faststart": true,
-        "width": 1738,
+        "width": 1610,
         "height": 906,
         "fps": 30.0,
         "video_codec": "h264",
         "pixel_format": "yuv420p",
         "audio_codec": "aac",
-        "bytes": 2312306,
-        "sha256": "8268f68d95efeaf57ccc48c3316dab7d84632679757b96b0bfc4efe1c968be58",
+        "bytes": 4969752,
+        "sha256": "76598368435be05b0d52a8fe4339ca06d61438392c050b02ad9b23ffbc44032e",
         "frame_count": 249
       },
-      "poster_sha256": "59ea2f55d0864db0312aadfc3e793cb55179265fcded782cf6dc3d718e1d982b"
+      "poster_sha256": "c526e47000c83674f22809ceda6893d470543fb5dc968c704082e336a0c8d226"
     },
     {
       "id": "body-diversity-upper-body",

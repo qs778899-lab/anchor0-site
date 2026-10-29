@@ -43,6 +43,12 @@ for group, public in zip(clip_manifest['groups'],clip_outputs['groups']):
         assert output['startSeconds']==clip['startFrame']/30 and output['endSeconds']==clip['endFrame']/30
         assert 5<=output['duration']<=15 and output['title']==clip['title']
         record=by_clip[output['id']]
+        assert record.get('crop')==group.get('crop') and record.get('encoding')==group.get('encoding')
+        if group.get('crop'):
+            assert group['id']=='comparison'
+            assert (output['width'],output['height'])==(1610,906)
+            assert output['revision']==record['output_metadata']['sha256'][:12]
+            assert output['posterRevision']==record['poster_sha256'][:12]
         repairs=[r for r in group.get('frameRepairs',[]) if r['startFrame']<clip['endFrame'] and r['endFrame']>clip['startFrame']]
         assert record.get('frameRepairs',[])==repairs, 'Declared subtitle repair not applied to clip'
         if repairs:
@@ -54,6 +60,12 @@ for group, public in zip(clip_manifest['groups'],clip_outputs['groups']):
 full_records=json.loads((ROOT/'docs/video-assets.json').read_text())['videos']
 for record in full_records:
     group=next((g for g in clip_manifest['groups'] if g['id']==record['slug']),{})
+    assert record.get('crop')==group.get('crop') and record.get('encoding')==group.get('encoding')
+    if group.get('crop'):
+        public=next(g for g in clip_outputs['groups'] if g['id']==record['slug'])
+        assert (public['fullWidth'],public['fullHeight'])==(1610,906)
+        assert public['fullPosterRevision']==record['poster_sha256'][:12]
+        assert (record['output_metadata']['width'],record['output_metadata']['height'])==(1610,906)
     assert record.get('frameRepairs',[])==group.get('frameRepairs',[]), 'Declared subtitle repair not applied to full video'
     if group.get('frameRepairs'):
         public=next(g for g in clip_outputs['groups'] if g['id']==record['slug'])
@@ -63,6 +75,7 @@ for record in full_records:
     if source.exists():
         assert hashlib.sha256(source.read_bytes()).hexdigest()==record['source_metadata']['sha256'], 'Original video changed'
 print('PASS: 15 contiguous action clips, declared frame repairs, output hashes and unchanged available originals')
+print('PASS: comparison-only crop, native 1610 × 906 pixels and versioned videos/posters')
 
 provenance=json.loads((ROOT/'docs/demo-provenance.json').read_text())
 assert provenance['sourceCommit']=='cdcfef07a9109603f36532c182ad0c282e51e748'

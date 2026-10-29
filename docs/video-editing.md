@@ -17,19 +17,27 @@ count must match its manifest range, and each group's ranges cover the source fr
 The comparison source contains a one-frame burned-in title at frame 12 (zero-based, 0.400 s).
 Its `frameRepairs` entry substitutes the next clean frame, 13, at that position. This applies to
 `comparison-standing.mp4` and the full web `comparison.mp4`; no frame is removed, no time shift
-is introduced, and audio is unchanged. Original input files and posters remain intact. The encoder
+is introduced, and audio is unchanged. Original input files remain intact. The encoder
 automatically rebuilds affected outputs when the declared repairs change; subsequent forced
 regeneration also applies the repair. Verification refuses to certify an unapplied repair.
 Repaired web copies use content-hash URL revisions so a normal page refresh bypasses the
 previously cached MP4. Other video URLs and playback behavior are unchanged.
 Verification: [frame/audio record](video-subtitle-repair.json) and [browser at 0.400 s](previews/comparison-subtitle-fixed.png).
 
+The comparison group now removes only its embedded outer black margins: `crop=1610:906:64:0`.
+The full film and all nine clips are encoded directly from the original at H.264 CRF 16 / slow,
+without a bitrate cap or spatial resampling. Original frame boundaries, timing, the frame-12 repair,
+and the previously published AAC packets are retained. All ten posters are regenerated from the
+new outputs. Video and poster URLs include content hashes, and the full-film player uses the
+declared 1610:906 ratio. Other groups' media remain byte-identical. `crop` and `encoding` in the
+manifest trigger regeneration when changed, and verification checks the declared output size.
+
 Run `python3 scripts/prepare-videos.py --clips-only` to prepare missing clips. Add `--force` to
 regenerate the generated clips and posters, or `--verify-only` to decode existing clips and refresh
 their validation records. The normal preparation command also prepares these clips after the
 full-length files. Originals are read only; hashes are checked before and after processing.
 
-Each of the three groups uses a single horizontal rail: four desktop cards for comparison and
+Each of the three groups uses a single horizontal rail: three desktop cards for comparison and
 body diversity (the input-device group contains only two clips), two on tablet,
 and one plus a glimpse of the next on mobile. Rails support native horizontal wheel/touch scrolling,
 a scrollbar, and previous/next buttons. When the rail itself has keyboard focus, Left/Right advances
