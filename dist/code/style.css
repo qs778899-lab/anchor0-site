@@ -24,8 +24,8 @@ main {
 }
 #viewer {
   position: relative;
-  width: min(100%, 800px);
-  height: min(65svh, 520px);
+  width: min(100%, 1000px);
+  height: min(68svh, 580px);
   touch-action: none;
   cursor: grab;
 }
@@ -65,3 +65,9 @@ main {
 h1 { margin: 24px 0 0; font-size: 14px; font-weight: 400; }
 noscript { margin-top: 12px; font-size: 14px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
+
+.replay-controls { display:flex; gap:8px; margin-top:12px; min-height:44px; }
+.replay-controls button { width:44px; height:44px; background:none; border:0; border-radius:50%; color:#74787d; cursor:pointer; font-size:17px; }
+.replay-controls button:hover { background:#f5f7fa; color:#1769d2; }
+.replay-controls button:focus-visible { outline:2px solid #1769d2; }
+.replay-controls button[hidden] { display:none; }
