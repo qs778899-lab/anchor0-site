@@ -4,7 +4,7 @@ Source: user-supplied `benchmark_mp4_only` folder (100 In-house, 100 Public, 100
 
 Seven In-house examples cover wide support, upper-body reaching, low reaching, torso participation, end-effector stabilization, lower-body movement and multi-phase sequences. Six Public examples include CIRCLE, BONES-SEED, AMASS, OMOMO and the supplied jump-turn example. Five Reachability examples cover standing, shallow squat, deep squat, staggered stance and half kneeling.
 
-Original MP4 bytes are copied unchanged (960 × 1020, native timing), with SHA-256 and original relative paths in `dist/data/benchmark-cases.json`. Total video size: 13.32 MiB. Posters are generated from midpoints at original dimensions. The source files remain untouched. Reproduce with `scripts/prepare-benchmark-cases.py`; selection inputs are in `scripts/benchmark-cases.json`.
+The original 960 × 1020 MP4 files remain untouched. A fixed per-clip crop removes outer whitespace, enclosing the full motion and floor across every frame plus an 18-pixel safety margin. Outputs use H.264 CRF 16 slow without scaling or timing changes. Source and output SHA-256, crop rectangles and original relative paths are recorded in `dist/data/benchmark-cases.json`. Posters use the cropped midpoint frame. Players match the comparison videos’ 1610:906 ratio, with contain fitting to avoid cropping moving limbs further. Reproduce with `scripts/prepare-benchmark-cases.py`; selection inputs are in `scripts/benchmark-cases.json`.
 
 UI: below the three benchmark summary cards; one horizontal rail per track; 3 desktop cards, 2 tablet cards, 1 mobile card with a next-card preview. Reuses the existing media controller and arrow/keyboard/touch controls. Only nearby cards load; visible clips loop muted; offscreen clips pause; user pauses persist. No model, metric or benchmark-count changes.
 
@@ -31,4 +31,8 @@ UI: below the three benchmark summary cards; one horizontal rail per track; 3 de
 | reachability | Staggered-stance reach | `reachability/012_staggered_left__rw_x+020_y+020_z110_s44/reference_motion.mp4` | 16.52 s |
 | reachability | Half-kneeling reach | `reachability/013_half_kneel_left__rw_x+060_y+020_z090_bend0/reference_motion.mp4` | 16.52 s |
 
-Validation: all 18 videos played in-browser at native dimensions; hashes match originals; no horizontal page overflow at 1440, 1024 or 390 px; single-row layout, arrows, lazy loading, offscreen/manual pause and bilingual dark-theme checks passed. Screenshots in `docs/previews/benchmark-cases-*.png`.
+Validation: all 18 videos played in-browser at their recorded cropped dimensions; source hashes match the supplied originals; no horizontal page overflow at 1440, 1024 or 390 px; single-row layout, arrows, lazy loading, offscreen/manual pause and bilingual dark-theme checks passed. Screenshots in `docs/previews/benchmark-cases-*.png`.
+
+## Whitespace crop acceptance
+
+All 6,901 frames retained. Each cropped encode was compared with the same crop of its original source; the lowest per-video mean SSIM was 0.998419. Per-video frame counts, crop rectangles and scores are in `benchmark-crop-verification.json`. Original sources remain unchanged. Desktop and mobile player aspect ratios match the comparison group (1610:906); all 18 clips, lazy loading, scrolling, pause/resume and bilingual layouts passed browser checks.

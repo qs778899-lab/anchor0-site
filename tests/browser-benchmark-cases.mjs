@@ -3,12 +3,13 @@ import {go,evaluate,viewport,until,wait,screenshot,close,events} from './browser
 try{
  await viewport(1440,1000);await go();await until(`document.querySelectorAll('#benchmark-videos video').length===18`);
  await evaluate(`if(document.documentElement.lang.startsWith('zh'))document.querySelector('#language-toggle').click();document.querySelector('#theme-select').value='light';document.querySelector('#theme-select').dispatchEvent(new Event('change'))`);
+ const dimensions=await evaluate(`fetch('./data/benchmark-cases.json').then(r=>r.json()).then(m=>m.groups.flatMap(g=>g.clips.map(c=>[c.width,c.height])))`);
  assert.deepEqual(await evaluate(`[...document.querySelectorAll('#benchmark-videos .clip-rail')].map(r=>r.children.length)`),[7,6,5]);
  assert(await evaluate(`[...document.querySelectorAll('#benchmark-videos video')].every(v=>!v.currentSrc)`));
  for(let i=0;i<18;i++){
   await evaluate(`document.querySelectorAll('#benchmark-videos video')[${i}].scrollIntoView({behavior:'instant',block:'center',inline:'center'})`);
   await until(`(()=>{const v=document.querySelectorAll('#benchmark-videos video')[${i}];return v.readyState>=2&&!v.paused&&v.currentTime>0})()`);
-  assert(await evaluate(`(()=>{const v=document.querySelectorAll('#benchmark-videos video')[${i}];return v.loop&&v.muted&&v.videoWidth===960&&v.videoHeight===1020})()`));
+  assert(await evaluate(`(()=>{const v=document.querySelectorAll('#benchmark-videos video')[${i}];return v.loop&&v.muted&&v.videoWidth===${dimensions[i][0]}&&v.videoHeight===${dimensions[i][1]}})()`));
  }
  await evaluate(`{const r=document.querySelector('#benchmark-inhouse-clips');r.scrollLeft=0;r.scrollIntoView({behavior:'instant',block:'center'});}`);
  await until(`!document.querySelector('#benchmark-inhouse-clips video').paused`);
@@ -26,6 +27,7 @@ try{
  await evaluate(`document.querySelector('#language-toggle').click();document.querySelector('#theme-select').value='dark';document.querySelector('#theme-select').dispatchEvent(new Event('change'));document.querySelector('.benchmark-examples').scrollIntoView({behavior:'instant'})`);await wait(400);
  assert((await evaluate(`document.querySelector('#benchmark-videos').innerText`)).includes('五种姿态'));
  await screenshot('docs/previews/benchmark-cases-mobile-zh-dark.png');
+ assert(await evaluate(`(()=>{const a=document.querySelector('#benchmark-videos video').getBoundingClientRect(),b=document.querySelector('#comparison-clips video').getBoundingClientRect();return Math.abs(a.width/a.height-b.width/b.height)<.01})()`));
  assert.equal(events.filter(e=>e.method==='Runtime.exceptionThrown').length,0);
- console.log('PASS: 18 native-resolution reference videos load/play; three single-row rails; lazy loading; navigation; offscreen/manual pause; bilingual and responsive layouts.');
+ console.log('PASS: 18 cropped reference videos load/play; three single-row rails; lazy loading; navigation; offscreen/manual pause; bilingual and responsive layouts.');
 }finally{await close()}

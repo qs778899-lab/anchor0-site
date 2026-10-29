@@ -1,0 +1,203 @@
+{
+  "comparison": "Every frame of encoded crop vs the same crop of the untouched source; all source hashes verified.",
+  "results": [
+    {
+      "id": "benchmark-inhouse-1",
+      "frames": 127,
+      "ssim": 0.998745,
+      "crop": {
+        "x": 200,
+        "y": 200,
+        "width": 550,
+        "height": 736
+      }
+    },
+    {
+      "id": "benchmark-inhouse-7",
+      "frames": 244,
+      "ssim": 0.998891,
+      "crop": {
+        "x": 140,
+        "y": 216,
+        "width": 692,
+        "height": 678
+      }
+    },
+    {
+      "id": "benchmark-inhouse-15",
+      "frames": 176,
+      "ssim": 0.998457,
+      "crop": {
+        "x": 234,
+        "y": 192,
+        "width": 520,
+        "height": 718
+      }
+    },
+    {
+      "id": "benchmark-inhouse-21",
+      "frames": 221,
+      "ssim": 0.998448,
+      "crop": {
+        "x": 282,
+        "y": 258,
+        "width": 498,
+        "height": 672
+      }
+    },
+    {
+      "id": "benchmark-inhouse-44",
+      "frames": 167,
+      "ssim": 0.998643,
+      "crop": {
+        "x": 194,
+        "y": 206,
+        "width": 622,
+        "height": 718
+      }
+    },
+    {
+      "id": "benchmark-inhouse-50",
+      "frames": 306,
+      "ssim": 0.99886,
+      "crop": {
+        "x": 242,
+        "y": 260,
+        "width": 538,
+        "height": 674
+      }
+    },
+    {
+      "id": "benchmark-inhouse-inhouse_low_reach",
+      "frames": 131,
+      "ssim": 0.998563,
+      "crop": {
+        "x": 164,
+        "y": 218,
+        "width": 614,
+        "height": 718
+      }
+    },
+    {
+      "id": "benchmark-public-2",
+      "frames": 164,
+      "ssim": 0.998594,
+      "crop": {
+        "x": 198,
+        "y": 212,
+        "width": 516,
+        "height": 710
+      }
+    },
+    {
+      "id": "benchmark-public-5",
+      "frames": 381,
+      "ssim": 0.998533,
+      "crop": {
+        "x": 156,
+        "y": 192,
+        "width": 636,
+        "height": 744
+      }
+    },
+    {
+      "id": "benchmark-public-7",
+      "frames": 257,
+      "ssim": 0.998856,
+      "crop": {
+        "x": 128,
+        "y": 294,
+        "width": 698,
+        "height": 504
+      }
+    },
+    {
+      "id": "benchmark-public-10",
+      "frames": 164,
+      "ssim": 0.998919,
+      "crop": {
+        "x": 108,
+        "y": 338,
+        "width": 694,
+        "height": 500
+      }
+    },
+    {
+      "id": "benchmark-public-31",
+      "frames": 220,
+      "ssim": 0.999319,
+      "crop": {
+        "x": 228,
+        "y": 320,
+        "width": 624,
+        "height": 530
+      }
+    },
+    {
+      "id": "benchmark-public-public_jump_turn",
+      "frames": 213,
+      "ssim": 0.998419,
+      "crop": {
+        "x": 198,
+        "y": 242,
+        "width": 582,
+        "height": 658
+      }
+    },
+    {
+      "id": "benchmark-reachability-1",
+      "frames": 826,
+      "ssim": 0.998822,
+      "crop": {
+        "x": 198,
+        "y": 206,
+        "width": 540,
+        "height": 668
+      }
+    },
+    {
+      "id": "benchmark-reachability-9",
+      "frames": 826,
+      "ssim": 0.998674,
+      "crop": {
+        "x": 230,
+        "y": 210,
+        "width": 500,
+        "height": 648
+      }
+    },
+    {
+      "id": "benchmark-reachability-3",
+      "frames": 826,
+      "ssim": 0.998752,
+      "crop": {
+        "x": 222,
+        "y": 194,
+        "width": 528,
+        "height": 722
+      }
+    },
+    {
+      "id": "benchmark-reachability-12",
+      "frames": 826,
+      "ssim": 0.999311,
+      "crop": {
+        "x": 224,
+        "y": 186,
+        "width": 512,
+        "height": 718
+      }
+    },
+    {
+      "id": "benchmark-reachability-13",
+      "frames": 826,
+      "ssim": 0.998704,
+      "crop": {
+        "x": 198,
+        "y": 222,
+        "width": 564,
+        "height": 664
+      }
+    }
+  ]
+}
