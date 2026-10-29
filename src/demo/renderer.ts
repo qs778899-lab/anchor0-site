@@ -49,11 +49,10 @@ export class S0Renderer {
   private readonly inkLine = new LineSegments2(new LineSegmentsGeometry(), this.inkMaterial);
   private readonly forceCue = new ForceCue();
   private readonly forceGroup = new THREE.Group();
-  private readonly forceArrow = new THREE.Group();
   private readonly forceMaterial = new THREE.ShaderMaterial({
     uniforms: {
       arrowColor: {value:new THREE.Color('#c39455')},
-      maxOpacity: {value:.45},
+      maxOpacity: {value:.29},
       fade: {value:1},
     },
     vertexShader: `
@@ -83,11 +82,16 @@ export class S0Renderer {
     `,
     transparent:true,depthTest:false,depthWrite:false,toneMapped:false,
   });
-  private readonly forceShaft = new THREE.Mesh(new THREE.CylinderGeometry(.006,.006,1,32),this.forceMaterial);
-  private readonly forceTip = new THREE.Mesh(new THREE.ConeGeometry(.025,.07,32),this.forceMaterial);
+  // Revolve the selected 240-unit outline around +Y. A single continuous surface
+  // joins the pointed, linearly widening tail to the head without overlapping parts.
+  private readonly forceArrow = new THREE.Mesh(new THREE.LatheGeometry([
+    new THREE.Vector2(0,0),
+    new THREE.Vector2(12/240,193/240),
+    new THREE.Vector2(24/240,183/240),
+    new THREE.Vector2(0,1),
+  ],48),this.forceMaterial);
   private readonly forceVector = new THREE.Vector3();
   private readonly forceOrigin = new THREE.Vector3();
-  private forceLength = 0;
   private latestFrame: RenderFrame | undefined;
   private lastRenderTime = performance.now();
 
@@ -135,8 +139,7 @@ export class S0Renderer {
     this.inkLine.visible = false;
     this.inkLine.frustumCulled = false;
     this.scene.add(grid, this.geometryGroup, this.inkLine);
-    this.forceShaft.renderOrder = this.forceTip.renderOrder = 100;
-    this.forceArrow.add(this.forceShaft,this.forceTip);
+    this.forceArrow.renderOrder = 100;
     this.forceGroup.add(this.forceArrow);
     this.forceGroup.visible = false;
     this.scene.add(this.forceGroup);
@@ -218,10 +221,7 @@ export class S0Renderer {
     this.forceCue.show(event);
     if (!this.forceCue.event) { this.clearForce(); return; }
     this.forceVector.fromArray(event.vector).normalize();
-    this.forceLength = .14 + .0034*event.forceN;
-    this.forceShaft.scale.y = this.forceLength-.07;
-    this.forceShaft.position.y = (this.forceLength-.07)/2;
-    this.forceTip.position.y = this.forceLength-.035;
+    this.forceArrow.scale.setScalar(.14 + .0034*event.forceN);
     this.forceArrow.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),this.forceVector);
     this.forceMaterial.uniforms.fade.value = 1;
     this.positionForce();
@@ -263,7 +263,6 @@ export class S0Renderer {
     grid.color.set(dark ? '#687585' : '#bdc8d5'); grid.opacity = dark ? .3 : .24;
     this.inkMaterial.color.set(dark ? '#80b4f8' : '#1769d2');
     this.forceMaterial.uniforms.arrowColor.value.set(dark ? '#d6b47a' : '#c39455');
-    this.forceMaterial.uniforms.maxOpacity.value = dark ? .5 : .45;
     this.renderer.domElement.dataset.theme = dark ? 'dark' : 'light';
   }
 

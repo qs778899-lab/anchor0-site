@@ -178,3 +178,28 @@ All 10 demo tests and TypeScript checking pass; browser shader/error logs are em
 Previews: `previews/demo-replay/demo-soft-arrow-desktop.png`,
 `previews/demo-replay/demo-soft-arrow-mobile.png` and the downloaded
 `previews/demo-replay/demo-soft-arrow.png`.
+
+### Pointed, linearly widening arrow
+
+The selected outline replaces the cylinder and separate head with one continuous
+48-segment lathed mesh. Its normalized `(radius, axial distance)` profile is
+`(0, 0) → (12/240, 193/240) → (24/240, 183/240) → (0, 1)`, matching the chosen
+reference: a pointed tail expands linearly into the triangular head. The mesh is
+scaled uniformly by the existing `0.14 + 0.0034 × forceN` length, so 50 N remains
+31 cm long and 60 N remains 34.4 cm. There are no overlapping shaft/head meshes.
+
+Maximum opacity is now 29% in both themes, matching the selected preview setting.
+The existing low-saturation amber colors, local silhouette softening, world-space
+orientation, pelvis attachment and temporal fade remain. No physics, worker,
+model or motion resources changed; the original-release hash checks pass.
+
+Verified light and dark themes on desktop 1280×800 and mobile 390×844, including
+1/50/60 N visibility, 0 N clearing, front/side/back camera rotation, pause freezing,
+reset and mode-change clearing, and perspective/orthographic rendering without
+browser shader errors. Mobile content width remains 390 px. An actual PNG download
+preserved paused frame 29 and contains the robot and translucent arrow without
+labels or UI. All 10 demo tests and TypeScript checking pass.
+
+Previews: `previews/demo-replay/demo-linear-arrow-desktop.png`,
+`previews/demo-replay/demo-linear-arrow-mobile.png`, and the actual downloaded
+`previews/demo-replay/demo-linear-arrow.png`.
