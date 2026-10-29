@@ -1,4 +1,4 @@
-// Record the unmodified, published /demo/ worker in an isolated test browser.
+// Record the current /demo/ worker; retain the exact loaded worker provenance.
 import assert from 'node:assert/strict';
 import { readFile, writeFile, mkdir, access } from 'node:fs/promises';
 import { createRequire } from 'node:module';
@@ -16,6 +16,11 @@ const manifestBytes = await readFile(resolve(root, 'dist/demo/assets/manifest.js
 const manifest = JSON.parse(manifestBytes);
 const first = JSON.parse(await readFile(resolve(root, 'dist/demo/assets/motions/letter-C.json')));
 const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const uiBuild = JSON.parse(await readFile(resolve(root, 'source/demo-ui-build.json')));
+const activeWorker = uiBuild.activeWorker || 'dist/demo/assets/sim.worker-B2q0D_ik.js';
+const activeWorkerHash = sha(await readFile(resolve(root, activeWorker)));
+if (uiBuild.activeWorkerSha256) assert.equal(activeWorkerHash, uiBuild.activeWorkerSha256);
+const workerBuild = uiBuild.activeWorker ? JSON.parse(await readFile(resolve(root, 'source/demo-worker-build.json'))) : null;
 assert.equal(manifest.model.sha256, 'e4f393a62ceb64d14fe310dd8f1ac7f9790f945ef22708074ce9e383d0928f3c');
 const browser = await chromium.launch({ channel: 'chrome', headless: true, args: ['--enable-unsafe-swiftshader', '--disable-background-timer-throttling'] });
 try {
@@ -24,7 +29,7 @@ try {
   page.on('console', message => { if (message.text().startsWith('REPLAY ')) console.log(message.text()); });
   await page.goto(`${origin}/demo/?word=COMING+SOON&validate=1`);
   await page.waitForFunction(() => window.__s0Ready, null, { timeout: 300000 });
-  console.log('Published worker ready; recording COMING SOON.');
+  console.log('Demo worker ready; recording COMING SOON with the published policy.');
   const result = await page.evaluate(() => new Promise((resolve, reject) => {
     const worker = window.__s0Worker, requestId = 'coming-soon-recording';
     const timer = setTimeout(() => reject(Error('Recording timed out')), 1200000);
@@ -59,7 +64,7 @@ try {
     format: 1, text: 'COMING SOON', fps: 50, capturedAt: new Date().toISOString(),
     policy: { name: 'test052', step: manifest.model.checkpointStep, sha256: manifest.model.sha256 },
     manifestSha256: sha(manifestBytes), physicsSha256: manifest.physics.physicsSha256,
-    workerSha256: sha(await readFile(resolve(root, 'dist/demo/assets/sim.worker-B2q0D_ik.js'))),
+    workerSha256: activeWorkerHash, workerPath: activeWorker, workerBuild,
     physics: { jointNames: manifest.physics.jointNames, qposAddresses: manifest.physics.qposAddresses },
     initial: { qpos: first.initial.qpos, qvel: first.initial.qvel,
       pointPositions: manifest.policy.pointNames.flatMap(name => {

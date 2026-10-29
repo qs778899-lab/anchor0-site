@@ -29,10 +29,11 @@ test('word composition preserves spaces and ink never bridges lifts, dropped fra
  ink.append(frame(5,true));assert.equal(ink.segments.length,6);
  ink.append(frame(0,true,2));assert.equal(ink.segments.length,0);
 });
-test('UI build references only the original frozen worker and preserves every release payload',async()=>{
+test('UI build uses the recorded force adapter and preserves every original release payload',async()=>{
  const provenance=JSON.parse(await readFile(new URL('docs/demo-provenance.json',root)));
  for(const [name,expected] of Object.entries(provenance.immutableFiles))assert.equal(sha(await readFile(new URL(`dist/demo/${name}`,root))),expected,name);
  const built=await readFile(new URL('dist/demo/assets/demo-ui.js',root),'utf8');
- assert(built.includes('sim.worker-B2q0D_ik.js'));assert(!built.includes('sim.worker.ts'));
- const record=JSON.parse(await readFile(new URL('source/demo-ui-build.json',root)));assert.equal(sha(await readFile(new URL('dist/demo/assets/sim.worker-B2q0D_ik.js',root))),record.workerSha256);
+ assert(built.includes('sim.worker-interactive.js'));assert(!built.includes('sim.worker.ts'));
+ const record=JSON.parse(await readFile(new URL('source/demo-ui-build.json',root)));
+ assert.equal(sha(await readFile(new URL(record.activeWorker,root))),record.activeWorkerSha256);assert.equal(sha(await readFile(new URL('dist/demo/assets/sim.worker-B2q0D_ik.js',root))),record.workerSha256);
 });

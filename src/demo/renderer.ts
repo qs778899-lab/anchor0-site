@@ -5,7 +5,8 @@ import { LineSegments2 } from 'three/addons/lines/LineSegments2.js';
 import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js';
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { InkTrace } from './ink';
-import type { RenderGeom, RenderFrame, VisualResources, MotionInfo } from './types';
+import { ForceCue } from './disturbance';
+import type { RenderGeom, RenderFrame, VisualResources, MotionInfo, PushApplied } from './types';
 
 /**
  * Original URDF visuals follow MuJoCo rigid-link poses in Z-up coordinates.
@@ -46,6 +47,21 @@ export class S0Renderer {
   private readonly ink = new InkTrace();
   private readonly inkMaterial = new LineMaterial({ color: 0x55bcff, linewidth: 4, depthTest: true });
   private readonly inkLine = new LineSegments2(new LineSegmentsGeometry(), this.inkMaterial);
+  private readonly forceCue = new ForceCue();
+  private readonly forceGroup = new THREE.Group();
+  private readonly forceArrow = new THREE.Group();
+  private readonly forceMaterial = new THREE.MeshBasicMaterial({color:'#d97706',transparent:true,depthTest:false,depthWrite:false,toneMapped:false});
+  private readonly forceShaft = new THREE.Mesh(new THREE.CylinderGeometry(.012,.012,1,10),this.forceMaterial);
+  private readonly forceTip = new THREE.Mesh(new THREE.ConeGeometry(.055,.14,14),this.forceMaterial);
+  private readonly forceLabelCanvas = document.createElement('canvas');
+  private readonly forceLabelTexture = new THREE.CanvasTexture(this.forceLabelCanvas);
+  private readonly forceLabel = new THREE.Sprite(new THREE.SpriteMaterial({map:this.forceLabelTexture,transparent:true,depthTest:false,depthWrite:false,toneMapped:false}));
+  private readonly forceVector = new THREE.Vector3();
+  private readonly forceOrigin = new THREE.Vector3();
+  private forceLength = 0;
+  private forceColor = '#d97706';
+  private latestFrame: RenderFrame | undefined;
+  private lastRenderTime = performance.now();
 
   constructor(private readonly container: HTMLElement) {
     this.scene.background = new THREE.Color('#101a23');
@@ -91,6 +107,13 @@ export class S0Renderer {
     this.inkLine.visible = false;
     this.inkLine.frustumCulled = false;
     this.scene.add(grid, this.geometryGroup, this.inkLine);
+    this.forceShaft.renderOrder = this.forceTip.renderOrder = this.forceLabel.renderOrder = 100;
+    this.forceArrow.add(this.forceShaft,this.forceTip);
+    this.forceGroup.add(this.forceArrow,this.forceLabel);
+    this.forceLabelTexture.colorSpace = THREE.SRGBColorSpace;
+    this.forceLabel.scale.set(.38,.136,1);
+    this.forceGroup.visible = false;
+    this.scene.add(this.forceGroup);
 
     this.controls = new OrbitControls(this.camera, this.renderer.domElement);
     this.controls.enableDamping = !matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -165,6 +188,41 @@ export class S0Renderer {
 
   setLanguage(label: string): void { this.renderer.domElement.setAttribute('aria-label', label); }
 
+  showForce(event: PushApplied): void {
+    this.forceCue.show(event);
+    if (!this.forceCue.event) { this.clearForce(); return; }
+    this.forceVector.fromArray(event.vector).normalize();
+    this.forceLength = .32 + .009*event.forceN;
+    this.forceShaft.scale.y = this.forceLength-.14;
+    this.forceShaft.position.y = (this.forceLength-.14)/2;
+    this.forceTip.position.y = this.forceLength-.07;
+    this.forceArrow.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),this.forceVector);
+    this.forceMaterial.opacity = this.forceLabel.material.opacity = 1;
+    this.updateForceLabel(); this.positionForce();
+    this.forceGroup.visible = true;
+  }
+
+  clearForce(): void { this.forceCue.clear(); this.forceGroup.visible = false; }
+
+  private updateForceLabel(): void {
+    if (!this.forceCue.event) return;
+    const canvas=this.forceLabelCanvas; canvas.width=224; canvas.height=80;
+    const context=canvas.getContext('2d'); if(!context)return;
+    context.fillStyle=this.forceColor; context.beginPath();context.roundRect(0,0,224,80,16);context.fill();
+    context.fillStyle='#fff';context.font='600 34px sans-serif';context.textAlign='center';context.textBaseline='middle';
+    context.fillText(`${this.forceCue.event.forceN} N`,112,40,204);
+    this.forceLabelTexture.needsUpdate=true;
+  }
+
+  private positionForce(): void {
+    const event=this.forceCue.event,frame=this.latestFrame;if(!event||!frame)return;
+    if(event.runId!==frame.runId||event.epoch!==frame.epoch){this.clearForce();return;}
+    this.forceOrigin.fromArray(frame.bodyXpos,event.bodyId*3);
+    this.forceArrow.position.copy(this.forceOrigin);
+    this.forceLabel.position.copy(this.forceOrigin).addScaledVector(this.forceVector,this.forceLength*.5);
+    this.forceLabel.position.z+=.22;
+  }
+
   capturePng(): Promise<Blob> {
     if (this.disposed || !this.hasFrame || this.renderer.getContext().isContextLost()) throw new Error('View unavailable');
     // Copy immediately after rendering: preserveDrawingBuffer can remain off.
@@ -190,6 +248,9 @@ export class S0Renderer {
     const grid = this.grid.material as THREE.LineBasicMaterial;
     grid.color.set(dark ? '#687585' : '#bdc8d5'); grid.opacity = dark ? .3 : .24;
     this.inkMaterial.color.set(dark ? '#80b4f8' : '#1769d2');
+    this.forceColor = dark ? '#b86a09' : '#b75c00';
+    this.forceMaterial.color.set(dark ? '#fbbf24' : '#d97706');
+    this.updateForceLabel();
     this.renderer.domElement.dataset.theme = dark ? 'dark' : 'light';
   }
 
@@ -210,6 +271,7 @@ export class S0Renderer {
     this.camera = this.letterMode ? this.orthographic : this.perspective;
     this.controls.object = this.camera;
     this.clearInk();
+    this.clearForce();
     this.allocateInk(motion.sequence?.inkCapacity ?? motion.numFrames);
     this.resize(); this.resetCamera();
   }
@@ -231,6 +293,8 @@ export class S0Renderer {
     overview: this.overviewMode, inkCapacity: this.inkCapacity }; }
 
   setFrame(frame: RenderFrame): void {
+    this.latestFrame = frame;
+    this.positionForce();
     if (this.ink.append(frame)) {
       const count = this.ink.segments.length;
       if (count / 6 > this.inkCapacity) this.allocateInk(Math.max(count / 6, this.inkCapacity * 2));
@@ -334,6 +398,7 @@ export class S0Renderer {
     this.clearVisuals();
     this.inkLine.geometry.dispose();
     this.inkMaterial.dispose();
+    this.forceLabel.material.dispose(); this.forceLabelTexture.dispose();
     this.scene.traverse((object) => {
       if (object instanceof THREE.Mesh || object instanceof THREE.LineSegments) {
         object.geometry.dispose();
@@ -406,6 +471,10 @@ export class S0Renderer {
 
   private render = (): void => {
     if (this.disposed) return;
+    const now=performance.now(),dt=Math.min(.1,Math.max(0,(now-this.lastRenderTime)/1000));this.lastRenderTime=now;
+    const frame=this.latestFrame;
+    const opacity=this.forceCue.advance(frame?.completed?Infinity:frame?.simTime??0,dt,!!frame&&(frame.playing||frame.completed),document.hidden);
+    this.forceGroup.visible=opacity>0;this.forceMaterial.opacity=this.forceLabel.material.opacity=opacity;
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
     this.animationId = requestAnimationFrame(this.render);

@@ -1,0 +1,15 @@
+{
+  "format": 1,
+  "source": "dist/demo/assets/sim.worker-B2q0D_ik.js",
+  "sourceSha256": "9c6fd1c5ea028011b531a2b9cbddbfaf5157d04cad7f8433a6c5594b47f883b5",
+  "output": "dist/demo/assets/sim.worker-interactive.js",
+  "outputSha256": "b140c305d6b6db9c378adb2b7efa7be1c9e5184c5fee0cf383f2e0113fd28684",
+  "helperSha256": "f0d364e8739e4a5f645358363e9677d01e3cc3047fb8939bc183b2a34c105d43",
+  "adapterSha256": "48a9401ed4bb1c022f8c3647d2206f0fba37ce9ccacd18c1375e17b666ee385c",
+  "changes": [
+    "Push magnitude 0–60 N; 100 ms pulse",
+    "Acknowledge actual world force, body, simulation times, run and epoch",
+    "Reject paused or stale interactive commands"
+  ],
+  "policyChanged": false
+}

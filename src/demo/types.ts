@@ -1,4 +1,9 @@
 export type Direction = 'forward' | 'back' | 'left' | 'right';
+export interface PushApplied {
+  type: 'push-applied'; direction: Direction; forceN: number;
+  vector: [number, number, number]; bodyId: number;
+  startTime: number; endTime: number; runId: number; epoch: number;
+}
 export interface MotionInfo {
   id: string; label: string; taskName: string; category: string;
   sourceFilename: string; recordId: string; datasetId: string;
@@ -65,10 +70,11 @@ export type WorkerCommand =
   | { type: 'play' | 'pause' | 'reset'; epoch?: number }
   | { type: 'motion'; motion: string; epoch?: number }
   | { type: 'word'; text: string; epoch?: number; play?: boolean }
-  | { type: 'push'; direction: Direction; force: number; duration: number }
+  | { type: 'push'; direction: Direction; force: number; duration: number; runId: number; epoch: number }
   | { type: 'validate'; requestId: string; goldenUrl: string; debugTick?: number }
   | { type: 'rollout'; requestId: string; motion: string; text?: string; perturb?: boolean; captureInputsAt?: number[] };
 export type WorkerEvent =
+  | PushApplied
   | { type: 'progress'; progress: number; message: string }
   | { type: 'download-source'; id: string; label: string; available: number }
   | { type: 'persistent-cache'; complete: boolean; errors: number; skipped: number }

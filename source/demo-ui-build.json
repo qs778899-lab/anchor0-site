@@ -2,15 +2,17 @@
   "format": 1,
   "entry": "src/demo/main.ts",
   "workerSha256": "9c6fd1c5ea028011b531a2b9cbddbfaf5157d04cad7f8433a6c5594b47f883b5",
+  "activeWorker": "dist/demo/assets/sim.worker-interactive.js",
+  "activeWorkerSha256": "b140c305d6b6db9c378adb2b7efa7be1c9e5184c5fee0cf383f2e0113fd28684",
   "three": "0.181.0",
   "outputs": {
     "dist/demo/assets/demo-ui.js": {
-      "bytes": 600547,
-      "sha256": "e6334a61a46b8b5a5e28e17b7a087a048e2d53dab1441fb9693b64fdc3363ea1"
+      "bytes": 607555,
+      "sha256": "0e9d70dc0ccb4da9e9bfac10a957c328b920d12485bffc7891aa630d77636fe2"
     },
     "dist/demo/assets/demo-ui.css": {
-      "bytes": 11544,
-      "sha256": "5c28a40deb1bb650aa1e0676f9dd49aa1bbc29669e4b2ac4ec531d3f4bcd7030"
+      "bytes": 12057,
+      "sha256": "568f2caf50e53376fec1c9c6da3db2d0e20202c1f4cfad290e58e925ea8bc9e9"
     }
   }
 }

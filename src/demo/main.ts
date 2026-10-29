@@ -1,6 +1,7 @@
 import './style.css';
 import {S0Renderer} from './renderer';
 import {downloadPng,snapshotFilename} from './download';
+import {parseForce} from './disturbance';
 import type {WorkerEvent,WorkerCommand,RenderFrame,MotionInfo} from './types';
 import {normalizeDraft,previousCharacterStart,textLayout,glyphResourceId} from './sequence';
 import {t,language,theme,setLanguage,setTheme,syncPreferences,validationMessage,workerText} from './i18n';
@@ -15,7 +16,7 @@ app.innerHTML=`<div class="app-shell">
  <div id="word-panel" class="word-panel hidden"><label for="word-input" ${tr('wordLabel')}></label><input id="word-input" type="text" autocomplete="off" spellcheck="false" aria-describedby="word-help word-error"><div id="letter-keyboard" class="letter-keyboard"></div><div class="word-edit-buttons"><button id="word-space" class="secondary-button" ${tr('space')}></button><button id="word-backspace" class="secondary-button" ${tr('backspace')}></button><button id="word-clear" class="secondary-button" ${tr('clear')}></button></div><p id="word-help" class="hint" ${tr('wordHelp')}></p><div class="word-preview-row"><div id="word-preview" class="word-preview"></div><button id="save-image" type="button" class="secondary-button" disabled ${tr('saveImage')}></button></div><p id="save-status" class="micro-copy" role="status"></p><p id="word-estimate" class="micro-copy"></p><p id="word-error" class="word-error" role="status"></p><button id="word-start" class="primary-button" ${tr('startOver')}></button><p id="word-draft" class="micro-copy"></p><p id="word-state" class="word-state" aria-live="polite"></p></div>
  <p id="motion-hint" class="hint"></p>
  <div class="playback-buttons"><button id="play-button" class="primary-button" disabled><span id="play-icon" aria-hidden="true">▶</span><span id="play-label"></span></button><button id="reset-button" class="secondary-button" disabled>↺ <span ${tr('reset')}></span></button></div><div class="timeline"><div><span id="time-label">0.00 s</span><span id="frame-label"></span></div><progress id="motion-progress" max="1" value="0" data-aria="progress"></progress></div><p id="selection-error" class="word-error" role="status"></p><button id="selection-retry" class="secondary-button hidden" ${tr('retryMotion')}></button></section>
- <section class="panel-section"><div class="section-label"><span>02</span><h2 ${tr('pushTitle')}></h2></div><p class="hint" ${tr('pushHelp')}></p><div class="direction-pad"><button class="push-button push-forward" data-direction="forward" disabled>↑<span ${tr('forward')}></span></button><button class="push-button push-left" data-direction="left" disabled>←<span ${tr('left')}></span></button><span class="push-center" aria-hidden="true">＋</span><button class="push-button push-right" data-direction="right" disabled>→<span ${tr('right')}></span></button><button class="push-button push-back" data-direction="back" disabled>↓<span ${tr('back')}></span></button></div><p id="push-feedback" class="micro-copy" aria-live="polite"></p></section>
+ <section class="panel-section"><div class="section-label"><span>02</span><h2 ${tr('pushTitle')}></h2></div><p class="hint" ${tr('pushHelp')}></p><label for="push-force" ${tr('forceLabel')}></label><div class="force-input"><input id="push-force" type="number" min="0" max="60" step="any" inputmode="decimal" value="50" aria-describedby="force-error"><span aria-hidden="true">N</span></div><p id="force-error" class="word-error" role="status"></p><div class="direction-pad"><button class="push-button push-forward" data-direction="forward" disabled>↑<span ${tr('forward')}></span></button><button class="push-button push-left" data-direction="left" disabled>←<span ${tr('left')}></span></button><span class="push-center" aria-hidden="true">＋</span><button class="push-button push-right" data-direction="right" disabled>→<span ${tr('right')}></span></button><button class="push-button push-back" data-direction="back" disabled>↓<span ${tr('back')}></span></button></div><p id="push-feedback" class="micro-copy" aria-live="polite"></p></section>
 </aside></main><footer><span ${tr('footer')}></span><a href="/" ${tr('home')}></a></footer></div>`;
 const el=<T extends HTMLElement=HTMLElement>(id:string)=>document.getElementById(id) as T;
 const text=(id:string,value:string)=>{el(id).textContent=value;};
@@ -30,7 +31,7 @@ if(search.has('letter')){const url=new URL(location.href);url.searchParams.delet
 wordInput.value=normalizeDraft(initialWord??'HELLO WORLD');
 let worker:Worker|undefined,renderer:S0Renderer|undefined,ready=false,playing=false,complete=false,busy=false,error='',selectionError='',progress=0,progressMessage='',epoch=0;
 let motions=new Map<string,MotionInfo>(),activeMotion='',activeWord='',frame:RenderFrame|undefined;
-let pendingReset=true,lastUI=0,lastPreset='',saving=false,saveStatus='',pushDirection='',pushTimer=0,draftError='',lastSelection:WorkerCommand|undefined;
+let pendingReset=true,lastUI=0,lastPreset='',saving=false,saveStatus='',pushDirection='',pushMagnitude=50,pushTimer=0,draftError='',lastSelection:WorkerCommand|undefined;
 const prefersDark=matchMedia('(prefers-color-scheme: dark)');
 function send(command:WorkerCommand){worker?.postMessage(command);}
 function applyAppearance(){
@@ -67,13 +68,15 @@ function renderUI(){
  document.querySelectorAll<HTMLButtonElement>('[data-mode]').forEach(b=>{b.disabled=!ready;b.setAttribute('aria-pressed',String(b.dataset.mode===currentMode));});
  text('save-image',t(saving?'savingImage':'saveImage'));text('save-status',saveStatus?t(saveStatus):'');el<HTMLButtonElement>('save-image').disabled=!ready||busy||saving||!frame;
  for(const id of ['play-button','reset-button'])el<HTMLButtonElement>(id).disabled=!ready||busy||!!selectionError||(kind==='word'&&item?.kind!=='word');
- document.querySelectorAll<HTMLButtonElement>('[data-direction]').forEach(b=>b.disabled=!ready||busy||!playing);
+ const validForce=parseForce(el<HTMLInputElement>('push-force').value)!==null;
+ text('force-error',validForce?'':t('forceInvalid'));el('push-force').setAttribute('aria-invalid',String(!validForce));
+ document.querySelectorAll<HTMLButtonElement>('[data-direction]').forEach(b=>b.disabled=!ready||busy||!playing||!validForce);
  text('play-label',t(playing?'pause':complete?'replay':'play'));text('play-icon',playing?'Ⅱ':'▶');el('play-button').setAttribute('aria-label',t(playing?'pause':complete?'replay':'play'));
  text('status-text',t(error||selectionError?'failed':!ready?'preparing':busy?'selecting':playing?'running':complete?'complete':'paused'));el('status-pill').classList.toggle('is-playing',playing);
  text('loading-title',t(error?'failed':'loadingTitle'));text('loading-message',error?workerText(error):progressMessage?workerText(progressMessage):t('loading'));
  text('loading-percent',error?t('retry'):`${Math.round(progress*100)}%`);el('loading-progress').style.width=`${Math.round(progress*100)}%`;hide('retry-button',!error);hide('selection-retry',!selectionError);text('selection-error',selectionError?workerText(selectionError):'');
  el('loading-overlay').classList.toggle('has-error',!!error);
- text('push-feedback',t(pushDirection?'pushFeedback':'pushReady',pushDirection?{direction:t(pushDirection)}:{}));
+ text('push-feedback',t(pushDirection?(pushMagnitude===0?'pushZero':'pushFeedback'):'pushReady',pushDirection?{direction:t(pushDirection),force:pushMagnitude}:{}));
  if(frame){
   text('time-label',`${frame.simTime.toFixed(2)} s`);text('frame-label',t('frames',{current:frame.frame+1,total:frame.totalFrames}));
   const p=el<HTMLProgressElement>('motion-progress');p.max=frame.totalFrames;p.value=frame.frame+1;
@@ -92,7 +95,7 @@ function populate(kind:'preset'|'word'){
  renderUI();
 }
 function request(command:WorkerCommand){
- epoch++;pendingReset=true;busy=true;selectionError='';playing=complete=false;renderer?.clearInk();saveStatus='';lastSelection={...command,epoch} as WorkerCommand;send(lastSelection);renderUI();
+ epoch++;pendingReset=true;busy=true;selectionError='';playing=complete=false;renderer?.clearInk();renderer?.clearForce();pushDirection='';saveStatus='';lastSelection={...command,epoch} as WorkerCommand;send(lastSelection);renderUI();
 }
 function selectWord(play:boolean){
  const normalized=normalizeDraft(wordInput.value).trim(),invalid=validationMessage(normalized);if(invalid){draftError=invalid;send({type:'pause'});playing=false;renderUI();return;}
@@ -107,7 +110,7 @@ function start(){
  try{
   renderer=new S0Renderer(el('viewport'));applyAppearance();renderer.setLanguage(t('viewportAria'));
   if(validationBridge){for(const key of ['__s0Ready','__s0LastFrame','__s0Cache'])delete bridge[key];bridge.__s0InkSnapshot=()=>renderer!.inkSnapshot();bridge.__s0VisualSnapshot=()=>renderer!.visualSnapshot();}
-  worker=new Worker(new URL('./sim.worker-B2q0D_ik.js',import.meta.url),{type:'module'});
+  worker=new Worker(new URL('./sim.worker-interactive.js',import.meta.url),{type:'module'});
   if(validationBridge)bridge.__s0Worker=worker;
   worker.onmessage=(event:MessageEvent<WorkerEvent>)=>{
    const m=event.data;
@@ -120,7 +123,10 @@ function start(){
    }else if(m.type==='sequence'){if(m.epoch<epoch)return;motions.set(m.info.id,m.info);activeMotion=m.info.id;activeWord=m.info.sequence!.text;populate('word');}
    else if(m.type==='motion-info'){motions.set(m.info.id,m.info);}
    else if(m.type==='selection'){if(m.epoch<epoch)return;busy=m.state==='loading';selectionError=m.state==='error'?m.message:'';playing=false;renderUI();}
-   else if(m.type==='cache'){if(validationBridge)bridge.__s0Cache=m;}
+   else if(m.type==='push-applied'){
+    if(m.epoch!==epoch||m.runId!==frame?.runId)return;
+    renderer?.showForce(m);pushDirection=m.direction;pushMagnitude=m.forceN;renderUI();clearTimeout(pushTimer);pushTimer=window.setTimeout(()=>{pushDirection='';renderUI();},2400);
+   }else if(m.type==='cache'){if(validationBridge)bridge.__s0Cache=m;}
    else if(m.type==='frame'){
     if(!ready||m.epoch<epoch)return;frame=m;if(validationBridge)bridge.__s0LastFrame=m;busy=false;selectionError='';activeMotion=m.motion;playing=m.playing;complete=m.completed;
     const item=motions.get(m.motion);if(item)renderer!.setMotion(item);
@@ -156,7 +162,12 @@ el('save-image').onclick=async()=>{
  catch{saveStatus='imageError';}finally{saving=false;renderUI();}
 };
 el('camera-button').onclick=()=>renderer?.resetCamera();el('overview-button').onclick=()=>renderer?.showOverview();
-document.querySelectorAll<HTMLButtonElement>('[data-direction]').forEach(button=>button.onclick=()=>{if(!ready||!playing)return;const direction=button.dataset.direction as 'forward'|'back'|'left'|'right';send({type:'push',direction,force:50,duration:.1});pushDirection=direction;renderUI();clearTimeout(pushTimer);pushTimer=window.setTimeout(()=>{pushDirection='';renderUI();},2400);});
+el('push-force').addEventListener('input',renderUI);
+document.querySelectorAll<HTMLButtonElement>('[data-direction]').forEach(button=>button.onclick=()=>{
+ const force=parseForce(el<HTMLInputElement>('push-force').value);if(!ready||busy||!playing||!frame||force===null)return;
+ const direction=button.dataset.direction as 'forward'|'back'|'left'|'right';
+ send({type:'push',direction,force,duration:.1,runId:frame.runId,epoch});
+});
 el('language').onclick=()=>{setLanguage(language==='en'?'zh':'en');draftError='';applyLanguage();};el<HTMLSelectElement>('theme').onchange=e=>{setTheme((e.target as HTMLSelectElement).value as 'system'|'light'|'dark');applyAppearance();};
 prefersDark.addEventListener('change',applyAppearance);window.addEventListener('storage',e=>{if(e.key===null||['anchor-language','anchor-theme'].includes(e.key)){syncPreferences();draftError='';applyAppearance();applyLanguage();}});
 el('retry-button').onclick=start;

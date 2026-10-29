@@ -146,10 +146,15 @@
     "entry": "src/demo/main.ts",
     "buildRecord": "source/demo-ui-build.json",
     "documentation": "docs/demo-ui.md",
-    "workerChanged": false,
+    "publishedWorkerUnchanged": true,
+    "activeWorker": "assets/sim.worker-interactive.js",
+    "workerBuildRecord": "source/demo-worker-build.json",
+    "workerChanges": "Magnitude validation and push acknowledgement only; policy, physics and motion resources unchanged.",
     "newFiles": [
       "assets/demo-ui.js",
-      "assets/demo-ui.css"
+      "assets/demo-ui.css",
+      "assets/sim.worker-interactive.js",
+      "assets/demo-disturbance.js"
     ],
     "preferences": [
       "anchor-language",
