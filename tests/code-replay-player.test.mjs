@@ -5,13 +5,13 @@ import {sampleTime,duration,inkSegments,visibleSegments} from '../dist/code/repl
 const clip=JSON.parse(await readFile(new URL('../source/code-replay/clip.json',import.meta.url)));
 const manifest=JSON.parse(await readFile(new URL('../dist/code/assets/manifest.json',import.meta.url)));
 const ink=JSON.parse(await readFile(new URL('../dist/code/assets/coming-soon-ink.json',import.meta.url)));
-test('8× playback completes without a camera transition, holds and restarts cleanly',()=>{
- assert.equal(clip.playbackRate,8);assert.equal(clip.overviewSeconds,0);
+test('12× playback completes without a camera transition, holds and restarts cleanly',()=>{
+ assert.equal(clip.playbackRate,12);assert.equal(clip.overviewSeconds,0);
  assert.deepEqual(manifest.clips[0],clip);
  assert.equal(sampleTime(0,clip).overview,0);
- assert.equal(sampleTime(10,clip).sourceTime,80);
- assert.equal(sampleTime(clip.duration/8,clip).sourceTime,clip.duration);
- const end=clip.duration/8;
+ assert.equal(sampleTime(10,clip).sourceTime,120);
+ assert.equal(sampleTime(clip.duration/12,clip).sourceTime,clip.duration);
+ const end=clip.duration/12;
  assert.equal(sampleTime(end,clip).overview,1);assert.equal(sampleTime(end+2.9,clip).opacity,1);
  assert(Math.abs(sampleTime(duration(clip)-.25,clip).opacity-.5)<1e-8);
  assert.equal(sampleTime(duration(clip),clip).sourceTime,0);assert.equal(sampleTime(duration(clip),clip).opacity,1);

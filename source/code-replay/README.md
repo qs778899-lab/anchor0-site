@@ -10,7 +10,7 @@ No reference animation is substituted for actual policy output.
 - `robot-kinematics.xml`: kinematic subset of the exact pinned `/demo/` physics
   model, retaining all 75 body frames and 36 qpos coordinates. Export evaluates
   `mj_kinematics` only; it does not run a second simulation.
-- `clip.json`: 8× playback configuration; full-phrase view without a camera transition,
+- `clip.json`: 12× playback configuration; full-phrase view without a camera transition,
   3-second hold and 0.5-second fade.
 - `provenance.json`: source, geometry and pose hashes plus validation results.
 

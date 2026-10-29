@@ -33,7 +33,7 @@ test('pause, hidden page and offscreen resume retain presentation time',async()=
 });
 test('reduced motion starts paused and explicit play works; language updates do not reload',async()=>{
  const s=await setup({reduced:true});assert.equal(s.frames,0);s.el('pause').fire('click');assert.equal(s.frames,1);
- s.preferences.set('anchor-language','zh');s.window.fire('storage',{key:'anchor-language'});assert.equal(s.document.documentElement.lang,'zh-CN');assert.equal(s.loads,1);assert.match(s.el('viewer').getAttribute('aria-label'),/八倍速/);
+ s.preferences.set('anchor-language','zh');s.window.fire('storage',{key:'anchor-language'});assert.equal(s.document.documentElement.lang,'zh-CN');assert.equal(s.loads,1);assert.match(s.el('viewer').getAttribute('aria-label'),/十二倍速/);
  s.media.fire('change',{matches:true});assert.equal(s.frames,0);
 });
 test('resource failure and context loss both expose retry and recover cleanly',async()=>{

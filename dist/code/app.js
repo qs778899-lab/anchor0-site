@@ -22,8 +22,8 @@ const active = () => !document.hidden && inView;
 function updateMessages() {
   document.documentElement.lang = language() === 'zh' ? 'zh-CN' : 'en';
   container.setAttribute('aria-label', t(
-    'Robot writing COMING SOON at 8× speed in a full-phrase view. Drag to rotate, scroll or pinch to zoom, and press Space to pause or play. Arrow keys rotate and zoom. Home resets the view.',
-    '机器人以八倍速书写 COMING SOON，默认展示全景。拖动旋转，滚轮或双指缩放，空格暂停或播放；方向键可旋转和缩放，Home 恢复视角。'
+    'Robot writing COMING SOON at 12× speed in a full-phrase view. Drag to rotate, scroll or pinch to zoom, and press Space to pause or play. Arrow keys rotate and zoom. Home resets the view.',
+    '机器人以十二倍速书写 COMING SOON，默认展示全景。拖动旋转，滚轮或双指缩放，空格暂停或播放；方向键可旋转和缩放，Home 恢复视角。'
   ));
   container.setAttribute('aria-busy', String(loading));
   loadState.hidden = ready;
