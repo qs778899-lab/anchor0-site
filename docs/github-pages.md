@@ -1,5 +1,23 @@
 # GitHub Pages publication
 
+## Update freshness (2026-10-29)
+
+New pushes now cancel superseded publication runs. Published HTML checks
+`version.json` without caching when opened, refreshed or restored from browser
+back-cache. If the cached HTML is older, it navigates once to the latest version
+URL while preserving demo parameters and section anchors. Active sessions are
+not periodically reloaded. Published code, styles and JSON references carry the
+commit revision, including relative module imports. These are packaging-only
+changes; LAN content and media/model bytes remain unchanged. The packaging
+behavior described below predates this cache adaptation.
+
+GitHub Pages currently sends `Cache-Control: max-age=600`; initial Pages deployment
+takes roughly two minutes in observed runs. Local unsaved/uncommitted or unpushed
+changes cannot be published. After pushing, verify the workflow succeeded and
+the public `version.json?check=<unique-value>` matches the deployment SHA before
+reporting synchronization complete. Previously cached pages without the version
+checker need one hard refresh or a versioned URL to receive this fix.
+
 Public URL: https://qs778899-lab.github.io/anchor0-site/
 
 The repository is public by the owner's explicit request. GitHub Actions publishes
