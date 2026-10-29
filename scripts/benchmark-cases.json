@@ -1,0 +1,189 @@
+{
+  "version": 1,
+  "selection": "Qualitative diversity selection of reference motions; not controller rollouts or a statistical sample. In-house covers complementary coordination; Public includes all four dataset families plus a supplied curated jump-turn; Reachability covers all five postures.",
+  "groups": [
+    {
+      "id": "benchmark-inhouse",
+      "title": {
+        "en": "In-house · Coordination diversity",
+        "zh": "自建动作集 · 协调多样性"
+      },
+      "description": {
+        "en": "Reaching, body motion, support changes, and coordinated sequences.",
+        "zh": "触达、身体运动、支撑变化与协调动作序列。"
+      },
+      "clips": [
+        {
+          "id": "benchmark-inhouse-1",
+          "source": "inhouse/001_Chingmu_Hand-Reaching_REC-11759_BVH_Take_001_xubugao/reference_motion.mp4",
+          "title": {
+            "en": "Wide-stance reach",
+            "zh": "宽站姿触达"
+          }
+        },
+        {
+          "id": "benchmark-inhouse-7",
+          "source": "inhouse/007_Chingmu_End-Effector-Stability_REC-11467_BVH_Take_002_huchuanxiang/reference_motion.mp4",
+          "title": {
+            "en": "End-effector stability",
+            "zh": "末端稳定"
+          }
+        },
+        {
+          "id": "benchmark-inhouse-15",
+          "source": "inhouse/015_Chingmu_Dual-Reaching_REC-14061_BVH_Take_001_wangshaodong/reference_motion.mp4",
+          "title": {
+            "en": "Torso-assisted reaching",
+            "zh": "躯干配合触达"
+          }
+        },
+        {
+          "id": "benchmark-inhouse-21",
+          "source": "inhouse/021_Chingmu_Mobile_REC-12420_BVH_Take_000_zhangcong/reference_motion.mp4",
+          "title": {
+            "en": "Lower-body movement",
+            "zh": "下肢移动"
+          }
+        },
+        {
+          "id": "benchmark-inhouse-44",
+          "source": "inhouse/044_Chingmu_Dual-Reaching_REC-11005_BVH_Take_001_wangshaodong/reference_motion.mp4",
+          "title": {
+            "en": "Coordinated reaching",
+            "zh": "协调触达"
+          }
+        },
+        {
+          "id": "benchmark-inhouse-50",
+          "source": "inhouse/050_Chingmu_Sequence_REC-12662_BVH_Take_000_xubugao/reference_motion.mp4",
+          "title": {
+            "en": "Multi-phase coordination",
+            "zh": "多阶段协调"
+          }
+        },
+        {
+          "id": "benchmark-inhouse-inhouse_low_reach",
+          "source": "selected_three_sequrences/inhouse_low_reach/reference_motion.mp4",
+          "title": {
+            "en": "Low reaching",
+            "zh": "低位触达"
+          }
+        }
+      ]
+    },
+    {
+      "id": "benchmark-public",
+      "title": {
+        "en": "Public · Motion diversity",
+        "zh": "公开动作集 · 动作多样性"
+      },
+      "description": {
+        "en": "External references spanning reaching, bending, dance, kicks, and dynamic locomotion.",
+        "zh": "外部参考动作涵盖触达、俯身、舞蹈、踢腿与动态移动。"
+      },
+      "clips": [
+        {
+          "id": "benchmark-public-2",
+          "source": "public/002_CIRCLE_s5_closet1_shelf_10_closet1_0_001_reaching_001_reaching/reference_motion.mp4",
+          "title": {
+            "en": "Overhead reaching",
+            "zh": "高位触达"
+          }
+        },
+        {
+          "id": "benchmark-public-5",
+          "source": "public/005_boneseed_all_230418_dancing_routine_V001_003__A332_M/reference_motion.mp4",
+          "title": {
+            "en": "Dance movements",
+            "zh": "舞蹈动作"
+          }
+        },
+        {
+          "id": "benchmark-public-7",
+          "source": "public/007_AMASS_Transitions_mazen_c3d_punchkarate_kick_stageii/reference_motion.mp4",
+          "title": {
+            "en": "Punch-to-kick transition",
+            "zh": "出拳与踢腿衔接"
+          }
+        },
+        {
+          "id": "benchmark-public-10",
+          "source": "public/010_OMOMO_smplx_test_sub17_smalltable_025/reference_motion.mp4",
+          "title": {
+            "en": "Bending & lifting motion",
+            "zh": "俯身与抬举动作"
+          }
+        },
+        {
+          "id": "benchmark-public-31",
+          "source": "public/031_AMASS_Transitions_mazen_c3d_walksideways_running_stageii/reference_motion.mp4",
+          "title": {
+            "en": "Sideways movement & running",
+            "zh": "侧向移动与跑步"
+          }
+        },
+        {
+          "id": "benchmark-public-public_jump_turn",
+          "source": "selected_three_sequrences/public_jump_turn/reference_motion.mp4",
+          "title": {
+            "en": "Jumping & turning",
+            "zh": "跳跃与转身"
+          }
+        }
+      ]
+    },
+    {
+      "id": "benchmark-reachability",
+      "title": {
+        "en": "Reachability · Five postures",
+        "zh": "可达性 · 五种姿态"
+      },
+      "description": {
+        "en": "Target-conditioned wrist reaching across different support postures.",
+        "zh": "不同支撑姿态下的指定腕部目标触达。"
+      },
+      "clips": [
+        {
+          "id": "benchmark-reachability-1",
+          "source": "reachability/001_standing__rw_x+060_y-040_z110_bend0/reference_motion.mp4",
+          "title": {
+            "en": "Standing reach",
+            "zh": "站姿触达"
+          }
+        },
+        {
+          "id": "benchmark-reachability-9",
+          "source": "reachability/009_half_squat__rw_x+060_y+020_z070_bend0/reference_motion.mp4",
+          "title": {
+            "en": "Shallow-squat reach",
+            "zh": "浅蹲触达"
+          }
+        },
+        {
+          "id": "benchmark-reachability-3",
+          "source": "reachability/003_deep_squat__rw_x+000_y-040_z010_bend0/reference_motion.mp4",
+          "title": {
+            "en": "Deep-squat reach",
+            "zh": "深蹲触达"
+          }
+        },
+        {
+          "id": "benchmark-reachability-12",
+          "source": "reachability/012_staggered_left__rw_x+020_y+020_z110_s44/reference_motion.mp4",
+          "title": {
+            "en": "Staggered-stance reach",
+            "zh": "错步站姿触达"
+          }
+        },
+        {
+          "id": "benchmark-reachability-13",
+          "source": "reachability/013_half_kneel_left__rw_x+060_y+020_z090_bend0/reference_motion.mp4",
+          "title": {
+            "en": "Half-kneeling reach",
+            "zh": "半跪触达"
+          }
+        }
+      ]
+    }
+  ]
+}

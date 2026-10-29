@@ -5,7 +5,7 @@ const base = process.env.SITE_URL || 'https://qs778899-lab.github.io/anchor0-sit
 try {
   await viewport(1440);
   await cdp('Page.navigate',{url:base});
-  await until(`document.querySelectorAll('.clip-card').length===15 && document.querySelectorAll('.research-svg').length>0`);
+  await until(`document.querySelectorAll('#video-groups .clip-card').length===15 && document.querySelectorAll('.research-svg').length>0`);
   assert.equal(await evaluate(`document.querySelector('.hero-actions a[href$="code/"]').href`),new URL('code/',base).href);
   assert.equal(await evaluate(`document.querySelector('.hero-actions a[href$="demo/"]').href`),new URL('demo/',base).href);
   await evaluate(`document.querySelector('#language-toggle').click()`);

@@ -158,17 +158,17 @@ function register(frame) {
   if(!video.closest('.clip-rail'))preloadObserver.observe(video);
 }
 
-function render() {
-  $('#video-groups').innerHTML = manifest.groups.map((group, gi) => `<section class="video-group" aria-labelledby="${group.id}-title">
-    <div class="video-group-heading"><div><h3 id="${group.id}-title">${bilingual('span', group.title)}</h3>${bilingual('p', group.description)}</div><div class="video-group-actions"><button type="button" class="full-video-link" data-full-video="${group.id}" data-en="Watch full video ↗" data-zh="查看完整视频 ↗">${t('Watch full video ↗','查看完整视频 ↗')}</button><div class="rail-controls" hidden><button type="button" class="rail-arrow" data-rail-step="-1" aria-controls="${group.id}-clips" aria-label="${t('Previous video','上一段视频')}" disabled><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m14 6-6 6 6 6"/></svg></button><button type="button" class="rail-arrow" data-rail-step="1" aria-controls="${group.id}-clips" aria-label="${t('Next video','下一段视频')}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></svg></button></div></div></div>
+function renderGroups(groups, root) {
+  root.innerHTML = groups.map((group, gi) => `<section class="video-group" aria-labelledby="${group.id}-title">
+    <div class="video-group-heading"><div><h3 id="${group.id}-title">${bilingual('span', group.title)}</h3>${bilingual('p', group.description)}</div><div class="video-group-actions">${group.fullVideo ? `<button type="button" class="full-video-link" data-full-video="${group.id}" data-en="Watch full video ↗" data-zh="查看完整视频 ↗">${t('Watch full video ↗','查看完整视频 ↗')}</button>` : ''}<div class="rail-controls" hidden><button type="button" class="rail-arrow" data-rail-step="-1" aria-controls="${group.id}-clips" aria-label="${t('Previous video','上一段视频')}" disabled><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m14 6-6 6 6 6"/></svg></button><button type="button" class="rail-arrow" data-rail-step="1" aria-controls="${group.id}-clips" aria-label="${t('Next video','下一段视频')}"><svg aria-hidden="true" viewBox="0 0 24 24"><path d="m10 6 6 6-6 6"/></svg></button></div></div></div>
     <div class="clip-rail" id="${group.id}-clips" role="region" aria-labelledby="${group.id}-title" tabindex="0">${group.clips.map((clip, i) => `<article class="clip-card">
       <div class="video-frame" data-video="${clip.id}" style="--video-ratio:${clip.width} / ${clip.height}">
         <video preload="none" muted playsinline controls loop poster="${videoUrl(clip.poster, clip.posterRevision)}" aria-label="${esc(clip.title[locale()])}" data-label-en="${esc(clip.title.en)}" data-label-zh="${esc(clip.title.zh)}"><source data-src="${videoUrl(clip.output, clip.revision)}" type="video/mp4"></video>
         <button class="video-cover" type="button" aria-label="${t('Play video','播放视频')}"><span class="play-circle" aria-hidden="true">▶</span></button>
       </div><div class="clip-caption"><span class="clip-number">${String(gi + 1).padStart(2,'0')}.${String(i + 1).padStart(2,'0')}</span>${bilingual('h4', clip.title)}<span class="clip-duration">${Math.round(clip.duration)} s</span></div>
     </article>`).join('')}</div></section>`).join('');
-  $$('.clip-card .video-frame').forEach(register);
-  $$('.clip-rail').forEach(registerRail);
+  $$('.clip-card .video-frame',root).forEach(register);
+  $$('.clip-rail',root).forEach(registerRail);
 }
 
 export function translateMedia() {
@@ -179,6 +179,7 @@ export function translateMedia() {
 }
 
 export async function initializeMedia() {
+  initializeBenchmarkCases();
   register($('.hero-video'));
   $$('#future .video-frame').forEach(register);
   register($('.video-frame', dialog));
@@ -209,9 +210,21 @@ export async function initializeMedia() {
   try {
     const response = await fetch('./data/video-clips.json');
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
-    manifest = await response.json(); render(); translateMedia();
+    manifest = await response.json(); renderGroups(manifest.groups,$('#video-groups')); translateMedia();
   } catch (error) {
     $('#video-load-error').hidden = false;
     console.error('Video clips:', error);
+  }
+}
+
+async function initializeBenchmarkCases() {
+  try {
+    const response=await fetch('./data/benchmark-cases.json');
+    if(!response.ok)throw new Error(`HTTP ${response.status}`);
+    const cases=await response.json();
+    renderGroups(cases.groups,$('#benchmark-videos'));translateMedia();
+  } catch(error) {
+    $('#benchmark-video-error').hidden=false;
+    console.error('Benchmark cases:',error);
   }
 }

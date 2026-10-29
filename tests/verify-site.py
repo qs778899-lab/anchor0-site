@@ -28,6 +28,18 @@ for link in parser.links:
     assert target.exists(), f'Missing {link}'
 print(f'PASS: {len(parser.links)} local page references')
 
+benchmark_spec=json.loads((ROOT/'scripts/benchmark-cases.json').read_text())
+benchmark_cases=json.loads((DIST/'data/benchmark-cases.json').read_text())
+assert [len(g['clips']) for g in benchmark_cases['groups']]==[7,6,5]
+for spec, group in zip(benchmark_spec['groups'],benchmark_cases['groups']):
+    assert spec['id']==group['id']
+    for selected, clip in zip(spec['clips'],group['clips']):
+        assert selected['source']==clip['source'] and selected['title']==clip['title']
+        digest=hashlib.sha256((DIST/clip['output']).read_bytes()).hexdigest()
+        assert digest==clip['sha256'] and digest[:12]==clip['revision']
+        assert hashlib.sha256((DIST/clip['poster']).read_bytes()).hexdigest()[:12]==clip['posterRevision']
+print('PASS: 18 selected benchmark references, native asset hashes and posters')
+
 clip_manifest=json.loads((ROOT/'scripts/video-clips.json').read_text())
 clip_outputs=json.loads((DIST/'data/video-clips.json').read_text())
 clip_records=json.loads((ROOT/'docs/video-clips.json').read_text())['clips']

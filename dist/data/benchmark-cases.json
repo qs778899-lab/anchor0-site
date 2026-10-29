@@ -1,0 +1,351 @@
+{
+  "version": 1,
+  "selection": "Qualitative diversity selection of reference motions; not controller rollouts or a statistical sample. In-house covers complementary coordination; Public includes all four dataset families plus a supplied curated jump-turn; Reachability covers all five postures.",
+  "groups": [
+    {
+      "id": "benchmark-inhouse",
+      "title": {
+        "en": "In-house · Coordination diversity",
+        "zh": "自建动作集 · 协调多样性"
+      },
+      "description": {
+        "en": "Reaching, body motion, support changes, and coordinated sequences.",
+        "zh": "触达、身体运动、支撑变化与协调动作序列。"
+      },
+      "clips": [
+        {
+          "id": "benchmark-inhouse-1",
+          "source": "inhouse/001_Chingmu_Hand-Reaching_REC-11759_BVH_Take_001_xubugao/reference_motion.mp4",
+          "title": {
+            "en": "Wide-stance reach",
+            "zh": "宽站姿触达"
+          },
+          "output": "assets/videos/benchmark/benchmark-inhouse-1.mp4",
+          "poster": "assets/posters/benchmark/benchmark-inhouse-1.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 4.23,
+          "sha256": "ee9eb2053e925d0eceb74cab54b947694e92ee17a472d241846e2d8c6c857054",
+          "revision": "ee9eb2053e92",
+          "posterRevision": "481368ce2c2f",
+          "bytes": 488505
+        },
+        {
+          "id": "benchmark-inhouse-7",
+          "source": "inhouse/007_Chingmu_End-Effector-Stability_REC-11467_BVH_Take_002_huchuanxiang/reference_motion.mp4",
+          "title": {
+            "en": "End-effector stability",
+            "zh": "末端稳定"
+          },
+          "output": "assets/videos/benchmark/benchmark-inhouse-7.mp4",
+          "poster": "assets/posters/benchmark/benchmark-inhouse-7.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 8.13,
+          "sha256": "fc360cecbde20efdaa29eedff6f2f6782dc04d52e7d9673d4923d2f709feefe8",
+          "revision": "fc360cecbde2",
+          "posterRevision": "bb28849401e5",
+          "bytes": 748814
+        },
+        {
+          "id": "benchmark-inhouse-15",
+          "source": "inhouse/015_Chingmu_Dual-Reaching_REC-14061_BVH_Take_001_wangshaodong/reference_motion.mp4",
+          "title": {
+            "en": "Torso-assisted reaching",
+            "zh": "躯干配合触达"
+          },
+          "output": "assets/videos/benchmark/benchmark-inhouse-15.mp4",
+          "poster": "assets/posters/benchmark/benchmark-inhouse-15.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 5.87,
+          "sha256": "cebdad88f1e7be71077fe0bb8594a5050bde4eed602915abed63a6afec01587b",
+          "revision": "cebdad88f1e7",
+          "posterRevision": "7a65a2893675",
+          "bytes": 578623
+        },
+        {
+          "id": "benchmark-inhouse-21",
+          "source": "inhouse/021_Chingmu_Mobile_REC-12420_BVH_Take_000_zhangcong/reference_motion.mp4",
+          "title": {
+            "en": "Lower-body movement",
+            "zh": "下肢移动"
+          },
+          "output": "assets/videos/benchmark/benchmark-inhouse-21.mp4",
+          "poster": "assets/posters/benchmark/benchmark-inhouse-21.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 7.37,
+          "sha256": "0741feea358451e773134be80cf995ea435b03b06ca09711ff9e2cacead6ece9",
+          "revision": "0741feea3584",
+          "posterRevision": "4cd7d6ebb1b5",
+          "bytes": 613492
+        },
+        {
+          "id": "benchmark-inhouse-44",
+          "source": "inhouse/044_Chingmu_Dual-Reaching_REC-11005_BVH_Take_001_wangshaodong/reference_motion.mp4",
+          "title": {
+            "en": "Coordinated reaching",
+            "zh": "协调触达"
+          },
+          "output": "assets/videos/benchmark/benchmark-inhouse-44.mp4",
+          "poster": "assets/posters/benchmark/benchmark-inhouse-44.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 5.57,
+          "sha256": "59312a5e0f5e2481c036a3645966215e86312c7ff975b8bfea8e28433620526c",
+          "revision": "59312a5e0f5e",
+          "posterRevision": "cb3988914053",
+          "bytes": 520866
+        },
+        {
+          "id": "benchmark-inhouse-50",
+          "source": "inhouse/050_Chingmu_Sequence_REC-12662_BVH_Take_000_xubugao/reference_motion.mp4",
+          "title": {
+            "en": "Multi-phase coordination",
+            "zh": "多阶段协调"
+          },
+          "output": "assets/videos/benchmark/benchmark-inhouse-50.mp4",
+          "poster": "assets/posters/benchmark/benchmark-inhouse-50.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 10.2,
+          "sha256": "bc0f3852fadb677618347c479b3da8a3c6c43c3fd8b30c6cf0763169db530d7b",
+          "revision": "bc0f3852fadb",
+          "posterRevision": "38580b6c300b",
+          "bytes": 723028
+        },
+        {
+          "id": "benchmark-inhouse-inhouse_low_reach",
+          "source": "selected_three_sequrences/inhouse_low_reach/reference_motion.mp4",
+          "title": {
+            "en": "Low reaching",
+            "zh": "低位触达"
+          },
+          "output": "assets/videos/benchmark/benchmark-inhouse-inhouse_low_reach.mp4",
+          "poster": "assets/posters/benchmark/benchmark-inhouse-inhouse_low_reach.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 4.37,
+          "sha256": "039af9f0a2092774cf7bd43a9d497c04ef2bdfcab5be5b8acfa7abc2acfd5d77",
+          "revision": "039af9f0a209",
+          "posterRevision": "296b2fd0d540",
+          "bytes": 395980
+        }
+      ]
+    },
+    {
+      "id": "benchmark-public",
+      "title": {
+        "en": "Public · Motion diversity",
+        "zh": "公开动作集 · 动作多样性"
+      },
+      "description": {
+        "en": "External references spanning reaching, bending, dance, kicks, and dynamic locomotion.",
+        "zh": "外部参考动作涵盖触达、俯身、舞蹈、踢腿与动态移动。"
+      },
+      "clips": [
+        {
+          "id": "benchmark-public-2",
+          "source": "public/002_CIRCLE_s5_closet1_shelf_10_closet1_0_001_reaching_001_reaching/reference_motion.mp4",
+          "title": {
+            "en": "Overhead reaching",
+            "zh": "高位触达"
+          },
+          "output": "assets/videos/benchmark/benchmark-public-2.mp4",
+          "poster": "assets/posters/benchmark/benchmark-public-2.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 5.47,
+          "sha256": "4bb4fd037d057bcbcc5f2b1a18cc1c4aa6d564b5bea0e0810e85b4baae73e923",
+          "revision": "4bb4fd037d05",
+          "posterRevision": "25802ffc3218",
+          "bytes": 492836
+        },
+        {
+          "id": "benchmark-public-5",
+          "source": "public/005_boneseed_all_230418_dancing_routine_V001_003__A332_M/reference_motion.mp4",
+          "title": {
+            "en": "Dance movements",
+            "zh": "舞蹈动作"
+          },
+          "output": "assets/videos/benchmark/benchmark-public-5.mp4",
+          "poster": "assets/posters/benchmark/benchmark-public-5.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 12.7,
+          "sha256": "b1c25076326fae350049c6ed958ceb57721e4bf5b3d9d019de3075a0b1df7dfc",
+          "revision": "b1c25076326f",
+          "posterRevision": "48b284585940",
+          "bytes": 1991733
+        },
+        {
+          "id": "benchmark-public-7",
+          "source": "public/007_AMASS_Transitions_mazen_c3d_punchkarate_kick_stageii/reference_motion.mp4",
+          "title": {
+            "en": "Punch-to-kick transition",
+            "zh": "出拳与踢腿衔接"
+          },
+          "output": "assets/videos/benchmark/benchmark-public-7.mp4",
+          "poster": "assets/posters/benchmark/benchmark-public-7.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 8.57,
+          "sha256": "a3c4b29ae5dfcb383da93715062323628cb2ca2017ca34ef7fcbfec3e11ba62e",
+          "revision": "a3c4b29ae5df",
+          "posterRevision": "22fdfc8e6886",
+          "bytes": 758677
+        },
+        {
+          "id": "benchmark-public-10",
+          "source": "public/010_OMOMO_smplx_test_sub17_smalltable_025/reference_motion.mp4",
+          "title": {
+            "en": "Bending & lifting motion",
+            "zh": "俯身与抬举动作"
+          },
+          "output": "assets/videos/benchmark/benchmark-public-10.mp4",
+          "poster": "assets/posters/benchmark/benchmark-public-10.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 5.47,
+          "sha256": "6753e93a141d817cb05466aaf07d8dee01ca2eea3c52e4fe6dde38c5a7e812ce",
+          "revision": "6753e93a141d",
+          "posterRevision": "8f60cfd1299d",
+          "bytes": 404378
+        },
+        {
+          "id": "benchmark-public-31",
+          "source": "public/031_AMASS_Transitions_mazen_c3d_walksideways_running_stageii/reference_motion.mp4",
+          "title": {
+            "en": "Sideways movement & running",
+            "zh": "侧向移动与跑步"
+          },
+          "output": "assets/videos/benchmark/benchmark-public-31.mp4",
+          "poster": "assets/posters/benchmark/benchmark-public-31.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 7.33,
+          "sha256": "d2723fc8a2706f656e4c834bb2076b192b730f56427fd1d9a7f276a13cb06cb8",
+          "revision": "d2723fc8a270",
+          "posterRevision": "038889a51e99",
+          "bytes": 397748
+        },
+        {
+          "id": "benchmark-public-public_jump_turn",
+          "source": "selected_three_sequrences/public_jump_turn/reference_motion.mp4",
+          "title": {
+            "en": "Jumping & turning",
+            "zh": "跳跃与转身"
+          },
+          "output": "assets/videos/benchmark/benchmark-public-public_jump_turn.mp4",
+          "poster": "assets/posters/benchmark/benchmark-public-public_jump_turn.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 7.1,
+          "sha256": "3ba8174c710284614600e8dbe2e8417f97d2dba0d9a421901a730483dbc7266b",
+          "revision": "3ba8174c7102",
+          "posterRevision": "6963a7b97aeb",
+          "bytes": 874735
+        }
+      ]
+    },
+    {
+      "id": "benchmark-reachability",
+      "title": {
+        "en": "Reachability · Five postures",
+        "zh": "可达性 · 五种姿态"
+      },
+      "description": {
+        "en": "Target-conditioned wrist reaching across different support postures.",
+        "zh": "不同支撑姿态下的指定腕部目标触达。"
+      },
+      "clips": [
+        {
+          "id": "benchmark-reachability-1",
+          "source": "reachability/001_standing__rw_x+060_y-040_z110_bend0/reference_motion.mp4",
+          "title": {
+            "en": "Standing reach",
+            "zh": "站姿触达"
+          },
+          "output": "assets/videos/benchmark/benchmark-reachability-1.mp4",
+          "poster": "assets/posters/benchmark/benchmark-reachability-1.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 16.52,
+          "sha256": "3ceabec6a3f8417a548d1e829beb30b76622a3af50024fc43c137e28829a86f2",
+          "revision": "3ceabec6a3f8",
+          "posterRevision": "0faf8bbce04c",
+          "bytes": 903073
+        },
+        {
+          "id": "benchmark-reachability-9",
+          "source": "reachability/009_half_squat__rw_x+060_y+020_z070_bend0/reference_motion.mp4",
+          "title": {
+            "en": "Shallow-squat reach",
+            "zh": "浅蹲触达"
+          },
+          "output": "assets/videos/benchmark/benchmark-reachability-9.mp4",
+          "poster": "assets/posters/benchmark/benchmark-reachability-9.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 16.52,
+          "sha256": "8391571b4e6697dea4d7eda530c7b39712254b6b1e6fbf150c1bbf63d72ac077",
+          "revision": "8391571b4e66",
+          "posterRevision": "b01fe6277ad1",
+          "bytes": 1094273
+        },
+        {
+          "id": "benchmark-reachability-3",
+          "source": "reachability/003_deep_squat__rw_x+000_y-040_z010_bend0/reference_motion.mp4",
+          "title": {
+            "en": "Deep-squat reach",
+            "zh": "深蹲触达"
+          },
+          "output": "assets/videos/benchmark/benchmark-reachability-3.mp4",
+          "poster": "assets/posters/benchmark/benchmark-reachability-3.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 16.52,
+          "sha256": "7b1facd1a59a4d979043c2c5601c093ce54184fb3b32b115a2c2bbccb62ebb3e",
+          "revision": "7b1facd1a59a",
+          "posterRevision": "93237005341c",
+          "bytes": 1305449
+        },
+        {
+          "id": "benchmark-reachability-12",
+          "source": "reachability/012_staggered_left__rw_x+020_y+020_z110_s44/reference_motion.mp4",
+          "title": {
+            "en": "Staggered-stance reach",
+            "zh": "错步站姿触达"
+          },
+          "output": "assets/videos/benchmark/benchmark-reachability-12.mp4",
+          "poster": "assets/posters/benchmark/benchmark-reachability-12.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 16.52,
+          "sha256": "dd2ea38b32a7b89db08476886e884e278266f506e09816da309ce28fd9a26511",
+          "revision": "dd2ea38b32a7",
+          "posterRevision": "36c53efe89c8",
+          "bytes": 435835
+        },
+        {
+          "id": "benchmark-reachability-13",
+          "source": "reachability/013_half_kneel_left__rw_x+060_y+020_z090_bend0/reference_motion.mp4",
+          "title": {
+            "en": "Half-kneeling reach",
+            "zh": "半跪触达"
+          },
+          "output": "assets/videos/benchmark/benchmark-reachability-13.mp4",
+          "poster": "assets/posters/benchmark/benchmark-reachability-13.jpg",
+          "width": 960,
+          "height": 1020,
+          "duration": 16.52,
+          "sha256": "ee8450678541e8859a66cb298a5745d3233eb4bafa09a72f30c31f0e1b3c4583",
+          "revision": "ee8450678541",
+          "posterRevision": "dc8c0b9fbcd0",
+          "bytes": 1241517
+        }
+      ]
+    }
+  ]
+}
