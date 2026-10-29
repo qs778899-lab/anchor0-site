@@ -50,9 +50,41 @@ export class S0Renderer {
   private readonly forceCue = new ForceCue();
   private readonly forceGroup = new THREE.Group();
   private readonly forceArrow = new THREE.Group();
-  private readonly forceMaterial = new THREE.MeshBasicMaterial({color:'#d97706',transparent:true,depthTest:false,depthWrite:false,toneMapped:false});
-  private readonly forceShaft = new THREE.Mesh(new THREE.CylinderGeometry(.012,.012,1,10),this.forceMaterial);
-  private readonly forceTip = new THREE.Mesh(new THREE.ConeGeometry(.055,.14,14),this.forceMaterial);
+  private readonly forceMaterial = new THREE.ShaderMaterial({
+    uniforms: {
+      arrowColor: {value:new THREE.Color('#c39455')},
+      maxOpacity: {value:.45},
+      fade: {value:1},
+    },
+    vertexShader: `
+      varying vec3 arrowNormal;
+      varying vec3 arrowView;
+      void main() {
+        vec4 viewPosition = modelViewMatrix * vec4(position, 1.0);
+        arrowNormal = normalize(normalMatrix * normal);
+        arrowView = -viewPosition.xyz;
+        gl_Position = projectionMatrix * viewPosition;
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 arrowColor;
+      uniform float maxOpacity;
+      uniform float fade;
+      varying vec3 arrowNormal;
+      varying vec3 arrowView;
+      void main() {
+        vec3 viewDirection = isOrthographic ? vec3(0.0, 0.0, 1.0) : normalize(arrowView);
+        // Fade only this mesh's silhouette; the robot and ink stay sharp.
+        float facing = max(0.0, dot(normalize(arrowNormal), viewDirection));
+        float edge = smoothstep(0.0, 0.65, facing);
+        gl_FragColor = vec4(arrowColor, maxOpacity * fade * edge);
+        #include <colorspace_fragment>
+      }
+    `,
+    transparent:true,depthTest:false,depthWrite:false,toneMapped:false,
+  });
+  private readonly forceShaft = new THREE.Mesh(new THREE.CylinderGeometry(.006,.006,1,32),this.forceMaterial);
+  private readonly forceTip = new THREE.Mesh(new THREE.ConeGeometry(.025,.07,32),this.forceMaterial);
   private readonly forceVector = new THREE.Vector3();
   private readonly forceOrigin = new THREE.Vector3();
   private forceLength = 0;
@@ -186,12 +218,12 @@ export class S0Renderer {
     this.forceCue.show(event);
     if (!this.forceCue.event) { this.clearForce(); return; }
     this.forceVector.fromArray(event.vector).normalize();
-    this.forceLength = .32 + .009*event.forceN;
-    this.forceShaft.scale.y = this.forceLength-.14;
-    this.forceShaft.position.y = (this.forceLength-.14)/2;
-    this.forceTip.position.y = this.forceLength-.07;
+    this.forceLength = .14 + .0034*event.forceN;
+    this.forceShaft.scale.y = this.forceLength-.07;
+    this.forceShaft.position.y = (this.forceLength-.07)/2;
+    this.forceTip.position.y = this.forceLength-.035;
     this.forceArrow.quaternion.setFromUnitVectors(new THREE.Vector3(0,1,0),this.forceVector);
-    this.forceMaterial.opacity = 1;
+    this.forceMaterial.uniforms.fade.value = 1;
     this.positionForce();
     this.forceGroup.visible = true;
   }
@@ -230,7 +262,8 @@ export class S0Renderer {
     const grid = this.grid.material as THREE.LineBasicMaterial;
     grid.color.set(dark ? '#687585' : '#bdc8d5'); grid.opacity = dark ? .3 : .24;
     this.inkMaterial.color.set(dark ? '#80b4f8' : '#1769d2');
-    this.forceMaterial.color.set(dark ? '#fbbf24' : '#d97706');
+    this.forceMaterial.uniforms.arrowColor.value.set(dark ? '#d6b47a' : '#c39455');
+    this.forceMaterial.uniforms.maxOpacity.value = dark ? .5 : .45;
     this.renderer.domElement.dataset.theme = dark ? 'dark' : 'light';
   }
 
@@ -453,7 +486,7 @@ export class S0Renderer {
     const now=performance.now(),dt=Math.min(.1,Math.max(0,(now-this.lastRenderTime)/1000));this.lastRenderTime=now;
     const frame=this.latestFrame;
     const opacity=this.forceCue.advance(frame?.completed?Infinity:frame?.simTime??0,dt,!!frame&&(frame.playing||frame.completed),document.hidden);
-    this.forceGroup.visible=opacity>0;this.forceMaterial.opacity=opacity;
+    this.forceGroup.visible=opacity>0;this.forceMaterial.uniforms.fade.value=opacity;
     this.controls.update();
     this.renderer.render(this.scene, this.camera);
     this.animationId = requestAnimationFrame(this.render);

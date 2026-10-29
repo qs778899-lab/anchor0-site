@@ -158,3 +158,23 @@ the panel retains its numeric input, feedback and 100 ms hint. Desktop light and
 390 px mobile dark views were checked, including a paused 50 N push. The actual
 downloaded PNG (`previews/demo-replay/demo-arrow-no-label.png`) contains the robot
 and arrow without text. All 10 demo tests and the isolated TypeScript check pass.
+
+### Compact, soft translucent arrow
+
+The arrow now measures `0.14 + 0.0034 × forceN` metres: 31 cm at 50 N and
+34.4 cm at 60 N. The shaft radius is 6 mm; the head is 7 cm long with a
+2.5 cm radius. The existing 0 N handling, world direction, pelvis attachment,
+100 ms pulse, fade, pause and reset behavior are unchanged.
+
+A local shader fades grazing-angle silhouette pixels, using the correct view
+direction for both perspective and orthographic cameras. Only the arrow is
+softened; robot/ink rendering and PNG capture remain sharp. Maximum opacity is
+45% in light mode (`#c39455`) and 50% in dark mode (`#d6b47a`), multiplied by the
+existing temporal fade. There is no label, glow, postprocessing blur or worker change.
+
+Verified desktop light at 1280×800, mobile dark at 390×844, 1/50/60 N arrows,
+camera rotation, pause freezing, reset clearing and an actual downloaded PNG.
+All 10 demo tests and TypeScript checking pass; browser shader/error logs are empty.
+Previews: `previews/demo-replay/demo-soft-arrow-desktop.png`,
+`previews/demo-replay/demo-soft-arrow-mobile.png` and the downloaded
+`previews/demo-replay/demo-soft-arrow.png`.

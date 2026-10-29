@@ -7,8 +7,8 @@
   "three": "0.181.0",
   "outputs": {
     "dist/demo/assets/demo-ui.js": {
-      "bytes": 604142,
-      "sha256": "d7873d6135bab5f5ddd55e463fec5863d72886d07f333c43e14235b71309cd98"
+      "bytes": 605242,
+      "sha256": "68525c7053d389fa1a33a5dcc3e9b547809bdc0b08db097f233518ec204560dd"
     },
     "dist/demo/assets/demo-ui.css": {
       "bytes": 12057,
