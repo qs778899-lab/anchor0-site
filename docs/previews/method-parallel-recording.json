@@ -1,0 +1,34 @@
+{
+  "source": "Chrome Page.screencastFrame",
+  "paperCommit": "7bdfcc7f280c6190d74c963995c5bd530b1d8229",
+  "cycleSeconds": 23.412857142857142,
+  "steps": 26,
+  "arrows": 28,
+  "parallelSteps": [
+    {
+      "paths": [
+        "reconstruction-selector",
+        "reference-selector"
+      ],
+      "startSeconds": 7.055714285714285,
+      "durationSeconds": 1.8
+    },
+    {
+      "paths": [
+        "policy-reference",
+        "policy-token"
+      ],
+      "startSeconds": 15.854285714285714,
+      "durationSeconds": 1.8
+    }
+  ],
+  "frames": 728,
+  "seconds": 25.16580104827881,
+  "viewport": [
+    1440,
+    1100
+  ],
+  "fps": 30,
+  "speed": 1,
+  "output": "docs/previews/method-parallel-motion.mp4"
+}
