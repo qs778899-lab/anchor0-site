@@ -36,6 +36,7 @@ function updatePosition() {
   const threshold = innerHeight * .27;
   let active = sections[0];
   for (const section of sections) if (section.getBoundingClientRect().top <= threshold) active = section;
+  if (scrollY + innerHeight >= document.documentElement.scrollHeight - 2) active = sections.at(-1);
   links.forEach(link => {
     if (link.hash === `#${active.id}`) link.setAttribute('aria-current', 'location');
     else link.removeAttribute('aria-current');

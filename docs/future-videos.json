@@ -1,0 +1,35 @@
+{
+  "source": "场景/场景.mp4",
+  "sourceSha256": "6b3652943f8444820ba767d07d4d6c8a97013fcc7fd36f950c0dac695108c9d6",
+  "encoding": "H.264 CRF 16 slow; native 3840 × 2160 / 30 fps; no crop, scale or speed changes",
+  "clips": [
+    {
+      "id": "stool",
+      "startFrame": 5700,
+      "endFrame": 6303,
+      "fps": 30,
+      "duration": 20.1,
+      "width": 3840,
+      "height": 2160,
+      "output": "dist/assets/videos/future-stool.mp4",
+      "sha256": "18a45b34b778149e9881967f41e29c6f50ead5ed89efacdec2b150aa93b5a1f2",
+      "bytes": 64952993,
+      "poster": "dist/assets/posters/future-stool.jpg",
+      "posterSha256": "3703d97384ffd8487ce3a31acc861ea3ac3287fddf603c47a64b5995964949ad"
+    },
+    {
+      "id": "stairs",
+      "startFrame": 6306,
+      "endFrame": 6866,
+      "fps": 30,
+      "duration": 18.666666666666668,
+      "width": 3840,
+      "height": 2160,
+      "output": "dist/assets/videos/future-stairs.mp4",
+      "sha256": "9bbca7cff4978626f393a3935cb931eba9b494e73a979a0e3e544c6e8f289910",
+      "bytes": 68919798,
+      "poster": "dist/assets/posters/future-stairs.jpg",
+      "posterSha256": "3924855e25b5108ea32b4e0cacf32e45174dd4d78c64d502da575dc8f5085fbf"
+    }
+  ]
+}

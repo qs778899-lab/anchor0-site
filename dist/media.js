@@ -180,6 +180,7 @@ export function translateMedia() {
 
 export async function initializeMedia() {
   register($('.hero-video'));
+  $$('#future .video-frame').forEach(register);
   register($('.video-frame', dialog));
   document.addEventListener('visibilitychange', reconcile);
   document.addEventListener('fullscreenchange', reconcile);
