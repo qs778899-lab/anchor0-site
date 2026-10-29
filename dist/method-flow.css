@@ -1,0 +1,17 @@
+/* Only the METHOD figure and its own enlarged view use these rules. */
+.method-flow-surface{position:relative;display:block;aspect-ratio:2314/1585;line-height:0}
+.method-flow-surface>img{display:block;width:100%;height:auto;max-width:none;max-height:none}
+.method-flow-overlay{position:absolute;inset:0;width:100%;height:100%;overflow:hidden;pointer-events:none;opacity:0}
+.method-flow-overlay[data-started="true"]{opacity:1}
+.method-flow-highlight{fill:none;stroke-width:3;stroke-linecap:butt;stroke-linejoin:round;stroke-dasharray:24 176;stroke-dashoffset:calc(var(--flow-offset,0px) + var(--flow-phase,0px))}
+.method-flow-actions{display:flex;justify-content:flex-end;margin-top:8px}
+.method-flow-toggle,#image-dialog .method-flow-toggle{display:inline-flex;align-items:center;justify-content:center;gap:7px;width:auto;padding:6px 9px;border:1px solid var(--line);border-radius:5px;background:var(--bg);color:var(--muted);font-family:inherit;font-size:11px;font-weight:500;line-height:1.5;white-space:nowrap}
+.method-flow-toggle:hover,#image-dialog .method-flow-toggle:hover{color:var(--primary);border-color:var(--primary)}
+.method-flow-toggle:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.method-flow-toggle svg{width:12px;height:12px;fill:none;stroke:currentColor;stroke-width:1.7;flex:none}
+#image-dialog.method-flow-dialog[open]{display:flex;flex-direction:column}
+.method-flow-dialog .dialog-toolbar{flex:none;flex-wrap:wrap;gap:10px}
+.method-flow-dialog .dialog-toolbar>div{gap:12px}
+.method-flow-area{display:block;flex:1;min-height:0;height:auto}
+.method-flow-area .method-flow-surface{margin:auto}
+.method-flow-area .method-flow-surface>img{width:100%;height:100%;max-width:none;max-height:none;margin:0}
