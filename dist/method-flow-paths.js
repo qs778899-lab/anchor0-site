@@ -5,7 +5,7 @@ export const METHOD_IMAGE = {
   sha256: '3a3a2b04d4d001396ca93acd13f40ba0de7de0e18975bbe6ddf0878d709eba1e',
 };
 
-// Each centerline ends at the base of its existing arrowhead. Arrowheads remain in the PNG.
+// Each centerline ends at the base of its existing arrowhead. The heads stay fixed in the PNG.
 // The Benchmark trunk is drawn once, then splits into two branches without overlapping strokes.
 export const METHOD_FLOWS = [
   {id:'calibration', group:'A', color:'#156082', d:'M386 314 H480'},
@@ -34,10 +34,10 @@ export const METHOD_FLOWS = [
   {id:'deployment-token-decoder', group:'C', color:'#7960af', d:'M2082 910 V961'},
   {id:'deployment-error-decoder', group:'C', color:'#156082', d:'M1920 1057 H1960'},
   {id:'deployment-decoder-robot', group:'C', color:'#4e887a', d:'M2085 1115 V1166'},
-  {id:'deployment-state-decoder', group:'C', color:'#4e887a', d:'M2250 1215 V1053 H2207'},
+  {id:'deployment-state-decoder', group:'C', color:'#4e887a', d:'M2177 1314 H2249 V1053 H2207'},
   {id:'deployment-state-error', group:'C', color:'#747474', d:'M1925 1314 H1828 V1133'},
   {id:'execution-benchmark', group:'benchmark', color:'#747474', d:'M2003 1453 V1524 H1701'},
-  {id:'benchmark-trunk', group:'benchmark', color:'#747474', d:'M1021 1524 H6 V1015'},
+  {id:'benchmark-trunk', group:'benchmark', color:'#747474', d:'M1021 1524 H6 V1015', arrowhead:false},
   {id:'benchmark-training', group:'benchmark', color:'#747474', d:'M6 1015 H20', continues:'benchmark-trunk'},
   {id:'benchmark-curation', group:'benchmark', color:'#747474', d:'M6 1015 V289 H20', continues:'benchmark-trunk'},
 ];

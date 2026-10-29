@@ -1,4 +1,5 @@
 import {METHOD_IMAGE, METHOD_FLOWS} from './method-flow-paths.js';
+import {buildMethodLayers} from './method-flow-layers.js';
 
 const button = document.querySelector('#method [data-zoom="./assets/images/method.png"]');
 const original = button.querySelector('img');
@@ -12,6 +13,7 @@ const controls = new Set();
 let modalSurface = null, modalControl = null;
 let userPaused = null, hasStarted = false;
 let elapsed = 0, lastFrame = null, frame = null;
+const layers=buildMethodLayers(original.src);
 
 const paused = () => userPaused ?? reducedMotion.matches;
 const chinese = () => document.documentElement.lang.startsWith('zh');
@@ -23,7 +25,7 @@ function element(name, attributes = {}) {
 function highlight(color) {
   return '#' + color.slice(1).match(/../g).map(channel => {
     const base = parseInt(channel, 16);
-    return Math.round(base + (255 - base) * .58).toString(16).padStart(2, '0');
+    return Math.round(base + (255 - base) * .75).toString(16).padStart(2, '0');
   }).join('');
 }
 
@@ -35,22 +37,31 @@ function createSurface(image, id) {
   const defs = element('defs');
   const maskId = `method-flow-alpha-${id}`;
   const mask = element('mask', {id:maskId, maskUnits:'userSpaceOnUse', x:0, y:0, width:METHOD_IMAGE.width, height:METHOD_IMAGE.height, style:'mask-type:alpha'});
-  // The PNG's alpha preserves the exact existing gaps in the outer dashed feedback lines.
-  mask.append(element('image', {href:original.src, x:0, y:0, width:METHOD_IMAGE.width, height:METHOD_IMAGE.height}));
+  const maskImage=element('image', {x:0, y:0, width:METHOD_IMAGE.width, height:METHOD_IMAGE.height});
+  mask.append(maskImage);
   defs.append(mask);svg.append(defs);
+  const fade=element('image', {class:'method-flow-fade', x:0, y:0, width:METHOD_IMAGE.width, height:METHOD_IMAGE.height});
+  svg.append(fade);
   const lines = element('g', {mask:`url(#${maskId})`});
   const paths = new Map();
   METHOD_FLOWS.forEach((flow, index) => {
-    const path = element('path', {d:flow.d, stroke:highlight(flow.color), class:'method-flow-highlight', 'data-flow':flow.id, 'data-group':flow.group});
+    const path = element('path', {d:flow.d, stroke:flow.color, class:'method-flow-highlight', 'data-flow':flow.id, 'data-group':flow.group});
     const preceding = paths.get(flow.continues);
-    const phase = preceding ? preceding.phase + preceding.path.getTotalLength() : index * 37 % 200;
-    path.style.setProperty('--flow-phase', `${phase % 200}px`);
-    lines.append(path);paths.set(flow.id, {path, phase});
+    const phase = preceding ? preceding.phase + preceding.path.getTotalLength() : index * 37 % 160;
+    path.style.setProperty('--flow-phase', `${phase % 160}px`);
+    const core=path.cloneNode();core.removeAttribute('data-flow');core.setAttribute('class','method-flow-highlight method-flow-core');core.setAttribute('stroke',highlight(flow.color));
+    lines.append(path,core);paths.set(flow.id, {path, phase});
   });
   svg.append(lines);container.append(svg);
-  const surface = {container, image, svg, id, visible:false, running:false};
+  const surface = {container, image, svg, id, visible:false, running:false, ready:false};
   surfaces.add(surface);visibility.observe(container);
   image.addEventListener('load', reconcile);
+  layers.then(({fadeHref,maskHref,stats})=>{
+    maskImage.setAttribute('href',maskHref);fade.setAttribute('href',fadeHref);
+    svg.dataset.maskPixels=stats.pixels;svg.dataset.maskReady='true';surface.ready=true;
+    if(hasStarted){svg.dataset.started='true';svg.style.setProperty('--flow-offset',`${-elapsed/10}px`);}
+    reconcile();
+  }).catch(error=>console.error('METHOD arrow layer:',error));
   return surface;
 }
 
@@ -74,7 +85,7 @@ function createControl() {
 }
 
 function tick(timestamp) {
-  if (lastFrame !== null) elapsed = (elapsed + timestamp - lastFrame) % 2000;
+  if (lastFrame !== null) elapsed = (elapsed + timestamp - lastFrame) % 1600;
   lastFrame = timestamp;
   for (const surface of surfaces) if (surface.running) surface.svg.style.setProperty('--flow-offset', `${-elapsed / 10}px`);
   frame = requestAnimationFrame(tick);
@@ -83,7 +94,7 @@ function reconcile() {
   let running = false;
   const anyModalOpen = !!document.querySelector('dialog[open]');
   for (const surface of surfaces) {
-    surface.running = !paused() && !document.hidden && surface.visible && surface.image.complete && !!surface.image.naturalWidth &&
+    surface.running = surface.ready && !paused() && !document.hidden && surface.visible && surface.image.complete && !!surface.image.naturalWidth &&
       (surface.id === 'inline' ? !anyModalOpen : dialog.open && surface === modalSurface);
     surface.svg.dataset.running = String(surface.running);
     if (surface.running) {
