@@ -4,12 +4,12 @@
     {
       "id": "comparison",
       "title": {
-        "en": "Two robots. The same intent.",
-        "zh": "相同意图，双机对照。"
+        "en": "Precision and Stability in Teleoperation",
+        "zh": "遥操作中的精度与稳定性"
       },
       "description": {
-        "en": "Reaching, foot stability and locomotion, side by side.",
-        "zh": "并排观察触达、足部稳定与行走表现。"
+        "en": "Anchor and a baseline compared side by side in motion tracking, foot stability, and whole-body coordination.",
+        "zh": "并排对比 Anchor 与基线在运动跟踪、足部稳定及全身协调方面的表现。"
       },
       "fullVideo": "assets/videos/comparison.mp4",
       "fullPoster": "assets/posters/comparison.jpg",
