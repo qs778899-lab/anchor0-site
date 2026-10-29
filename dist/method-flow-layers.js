@@ -27,6 +27,7 @@ export async function buildMethodLayers(url) {
     for(let channel=0;channel<3;channel++)flat[j+channel]=source[i+channel]*alpha+255*(1-alpha);
   }
   const fade=context.createImageData(width,height), mask=context.createImageData(width,height);
+  const aura=context.createImageData(width,height);
   const geometry=document.createElement('canvas');geometry.width=width;geometry.height=height;
   const pen=geometry.getContext('2d',{willReadFrequently:true});
   const stats={pixels:0,perFlow:{}};
@@ -90,11 +91,27 @@ export async function buildMethodLayers(url) {
         fade.data[index+3]=255;mask.data[index+3]=alpha;
       }
       count++;
+      // Widen only perpendicular to the shaft, so original dash gaps stay open.
+      // Admit background pixels matching the local panel, never lettering or borders.
+      const along=nearest.horizontal?x:y;
+      const start=nearest.horizontal?nearest.x:nearest.y,end=nearest.horizontal?nearest.nextX:nearest.nextY;
+      if(along<Math.min(start,end)||along>Math.max(start,end))continue;
+      for(let step=-7;step<=7;step++){
+        const ax=x+(nearest.horizontal?0:step),ay=y+(nearest.horizontal?step:0);
+        if(ax<0||ax>=width||ay<0||ay>=height)continue;
+        const sample=(ay*width+ax)*3,at=(ay*width+ax)*4;
+        if(background.some((c,i)=>Math.abs(c-flat[sample+i])>3))continue;
+        if(alpha>aura.data[at+3]){aura.data[at]=aura.data[at+1]=aura.data[at+2]=255;aura.data[at+3]=alpha;}
+      }
     }
     stats.perFlow[flow.id]=count;
   }
   context.putImageData(fade,0,0);const fadeHref=canvas.toDataURL('image/png');
   context.putImageData(mask,0,0);const maskHref=canvas.toDataURL('image/png');
-  await Promise.all([fadeHref,maskHref].map(async href=>{const ready=new Image();ready.src=href;await ready.decode();}));
-  return {fadeHref,maskHref,stats};
+  for(let i=0;i<mask.data.length;i+=4)if(mask.data[i+3]>aura.data[i+3]){
+    aura.data[i]=aura.data[i+1]=aura.data[i+2]=255;aura.data[i+3]=mask.data[i+3];
+  }
+  context.putImageData(aura,0,0);const auraHref=canvas.toDataURL('image/png');
+  await Promise.all([fadeHref,maskHref,auraHref].map(async href=>{const ready=new Image();ready.src=href;await ready.decode();}));
+  return {fadeHref,maskHref,auraHref,stats};
 }

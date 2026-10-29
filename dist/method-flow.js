@@ -8,6 +8,8 @@ const dialogImage = document.querySelector('#dialog-image');
 const dialogArea = dialogImage.parentElement;
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const namespace = 'http://www.w3.org/2000/svg';
+const period = 128;
+const streamColors = {'#156082':'#008eff','#7960af':'#a13cff','#4e887a':'#00b58b','#aa7b26':'#ee9b00','#747474':'#768da8','#7f7f7f':'#768da8'};
 const surfaces = new Set();
 const controls = new Set();
 let modalSurface = null, modalControl = null;
@@ -22,13 +24,6 @@ function element(name, attributes = {}) {
   Object.entries(attributes).forEach(([key, value]) => node.setAttribute(key, value));
   return node;
 }
-function highlight(color) {
-  return '#' + color.slice(1).match(/../g).map(channel => {
-    const base = parseInt(channel, 16);
-    return Math.round(base + (255 - base) * .75).toString(16).padStart(2, '0');
-  }).join('');
-}
-
 function createSurface(image, id) {
   const container = document.createElement('span');
   container.className = 'method-flow-surface';
@@ -39,25 +34,47 @@ function createSurface(image, id) {
   const mask = element('mask', {id:maskId, maskUnits:'userSpaceOnUse', x:0, y:0, width:METHOD_IMAGE.width, height:METHOD_IMAGE.height, style:'mask-type:alpha'});
   const maskImage=element('image', {x:0, y:0, width:METHOD_IMAGE.width, height:METHOD_IMAGE.height});
   mask.append(maskImage);
-  defs.append(mask);svg.append(defs);
+  const auraMask=mask.cloneNode(true),auraId=`method-flow-aura-${id}`;
+  auraMask.setAttribute('id',auraId);
+  const auraImage=auraMask.querySelector('image');
+  const glowId=`method-flow-glow-${id}`;
+  const glow=element('filter',{id:glowId,filterUnits:'userSpaceOnUse',x:0,y:0,width:METHOD_IMAGE.width,height:METHOD_IMAGE.height,'color-interpolation-filters':'sRGB'});
+  glow.append(element('feGaussianBlur',{stdDeviation:2}));
+  defs.append(mask,auraMask,glow);svg.append(defs);
   const fade=element('image', {class:'method-flow-fade', x:0, y:0, width:METHOD_IMAGE.width, height:METHOD_IMAGE.height});
   svg.append(fade);
-  const lines = element('g', {mask:`url(#${maskId})`});
+  const halos = element('g', {mask:`url(#${auraId})`});
+  const haloPaths=element('g',{filter:`url(#${glowId})`});halos.append(haloPaths);
+  const lines = element('g', {mask:`url(#${auraId})`});
+  const tips = element('g', {mask:`url(#${maskId})`});
   const paths = new Map();
   METHOD_FLOWS.forEach((flow, index) => {
-    const path = element('path', {d:flow.d, stroke:flow.color, class:'method-flow-highlight', 'data-flow':flow.id, 'data-group':flow.group});
+    const color=streamColors[flow.color]||flow.color;
+    const path = element('path', {d:flow.d, stroke:color, class:'method-flow-highlight', 'data-flow':flow.id, 'data-group':flow.group});
     const preceding = paths.get(flow.continues);
-    const phase = preceding ? preceding.phase + preceding.path.getTotalLength() : index * 37 % 160;
-    path.style.setProperty('--flow-phase', `${phase % 160}px`);
-    const core=path.cloneNode();core.removeAttribute('data-flow');core.setAttribute('class','method-flow-highlight method-flow-core');core.setAttribute('stroke',highlight(flow.color));
+    const phase = preceding ? preceding.phase + preceding.path.getTotalLength() : index * 37 % period;
+    path.style.setProperty('--flow-phase', `${phase % period}px`);
+    const halo=path.cloneNode();halo.removeAttribute('data-flow');halo.setAttribute('class','method-flow-highlight method-flow-aura');haloPaths.append(halo);
+    const core=path.cloneNode();core.removeAttribute('data-flow');core.setAttribute('class','method-flow-highlight method-flow-core');core.setAttribute('stroke','#f4fcff');
     lines.append(path,core);paths.set(flow.id, {path, phase});
+    if(flow.arrowhead!==false){
+      const length=path.getTotalLength(),end=path.getPointAtLength(length),previous=path.getPointAtLength(length-1);
+      const dx=Math.sign(end.x-previous.x),dy=Math.sign(end.y-previous.y);
+      const clipId=`method-flow-tip-${id}-${index}`,clip=element('clipPath',{id:clipId,clipPathUnits:'userSpaceOnUse'});
+      clip.append(element('polygon',{points:`${end.x-dy*15.5},${end.y+dx*15.5} ${end.x+dx*28.5},${end.y+dy*28.5} ${end.x+dy*15.5},${end.y-dx*15.5}`}));
+      defs.append(clip);
+      const tip=element('path',{d:`M${end.x} ${end.y} l${dx*28.5} ${dy*28.5}`,stroke:color,class:'method-flow-highlight method-flow-tip','clip-path':`url(#${clipId})`,'data-flow-tip':flow.id});
+      tip.style.setProperty('--flow-phase',`${(phase+length)%period}px`);
+      const tipCore=tip.cloneNode();tipCore.removeAttribute('data-flow-tip');tipCore.setAttribute('class','method-flow-highlight method-flow-core');tipCore.setAttribute('stroke','#f4fcff');
+      tips.append(tip,tipCore);
+    }
   });
-  svg.append(lines);container.append(svg);
+  svg.append(halos,lines,tips);container.append(svg);
   const surface = {container, image, svg, id, visible:false, running:false, ready:false};
   surfaces.add(surface);visibility.observe(container);
   image.addEventListener('load', reconcile);
-  layers.then(({fadeHref,maskHref,stats})=>{
-    maskImage.setAttribute('href',maskHref);fade.setAttribute('href',fadeHref);
+  layers.then(({fadeHref,maskHref,auraHref,stats})=>{
+    maskImage.setAttribute('href',maskHref);auraImage.setAttribute('href',auraHref);fade.setAttribute('href',fadeHref);
     svg.dataset.maskPixels=stats.pixels;svg.dataset.maskReady='true';surface.ready=true;
     if(hasStarted){svg.dataset.started='true';svg.style.setProperty('--flow-offset',`${-elapsed/10}px`);}
     reconcile();
@@ -85,7 +102,7 @@ function createControl() {
 }
 
 function tick(timestamp) {
-  if (lastFrame !== null) elapsed = (elapsed + timestamp - lastFrame) % 1600;
+  if (lastFrame !== null) elapsed = (elapsed + timestamp - lastFrame) % (period * 10);
   lastFrame = timestamp;
   for (const surface of surfaces) if (surface.running) surface.svg.style.setProperty('--flow-offset', `${-elapsed / 10}px`);
   frame = requestAnimationFrame(tick);
