@@ -73,7 +73,9 @@ function renderAll(){
 }
 try{
   const response=await fetch('./data/paper-results.json');if(!response.ok)throw new Error(`HTTP ${response.status}`);
-  data=await response.json();renderAll();
+  data=await response.json();
+  const thresholds=await fetch('./data/hardware-thresholds.json');if(!thresholds.ok)throw new Error(`Threshold data HTTP ${thresholds.status}`);
+  data.hardwareThresholds=await thresholds.json();renderAll();
   // Resolve deep links after the asynchronously rendered figures have their final height.
   const initialAnchor=document.getElementById(location.hash.slice(1));
   if(initialAnchor)requestAnimationFrame(()=>initialAnchor.scrollIntoView({behavior:'instant',block:'start'}));

@@ -1,0 +1,1224 @@
+{
+  "schema_version": 1,
+  "dataset": "in-house",
+  "target_motion_count": 72,
+  "variant": "Latest Anchor; original MimicLite ROA (NOT MimicLite v1.1); other baselines unchanged",
+  "metric": {
+    "name": "Task success rate",
+    "unit": "percent",
+    "range": [
+      0,
+      100
+    ],
+    "orientation_threshold_rad": 1,
+    "other_10_body_points_position_threshold_cm": 25,
+    "scope": "local",
+    "rule": "All valid recorded active-control samples must satisfy all thresholds; missing tails ignored; no pre-failure truncation for success rate.",
+    "denominator": "Valid evaluated motions for each model and category; use evaluated_motions, not target counts."
+  },
+  "categories": [
+    {
+      "id": "Hand-Reaching",
+      "label": "Hand reaching",
+      "target_motion_count": 13
+    },
+    {
+      "id": "Mobile-Reaching",
+      "label": "Mobile reaching",
+      "target_motion_count": 15
+    },
+    {
+      "id": "Mobile",
+      "label": "Locomotion",
+      "target_motion_count": 8
+    },
+    {
+      "id": "Balance-Perturbation",
+      "label": "Balance perturbation",
+      "target_motion_count": 10
+    },
+    {
+      "id": "Dual-Reaching",
+      "label": "Hand–foot reaching",
+      "target_motion_count": 10
+    },
+    {
+      "id": "End-Effector-Stability",
+      "label": "End-effector stability",
+      "target_motion_count": 8
+    },
+    {
+      "id": "Sequence",
+      "label": "Motion sequences",
+      "target_motion_count": 8
+    }
+  ],
+  "models": [
+    {
+      "id": "anchor",
+      "label": "Anchor 1",
+      "color": "#496AA4",
+      "marker": "square",
+      "line_style": "solid"
+    },
+    {
+      "id": "scalebfm14",
+      "label": "ScaleBFM-14",
+      "color": "#8974A8",
+      "marker": "triangle-up",
+      "line_style": "solid"
+    },
+    {
+      "id": "scalebfm5",
+      "label": "ScaleBFM-5",
+      "color": "#8D5C7E",
+      "marker": "diamond",
+      "line_style": "solid"
+    },
+    {
+      "id": "sonic_g1",
+      "label": "SONIC-G1",
+      "color": "#AA7B27",
+      "marker": "triangle-down",
+      "line_style": "solid"
+    },
+    {
+      "id": "sonic_smpl",
+      "label": "SONIC-SMPL",
+      "color": "#4F887B",
+      "marker": "circle",
+      "line_style": "solid"
+    },
+    {
+      "id": "mimiclite",
+      "label": "MimicLite",
+      "color": "#B76585",
+      "marker": "plus-filled",
+      "line_style": "solid"
+    }
+  ],
+  "panels": [
+    {
+      "id": "a",
+      "label": "(a) 10 cm",
+      "position_threshold_cm": 10,
+      "series": [
+        {
+          "model_id": "anchor",
+          "values": [
+            46.15384615384615,
+            33.333333333333336,
+            62.5,
+            40.0,
+            50.0,
+            87.5,
+            50.0
+          ],
+          "successful_motions": [
+            6,
+            5,
+            5,
+            4,
+            5,
+            7,
+            4
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "scalebfm14",
+          "values": [
+            15.384615384615385,
+            0.0,
+            12.5,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "successful_motions": [
+            2,
+            0,
+            1,
+            0,
+            0,
+            0,
+            0
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "scalebfm5",
+          "values": [
+            30.76923076923077,
+            0.0,
+            12.5,
+            0.0,
+            10.0,
+            0.0,
+            0.0
+          ],
+          "successful_motions": [
+            4,
+            0,
+            1,
+            0,
+            1,
+            0,
+            0
+          ],
+          "evaluated_motions": [
+            13,
+            14,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "sonic_g1",
+          "values": [
+            36.36363636363637,
+            0.0,
+            0.0,
+            10.0,
+            0.0,
+            0.0,
+            12.5
+          ],
+          "successful_motions": [
+            4,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "evaluated_motions": [
+            11,
+            15,
+            8,
+            10,
+            10,
+            7,
+            8
+          ]
+        },
+        {
+          "model_id": "sonic_smpl",
+          "values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "successful_motions": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "evaluated_motions": [
+            11,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "mimiclite",
+          "values": [
+            23.076923076923077,
+            0.0,
+            12.5,
+            0.0,
+            0.0,
+            0.0,
+            12.5
+          ],
+          "successful_motions": [
+            3,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b",
+      "label": "(b) 12.5 cm",
+      "position_threshold_cm": 12.5,
+      "series": [
+        {
+          "model_id": "anchor",
+          "values": [
+            92.3076923076923,
+            66.66666666666667,
+            62.5,
+            60.0,
+            100.0,
+            100.0,
+            75.0
+          ],
+          "successful_motions": [
+            12,
+            10,
+            5,
+            6,
+            10,
+            8,
+            6
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "scalebfm14",
+          "values": [
+            38.46153846153846,
+            6.666666666666667,
+            50.0,
+            0.0,
+            0.0,
+            37.5,
+            25.0
+          ],
+          "successful_motions": [
+            5,
+            1,
+            4,
+            0,
+            0,
+            3,
+            2
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "scalebfm5",
+          "values": [
+            46.15384615384615,
+            0.0,
+            50.0,
+            0.0,
+            10.0,
+            37.5,
+            12.5
+          ],
+          "successful_motions": [
+            6,
+            0,
+            4,
+            0,
+            1,
+            3,
+            1
+          ],
+          "evaluated_motions": [
+            13,
+            14,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "sonic_g1",
+          "values": [
+            45.45454545454545,
+            6.666666666666667,
+            12.5,
+            30.0,
+            10.0,
+            28.571428571428573,
+            37.5
+          ],
+          "successful_motions": [
+            5,
+            1,
+            1,
+            3,
+            1,
+            2,
+            3
+          ],
+          "evaluated_motions": [
+            11,
+            15,
+            8,
+            10,
+            10,
+            7,
+            8
+          ]
+        },
+        {
+          "model_id": "sonic_smpl",
+          "values": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "successful_motions": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ],
+          "evaluated_motions": [
+            11,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "mimiclite",
+          "values": [
+            53.84615384615385,
+            26.666666666666668,
+            25.0,
+            10.0,
+            10.0,
+            0.0,
+            12.5
+          ],
+          "successful_motions": [
+            7,
+            4,
+            2,
+            1,
+            1,
+            0,
+            1
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "c",
+      "label": "(c) 15 cm",
+      "position_threshold_cm": 15,
+      "series": [
+        {
+          "model_id": "anchor",
+          "values": [
+            100.0,
+            66.66666666666667,
+            75.0,
+            70.0,
+            100.0,
+            100.0,
+            100.0
+          ],
+          "successful_motions": [
+            13,
+            10,
+            6,
+            7,
+            10,
+            8,
+            8
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "scalebfm14",
+          "values": [
+            38.46153846153846,
+            26.666666666666668,
+            87.5,
+            20.0,
+            40.0,
+            50.0,
+            50.0
+          ],
+          "successful_motions": [
+            5,
+            4,
+            7,
+            2,
+            4,
+            4,
+            4
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "scalebfm5",
+          "values": [
+            53.84615384615385,
+            14.285714285714286,
+            75.0,
+            10.0,
+            20.0,
+            62.5,
+            25.0
+          ],
+          "successful_motions": [
+            7,
+            2,
+            6,
+            1,
+            2,
+            5,
+            2
+          ],
+          "evaluated_motions": [
+            13,
+            14,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "sonic_g1",
+          "values": [
+            63.63636363636363,
+            33.333333333333336,
+            37.5,
+            60.0,
+            40.0,
+            57.142857142857146,
+            75.0
+          ],
+          "successful_motions": [
+            7,
+            5,
+            3,
+            6,
+            4,
+            4,
+            6
+          ],
+          "evaluated_motions": [
+            11,
+            15,
+            8,
+            10,
+            10,
+            7,
+            8
+          ]
+        },
+        {
+          "model_id": "sonic_smpl",
+          "values": [
+            18.181818181818183,
+            0.0,
+            0.0,
+            10.0,
+            0.0,
+            0.0,
+            12.5
+          ],
+          "successful_motions": [
+            2,
+            0,
+            0,
+            1,
+            0,
+            0,
+            1
+          ],
+          "evaluated_motions": [
+            11,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "mimiclite",
+          "values": [
+            53.84615384615385,
+            26.666666666666668,
+            62.5,
+            20.0,
+            30.0,
+            50.0,
+            25.0
+          ],
+          "successful_motions": [
+            7,
+            4,
+            5,
+            2,
+            3,
+            4,
+            2
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "d",
+      "label": "(d) 17.5 cm",
+      "position_threshold_cm": 17.5,
+      "series": [
+        {
+          "model_id": "anchor",
+          "values": [
+            100.0,
+            86.66666666666667,
+            87.5,
+            90.0,
+            100.0,
+            100.0,
+            100.0
+          ],
+          "successful_motions": [
+            13,
+            13,
+            7,
+            9,
+            10,
+            8,
+            8
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "scalebfm14",
+          "values": [
+            46.15384615384615,
+            46.666666666666664,
+            87.5,
+            20.0,
+            50.0,
+            75.0,
+            62.5
+          ],
+          "successful_motions": [
+            6,
+            7,
+            7,
+            2,
+            5,
+            6,
+            5
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "scalebfm5",
+          "values": [
+            53.84615384615385,
+            35.714285714285715,
+            75.0,
+            20.0,
+            30.0,
+            87.5,
+            62.5
+          ],
+          "successful_motions": [
+            7,
+            5,
+            6,
+            2,
+            3,
+            7,
+            5
+          ],
+          "evaluated_motions": [
+            13,
+            14,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "sonic_g1",
+          "values": [
+            63.63636363636363,
+            53.333333333333336,
+            75.0,
+            80.0,
+            50.0,
+            85.71428571428571,
+            87.5
+          ],
+          "successful_motions": [
+            7,
+            8,
+            6,
+            8,
+            5,
+            6,
+            7
+          ],
+          "evaluated_motions": [
+            11,
+            15,
+            8,
+            10,
+            10,
+            7,
+            8
+          ]
+        },
+        {
+          "model_id": "sonic_smpl",
+          "values": [
+            36.36363636363637,
+            0.0,
+            25.0,
+            10.0,
+            0.0,
+            25.0,
+            12.5
+          ],
+          "successful_motions": [
+            4,
+            0,
+            2,
+            1,
+            0,
+            2,
+            1
+          ],
+          "evaluated_motions": [
+            11,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "mimiclite",
+          "values": [
+            61.53846153846154,
+            40.0,
+            75.0,
+            70.0,
+            50.0,
+            87.5,
+            62.5
+          ],
+          "successful_motions": [
+            8,
+            6,
+            6,
+            7,
+            5,
+            7,
+            5
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "e",
+      "label": "(e) 20 cm",
+      "position_threshold_cm": 20,
+      "series": [
+        {
+          "model_id": "anchor",
+          "values": [
+            100.0,
+            93.33333333333333,
+            100.0,
+            90.0,
+            100.0,
+            100.0,
+            100.0
+          ],
+          "successful_motions": [
+            13,
+            14,
+            8,
+            9,
+            10,
+            8,
+            8
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "scalebfm14",
+          "values": [
+            46.15384615384615,
+            53.333333333333336,
+            100.0,
+            50.0,
+            50.0,
+            87.5,
+            62.5
+          ],
+          "successful_motions": [
+            6,
+            8,
+            8,
+            5,
+            5,
+            7,
+            5
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "scalebfm5",
+          "values": [
+            53.84615384615385,
+            42.857142857142854,
+            100.0,
+            20.0,
+            50.0,
+            100.0,
+            87.5
+          ],
+          "successful_motions": [
+            7,
+            6,
+            8,
+            2,
+            5,
+            8,
+            7
+          ],
+          "evaluated_motions": [
+            13,
+            14,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "sonic_g1",
+          "values": [
+            63.63636363636363,
+            66.66666666666667,
+            100.0,
+            80.0,
+            50.0,
+            85.71428571428571,
+            87.5
+          ],
+          "successful_motions": [
+            7,
+            10,
+            8,
+            8,
+            5,
+            6,
+            7
+          ],
+          "evaluated_motions": [
+            11,
+            15,
+            8,
+            10,
+            10,
+            7,
+            8
+          ]
+        },
+        {
+          "model_id": "sonic_smpl",
+          "values": [
+            36.36363636363637,
+            13.333333333333334,
+            50.0,
+            50.0,
+            20.0,
+            37.5,
+            50.0
+          ],
+          "successful_motions": [
+            4,
+            2,
+            4,
+            5,
+            2,
+            3,
+            4
+          ],
+          "evaluated_motions": [
+            11,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "mimiclite",
+          "values": [
+            61.53846153846154,
+            60.0,
+            87.5,
+            70.0,
+            50.0,
+            87.5,
+            75.0
+          ],
+          "successful_motions": [
+            8,
+            9,
+            7,
+            7,
+            5,
+            7,
+            6
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        }
+      ]
+    },
+    {
+      "id": "f",
+      "label": "(f) 25 cm",
+      "position_threshold_cm": 25,
+      "series": [
+        {
+          "model_id": "anchor",
+          "values": [
+            100.0,
+            93.33333333333333,
+            100.0,
+            100.0,
+            100.0,
+            100.0,
+            100.0
+          ],
+          "successful_motions": [
+            13,
+            14,
+            8,
+            10,
+            10,
+            8,
+            8
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "scalebfm14",
+          "values": [
+            53.84615384615385,
+            66.66666666666667,
+            100.0,
+            80.0,
+            80.0,
+            100.0,
+            87.5
+          ],
+          "successful_motions": [
+            7,
+            10,
+            8,
+            8,
+            8,
+            8,
+            7
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "scalebfm5",
+          "values": [
+            61.53846153846154,
+            64.28571428571429,
+            100.0,
+            90.0,
+            70.0,
+            100.0,
+            87.5
+          ],
+          "successful_motions": [
+            8,
+            9,
+            8,
+            9,
+            7,
+            8,
+            7
+          ],
+          "evaluated_motions": [
+            13,
+            14,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "sonic_g1",
+          "values": [
+            63.63636363636363,
+            66.66666666666667,
+            100.0,
+            80.0,
+            60.0,
+            85.71428571428571,
+            87.5
+          ],
+          "successful_motions": [
+            7,
+            10,
+            8,
+            8,
+            6,
+            6,
+            7
+          ],
+          "evaluated_motions": [
+            11,
+            15,
+            8,
+            10,
+            10,
+            7,
+            8
+          ]
+        },
+        {
+          "model_id": "sonic_smpl",
+          "values": [
+            45.45454545454545,
+            60.0,
+            87.5,
+            60.0,
+            30.0,
+            100.0,
+            75.0
+          ],
+          "successful_motions": [
+            5,
+            9,
+            7,
+            6,
+            3,
+            8,
+            6
+          ],
+          "evaluated_motions": [
+            11,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        },
+        {
+          "model_id": "mimiclite",
+          "values": [
+            61.53846153846154,
+            60.0,
+            100.0,
+            80.0,
+            50.0,
+            100.0,
+            87.5
+          ],
+          "successful_motions": [
+            8,
+            9,
+            8,
+            8,
+            5,
+            8,
+            7
+          ],
+          "evaluated_motions": [
+            13,
+            15,
+            8,
+            10,
+            10,
+            8,
+            8
+          ]
+        }
+      ]
+    }
+  ]
+}

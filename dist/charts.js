@@ -1,5 +1,5 @@
 import { enhanceCharts, hideTooltip, finishChart } from './chart-interactions.js';
-// All interactive figures consume one fixed evaluation snapshot.
+// Simulation and hardware threshold figures retain their separate source evaluations.
 const $ = (selector, root=document) => root.querySelector(selector);
 const $$ = (selector, root=document) => [...root.querySelectorAll(selector)];
 const escape = value => String(value ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -22,13 +22,13 @@ const measurement = (series, datasetId, dataset, metricId, metric, value, unit, 
   ...(series.config ? {config:series.config} : {}), ...extra
 });
 const cohortTip = (s,c,key,name,unit) => measurement(s,c.id,label(c),key,name,s[key],unit,{count:c.count});
-const radarTip = (s,r,i) => measurement(s,r.id||'reachability',r.id?`${t('In-house','自建动作集')} · ${label(r)}`:t('Reachability','可达性'),r.axes[i].id,label(r.axes[i]),s.values[i],'%',{count:s.counts[i],successes:s.successes[i]});
+const radarTip = (s,r,i) => measurement(s,r.id||'reachability',r.datasetLabel|| (r.id?`${t('In-house','自建动作集')} · ${label(r)}`:t('Reachability','可达性')),r.axes[i].id,label(r.axes[i]),s.values[i],'%',{count:s.counts[i],successes:s.successes[i]});
 const footTip = (s,key,name) => measurement(s,'reachability',t('Reachability','可达性'),key,name,s[key],t('events / motion','次 / 动作'),{count:s.count});
 const hardwareTip = (s,key,name) => measurement(s,'hardware',t('Hardware','真机实验'),key,name,s[key],'mm',{count:s.valid,contributing:s.contributing,note:s.preliminary?t('Preliminary result','初步结果'):undefined});
 const niceMax = value => { const power=10**Math.floor(Math.log10(value||1));return Math.ceil(value/power*2)/2*power; };
 
 function dataTable(headers,rows){
-  return `<div class="compact-table-scroll"><table class="compact-data"><thead><tr><th scope="col">${t('Controller','控制器')}</th>${headers.map(h=>`<th scope="col">${escape(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr data-series="${escape(row.id)}" class="${row.id.startsWith('anchor')?'anchor-row':''}"><th scope="row"><span class="model-dot" style="--model-color:${color(row.id)}"></span>${escape(row.label)}</th>${row.values.map((value,i)=>`<td>${typeof value==='number'?`<span class="exact-value" ${tipAttrs(row.tips[i])}>${fmt(value)}</span>`:escape(value)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
+  return `<div class="compact-table-scroll"><table class="compact-data"><thead><tr><th scope="col">${t('Controller','控制器')}</th>${headers.map(h=>`<th scope="col">${escape(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr data-series="${escape(row.id)}" class="${row.id.startsWith('anchor')?'anchor-row':''}"><th scope="row"><span class="model-dot" style="--model-color:${row.color||color(row.id)}"></span>${escape(row.label)}</th>${row.values.map((value,i)=>`<td>${typeof value==='number'?`<span class="exact-value" ${tipAttrs(row.tips[i])}>${fmt(value)}</span>`:escape(value)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
 
 function controls(id){
@@ -46,7 +46,7 @@ function panel(id,letter,title,ratio,chart,table,area=''){
 }
 
 function legend(series,group){
-  return `<div class="shared-legend" role="group" aria-label="${t('Highlight a controller','突出显示控制器')}">${series.map((s,i)=>`<button type="button" data-focus-group="${group}" data-focus-model="${s.id}" aria-pressed="${focus.get(group)===s.id}"><i style="--model-color:${color(s.id,i)}"></i>${escape(s.label)}</button>`).join('')}</div>`;
+  return `<div class="shared-legend" role="group" aria-label="${t('Highlight a controller','突出显示控制器')}">${series.map((s,i)=>`<button type="button" data-focus-group="${group}" data-focus-model="${s.id}" aria-pressed="${focus.get(group)===s.id}"><i style="--model-color:${s.color||color(s.id,i)}"></i>${escape(s.label)}</button>`).join('')}</div>`;
 }
 
 function success(cohort){
@@ -59,7 +59,7 @@ function success(cohort){
     ['localSuccess','globalSuccess'].forEach((key,j)=>{
       const v=s[key],name=j?t('Global','全局'):t('Local','局部');
       const tip=cohortTip(s,cohort,key,name,'%');
-      out+=`<rect class="plot-mark" data-grow="x" ${tipAttrs(tip)} x="${left}" y="${y+j*14}" width="${v/100*plot}" height="11" rx="1.5" fill="${color(s.id,i)}" opacity="${j?.4:1}"/>`+text(left+v/100*plot+4,y+j*14+9,short(v),'class="bar-number"');
+      out+=`<rect class="plot-mark" data-grow="x" ${tipAttrs(tip)} x="${left}" y="${y+j*14}" width="${v/100*plot}" height="11" rx="1.5" fill="${s.color||color(s.id,i)}" opacity="${j?.4:1}"/>`+text(left+v/100*plot+4,y+j*14+9,short(v),'class="bar-number"');
     });out+='</g>';
   });
   out+=`<rect x="137" y="313" width="12" height="7" fill="var(--muted)"/>`+text(154,320,t('Local','局部'),'class="plot-key"')+`<rect x="227" y="313" width="12" height="7" fill="var(--muted)" opacity=".35"/>`+text(244,320,t('Global','全局'),'class="plot-key"');
@@ -78,7 +78,7 @@ function errors(cohort){
     out+=text(center,h-36,name,'text-anchor="middle" class="category-label"');
     cohort.series.forEach((s,i)=>{
       const x=center-45+i*(barWidth+gap),height=s[key]/maximum*ph;
-      out+=`<g data-series="${s.id}"><rect class="plot-mark" data-grow="y" ${tipAttrs(cohortTip(s,cohort,key,name,'mm'))} x="${x}" y="${top+ph-height}" width="${barWidth}" height="${height}" rx="1.5" fill="${color(s.id,i)}"/></g>`;
+      out+=`<g data-series="${s.id}"><rect class="plot-mark" data-grow="y" ${tipAttrs(cohortTip(s,cohort,key,name,'mm'))} x="${x}" y="${top+ph-height}" width="${barWidth}" height="${height}" rx="1.5" fill="${s.color||color(s.id,i)}"/></g>`;
     });
   });
   out+=text(w/2,h-9,t('Mean position error · mm ↓','平均位置误差 · mm ↓'),'text-anchor="middle" class="plot-key"');
@@ -88,6 +88,15 @@ function errors(cohort){
 function wrap(value,max=16){
   if(language==='zh')return value.length>7?[value.slice(0,7),value.slice(7)]:[value];
   const lines=[''];value.split(' ').forEach(word=>{const i=lines.length-1;if(lines[i]&&lines[i].length+word.length>max)lines.push(word);else lines[i]+=(lines[i]?' ':'')+word;});return lines;
+}
+
+function radarMarker(s,x,y,i){
+  const attrs=`class="point-dot" fill="${s.color||color(s.id,i)}" stroke="var(--bg)" stroke-width="1"`;
+  if(s.marker==='square')return `<rect ${attrs} x="${x-4}" y="${y-4}" width="8" height="8"/>`;
+  if(s.marker==='diamond')return `<polygon ${attrs} points="${x},${y-5} ${x+5},${y} ${x},${y+5} ${x-5},${y}"/>`;
+  if(s.marker?.startsWith('triangle')){const d=s.marker==='triangle-up'?1:-1;return `<polygon ${attrs} points="${x},${y-5*d} ${x+5},${y+4*d} ${x-5},${y+4*d}"/>`;}
+  if(s.marker==='plus-filled')return `<path ${attrs} d="M${x-1.5},${y-5}h3v3.5h3.5v3h-3.5V${y+5}h-3v-3.5H${x-5}v-3h3.5Z"/>`;
+  return `<circle ${attrs} cx="${x}" cy="${y}" r="4"/>`;
 }
 
 function radarGraphic(radar,{w=400,h=330,r=97,cx=w/2,cy=h/2,max=100}={}){
@@ -100,15 +109,15 @@ function radarGraphic(radar,{w=400,h=330,r=97,cx=w/2,cy=h/2,max=100}={}){
   });
   [...radar.series].reverse().forEach(s=>{
     const i=radar.series.indexOf(s),points=s.values.map((v,a)=>point(a,r*v/max));
-    out+=`<g class="radar-series" data-series="${s.id}" data-center-x="${cx}" data-center-y="${cy}"><polygon points="${points.map(p=>p.join(',')).join(' ')}" fill="${i===0?color(s.id):'none'}" fill-opacity=".07" stroke="${color(s.id,i)}" stroke-width="${i===0?2.5:1.6}" ${s.id.endsWith('local')?'stroke-dasharray="5 4"':''}/>`;
+    out+=`<g class="radar-series" data-series="${s.id}" data-center-x="${cx}" data-center-y="${cy}"><polygon points="${points.map(p=>p.join(',')).join(' ')}" fill="${i===0?(s.color||color(s.id)):'none'}" fill-opacity=".07" stroke="${s.color||color(s.id,i)}" stroke-width="${i===0?2.5:1.6}" ${s.id.endsWith('local')?'stroke-dasharray="5 4"':''}/>`;
     points.forEach(([x,y],a)=>{
-      out+=`<g class="plot-mark radar-point" ${tipAttrs(radarTip(s,radar,a))} data-point-x="${x}" data-point-y="${y}"><circle class="point-hit" cx="${x}" cy="${y}" r="12" fill="transparent"/><circle class="point-dot" cx="${x}" cy="${y}" r="4" fill="${color(s.id,i)}" stroke="var(--bg)" stroke-width="1"/></g>`;
+      out+=`<g class="plot-mark radar-point" ${tipAttrs(radarTip(s,radar,a))} data-point-x="${x}" data-point-y="${y}"><circle class="point-hit" cx="${x}" cy="${y}" r="12" fill="transparent"/>${radarMarker(s,x,y,i)}</g>`;
     });out+='</g>';
   });
   return svg(w,h,label(radar)||t('Task success by posture','各姿态的任务成功率'),out);
 }
 
-function radarTable(radar){return dataTable(radar.axes.map(a=>`${label(a)} (%)`),radar.series.map(s=>({id:s.id,label:s.label,values:s.values,tips:s.values.map((_,i)=>radarTip(s,radar,i))})));}
+function radarTable(radar){return dataTable(radar.axes.map(a=>`${label(a)} (%)`),radar.series.map(s=>({id:s.id,label:s.label,color:s.color,values:s.values,tips:s.values.map((_,i)=>radarTip(s,radar,i))})));}
 
 function feet(){
   const rows=source.reachability.footEvents.series,w=560,h=380,left=132,top=58,rowHeight=43,groupWidth=188,barWidth=145;
@@ -122,7 +131,7 @@ function feet(){
       const y=top+i*rowHeight;
       out+=`<g data-series="${s.id}">`;
       if(mi===0)out+=text(left-12,y+13,s.label,`text-anchor="end" class="model-label ${s.id.startsWith('anchor')?'anchor-label':''}"`);
-      out+=`<rect class="plot-mark" data-grow="x" ${tipAttrs(footTip(s,key,name))} x="${x0}" y="${y}" width="${Math.max(1,s[key]/maximum*barWidth)}" height="19" rx="2" fill="${color(s.id,i)}"/>`+text(x0+s[key]/maximum*barWidth+4,y+13,fmt(s[key]),'class="bar-number"')+'</g>';
+      out+=`<rect class="plot-mark" data-grow="x" ${tipAttrs(footTip(s,key,name))} x="${x0}" y="${y}" width="${Math.max(1,s[key]/maximum*barWidth)}" height="19" rx="2" fill="${s.color||color(s.id,i)}"/>`+text(x0+s[key]/maximum*barWidth+4,y+13,fmt(s[key]),'class="bar-number"')+'</g>';
     });
   });
   out+=text(w/2,h-12,t('Mean events per motion · lower is better','平均每条动作的事件数 · 越低越好'),'text-anchor="middle" class="plot-key"');
@@ -179,6 +188,20 @@ function renderLookahead(){
   enhanceCharts($('#lookahead-chart'));
 }
 
+function renderHardwareThresholds(){
+  const data=source.hardwareThresholds;
+  if(!data)return;
+  const translations=['手部触达','移动触达','移动','平衡扰动','手脚协同触达','末端稳定性','动作序列'];
+  const names={scalebfm14:'ScaleBFM (14-point)',scalebfm5:'ScaleBFM (5-point)',sonic_g1:'SONIC v1.1 (G1)',sonic_smpl:'SONIC v1.1 (SMPL)',mimiclite:'MimicLite (ROA)'};
+  const models=data.models.map(m=>({...m,label:names[m.id]||m.label}));
+  const figures=data.panels.map(p=>{
+    const name=`${p.position_threshold_cm} cm`,radar={id:`hardware-threshold-${p.id}`,label:name,datasetLabel:t(`Hardware · Local task success · ${name}`,`真机 · 局部任务成功率 · ${name}`),axes:data.categories.map((c,i)=>({...c,labelZh:translations[i]})),series:p.series.map(s=>({...models.find(m=>m.id===s.model_id),values:s.values,counts:s.evaluated_motions,successes:s.successful_motions}))};
+    return panel(radar.id,p.id.toUpperCase(),name,'440 / 350',radarGraphic(radar,{w:440,h:350,r:100}),radarTable(radar));
+  }).join('');
+  $('#hardware-thresholds').innerHTML=legend(models,'hardware-thresholds')+`<div class="threshold-matrix">${figures}</div>`;
+  applyHighlight('hardware-thresholds');enhanceCharts($('#hardware-thresholds'));
+}
+
 function renderHardware(){
   const rows=source.hardware.trackingErrors.series,w=650,h=340,left=155,right=45,top=22,plot=w-left-right;
   let out='';const maximum=110;
@@ -194,7 +217,7 @@ function renderHardware(){
 }
 
 function applyHighlight(group){
-  const root=group==='simulation'?$('#simulation-figure'):$('#lookahead-chart'),selected=focus.get(group);
+  const root=group==='simulation'?$('#simulation-figure'):group==='hardware-thresholds'?$('#hardware-thresholds'):$('#lookahead-chart'),selected=focus.get(group);
   if(!root)return;
   $$('[data-series]',root).forEach(el=>{
     const muted=!!selected&&el.dataset.series!==selected;
@@ -238,5 +261,5 @@ window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setT
 export function renderResearchFigures(data,locale){
   source=data;language=locale;narrow=($('#lookahead-chart')?.clientWidth ?? 1120)<650;
   if($('#lookahead-cohort')) $('#lookahead-cohort').value=cohort;
-  renderLookahead();renderSimulation();renderHardware();
+  renderLookahead();renderSimulation();renderHardware();renderHardwareThresholds();
 }
