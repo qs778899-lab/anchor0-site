@@ -21,7 +21,7 @@ app.innerHTML=`<div class="app-shell">
 const el=<T extends HTMLElement=HTMLElement>(id:string)=>document.getElementById(id) as T;
 const text=(id:string,value:string)=>{el(id).textContent=value;};
 const hide=(id:string,value:boolean)=>el(id).classList.toggle('hidden',value);
-let currentMode:'preset'|'word'='preset';
+let currentMode:'preset'|'word'='word';
 const motionSelect=el<HTMLSelectElement>('motion-select'),wordInput=el<HTMLInputElement>('word-input');
 const bridge=window as unknown as Record<string,unknown>;
 const validationBridge=new URLSearchParams(location.search).has('validate');

@@ -102,6 +102,10 @@ The viewer header contains only Preset motions and Continuous writing. Legacy
 continuous policy path. Re-selecting the active mode is a no-op, while mode changes
 retain the draft and last chosen preset. Motion metadata and copy controls are removed.
 
+Opening `/demo/` now defaults to Continuous writing with `HELLO WORLD` prepared
+and paused. Explicit `?word=...` and legacy `?letter=...` inputs still take
+precedence over that default text. Preset motions remains available in the mode bar.
+
 Save image downloads only the current 3D view as PNG. The renderer draws and
 immediately copies the canvas before encoding, without changing camera or playback.
 The filename uses the active phrase rather than an un-applied draft. Failure leaves
