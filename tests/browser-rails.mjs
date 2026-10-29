@@ -24,7 +24,56 @@ try {
  await until(`document.querySelector('[aria-controls="comparison-clips"][data-rail-step="1"]').disabled`);
  await check('End reaches the last clips and disables the next arrow',`(()=>{const r=document.querySelector('${rail}');return Math.abs(r.scrollLeft+r.clientWidth-r.scrollWidth)<2;})()`);
  await cdp('Input.dispatchKeyEvent',{type:'keyDown',key:'Home',code:'Home'});await cdp('Input.dispatchKeyEvent',{type:'keyUp',key:'Home',code:'Home'});await until(`document.querySelector('${rail}').scrollLeft<1`);
- await mkdir('.cache/preview',{recursive:true});await screenshot('.cache/preview/desktop-video-rails.png');
+ await evaluate(`document.querySelector('${rail}').blur();document.querySelector('${rail} video').play()`);
+ // Wheel input must keep the two scroll directions independent.
+ const point=await evaluate(`(()=>{const r=document.querySelector('${rail}').getBoundingClientRect();return{x:r.left+r.width/2,y:r.top+80,page:scrollY};})()`);
+ await cdp('Input.dispatchMouseEvent',{type:'mouseWheel',x:point.x,y:point.y,deltaX:360,deltaY:0});
+ await until(`document.querySelector('${rail}').scrollLeft>300`);await wait(500);
+ await check('horizontal wheel scrolls the rail, not the page',`Math.abs(scrollY-${point.page})<2`);
+ const beforeWheel=await evaluate(`({page:scrollY,left:document.querySelector('${rail}').scrollLeft})`);
+ await cdp('Input.dispatchMouseEvent',{type:'mouseWheel',x:point.x,y:point.y,deltaX:0,deltaY:250});
+ await until(`scrollY>${beforeWheel.page}+100`);
+ await check('ordinary vertical wheel keeps scrolling the page',`Math.abs(document.querySelector('${rail}').scrollLeft-${beforeWheel.left})<2`);
+ await evaluate(`document.querySelector('#videos').scrollIntoView({behavior:'instant'});document.querySelector('${rail}').scrollTo({left:0,behavior:'instant'})`);await wait(200);
+ // Exercise the native scrollbar thumb, not a custom drag implementation.
+ const thumb=await evaluate(`(()=>{const r=document.querySelector('${rail}'),b=r.getBoundingClientRect();return{x:b.left+(r.clientWidth/r.scrollWidth*r.clientWidth)/2,y:b.bottom-3,end:b.right-8};})()`);
+ await cdp('Input.dispatchMouseEvent',{type:'mouseMoved',x:thumb.x,y:thumb.y});
+ await cdp('Input.dispatchMouseEvent',{type:'mousePressed',x:thumb.x,y:thumb.y,button:'left',clickCount:1});
+ await cdp('Input.dispatchMouseEvent',{type:'mouseMoved',x:thumb.end,y:thumb.y,button:'left',buttons:1});
+ await cdp('Input.dispatchMouseEvent',{type:'mouseReleased',x:thumb.end,y:thumb.y,button:'left',clickCount:1});
+ await until(`document.querySelector('[aria-controls="comparison-clips"][data-rail-step="1"]').disabled`);
+ console.log('PASS: dragging the scrollbar reaches the final clips');
+ const savedPosition=await evaluate(`document.querySelector('${rail}').scrollLeft`);
+ await evaluate(`document.querySelector('#language-toggle').click();document.querySelector('#theme-select').value='dark';document.querySelector('#theme-select').dispatchEvent(new Event('change'))`);
+ await check('Chinese labels and dark theme preserve browsing position',`document.documentElement.lang==='zh-CN'&&document.documentElement.dataset.theme==='dark'&&document.querySelector('[data-rail-step="1"]').getAttribute('aria-label')==='下一段视频'&&Math.abs(document.querySelector('${rail}').scrollLeft-${savedPosition})<2`);
+ await mkdir('.cache/preview',{recursive:true});
+ await evaluate(`document.activeElement.blur();document.querySelector('${rail}').scrollTo({left:0,behavior:'instant'});`);
+ await cdp('Input.dispatchMouseEvent',{type:'mouseMoved',x:6,y:6});await wait(500);
+ await screenshot('.cache/preview/desktop-video-rails-dark-zh.png');
+ await evaluate(`document.querySelector('#language-toggle').click();document.querySelector('#theme-select').value='light';document.querySelector('#theme-select').dispatchEvent(new Event('change'));document.activeElement.blur()`);
+ await screenshot('.cache/preview/desktop-video-rails.png');
+ await viewport(1024,900);await wait(300);await evaluate(`document.querySelector('#videos').scrollIntoView({behavior:'instant'})`);
+ await check('tablet shows two cards in one row',`(()=>{const r=document.querySelector('${rail}');return Math.abs(r.firstElementChild.getBoundingClientRect().width*2+18-r.clientWidth)<2&&document.documentElement.scrollWidth===innerWidth;})()`);
+ await screenshot('.cache/preview/tablet-video-rails.png');
+ await viewport(390,844,true);await go();
+ await evaluate(`document.querySelector('#videos').scrollIntoView({behavior:'instant'})`);await until(`!document.querySelector('${rail} video').paused`);
+ await check('mobile shows one card and a glimpse of the next, in every group',`[...document.querySelectorAll('.clip-rail')].every(r=>Math.abs(r.firstElementChild.getBoundingClientRect().width+28-r.clientWidth)<2&&r.children[1].getBoundingClientRect().left<r.getBoundingClientRect().right&&r.scrollWidth>r.clientWidth)&&document.documentElement.scrollWidth===innerWidth`);
+ await check('mobile loads the visible clip and its neighbor only',`(()=>{const v=[...document.querySelectorAll('${rail} video')];return v[0].currentSrc&&v[1].currentSrc&&v.slice(2).every(v=>!v.currentSrc);})()`);
+ await screenshot('.cache/preview/mobile-video-rails.png');
+ await cdp('Emulation.setTouchEmulationEnabled',{enabled:true,maxTouchPoints:1});
+ const touch=await evaluate(`(()=>{const b=document.querySelector('${rail}').getBoundingClientRect();return {x:b.right-40,y:b.top+70};})()`);
+ await cdp('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[touch]});
+ for(let i=1;i<=8;i++){await cdp('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:touch.x-i*30,y:touch.y}]});await wait(25);}
+ await cdp('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+ await until(`document.querySelector('${rail}').scrollLeft>100&&document.querySelector('${rail} video').paused`);await wait(600);
+ await check('touch swipe browses later clips while the hidden first clip pauses',`document.querySelector('${rail}').scrollLeft>100&&[...document.querySelectorAll('${rail} video')].slice(1).some(v=>!v.paused)`);
+ await screenshot('.cache/preview/mobile-video-rails-scrolled.png');
+ // A resize that makes a group fit must remove its now-unnecessary controls.
+ await viewport(1440,1000);await wait(300);
+ await check('resize hides arrows for the two-clip group',`document.querySelector('#input-devices-clips').closest('.video-group').querySelector('.rail-controls').hidden`);
+ await cdp('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
+ await evaluate(`document.querySelector('${rail}').scrollTo({left:0,behavior:'instant'});document.querySelector('[aria-controls="comparison-clips"][data-rail-step="1"]').click()`);
+ await check('reduced motion moves immediately by one card',`(()=>{const r=document.querySelector('${rail}');return Math.abs(r.scrollLeft-r.firstElementChild.getBoundingClientRect().width-18)<2;})()`);
  assert.equal(events.filter(e=>e.method==='Runtime.exceptionThrown').length,0,JSON.stringify(events.filter(e=>e.method==='Runtime.exceptionThrown').slice(0,2)));
  console.log('PASS: no browser errors');
 } finally {await close();}

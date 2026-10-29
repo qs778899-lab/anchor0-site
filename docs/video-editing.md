@@ -19,8 +19,18 @@ regenerate the generated clips and posters, or `--verify-only` to decode existin
 their validation records. The normal preparation command also prepares these clips after the
 full-length files. Originals are read only; hashes are checked before and after processing.
 
-Videos attach their media sources within 350 px of the viewport and play muted once 15% visible.
-Short clips loop; the main film does not. Leaving the viewport, opening a full film, or switching
-tabs pauses automatic playback. A viewer's deliberate pause persists until they resume playback.
-Unmuting one player mutes other players. Native controls retain seeking, volume and full screen.
-Rejected autoplay exposes a manual play overlay. Full films open in a modal and load on demand.
+Each of the three groups uses a single horizontal rail: three cards on desktop, two on tablet,
+and one plus a glimpse of the next on mobile. Rails support native horizontal wheel/touch scrolling,
+a scrollbar, and previous/next buttons. When the rail itself has keyboard focus, Left/Right advances
+one card and Home/End goes to either end. Video controls retain their own keyboard shortcuts.
+Ordinary vertical wheel input continues scrolling the page. Buttons disappear when every card fits.
+
+Once a rail is within 350 px vertically of the viewport, it attaches sources only for horizontally
+visible clips and one neighboring clip on either side. Previously loaded sources stay attached so
+returning does not reset playback. The main film attaches its source within 350 px of the viewport.
+Videos play muted once 15% visible, accounting for the rail's horizontal clipping. Short clips loop;
+the main film does not. Leaving the viewport vertically or horizontally, opening a full film, or
+switching tabs pauses automatic playback. Returning resumes the same position. A viewer's deliberate
+pause persists until they resume playback. Unmuting one player mutes other players. Native controls
+retain seeking, volume and full screen. Rejected autoplay exposes a manual play overlay.
+Full films open in a modal and load on demand. No clips or source films were re-encoded for this layout.

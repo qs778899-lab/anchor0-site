@@ -95,6 +95,7 @@ For browser checks, start a separate Chrome instance with `--headless=new`,
 ```sh
 node tests/browser-experience.mjs
 node tests/browser-media.mjs
+node tests/browser-rails.mjs
 ```
 
 `CDP_URL` and `SITE_URL` can override the localhost defaults. Browser screenshots are saved under
@@ -109,3 +110,34 @@ Saved previews: [desktop home](previews/desktop-home.png), [video showcase](prev
 [performance](previews/desktop-performance.png), [combined results](previews/desktop-results.png),
 [Chinese dark mode](previews/desktop-results-dark-zh.png), [mobile navigation](previews/mobile-navigation.png),
 [mobile performance](previews/mobile-performance.png), and [mobile videos](previews/mobile-videos.png).
+
+## Single-row video rails — 2026-10-29
+
+The layout and playback update was committed and pushed as `aede707` on `codex/anchor0-site`.
+The following acceptance checks were completed before the second commit; all three browser suites
+passed sequentially in the isolated Chrome profile, with no JavaScript exceptions.
+
+- All three groups remain single rows. At 1440 × 1000 the rail shows three cards; at 1024 × 900 it
+  shows two; at 390 × 844 it shows one and a preview of the next. No viewport has page-width overflow.
+- Previous/next buttons move one clip without moving another group. End and Home reach the rail
+  boundaries, with the corresponding button disabled. A group that fits hides its arrows; resizing
+  updates this state. Reduced-motion mode moves directly to the target card.
+- Real Chrome horizontal wheel events and native scrollbar-thumb dragging reach later clips.
+  Vertical wheel events over a video continue moving the page without changing the rail position.
+  Emulated touch swipes on the 390 px viewport reveal and play later clips, pausing the hidden clip.
+- Horizontally hidden clips pause and resume at their existing position when they return. A manual
+  pause survives browsing away and back. Desktop initially attaches only the first three clips plus
+  one neighbor; mobile attaches only the first clip and its neighbor. All 15 clips still load, play
+  and loop; full films, fullscreen, background-tab pause and autoplay fallback remain functional.
+- Chinese/English and dark/light changes preserve the browsing position and update arrow labels.
+  Existing navigation, chart values, selected-model interactions and entrance animations pass the
+  full experience suite. Clip manifests/hashes, original films and all 134 immutable demo assets
+  pass verification; transport and video range checks also pass.
+- The current Wi-Fi URL is `http://192.168.71.107:18081/`. This Mac received HTTP 200 at that address
+  for the homepage, clip manifest and `/demo/`. Touch testing uses Chrome emulation; a separate
+  physical phone and Safari were not tested.
+
+Current rail previews: [desktop](previews/desktop-video-rails.png),
+[tablet](previews/tablet-video-rails.png), [mobile](previews/mobile-video-rails.png),
+[mobile after swiping](previews/mobile-video-rails-scrolled.png), and
+[Chinese dark mode](previews/desktop-video-rails-dark-zh.png).
