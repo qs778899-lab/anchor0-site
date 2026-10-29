@@ -171,6 +171,7 @@ function bubbleFigure(dataset){
 }
 
 function renderLookahead(){
+  if(!$('#lookahead-chart')) return;
   const dataset=source.lookahead.cohorts.find(c=>c.id===cohort);
   const [chart,table,ratio]=bubbleFigure(dataset);
   $('#lookahead-chart').innerHTML=`<div class="feature-chart-tools"><span>${dataset.count.toLocaleString('en-US')} ${t('motions','条动作')}</span>${controls('performance')}</div>${stage('performance',ratio,chart,table)}<div class="shape-legend"><span><i class="circle-key"></i>${t('No online retargeting','无需在线重定向')}</span><span><i class="diamond-key"></i>${t('Online retargeting required','需要在线重定向')}</span></div>${legend(dataset.series,'lookahead')}`;
@@ -232,10 +233,10 @@ document.addEventListener('keydown',event=>{
 });
 document.addEventListener('change',event=>{if(event.target.id==='lookahead-cohort'){cohort=event.target.value;if(source)renderLookahead();}});
 let resizeTimer;
-window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{const next=$('#lookahead-chart')?.clientWidth<650;if(source&&next!==narrow){narrow=next;renderLookahead();}},120);});
+window.addEventListener('resize',()=>{clearTimeout(resizeTimer);resizeTimer=setTimeout(()=>{const next=$('#lookahead-chart')?.clientWidth<650;if(source&&$('#lookahead-chart')&&next!==narrow){narrow=next;renderLookahead();}},120);});
 
 export function renderResearchFigures(data,locale){
-  source=data;language=locale;narrow=$('#lookahead-chart').clientWidth<650;
-  $('#lookahead-cohort').value=cohort;
+  source=data;language=locale;narrow=($('#lookahead-chart')?.clientWidth ?? 1120)<650;
+  if($('#lookahead-cohort')) $('#lookahead-cohort').value=cohort;
   renderLookahead();renderSimulation();renderHardware();
 }
