@@ -20,6 +20,8 @@ body{padding-left:236px}
 .hero{padding-top:64px}
 .hero h1{font-size:clamp(32px,3.35vw,50px)}
 .hero-summary{font-size:18px}
+.hero-actions{flex-wrap:wrap}
+.hero-actions .button{flex-shrink:0}
 .video-showcase{padding-top:90px}
 .showcase-heading{padding-bottom:10px}
 .video-group{padding-top:38px}
