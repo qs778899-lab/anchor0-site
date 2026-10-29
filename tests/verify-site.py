@@ -23,7 +23,7 @@ class Links(HTMLParser):
 
 parser=Links(); parser.feed((DIST/'index.html').read_text())
 for link in parser.links:
-    if link.startswith(('#','http:','https:','data:')): continue
+    if link.startswith(('#','http:','https:','data:','mailto:')): continue
     target=(DIST / urllib.parse.urlsplit(link).path.lstrip('/')).resolve()
     assert target.exists(), f'Missing {link}'
 print(f'PASS: {len(parser.links)} local page references')
