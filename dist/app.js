@@ -50,7 +50,7 @@ $('#dialog-image').addEventListener('click',event=>event.currentTarget.classList
 function table(headers, rows, highlight=false){
   return `<div class="table-scroll"><table class="data-table"><thead><tr>${headers.map(h=>`<th scope="col">${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(row=>`<tr${highlight&&String(row[0]).startsWith('Anchor')?' class="highlight"':''}>${row.map((cell,i)=>i===0?`<th scope="row">${esc(cell)}</th>`:`<td>${esc(cell)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
-function downstreamNote(){return `<p class="table-note">${t('* denotes the earlier variant with error feedback supplied to the encoder. Current-model results remain pending in the paper.','* 表示将误差反馈输入编码器的早期版本。论文中的当前模型结果仍待评估。')}</p>`;}
+function downstreamNote(){return `<p class="table-note">${esc(t(data.downstream.note,data.downstream.noteZh))}</p>`;}
 function collectionMatrix(tasks,series){
   return `<div class="collection-scroll" tabindex="0" role="region" aria-label="${t('Demonstration collection comparison','示范采集比较表')}"><table class="collection-matrix"><thead><tr><th scope="col" rowspan="2">${t('Controller','控制器')}</th>${tasks.map(task=>`<th scope="colgroup" colspan="2">${esc(label(task))}</th>`).join('')}</tr><tr>${tasks.map(()=>`<th scope="col">${t('Demos / h','示范 / 小时')}</th><th scope="col">${t('Success (%)','成功率 (%)')}</th>`).join('')}</tr></thead><tbody>${series.map(s=>`<tr${s.id.startsWith('anchor')?' class="highlight"':''}><th scope="row">${esc(s.label)}</th>${tasks.map((_,i)=>`<td>${s.demosPerHour[i]==null?`<span class="pending-value">${t('Pending','待评估')}</span>`:number(s.demosPerHour[i],0)}</td><td>${s.success[i]==null?`<span class="pending-value">${t('Pending','待评估')}</span>`:s.success[i].toFixed(2)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
 }
@@ -61,6 +61,10 @@ function renderTables(){
   $('#collection-table').innerHTML=collectionMatrix(tasks,collection)+downstreamNote();
   const autonomy=data.downstream.autonomy;
   $('#autonomy-table').innerHTML=table([t('Controller','控制器'),t('Interface','接口'),...autonomy.taskOrder.map(id=>`${label(tasks.find(task=>task.id===id))} (%)`)],autonomy.series.map(s=>[s.label,s.interface,...s.values.map(v=>number(v))]),true)+downstreamNote();
+  $$('#applications td').filter(cell=>cell.textContent===t('Pending','待评估')).forEach(cell=>{
+    cell.title=t(data.downstream.pendingDefinition,data.downstream.pendingDefinitionZh);
+    cell.setAttribute('aria-label',`${cell.textContent}. ${cell.title}`);
+  });
 }
 function renderAll(){
   hideTooltip();

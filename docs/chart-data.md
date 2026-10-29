@@ -104,7 +104,9 @@ Anchor 的成功数（local / global）分别为：In-house G `13744 / 13732`、
 - `hardware.standingReach` 是论文 51 条站立触达动作表；Anchor† 数值在稿件中标为 preliminary，JSON 同样保留该状态。
 - 六阈值真机雷达图采用同一论文提交的 `figures/realworld_position_threshold_sensitivity.pdf`，未提供逐点数值，`numericValuesAvailable` 为 `false`，只展示图像及放大功能。`scripts/prepare-hardware-figure.py` 仅移除图例的 `-0` 字形后以 3414 × 2271 渲染；其余绘图指令完全不变，来源和校验值记录于 `hardware-figure-provenance.json`。
 - 网页中名为 `real_robot` 的原始数据集是对真机动作参考做的仿真评估，不作为实测真机结果使用。
-- `downstream` 保留论文的示范采集与 VLA 表格数据。Anchor* 明确为较早的 test101/59000、encoder 接收误差反馈的版本。当前版本尚未完成的结果使用 `null` 与 `pending: true`，没有以早期结果代替，也没有把缺失值当作零。
+- `downstream` 的示范采集与 VLA 表格已对照最新核验的 `main@7bdfcc7f280c6190d74c963995c5bd530b1d8229`，来源为 `sections/results.tex` 的 `tab:collection-current`（518–546 行）和 `tab:posttrain`（585–609 行）。数值和模型行未变。
+- 星号说明采用原文 “Anchor* denotes the variant with error feedback supplied to the encoder.”，中文为“Anchor* 表示将误差反馈输入编码器的变体。”删除网站自行加入的 “earlier” 和 “Current-model results remain pending in the paper.”。论文模型宏为 `Anchor 1`，网站继续遵循用户指定的 `Anchor` 显示名称。
+- 论文用 `XXX` 表示待评估，原文为 “XXX denotes pending evaluation.”。网站保留 Pending／待评估的显示，通过单元格提示与无障碍标签说明它对应 `XXX`；JSON 继续使用 `null` 与 `pending: true`，不以有星号配置的结果替代，也不将缺失值改为零。星号配置 `test101/59000` 记录在 `downstream.provenance` 中。
 
 ## 前端字段
 

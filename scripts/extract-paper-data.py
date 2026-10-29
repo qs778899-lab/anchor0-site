@@ -190,7 +190,15 @@ def downstream() -> dict:
                 {"id": "anchor-star-token", "label": "Anchor* (re-locate)", "interface": "Motion token", "values": [0, 0, 0, 0]},
                 {"id": "anchor-sparse", "label": "Anchor (re-locate + PRED feedback)", "interface": "Sparse", "values": [None] * 4, "pending": True},
                 {"id": "anchor-token", "label": "Anchor (re-locate + PRED feedback)", "interface": "Motion token", "values": [None] * 4, "pending": True}]},
-            "note": "* denotes the earlier variant with error feedback supplied to the encoder (test101/59000). Current-model collection and autonomy results are pending in the supplied paper; they are not replaced with earlier-variant results."}
+            "note": "Anchor* denotes the variant with error feedback supplied to the encoder.",
+            "noteZh": "Anchor* 表示将误差反馈输入编码器的变体。",
+            "pendingDefinition": "XXX denotes pending evaluation.",
+            "pendingDefinitionZh": "论文中的 XXX 表示待评估。",
+            "provenance": {"repository": "ilnehc/S0_Report", "branch": "main",
+                           "commit": "7bdfcc7f280c6190d74c963995c5bd530b1d8229",
+                           "sourcePath": "sections/results.tex",
+                           "tables": ["tab:collection-current", "tab:posttrain"],
+                           "starredCheckpoint": "test101/59000"}}
 
 
 def main() -> None:
