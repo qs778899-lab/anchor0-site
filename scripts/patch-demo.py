@@ -16,7 +16,7 @@ if 'import { digestSha256, createResourceCache }' not in text:
     worker.write_text(text)
 index = root / 'dist/demo/index.html'
 text = index.read_text()
-if 'data-home-link' not in text:
+if 'data-home-link' not in text and './assets/demo-ui.js' not in text:
     text = text.replace('</head>', '''<style>
       .home-return{position:fixed;bottom:12px;left:12px;z-index:10000;background:#111418e8;color:#E4E8EE;border:1px solid #44474B;border-radius:7px;padding:8px 13px;font:12px system-ui;text-decoration:none;box-shadow:0 2px 12px #0004}
       .home-return:hover,.home-return:focus-visible{color:#80B4F8;border-color:#80B4F8}

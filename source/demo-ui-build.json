@@ -1,0 +1,16 @@
+{
+  "format": 1,
+  "entry": "src/demo/main.ts",
+  "workerSha256": "9c6fd1c5ea028011b531a2b9cbddbfaf5157d04cad7f8433a6c5594b47f883b5",
+  "three": "0.181.0",
+  "outputs": {
+    "dist/demo/assets/demo-ui.js": {
+      "bytes": 605480,
+      "sha256": "a204a586425aeea3bb001523353b99923c23e14f18a50773ebe8d6587b97cdf6"
+    },
+    "dist/demo/assets/demo-ui.css": {
+      "bytes": 11548,
+      "sha256": "24f86d163351aee83e62c4b0f7e8548e528acbdb99f7d343181dfd4c1580c638"
+    }
+  }
+}

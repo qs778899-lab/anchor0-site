@@ -141,5 +141,19 @@
     "licenses/onnxruntime-third-party.txt": "0e07b95f3a8d6230037707c5c4a2b554d12c4cb67369669ac255635528ffcee2",
     "licenses/three-MIT.txt": "bfe119ea4fd413f5f7ca3fcd63adb0c4a073ed39daa2fe7d3e6b769e21272601",
     "release.json": "852d24bdad58c47d2ef65334466cb3d844069162746001dff6e5f0815c5e68d5"
+  },
+  "presentation": {
+    "entry": "src/demo/main.ts",
+    "buildRecord": "source/demo-ui-build.json",
+    "documentation": "docs/demo-ui.md",
+    "workerChanged": false,
+    "newFiles": [
+      "assets/demo-ui.js",
+      "assets/demo-ui.css"
+    ],
+    "preferences": [
+      "anchor-language",
+      "anchor-theme"
+    ]
   }
 }
