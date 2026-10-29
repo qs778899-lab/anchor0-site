@@ -14,7 +14,7 @@ frame 12 (0.400 s) is replaced with clean frame 13 to remove an isolated burned-
 | Video | Duration | Resolution | Size | Poster frame |
 |---|---:|---:|---:|---:|
 | scenes.mp4 | 228.878 s | 1920 × 1080 | 67.15 MiB | 125 s |
-| comparison.mp4 | 83.776 s | 1610 × 906 | 46.80 MiB | 10 s |
+| comparison.mp4 | 83.776 s | 1610 × 906 | 46.78 MiB | 10 s |
 | body-diversity.mp4 | 32.321 s | 1920 × 1080 | 9.32 MiB | 6 s |
 | input-devices.mp4 | 19.620 s | 1920 × 1080 | 6.38 MiB | 4 s |
 

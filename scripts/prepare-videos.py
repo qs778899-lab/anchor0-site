@@ -298,7 +298,8 @@ def main():
         repairs = group.get('frameRepairs', [])
         repair_changed = previous_records.get(slug, {}).get('frameRepairs', []) != repairs
         visual_changed = visual_settings(previous_records.get(slug, {})) != visual_settings(group)
-        changed = repair_changed or visual_changed
+        full_frames_changed = previous_records.get(slug, {}).get('fullVideoFrames') != group.get('fullVideoFrames')
+        changed = repair_changed or visual_changed or full_frames_changed
         assert not (args.verify_only and changed), f'Generate declared visual changes before verification: {slug}'
         if not source.is_file():
             raise SystemExit(f"Missing input: {source}")
@@ -309,7 +310,8 @@ def main():
             run_logged([
                 ffmpeg, "-hide_banner", "-nostdin", "-y", "-i", str(source),
                 "-map", "0:a:0?", "-map_metadata", "-1",
-                *video_filter_args(spatial_filter(group) + ',fps=30', repairs),
+                *video_filter_args(spatial_filter(group) + ',fps=30' +
+                    (f",trim=end_frame={group['fullVideoFrames']}" if group.get('fullVideoFrames') else ''), repairs),
                 *encoding_args(group, 21, maxrate),
                 "-g", "60", "-c:a", "aac", "-b:a", "128k", "-ar", "48000",
                 "-movflags", "+faststart", str(temporary),
@@ -336,6 +338,9 @@ def main():
         assert prepared["audio_codec"] == "aac", "Missing AAC audio"
         assert prepared["faststart"], "moov must precede mdat"
         assert prepared["bytes"] < MAX_BYTES, "Video exceeds 90 MiB"
+        if group.get('fullVideoFrames'):
+            prepared['frame_count'] = decoded_frame_count(ffmpeg, destination, cache / f'{slug}-frame-count.log')
+            assert prepared['frame_count'] == group['fullVideoFrames'], 'Published full-video frame count changed'
         run_logged([ffmpeg, "-v", "error", "-nostdin", "-i", str(destination), "-f", "null", "-"], cache / f"{slug}-decode.log")
         assert not (cache / f"{slug}-decode.log").read_text().strip(), "Decode error; inspect log"
         records.append({
@@ -345,6 +350,7 @@ def main():
             "poster_bytes": poster.stat().st_size, "poster_sha256": sha256(poster),
             **({'frameRepairs': repairs} if repairs else {}),
             **visual_settings(group),
+            **({'fullVideoFrames':group['fullVideoFrames']} if group.get('fullVideoFrames') else {}),
             "validation": "complete decode without errors",
         })
         (docs / "video-assets.json").write_text(json.dumps({"ffmpeg": version, "videos": records}, indent=2, ensure_ascii=False) + "\n")

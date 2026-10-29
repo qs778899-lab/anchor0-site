@@ -62,8 +62,9 @@
         "video_codec": "h264",
         "pixel_format": "yuv420p",
         "audio_codec": "aac",
-        "bytes": 49073127,
-        "sha256": "53d7e3bc9f3dedcb89119a6a9a3bc92d484feed91dcc67b0b7821d01639ef94a"
+        "bytes": 49054438,
+        "sha256": "9e804118211dc16fd628cff9fd4f33259b40fdcc0e02dbbbda0c23da5d3fa238",
+        "frame_count": 2512
       },
       "poster": "assets/posters/comparison.jpg",
       "poster_time_seconds": 10,
@@ -87,6 +88,7 @@
         "crf": 16,
         "preset": "slow"
       },
+      "fullVideoFrames": 2512,
       "validation": "complete decode without errors"
     },
     {

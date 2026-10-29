@@ -8,6 +8,7 @@
       "source": "双机对比 pico logo/双机对比.mp4",
       "crop": {"x":64, "y":0, "width":1610, "height":906},
       "encoding": {"crf":16, "preset":"slow"},
+      "fullVideoFrames": 2512,
       "frameRepairs": [{"startFrame":12, "endFrame":13, "replacementFrame":13, "reason":"Remove the single-frame burned-in title at 0.400 s using the immediately following clean frame; keep timing and audio unchanged."}],
       "title": {"en": "Two robots. The same intent.", "zh": "相同意图，双机对照。"},
       "description": {"en": "Reaching, foot stability and locomotion, side by side.", "zh": "并排观察触达、足部稳定与行走表现。"},

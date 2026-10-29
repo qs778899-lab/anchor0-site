@@ -31,6 +31,10 @@ and the previously published AAC packets are retained. All ten posters are regen
 new outputs. Video and poster URLs include content hashes, and the full-film player uses the
 declared 1610:906 ratio. Other groups' media remain byte-identical. `crop` and `encoding` in the
 manifest trigger regeneration when changed, and verification checks the declared output size.
+The full film explicitly preserves its existing 2,512 displayed frames and 83.776-second MP4
+duration (including the unchanged audio). The nine source-frame clips still cover all 2,513 source
+frames. `fullVideoFrames` records that existing full-film endpoint instead of relying on implicit
+encoder end-of-stream behavior.
 
 Run `python3 scripts/prepare-videos.py --clips-only` to prepare missing clips. Add `--force` to
 regenerate the generated clips and posters, or `--verify-only` to decode existing clips and refresh

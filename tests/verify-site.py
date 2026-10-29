@@ -66,6 +66,7 @@ for record in full_records:
         assert (public['fullWidth'],public['fullHeight'])==(1610,906)
         assert public['fullPosterRevision']==record['poster_sha256'][:12]
         assert (record['output_metadata']['width'],record['output_metadata']['height'])==(1610,906)
+        assert record['fullVideoFrames']==record['output_metadata']['frame_count']==group['fullVideoFrames']==2512
     assert record.get('frameRepairs',[])==group.get('frameRepairs',[]), 'Declared subtitle repair not applied to full video'
     if group.get('frameRepairs'):
         public=next(g for g in clip_outputs['groups'] if g['id']==record['slug'])
