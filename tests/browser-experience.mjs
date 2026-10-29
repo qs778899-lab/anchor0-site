@@ -14,7 +14,7 @@ try {
  await screenshot('.cache/preview/desktop-home.png');
  await scroll('#videos');await until(`[...document.querySelectorAll('.clip-card video')].slice(0,3).every(v=>!v.paused&&v.currentTime>0)`);
  await check('visible clips play muted together; hero pauses off screen',`[...document.querySelectorAll('.clip-card video')].slice(0,3).every(v=>!v.paused&&v.muted&&v.loop) && document.querySelector('#scenes-video').paused`);
- await check('all fifteen clips in three desktop columns',`document.querySelectorAll('.clip-card').length===15 && getComputedStyle(document.querySelector('.clip-grid')).gridTemplateColumns.split(' ').length===3`);
+ await check('all fifteen clips stay in single rows with three desktop cards visible',`document.querySelectorAll('.clip-card').length===15 && [...document.querySelectorAll('.clip-rail')].every(r=>[...r.children].every(c=>Math.abs(c.getBoundingClientRect().top-r.firstElementChild.getBoundingClientRect().top)<1)) && Math.abs(document.querySelector('.clip-card').getBoundingClientRect().width*3+36-document.querySelector('.clip-rail').clientWidth)<2`);
  await screenshot('.cache/preview/desktop-videos.png');
  await evaluate(`document.querySelector('.clip-card video').pause()`);await wait(100);
  await scroll('#performance');await scroll('#videos');await wait(300);
@@ -115,9 +115,9 @@ try {
  await screenshot('.cache/preview/desktop-results-dark-zh.png');
  await evaluate(`document.querySelector('#language-toggle').click();document.querySelector('#theme-select').value='light';document.querySelector('#theme-select').dispatchEvent(new Event('change'));`);
  await viewport(1024,900);await wait(300);await scroll('#videos');
- await check('tablet has two columns and a collapsed sidebar',`getComputedStyle(document.querySelector('.clip-grid')).gridTemplateColumns.split(' ').length===2&&getComputedStyle(document.querySelector('.floating-nav')).visibility==='hidden'&&document.documentElement.scrollWidth===innerWidth`);
+ await check('tablet shows two cards and a collapsed sidebar',`Math.abs(document.querySelector('.clip-card').getBoundingClientRect().width*2+18-document.querySelector('.clip-rail').clientWidth)<2&&getComputedStyle(document.querySelector('.floating-nav')).visibility==='hidden'&&document.documentElement.scrollWidth===innerWidth`);
  await viewport(390,844,true);await scroll('#videos');await screenshot('.cache/preview/mobile-videos.png');
- await check('390 px layout has one column and no overflow',`getComputedStyle(document.querySelector('.clip-grid')).gridTemplateColumns.split(' ').length===1&&document.documentElement.scrollWidth===innerWidth`);
+ await check('390 px layout shows one card with a preview of the next',`Math.abs(document.querySelector('.clip-card').getBoundingClientRect().width+28-document.querySelector('.clip-rail').clientWidth)<2&&document.documentElement.scrollWidth===innerWidth`);
  await evaluate(`document.querySelector('#nav-toggle').click()`);await wait(180);
  await check('mobile menu opens and demo link is intact',`document.querySelector('#nav-toggle').getAttribute('aria-expanded')==='true'&&document.querySelector('main').inert&&document.querySelector('.nav-demo').getAttribute('href')==='./demo/'`);
  await screenshot('.cache/preview/mobile-navigation.png');
