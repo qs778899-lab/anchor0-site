@@ -3,7 +3,7 @@
 The `/demo/` UI now shares the main site's palette, system font stack, button and
 input styles, English-first language setting and light/dark/system appearance.
 Desktop keeps a large 3D view beside controls; mobile stacks the view and controls.
-Motion source metadata is available in a compact disclosure. The controls contain
+Motion source metadata is no longer displayed. The controls contain
 only motion selection and disturbances. Reference target markers, target outlines
 and the former 03 View and status panel have been removed; only actual wrist ink
 is rendered. Policy reference inputs and frozen worker resources are unchanged.
@@ -90,3 +90,18 @@ Rebuilt the UI and passed the six demo tests, including all frozen resource
 hashes. Browser checks covered English/Chinese, preset-to-letter switching and
 a completed letter A (714/714 frames) with only actual blue wrist ink. The
 Chinese narrow-screen screenshot is `previews/demo-replay/demo-clean-mobile-zh.jpg`.
+
+### Mode bar and PNG export
+
+The viewer header contains only Preset motions and Continuous writing. Legacy
+`?letter=A` URLs normalize to `?word=A`; one-character phrases still use the
+continuous policy path. Re-selecting the active mode is a no-op, while mode changes
+retain the draft and last chosen preset. Motion metadata and copy controls are removed.
+
+Save image downloads only the current 3D view as PNG. The renderer draws and
+immediately copies the canvas before encoding, without changing camera or playback.
+The filename uses the active phrase rather than an un-applied draft. Failure leaves
+the action available to retry. The download was opened and visually checked: robot
+and actual blue A ink are present with no UI chrome. A completed single-character
+run reached 714/714 frames, and repeating the selected mode kept run ID 2.
+TypeScript and all six demo tests pass. Preview: `previews/demo-replay/demo-mode-snapshot.jpg`.

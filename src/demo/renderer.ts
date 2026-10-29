@@ -165,6 +165,19 @@ export class S0Renderer {
 
   setLanguage(label: string): void { this.renderer.domElement.setAttribute('aria-label', label); }
 
+  capturePng(): Promise<Blob> {
+    if (this.disposed || !this.hasFrame || this.renderer.getContext().isContextLost()) throw new Error('View unavailable');
+    // Copy immediately after rendering: preserveDrawingBuffer can remain off.
+    this.renderer.render(this.scene, this.camera);
+    const canvas = document.createElement('canvas');
+    canvas.width = this.renderer.domElement.width;
+    canvas.height = this.renderer.domElement.height;
+    const context = canvas.getContext('2d');
+    if (!context) throw new Error('Snapshot unavailable');
+    context.drawImage(this.renderer.domElement, 0, 0);
+    return new Promise((resolve, reject) => canvas.toBlob(blob => blob ? resolve(blob) : reject(new Error('PNG export failed')), 'image/png'));
+  }
+
   setTheme(dark: boolean): void {
     const background = dark ? '#111418' : '#ffffff';
     this.scene.background = new THREE.Color(background);
