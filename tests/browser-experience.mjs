@@ -14,7 +14,7 @@ try {
  await screenshot('.cache/preview/desktop-home.png');
  await scroll('#videos');await until(`[...document.querySelectorAll('.clip-card video')].slice(0,3).every(v=>!v.paused&&v.currentTime>0)`);
  await check('visible clips play muted together; hero pauses off screen',`[...document.querySelectorAll('.clip-card video')].slice(0,3).every(v=>!v.paused&&v.muted&&v.loop) && document.querySelector('#scenes-video').paused`);
- await check('all fifteen clips stay in single rows with four desktop cards visible',`document.querySelectorAll('.clip-card').length===15 && [...document.querySelectorAll('.clip-rail')].every(r=>[...r.children].every(c=>Math.abs(c.getBoundingClientRect().top-r.firstElementChild.getBoundingClientRect().top)<1)) && Math.abs(document.querySelector('.clip-card').getBoundingClientRect().width*4+54-document.querySelector('.clip-rail').clientWidth)<2`);
+ await check('all fifteen clips stay in single rows with three desktop cards visible',`document.querySelectorAll('.clip-card').length===15 && [...document.querySelectorAll('.clip-rail')].every(r=>[...r.children].every(c=>Math.abs(c.getBoundingClientRect().top-r.firstElementChild.getBoundingClientRect().top)<1)) && Math.abs(document.querySelector('.clip-card').getBoundingClientRect().width*3+36-document.querySelector('.clip-rail').clientWidth)<2`);
  await screenshot('.cache/preview/desktop-videos.png');
  await evaluate(`document.querySelector('.clip-card video').pause()`);await wait(100);
  await scroll('#performance');await scroll('#videos');await wait(300);

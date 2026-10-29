@@ -49,7 +49,6 @@ body{padding-left:264px}
 .rail-arrow:hover:not(:disabled){background:var(--accent);border-color:var(--primary)}
 .rail-arrow:disabled{opacity:.32;cursor:default}
 .clip-rail{display:grid;grid-auto-flow:column;grid-auto-columns:calc((100% - 36px)/3);grid-template-rows:auto;gap:18px;max-width:100%;min-width:0;overflow-x:auto;overflow-y:hidden;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:var(--border) transparent;padding-bottom:13px}
-@media(min-width:1200px){#comparison-clips,#body-diversity-clips{grid-auto-columns:calc((100% - 54px)/4)}}
 .clip-rail::-webkit-scrollbar{height:5px}
 .clip-rail::-webkit-scrollbar-track{background:transparent}
 .clip-rail::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}

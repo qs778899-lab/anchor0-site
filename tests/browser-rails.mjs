@@ -6,13 +6,13 @@ const rail='#comparison-clips';
 try {
  await viewport(1440,1000);await go();
  await evaluate(`document.querySelector('#videos').scrollIntoView({behavior:'instant'})`);
- await until(`[...document.querySelectorAll('${rail} video')].slice(0,4).every(v=>!v.paused&&v.currentTime>0)`);
+ await until(`[...document.querySelectorAll('${rail} video')].slice(0,3).every(v=>!v.paused&&v.currentTime>0)`);
  await check('every group has exactly one row, no page overflow',`[...document.querySelectorAll('.clip-rail')].every(r=>[...r.children].every(c=>Math.abs(c.getBoundingClientRect().top-r.firstElementChild.getBoundingClientRect().top)<1))&&document.documentElement.scrollWidth===innerWidth`);
- await check('four desktop cards and only one adjacent clip preloaded',`(()=>{const r=document.querySelector('${rail}'),v=[...r.querySelectorAll('video')];return Math.abs(r.firstElementChild.getBoundingClientRect().width*4+54-r.clientWidth)<2&&v.slice(0,5).every(v=>v.currentSrc)&&v.slice(5).every(v=>!v.currentSrc);})()`);
+ await check('three desktop cards in both requested groups and only one adjacent clip preloaded',`(()=>{const v=[...document.querySelectorAll('${rail} video')];return ['comparison','body-diversity'].every(id=>{const r=document.querySelector('#'+id+'-clips');return Math.abs(r.firstElementChild.getBoundingClientRect().width*3+36-r.clientWidth)<2;})&&v.slice(0,4).every(v=>v.currentSrc)&&v.slice(4).every(v=>!v.currentSrc);})()`);
  await check('first arrow disabled; a fully fitting group hides arrows',`document.querySelector('[aria-controls="comparison-clips"][data-rail-step="-1"]').disabled&&document.querySelector('#input-devices-clips').closest('.video-group').querySelector('.rail-controls').hidden`);
  const start=await evaluate(`document.querySelector('${rail} video').currentTime`);
  await evaluate(`document.querySelector('[aria-controls="comparison-clips"][data-rail-step="1"]').click()`);
- await until(`Math.abs(document.querySelector('${rail}').scrollLeft-document.querySelector('${rail} .clip-card').getBoundingClientRect().width-18)<2&&document.querySelector('${rail} video').paused&&!document.querySelectorAll('${rail} video')[4].paused`);
+ await until(`Math.abs(document.querySelector('${rail}').scrollLeft-document.querySelector('${rail} .clip-card').getBoundingClientRect().width-18)<2&&document.querySelector('${rail} video').paused&&!document.querySelectorAll('${rail} video')[3].paused`);
  await check('next arrow moves one card without moving other groups',`(()=>{const r=document.querySelector('${rail}');return Math.abs(r.scrollLeft-r.firstElementChild.getBoundingClientRect().width-18)<2&&document.querySelector('#body-diversity-clips').scrollLeft===0;})()`);
  await evaluate(`document.querySelector('[aria-controls="comparison-clips"][data-rail-step="-1"]').click()`);await until(`document.querySelector('${rail}').scrollLeft<1&&!document.querySelector('${rail} video').paused`);
  await check('returning resumes the existing playback position',`document.querySelector('${rail} video').currentTime>=${start}`);
