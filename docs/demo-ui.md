@@ -215,3 +215,29 @@ the arrow was too faint. The pointed linear profile, dimensions, colors, soft
 silhouette and force/fade behavior are unchanged.
 Checked a paused 50 N arrow in both themes on the LAN site, with no browser errors;
 all 10 demo tests pass. Actual PNG export: `previews/demo-replay/demo-linear-arrow-40.png`.
+
+### Complete ground in wide orthographic views — 2026-10-30
+
+The continuous-writing camera used a 4 m orbit radius with an 80 m floor. Zooming
+out expanded the orthographic footprint without moving the camera back. At oblique
+angles, the positive near plane therefore sliced off the near half of the floor.
+This was depth clipping, not an incomplete mesh or ordinary foreshortening.
+
+The renderer now fits a separate orthographic render camera to the world bounds of
+the grid and posed ground meshes. It translates that camera backward only along
+its viewing axis and extends the far plane as needed. The control camera, zoom,
+XY projection, orbit target and physics remain unchanged. The near plane stays
+positive. Fog boundaries shift by the same depth offset to preserve their blend.
+Screen rendering and PNG export use the same fitted camera. Preset-mode perspective
+rendering retains its existing camera.
+
+Regression tests reproduce the previous cut and check all ground corners across
+160 angle/aspect/zoom combinations, unchanged screen XY coordinates and fog,
+translated ground, repeated fitting and far-plane coverage. All 12 demo tests and
+TypeScript checking pass, including immutable release-resource checks.
+Browser verification reproduced the missing near edge before the change, then
+confirmed the complete floor after rotating and zooming, desktop light and 390 px
+mobile dark display, camera reset and playback. A real downloaded PNG contains the
+complete floor. Evidence: `previews/demo-replay/demo-ground-before.png`,
+`demo-ground-fixed.png`, `demo-ground-mobile-dark.png` and `demo-ground-export.png`
+in the same directory.

@@ -6,6 +6,7 @@ import { LineSegmentsGeometry } from 'three/addons/lines/LineSegmentsGeometry.js
 import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { InkTrace } from './ink';
 import { ForceCue } from './disturbance';
+import { fitOrthographicDepth } from './orthographic-depth';
 import type { RenderGeom, RenderFrame, VisualResources, MotionInfo, PushApplied } from './types';
 
 /**
@@ -17,6 +18,9 @@ export class S0Renderer {
   private readonly scene = new THREE.Scene();
   private readonly perspective = new THREE.PerspectiveCamera(42, 1, 0.02, 120);
   private readonly orthographic = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.02, 120);
+  private readonly renderOrthographic = new THREE.OrthographicCamera();
+  private readonly groundBounds = new THREE.Box3();
+  private readonly planeBounds = new THREE.Box3();
   private camera: THREE.PerspectiveCamera | THREE.OrthographicCamera = this.perspective;
   private readonly renderer: THREE.WebGLRenderer;
   private readonly controls: OrbitControls;
@@ -240,7 +244,7 @@ export class S0Renderer {
   capturePng(): Promise<Blob> {
     if (this.disposed || !this.hasFrame || this.renderer.getContext().isContextLost()) throw new Error('View unavailable');
     // Copy immediately after rendering: preserveDrawingBuffer can remain off.
-    this.renderer.render(this.scene, this.camera);
+    this.renderView();
     const canvas = document.createElement('canvas');
     canvas.width = this.renderer.domElement.width;
     canvas.height = this.renderer.domElement.height;
@@ -322,6 +326,9 @@ export class S0Renderer {
     }
     const positions = frame.geomXpos;
     const rotations = frame.geomXmat;
+    // Include the 80 m grid and each actual ground mesh, including its pose.
+    this.groundBounds.min.set(-40, -40, 0);
+    this.groundBounds.max.set(40, 40, 3);
     for (const [id, mesh] of this.objects) {
       const p = id * 3;
       const r = id * 9;
@@ -333,6 +340,10 @@ export class S0Renderer {
         0, 0, 0, 1,
       );
       mesh.matrixWorldNeedsUpdate = true;
+      if (mesh.userData.ground) {
+        if (!mesh.geometry.boundingBox) mesh.geometry.computeBoundingBox();
+        this.groundBounds.union(this.planeBounds.copy(mesh.geometry.boundingBox!).applyMatrix4(mesh.matrix));
+      }
     }
     for (const { mesh, bodyId, local } of this.visualObjects) {
       const p = bodyId * 3, q = bodyId * 4;
@@ -343,6 +354,7 @@ export class S0Renderer {
       mesh.matrixWorldNeedsUpdate = true;
     }
     this.root.set(...frame.rootPosition);
+    this.groundBounds.expandByPoint(this.root);
     if (!this.hasFrame) {
       this.resetCamera();
       this.hasFrame = true;
@@ -480,6 +492,25 @@ export class S0Renderer {
     this.renderer.setSize(width, height);
   }
 
+  private renderView(): void {
+    if (this.camera !== this.orthographic || this.groundBounds.isEmpty()) {
+      this.renderer.render(this.scene, this.camera);
+      return;
+    }
+    // Zoom changes the orthographic footprint, not the orbit radius. A close
+    // orbit camera can cut through a large floor; shift only the render camera.
+    const offset = fitOrthographicDepth(this.orthographic, this.renderOrthographic, this.groundBounds);
+    const fog = this.scene.fog;
+    const near = fog instanceof THREE.Fog ? fog.near : 0;
+    const far = fog instanceof THREE.Fog ? fog.far : 0;
+    if (fog instanceof THREE.Fog) { fog.near += offset; fog.far += offset; }
+    try {
+      this.renderer.render(this.scene, this.renderOrthographic);
+    } finally {
+      if (fog instanceof THREE.Fog) { fog.near = near; fog.far = far; }
+    }
+  }
+
   private render = (): void => {
     if (this.disposed) return;
     const now=performance.now(),dt=Math.min(.1,Math.max(0,(now-this.lastRenderTime)/1000));this.lastRenderTime=now;
@@ -487,7 +518,7 @@ export class S0Renderer {
     const opacity=this.forceCue.advance(frame?.completed?Infinity:frame?.simTime??0,dt,!!frame&&(frame.playing||frame.completed),document.hidden);
     this.forceGroup.visible=opacity>0;this.forceMaterial.uniforms.fade.value=opacity;
     this.controls.update();
-    this.renderer.render(this.scene, this.camera);
+    this.renderView();
     this.animationId = requestAnimationFrame(this.render);
   };
 }

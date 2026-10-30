@@ -6,12 +6,12 @@
   "scripts": {
     "start": "python3 scripts/site.py start",
     "stop": "python3 scripts/site.py stop",
-    "test": "node --test tests/demo.test.mjs tests/demo-ui.test.mjs tests/demo-disturbance.test.mjs tests/code-replay-*.test.mjs",
+    "test": "node --test tests/demo.test.mjs tests/demo-ui.test.mjs tests/demo-disturbance.test.mjs tests/demo-camera.test.mjs tests/code-replay-*.test.mjs",
     "test:site": "python3 tests/verify-site.py",
     "test:browser": "node tests/browser-experience.mjs && node tests/browser-media.mjs && node tests/browser-rails.mjs",
     "build:demo": "node scripts/build-demo-ui.mjs",
     "check:demo": "tsc --noEmit --module ESNext --target ES2022 --moduleResolution bundler --lib dom,dom.iterable,es2022 --allowImportingTsExtensions --skipLibCheck src/demo/main.ts",
-    "test:demo-ui": "node --test tests/demo-ui.test.mjs tests/demo-disturbance.test.mjs tests/demo.test.mjs",
+    "test:demo-ui": "node --test tests/demo-ui.test.mjs tests/demo-disturbance.test.mjs tests/demo-camera.test.mjs tests/demo.test.mjs",
     "test:code": "node --test tests/code-replay-*.test.mjs"
   },
   "devDependencies": {
