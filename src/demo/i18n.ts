@@ -1,4 +1,14 @@
 export const messages: Record<string, [string,string]> = {
+ 'motion.motion01':['Quick Turn','快速转身'],
+ 'motion.motion02':['Step & Reach','跨步抬手'],
+ 'motion.motion03':['Turn & Hold','转身稳手'],
+ 'motion.motion04':['Standing Reach','原地抬手'],
+ 'motion.motion05':['Stepping Turn','踏步转向'],
+ 'motion.motion06':['Walk & Reach','行走抬手'],
+ 'motion.motion07':['Squat & Bend','蹲起俯身组合'],
+ 'motion.chingmu-gt-take-007-lizhe':['Bear Shake','狗熊哆嗦毛'],
+ 'motion.chingmu-lzt-take-016-lizhe':['Wanderer’s Kick','浪子踢球'],
+ 'motion.chingmu-shanshenbu-1-take-006-lizhe':['Dodge Step','闪身步'],
  title:['Interactive Demo','交互演示'], home:['Back to project','返回主页'], local:['Runs in your browser','在浏览器中运行'],
  language:['Switch to Chinese','Switch to English'], theme:['Appearance','外观'], system:['System','跟随系统'],light:['Light','浅色'],dark:['Dark','深色'],
  simulation:['3D simulation','三维仿真'],controls:['Simulation controls','仿真控制'],
@@ -53,4 +63,10 @@ export function workerText(message:string){
  if(/下载|网络|加载失败|HTTP|fetch/i.test(message))return t('networkError');
  if(/校验|不一致|损坏|缺少|不完整/.test(message))return t('integrityError');
  return t('runtimeError');
+}
+
+// Presentation names are keyed by immutable release IDs, not source filenames.
+export function motionLabel(motion:{id:string;label:string}){
+ const key=`motion.${motion.id}`;
+ return Object.hasOwn(messages,key)?t(key):motion.label;
 }

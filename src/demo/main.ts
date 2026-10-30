@@ -4,7 +4,7 @@ import {downloadPng,snapshotFilename} from './download';
 import {parseForce} from './disturbance';
 import type {WorkerEvent,WorkerCommand,RenderFrame,MotionInfo} from './types';
 import {normalizeDraft,previousCharacterStart,textLayout,glyphResourceId} from './sequence';
-import {t,language,theme,setLanguage,setTheme,syncPreferences,validationMessage,workerText} from './i18n';
+import {motionLabel,t,language,theme,setLanguage,setTheme,syncPreferences,validationMessage,workerText} from './i18n';
 const app=document.querySelector<HTMLDivElement>('#app')!;
 const tr=(key:string)=>`data-i18n="${key}"`;
 app.innerHTML=`<div class="app-shell">
@@ -46,7 +46,7 @@ function applyLanguage(){
  text('language',language==='en'?'中文':'EN');el('language').setAttribute('aria-label',t('language'));el('theme').setAttribute('aria-label',t('theme'));
  document.querySelectorAll<HTMLElement>('[data-direction]').forEach(button=>button.setAttribute('aria-label',t('pushAria',{direction:t(button.dataset.direction!)})));
  renderer?.setLanguage(t('viewportAria'));
- for(const option of motionSelect.options){const m=motions.get(option.value);if(m)option.textContent=m.label;}
+ for(const option of motionSelect.options){const m=motions.get(option.value);if(m)option.textContent=motionLabel(m);}
  renderUI();
 }
 function renderDraft(){
@@ -89,7 +89,7 @@ function renderUI(){
 }
 function populate(kind:'preset'|'word'){
  currentMode=kind;motionSelect.replaceChildren();
- for(const item of motions.values())if((item.kind??'preset')==='preset'){const option=document.createElement('option');option.value=item.id;option.textContent=item.label;motionSelect.append(option);}
+ for(const item of motions.values())if((item.kind??'preset')==='preset'){const option=document.createElement('option');option.value=item.id;option.textContent=motionLabel(item);motionSelect.append(option);}
  if([...motionSelect.options].some(o=>o.value===lastPreset))motionSelect.value=lastPreset;
  else lastPreset=motionSelect.value;
  renderUI();
