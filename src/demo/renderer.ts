@@ -7,6 +7,7 @@ import { LineMaterial } from 'three/addons/lines/LineMaterial.js';
 import { InkTrace } from './ink';
 import { ForceCue } from './disturbance';
 import { fitOrthographicDepth } from './orthographic-depth';
+import { createChestLogo } from '../robot/chest-logo.js';
 import type { RenderGeom, RenderFrame, VisualResources, MotionInfo, PushApplied } from './types';
 
 /**
@@ -27,6 +28,7 @@ export class S0Renderer {
   private readonly geometryGroup = new THREE.Group();
   private readonly objects = new Map<number, THREE.Mesh>();
   private readonly visualObjects: { mesh: THREE.Mesh; bodyId: number; local: THREE.Matrix4 }[] = [];
+  private readonly chestLogoTexture = new THREE.TextureLoader().load('/demo/assets/archon-chest-logo.png');
   private readonly bodyMatrix = new THREE.Matrix4();
   private readonly bodyPosition = new THREE.Vector3();
   private readonly bodyQuaternion = new THREE.Quaternion();
@@ -207,6 +209,9 @@ export class S0Renderer {
       });
       const mesh = new THREE.Mesh(geometry, material);
       mesh.name = visual.name;
+      if ((visual.sourceBodyName ?? visual.bodyName) === 'torso_link') {
+        mesh.add(createChestLogo(geometry, this.chestLogoTexture));
+      }
       mesh.matrixAutoUpdate = false;
       mesh.castShadow = true;
       mesh.receiveShadow = true;
@@ -420,6 +425,7 @@ export class S0Renderer {
     this.controls.dispose();
     this.clearGeometries();
     this.clearVisuals();
+    this.chestLogoTexture.dispose();
     this.inkLine.geometry.dispose();
     this.inkMaterial.dispose();
     this.scene.traverse((object) => {
@@ -471,6 +477,10 @@ export class S0Renderer {
   private clearVisuals(): void {
     const geometries = new Set<THREE.BufferGeometry>();
     for (const { mesh } of this.visualObjects) {
+      for (const child of mesh.children) if (child instanceof THREE.Mesh) {
+        child.geometry.dispose();
+        (child.material as THREE.Material).dispose();
+      }
       geometries.add(mesh.geometry);
       (mesh.material as THREE.Material).dispose();
       this.geometryGroup.remove(mesh);

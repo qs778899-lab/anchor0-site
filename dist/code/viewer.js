@@ -4,6 +4,7 @@ import { LineSegments2 } from './vendor/lines/LineSegments2.js';
 import { LineSegmentsGeometry } from './vendor/lines/LineSegmentsGeometry.js';
 import { LineMaterial } from './vendor/lines/LineMaterial.js';
 import { sampleTime, inkSegments, visibleSegments } from './replay.js';
+import { createChestLogo } from './chest-logo.js';
 
 async function binary(name) {
   const response = await fetch(new URL(`./assets/${name}`, import.meta.url));
@@ -14,6 +15,7 @@ async function binary(name) {
 export async function createViewer(container, spec) {
   const buffer = await binary(spec.url);
   if (buffer.byteLength !== spec.bytes) throw new Error('Incomplete robot geometry');
+  const chestLogoTexture = await new THREE.TextureLoader().loadAsync(new URL('./assets/archon-chest-logo.png', import.meta.url).href);
   let renderer;
   try { renderer = new THREE.WebGLRenderer({antialias:true, powerPreference:'high-performance'}); }
   catch { renderer = new THREE.WebGLRenderer({antialias:false}); }
@@ -35,11 +37,15 @@ export async function createViewer(container, spec) {
     geometry.computeVertexNormals(); return geometry;
   });
   const materials = new Map();
+  let chestLogo;
   for (const geom of spec.geoms) {
     const id = JSON.stringify([geom.color,geom.specular,geom.shininess]);
     if (!materials.has(id)) materials.set(id,new THREE.MeshPhongMaterial({color:new THREE.Color().fromArray(geom.color),specular:new THREE.Color().setScalar(geom.specular),shininess:geom.shininess*128}));
     const mesh = new THREE.Mesh(meshes[geom.mesh],materials.get(id));
     mesh.position.fromArray(geom.position); mesh.quaternion.fromArray(geom.quaternion); mesh.scale.fromArray(geom.scale ?? [1,1,1]); bodies[geom.body].add(mesh);
+    if (!chestLogo && spec.bodyNames[geom.body] === 'torso_link') {
+      chestLogo = createChestLogo(mesh.geometry, chestLogoTexture); mesh.add(chestLogo);
+    }
   }
   let clip, poses, ink, strokeMesh, segmentFrames=[], active=true, manual=false, previousFrame=-1, lastElapsed=0;
   let baseHeight=2, overviewTarget=new THREE.Vector3(), overviewWidth=5;
@@ -117,6 +123,7 @@ export async function createViewer(container, spec) {
       active=false;observer.disconnect();container.removeEventListener('keydown',onKeyDown);renderer.domElement.removeEventListener('webglcontextlost',lost);
       controls.removeEventListener('start',userControl);controls.removeEventListener('change',render);controls.dispose();
       meshes.forEach(g=>g.dispose());materials.forEach(m=>m.dispose());strokeGeometry.dispose();strokeMaterial.dispose();renderer.dispose();renderer.domElement.remove();
+      chestLogo?.geometry.dispose();chestLogo?.material.dispose();chestLogoTexture.dispose();
     }
   };
 }

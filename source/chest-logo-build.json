@@ -1,0 +1,29 @@
+{
+  "format": 1,
+  "source": "src/robot/chest-logo.js",
+  "sourceSha256": "07c0d6ca824f04d22995da9b349b9858789431ff60c3f34f39fc56f1ac58e96d",
+  "textureSource": "dist/assets/images/archon-logo.png",
+  "textureSourceSha256": "f607cb60defbed5ef85fe15f4de83944b5a5e3d4d596742f05c129b5f31d58b2",
+  "reference": "User-supplied ARCHON screenshot, 2026-10-30; matching existing high-resolution transparent wordmark reused without image edits.",
+  "textureCropPixels": [
+    494,
+    161,
+    1569,
+    158
+  ],
+  "placement": "Letters only, centered on front torso at local z=0.22 m, width 0.112 m; decal follows the original torso surface and body pose.",
+  "outputs": {
+    "dist/code/chest-logo.js": {
+      "bytes": 9395,
+      "sha256": "88992579a5b15e8bdbb33f1d921bb2616c0c1490436ce3b2abf174ac8497b95b"
+    },
+    "dist/code/assets/archon-chest-logo.png": {
+      "bytes": 22253,
+      "sha256": "f607cb60defbed5ef85fe15f4de83944b5a5e3d4d596742f05c129b5f31d58b2"
+    },
+    "dist/demo/assets/archon-chest-logo.png": {
+      "bytes": 22253,
+      "sha256": "f607cb60defbed5ef85fe15f4de83944b5a5e3d4d596742f05c129b5f31d58b2"
+    }
+  }
+}

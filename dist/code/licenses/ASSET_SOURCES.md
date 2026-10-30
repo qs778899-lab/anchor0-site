@@ -1,5 +1,18 @@
 # Asset sources
 
+## Chest lettering (2026-10-30)
+
+- The user requested the ARCHON chest wordmark. `assets/archon-chest-logo.png` is
+  an unchanged copy of the site's existing transparent brand image. Its texture
+  coordinates select only ARCHON, excluding the triangular icon. Brand rights
+  remain with their owner; no new license is asserted for the mark.
+- The generated `chest-logo.js` includes the Three.js 0.181.0 DecalGeometry helper
+  from the locally installed official package. The existing MIT license at
+  `vendor/THREE-LICENSE.txt` is retained. Source and output hashes are recorded in
+  `source/chest-logo-build.json` in the repository.
+
+## Original page assets
+
 - Robot: S0 `_assets/gear_sonic/data/robot_model/model_data/g1/new_assemble_description/mujoco/scene_free_pearl_lightgray.xml` and its relative mesh assets. A byte-for-byte copy of this XML and all 264 referenced mesh files is bundled under `resources/robot/`, preserving relative paths (including collision meshes required to compile the MJCF). Archon G1 pearl/light-gray materials are retained. Only group-1 visual meshes are exported, without simplification. Existing trajectories drive 29 named body joints; the additional finger/head joints retain their model defaults. The source MJCF is never modified.
 - Motion CSVs: S0 `_assets/gear_sonic_deploy/reference/example/`. The three configured sequences are bundled under `resources/motions/`; only `joint_pos.csv`, `body_pos.csv`, and `body_quat.csv` are needed. Exact sequences are configured in `motion_config.py` and recorded in `public/assets/manifest.json`.
 - Generated assets: mesh binaries and world-body pose binaries produced by `scripts/export_assets.py`. These are reference trajectories, not live policy inference or real-robot recordings.

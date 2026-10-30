@@ -241,3 +241,24 @@ mobile dark display, camera reset and playback. A real downloaded PNG contains t
 complete floor. Evidence: `previews/demo-replay/demo-ground-before.png`,
 `demo-ground-fixed.png`, `demo-ground-mobile-dark.png` and `demo-ground-export.png`
 in the same directory.
+
+### ARCHON chest lettering — 2026-10-30
+
+Both `/demo/` and `/code/` now project the ARCHON letters onto the front torso.
+The matching existing transparent 2133×480 brand asset is copied byte-for-byte
+under each page's assets directory. Texture coordinates sample only the letters
+at pixel crop `[494, 161, 1569, 158]`; the triangle is excluded and the original
+image is not edited. The letters are centered at torso-local `(0.08, 0, 0.22)` m
+with a 0.112 m projection width, 2 cm below the first preview.
+
+The shared `src/robot/chest-logo.js` uses Three.js DecalGeometry to conform to the
+existing chest mesh. The decal is a child of the torso visual, so its pose follows
+the robot. Transparent material, ordinary depth testing and a small polygon offset
+avoid a white rectangle, show-through and coplanar flicker. The simulation's
+meshes, policy, worker and replay poses/ink remain unchanged.
+
+`scripts/build-demo-ui.mjs` builds both presentation copies and records source,
+texture and output checksums in `source/chest-logo-build.json`. Three.js's existing
+MIT notices cover the decal helper. Browser verification covers front/oblique
+views, a complete A run, the replay viewer, narrow layout and PNG export. All 21
+demo/replay tests and TypeScript checks pass. Preview: `previews/demo-replay/archon-logo-closeup.png`.

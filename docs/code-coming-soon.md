@@ -3,6 +3,11 @@
 `/code/` is a static WebGL replay of the published test052/20k controller writing
 COMING SOON. The homepage links to it with a relative `/code/` URL.
 
+The torso also carries the same centered ARCHON lettering as `/demo/` (no triangle).
+`chest-logo.js` projects the transparent letters onto the unchanged torso surface;
+its texture loads locally from `assets/archon-chest-logo.png`. Build and source
+records are in `source/chest-logo-build.json`; rebuild with `scripts/build-demo-ui.mjs`.
+
 ## Current replay
 
 - Exact 75-body physics frames and 1020 visuals from `/demo/`; actual 50 Hz policy
